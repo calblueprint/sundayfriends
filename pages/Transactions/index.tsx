@@ -1,10 +1,8 @@
-import SideNavbar from "../../components/SideNavbar/SideNavbar";
+import Layout from "../../components/Layout/Layout";
 
 const TransactionsPage: React.FunctionComponent = () => {
     return(
-        <div>
-            <SideNavbar />
-        </div>
+        <Layout title='Transactions'/>
     );
 }
 

@@ -23,9 +23,11 @@ const SideNavbar: React.FunctionComponent = () => {
             <List className={styles.list}>
                 <ListItem 
                     button
+                    key='logo'
                     onClick={() => {
                         router.push('/')
                     }}
+                    disableRipple={true}
                 >
                     <ListItemText className={styles['item']} primary={'Sunday Friends'} />
                 </ListItem>
@@ -37,6 +39,7 @@ const SideNavbar: React.FunctionComponent = () => {
                     onClick={() => {
                         router.push(`/${text}`)
                     }}
+                    disableRipple={true}
                 >
                 <ListItemText className={styles['item']} primary={text} />
                 </ListItem>
