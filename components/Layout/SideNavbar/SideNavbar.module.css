@@ -1,0 +1,23 @@
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5%;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav {
+    width: 180px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.sidenav-paper {
+    width: 180px;
+    box-sizing: border-box;
+    border-radius: 0px 35px 35px 0px;
+}
