@@ -32,11 +32,28 @@
 }
 
 .box {
-  height: 80%;
+  height: 100%;
 }
 
 .tabbox {
   height: 100%;
   border: 2px solid #ebebeb;
+  border-top: 0px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.seltab {
+  border: 2px solid #ebebeb;
   border-radius: 10px 10px 0px 0px;
+  width: 10vw;
+  margin-right: 7px;
+  color: #646464;
+}
+
+.tab {
+  width: 10vw;
+  margin-right: 7px;
+  background-color: #ebebeb;
+  border-radius: 10px 10px 0px 0px;
+  color: #646464;
 }
