@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Layout from "../../components/Layout/Layout";
 import styles from './Admins.module.css';
 import { Grid, Button, Box } from "@mui/material";
