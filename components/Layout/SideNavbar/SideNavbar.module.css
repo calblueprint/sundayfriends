@@ -7,7 +7,7 @@
 
 .list {
   display: flex;
-  flex-wrap: column;
+  flex-direction: column;
 }
 
 .sidenav {
