@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Box className={styles['container']}>
-                <SideNavbar/>
+                <SideNavbar />
                 {children}
             </Box>
         </div>
