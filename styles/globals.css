@@ -2,8 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Avenir;
 }
 
 a {
@@ -13,4 +12,26 @@ a {
 
 * {
   box-sizing: border-box;
+}
+:root {
+  --kelly: #098d45;
+  --kelly-mid: #5abd87;
+  --sapphire: #253c85;
+  --sapphire-mid: #526dc2;
+  --sapphire-muted: #5a6aa2;
+  --sapphire-mid-light: #7f93d1;
+  --sapphire-light: #e6ecfe;
+  --fuschia: #ce238f;
+  --fuschia-mid: #e170b7;
+  --marigold: #fed719;
+  --marigold-mid: #ffe381;
+  --marigold-light: #fff2c3;
+  --background: #f9f7f7;
+  --noirish: #272929;
+  --grey-dark: #525454;
+  --grey-mid: #a9a9a9;
+  --grey-light: #eaeaea;
+  --while: #ffffff;
+  --alert-text: #e94444;
+  --alert: #fce3e3;
 }
