@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Layout from "../../components/Layout/Layout";
 import PropTypes from 'prop-types';
 import { Grid, Button, Tabs, Tab, Box } from "@mui/material";
 import styles from './Transactions.module.css';
-import { TabPanel } from '../../components/TabPanel';
+import { TabPanel } from '../../components/TabPanel/TabPanel';
 
 const TransactionsPage: React.FunctionComponent = () => {
 

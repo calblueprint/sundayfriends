@@ -1,4 +1,4 @@
-import styles from '../pages/Transactions/Transactions.module.css';
+import styles from '../../pages/Transactions/Transactions.module.css';
 import { Box } from "@mui/material";
 
 type TabPanelProps = {
