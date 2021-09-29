@@ -1,5 +1,7 @@
 .main {
     padding: 35px;
+    display: flex;
+    justify-content: center;
 }
 
 .title {
