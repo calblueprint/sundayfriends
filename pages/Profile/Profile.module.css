@@ -1,9 +1,6 @@
 .main {
     padding: 35px;
+    font-size: x-large;
     display: flex;
     justify-content: center;
-}
-
-.title {
-    display:flex;
 }
