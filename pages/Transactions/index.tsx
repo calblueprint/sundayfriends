@@ -3,8 +3,10 @@ import Layout from "../../components/Layout/Layout";
 import { Grid, Button, Tabs, Tab, Box, SvgIcon, List, ListItem} from "@mui/material";
 import Icon from '@mui/material/Icon';
 import styles from './Transactions.module.css';
+import itemstyles from '../../components/TransactionItem/TransactionItem.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
 import addIcon from '../../public/plus_circle_outline.png';
+import { TransactionItem } from '../../components/TransactionItem/TransactionItem';
 
 const TransactionsPage: React.FunctionComponent = () => {
 
@@ -37,38 +39,33 @@ const TransactionsPage: React.FunctionComponent = () => {
         const renderCategoryHeader = () => {
             return (
                 <div className={styles['section-header']}>
-                    <div>Date</div>
-                    <div>User</div>
-                    <div>FID</div>
-                    <div>Admin</div>
-                    <div>Action</div>
-                    <div>Message</div>
-                    <div>Change</div>
+                    <div className={itemstyles['date']} id={styles['category-text']}>Date</div>
+                    <div className={itemstyles['username']} id={styles['category-text']}>User</div>
+                    <div className={itemstyles['fid']} id={styles['category-text']}>FID</div>
+                    <div className={itemstyles['admin']} id={styles['category-text']}>Admin</div>
+                    <div className={itemstyles['action']} id={styles['category-text']}>Action</div>
+                    <div className={itemstyles['message']} id={styles['category-text']}>Message</div>
+                    <div className={itemstyles['change']} id={styles['category-text']}>Change</div>
                 </div>
             )
         }
 
+        const temp = [
+            {date: new Date(), username: 'Firstname Lastname', fid: 'H1234', admin: 'Firstname Lastname', message: 'short messaging explaining what the transaction was', change: 10},
+            {date: new Date(), username: 'Jacob Kim', fid: '431', admin: 'Cindy Zhang', message: 'Jacob > Cindy', change: -10}
+        ]
+
         const renderHistory = () => {
             return(
                 <List className={styles['list']}>
-                    <ListItem className={styles['list-item']}>
-                        <div>09/01/21</div>
-                        <div>Firstname Lastname</div>
-                        <div>H1234</div>
-                        <div>Firstname Lastname</div>
-                        <div>Redeem</div>
-                        <div>Short messaging</div>
-                        <div>-10.00</div>
-                    </ListItem>
-                    <ListItem className={styles['list-item']}>
-                        Hi Hello
-                    </ListItem>
-                    <ListItem className={styles['list-item']}>
-                        Hi Hello
-                    </ListItem>
-                    <ListItem className={styles['list-item']}>
-                        Hi Hello
-                    </ListItem>
+                    {
+                        temp.map((transaction) => {
+                            return(
+                                <TransactionItem date={transaction.date} username={transaction.username} fid={transaction.fid}
+                                admin={transaction.admin} message={transaction.message} change={transaction.change}/>
+                            )
+                        })
+                    }
                 </List>
             )
         }
@@ -94,12 +91,14 @@ const TransactionsPage: React.FunctionComponent = () => {
                     <div>
                         {renderFilterHeader()}
                         {renderCategoryHeader()}
+                        {renderHistory()}
                     </div>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     <div>
                         {renderFilterHeader()}
                         {renderCategoryHeader()}
+                        {renderHistory()}
                     </div>
                 </TabPanel>
             </Box>

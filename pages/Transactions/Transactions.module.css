@@ -91,7 +91,6 @@
 .section-header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   height: 46px;
   align-items: center;
   background-color: #EBEBEB;
@@ -104,13 +103,11 @@
   padding-bottom: 0%;
 }
 
-.list-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 2%;
-  padding-right: 2%;
-  height: 62px;
-  border-top: 1px solid #EBEBEB;
+#category-text {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#category-text:hover {
+  font-weight: 800;
 }

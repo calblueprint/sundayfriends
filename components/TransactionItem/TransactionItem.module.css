@@ -1,0 +1,65 @@
+.list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 2%;
+    padding-right: 2%;
+    height: 62px;
+    border-top: 1px solid #EBEBEB;
+  }
+
+.date {
+    width: 8%;
+}
+
+.username {
+    width: 15%;
+}
+
+.fid {
+    width: 6%;
+}
+
+.admin {
+    width: 18%;
+}
+
+.redeem-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    background-color: #FFD4C7;
+    border: 1px solid #C8C8C8;
+    border-radius: 16.5px;
+}
+
+.earn-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 30px;
+    background-color: #CBF2C5;
+    border: 1px solid #C8C8C8;
+    border-radius: 16.5px;
+}
+
+.action {
+    width: 10%;
+}
+
+.message {
+    width: 37%;
+}
+
+.pos-change {
+    width: 6%;
+    color: #74AB67;
+}
+
+.neg-change {
+    width: 6%;
+    color: #EE512F;
+}
