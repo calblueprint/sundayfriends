@@ -10,6 +10,17 @@ a {
   text-decoration: none;
 }
 
+h2 {
+  color: #646464;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.72px;
+  letter-spacing: 1px;
+  margin-left: 60px;
+}
+
 * {
   box-sizing: border-box;
 }

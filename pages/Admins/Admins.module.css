@@ -9,17 +9,6 @@
   height: 800px;
 }
 
-.h2 {
-  color: #646464;
-  font-family: Avenir;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 29.72px;
-  letter-spacing: 1px;
-  margin-left: 60px;
-}
-
 .table {
   width: 90%;
   align-items: center;
@@ -35,6 +24,8 @@
   border-radius: 7px;
   height: 33px;
   font-size: 14px;
+  font-family: Avenir;
+  font-weight: 800;
   align-self: center;
   margin-left: auto;
 }
@@ -52,7 +43,18 @@
   width: 100%;
   height: 10%;
   /* background-color: black; */
+  display: flex;
+  flex-direction: row;
   border: 1px solid #ebebeb;
+
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  justify-content: space-around;
 }
 
 .header {

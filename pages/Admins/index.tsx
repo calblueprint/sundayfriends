@@ -14,11 +14,11 @@ const AdminPage: React.FunctionComponent = () => {
 
     return (
       <div className={styles['row']}>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div className={styles['column']}>{name}</div>
+        <div className={styles['column']}>{role}</div>
+        <div className={styles['column']}>{email}</div>
+        <div className={styles['column']}>{phone}</div>
+        <div className={styles['column']}></div>
       </div>
     );
   }
@@ -32,6 +32,10 @@ const AdminPage: React.FunctionComponent = () => {
           <Button className={styles['button']}>INVITE ADMIN</Button>
         </div>
         <div className={styles['table']}>
+          <AdminRow name="harold" role="president" email="pres@google.com" phone="8575009958" />
+          <AdminRow name="harolddddddddddd" role="president" email="pres@google.com" phone="8575009958" />
+          <AdminRow name="harolddddddddddd" role="president" email="pres@google.com" phone="8575009958" />
+          <AdminRow name="harolddddddddddd" role="president" email="pres@google.com" phone="8575009958" />
           {/* {AdminRow()}
           {AdminRow()}
           {AdminRow()}
