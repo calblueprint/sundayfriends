@@ -8,20 +8,20 @@ const TransactionsPage: React.FunctionComponent = () => {
 
     const BasicTabs = () => {
         const [value, setValue] = React.useState(0);
-        
+
         const handleChange = (event, newValue) => {
             setValue(newValue);
         };
-        
+
         return (
             <Box sx={{ width: '100%', maxHeight: '62vh' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="History" className={value==0 ? styles['seltab'] : styles['tab']}/>
-                <Tab label="Redemptions" className={value==1 ? styles['seltab'] : styles['tab']}/>
-                <Tab label="Earnings" className={value==2 ? styles['seltab'] : styles['tab']}/>
-                </Tabs>
-            </Box>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="History" className={value == 0 ? styles['seltab'] : styles['tab']} />
+                        <Tab label="Redemptions" className={value == 1 ? styles['seltab'] : styles['tab']} />
+                        <Tab label="Earnings" className={value == 2 ? styles['seltab'] : styles['tab']} />
+                    </Tabs>
+                </Box>
                 <TabPanel value={value} index={0}>
                     Item One
                 </TabPanel>
@@ -34,8 +34,8 @@ const TransactionsPage: React.FunctionComponent = () => {
             </Box>
         );
     }
-      
-    return(
+
+    return (
         <Layout title='Transactions'>
             <Grid container rowSpacing={1} className={styles.container}>
                 <Grid item xs={8}>
