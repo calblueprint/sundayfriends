@@ -7,15 +7,16 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
     
     return (
         <Layout title = 'Profile'>
-            <div className = {styles.title}>
-                Profile Settings
-            <div className = {styles.name}>
-                Cindy Zhang
+            <div className = {styles.header}>
+                <h2>Profile Settings</h2>
+                <h2>Cindy Zhang</h2>
             <hr></hr>
             <div className = {styles.boxes}>
                 <div className = {styles.box}>
                     <div className = {styles.subtitle}>About Info</div>
-                    <div className = {styles.boldtitle}>Role</div>  
+                    <br></br>
+                    <div className = {styles.boldtitle}>Role</div>
+                    <br></br>  
                     <div className = {styles.info}>Executive Director</div>
                 </div>
                 <div className = {styles.box}>
@@ -24,7 +25,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
                     </div>
                 </div>
                 </div>
-            </div>
+            
             </div>
         </Layout>
     );

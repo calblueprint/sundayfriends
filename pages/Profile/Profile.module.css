@@ -1,20 +1,24 @@
-.title {
+.header {
     padding: 30px;
-    font-size: xx-large;
 }
 
-.name {
+.subtitle {
     font-size: xx-large;
-    padding: 15px;
-}
-
-.boxes {
-    padding: 15px;
-    display: flex;
-    border: 1px solid black;
 }
 
 .box {
     padding: 15px;
     font-size: large;
+    justify-content: center;
+    align-content: space-between;
+    border: 1px solid black;
+    flex-grow: 1;
+    width: 100vh;
+}
+
+.boxes {
+    width: 100vh;
+    display: flex;
+    padding: 15px;
+    gap: 10%;
 }
