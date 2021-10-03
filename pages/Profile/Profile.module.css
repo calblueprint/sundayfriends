@@ -1,6 +1,20 @@
-.main {
-    padding: 35px;
-    font-size: x-large;
+.title {
+    padding: 30px;
+    font-size: xx-large;
+}
+
+.name {
+    font-size: xx-large;
+    padding: 15px;
+}
+
+.boxes {
+    padding: 15px;
     display: flex;
-    justify-content: center;
+}
+
+.box {
+    padding: 15px;
+    font-size: large;
+    border: 1px solid black;
 }
