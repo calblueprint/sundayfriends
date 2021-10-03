@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Layout from "../../components/Layout/Layout";
-import { Grid, Button, Tabs, Tab, Box, SvgIcon, List, ListItem} from "@mui/material";
+import { Button, Tabs, Tab, Box, List, Input, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 import Icon from '@mui/material/Icon';
 import styles from './Transactions.module.css';
 import itemstyles from '../../components/TransactionItem/TransactionItem.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
 import addIcon from '../../public/plus_circle_outline.png';
 import { TransactionItem } from '../../components/TransactionItem/TransactionItem';
+import { SortTriangles } from '../../components/SortTriangles/SortTriangles';
 
 const TransactionsPage: React.FunctionComponent = () => {
 
@@ -20,18 +21,24 @@ const TransactionsPage: React.FunctionComponent = () => {
         const renderFilterHeader = () => {
             return (
                 <div className={styles['filter-row']}>
-                    <div>
-                        Sep 5 - Sep 12
+                    <div className={styles['date-range']}>
+                        <Box>
+                            Sep 5 - Sep 12
+                        </Box>
+                        arrows
                     </div>
-                    <div>
-                        Filters
+                    <div className={styles['filters']}>
+                        <FormControl className={styles['filter-select']} size="small">
+                            <InputLabel className={styles['input-label']}>Filters</InputLabel>
+                            <Select variant="outlined"
+                                className={styles['select']}
+                                label="Filters"
+                            >
+                                <MenuItem>Butt</MenuItem>
+                            </Select>
+                        </FormControl>
                     </div>
-                    <div>
-                        Filter Name
-                    </div>
-                    <div>
-                        Search
-                    </div>
+                    <Input disableUnderline={true} placeholder="Search for a transaction" className={styles['search-bar']}></Input>
                 </div>
             )
         }
@@ -39,11 +46,26 @@ const TransactionsPage: React.FunctionComponent = () => {
         const renderCategoryHeader = () => {
             return (
                 <div className={styles['section-header']}>
-                    <div className={itemstyles['date']} id={styles['category-text']}>Date</div>
-                    <div className={itemstyles['username']} id={styles['category-text']}>User</div>
-                    <div className={itemstyles['fid']} id={styles['category-text']}>FID</div>
-                    <div className={itemstyles['admin']} id={styles['category-text']}>Admin</div>
-                    <div className={itemstyles['action']} id={styles['category-text']}>Action</div>
+                    <div className={itemstyles['date']} id={styles['category']}>
+                        <body id={styles['category-text']}>Date</body>
+                        <SortTriangles/>
+                    </div>
+                    <div className={itemstyles['username']} id={styles['category']}>
+                        <body id={styles['category-text']}>User</body>
+                        <SortTriangles/>
+                    </div>
+                    <div className={itemstyles['fid']} id={styles['category']}>
+                        <body id={styles['category-text']}>Fid</body>
+                        <SortTriangles/>
+                    </div>
+                    <div className={itemstyles['admin']} id={styles['category']}>
+                        <body id={styles['category-text']}>Admin</body>
+                        <SortTriangles/>
+                    </div>
+                    <div className={itemstyles['action']} id={styles['category']}>
+                        <body id={styles['category-text']}>Action</body>
+                        <SortTriangles/>
+                    </div>
                     <div className={itemstyles['message']} id={styles['category-text']}>Message</div>
                     <div className={itemstyles['change']} id={styles['category-text']}>Change</div>
                 </div>
@@ -56,6 +78,7 @@ const TransactionsPage: React.FunctionComponent = () => {
         ]
 
         const renderHistory = () => {
+
             return(
                 <List className={styles['list']}>
                     {

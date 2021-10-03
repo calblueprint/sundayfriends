@@ -6,6 +6,7 @@
     padding-right: 2%;
     height: 62px;
     border-top: 1px solid #EBEBEB;
+    color: #646464;
   }
 
 .date {
@@ -13,7 +14,7 @@
 }
 
 .username {
-    width: 15%;
+    width: 14%;
 }
 
 .fid {
