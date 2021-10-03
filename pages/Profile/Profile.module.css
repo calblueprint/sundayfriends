@@ -11,10 +11,10 @@
 .boxes {
     padding: 15px;
     display: flex;
+    border: 1px solid black;
 }
 
 .box {
     padding: 15px;
     font-size: large;
-    border: 1px solid black;
 }
