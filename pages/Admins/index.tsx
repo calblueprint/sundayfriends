@@ -1,7 +1,9 @@
 import React from 'react';
 import Layout from "../../components/Layout/Layout";
 import styles from './Admins.module.css';
-import { Grid, Button, Box } from "@mui/material";
+import { Grid, Button, Box, List, ListItem } from "@mui/material";
+// import firebase from "../../firebase/firebase";
+import { getDocs } from '@firebase/firestore';
 
 const AdminPage: React.FunctionComponent = () => {
 
@@ -13,15 +15,25 @@ const AdminPage: React.FunctionComponent = () => {
     };
 
     return (
-      <div className={styles['row']}>
-        <div className={styles['column']}>{name}</div>
-        <div className={styles['column']}>{role}</div>
-        <div className={styles['column']}>{email}</div>
-        <div className={styles['column']}>{phone}</div>
-        <div className={styles['column']}></div>
-      </div>
+      <ListItem className={styles['row']}>
+        <div className={styles['name']}>{name}</div>
+        <div className={styles['name']}>{role}</div>
+        <div className={styles['name']}>{email}</div>
+        <div className={styles['name']}>{phone}</div>
+        <div className={styles['name']}>
+          <Button className={styles['manageButton']}>herro</Button>
+        </div>
+      </ListItem>
     );
   }
+
+  // const db = getFirestore(firebase);
+  // const dbQuery = query(collection(db, "admins"));
+  // const getAdmins = async () => {
+  //   const qs = await getDocs(dbQuery);
+  //   return qs;
+  // }
+  // const admins = getAdmins();
 
   return (
     <Layout title='Admins'>
@@ -31,23 +43,23 @@ const AdminPage: React.FunctionComponent = () => {
 
           <Button className={styles['button']}>INVITE ADMIN</Button>
         </div>
-        <div className={styles['table']}>
+        <List className={styles['table']}>
           <AdminRow name="harold" role="president" email="pres@google.com" phone="8575009958" />
+          <AdminRow name="harolddddddddddd" role="presidentttttt" email="pres@google.commmm" phone="8575009958" />
           <AdminRow name="harolddddddddddd" role="president" email="pres@google.com" phone="8575009958" />
-          <AdminRow name="harolddddddddddd" role="president" email="pres@google.com" phone="8575009958" />
-          <AdminRow name="harolddddddddddd" role="president" email="pres@google.com" phone="8575009958" />
+          <AdminRow name="harolddddddddddd" role="president" email="pres@gogle.com" phone="8575009958" />
           {/* {AdminRow()}
           {AdminRow()}
           {AdminRow()}
-          {AdminRow()}
-          {admins.map(admin => (
+          {AdminRow()} */}
+          {/* {admins.map(admin => (
             <AdminRow
-              name={}
-              role={}
-              email={}
-              phone={} />
+              name={admin.name}
+              role={admin.}
+              email={ }
+              phone={ } />
           ))} */}
-        </div>
+        </List>
       </main>
     </Layout>
   );
