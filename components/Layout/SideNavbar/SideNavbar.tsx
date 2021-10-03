@@ -29,7 +29,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"users"}
           onClick={() => {
-            router.push(`users`);
+            router.push(`/users`);
           }}
         >
           <ListItemText className={styles["item"]} primary={"Users"} />
