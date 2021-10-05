@@ -1,10 +1,11 @@
 .list-item {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
+    height: 68px;
     padding-left: 2%;
     padding-right: 2%;
-    height: 62px;
     border-top: 1px solid #EBEBEB;
     color: #646464;
   }
@@ -22,7 +23,7 @@
 }
 
 .admin {
-    width: 18%;
+    width: 14%;
 }
 
 .redeem-action {
@@ -40,7 +41,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70px;
+    width: 100px;
     height: 30px;
     background-color: #CBF2C5;
     border: 1px solid #C8C8C8;
@@ -48,19 +49,33 @@
 }
 
 .action {
-    width: 10%;
+    width: 12%;
 }
 
 .message {
-    width: 37%;
+    width: 36%;
+    flex-wrap: wrap;
+    word-wrap: break-word;
 }
 
 .pos-change {
-    width: 6%;
+    width: 7%;
     color: #74AB67;
+    margin-left: 1%;
 }
 
 .neg-change {
-    width: 6%;
+    width: 7%;
     color: #EE512F;
+    margin-left: 1%;
+}
+
+.trash {
+    width: 2%;
+}
+
+.trash-icon {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
 }
