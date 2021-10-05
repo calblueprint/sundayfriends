@@ -1,15 +1,15 @@
-import styles from '../../pages/Transactions/Transactions.module.css';
+import styles from "../../pages/Transactions/Transactions.module.css";
 import { Box } from "@mui/material";
 
 type TabPanelProps = {
-    index: number,
-    value: number,
+  index: number;
+  value: number;
 };
 
 export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
-    children, 
-    index, 
-    value
+  children,
+  index,
+  value,
 }) => {
     return (
       <div
@@ -27,4 +27,3 @@ export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
       </div>
     );
 }
-  
