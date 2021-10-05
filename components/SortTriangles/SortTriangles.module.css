@@ -11,7 +11,7 @@
     height: 0; 
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-bottom: 4px solid #646464;
+    border-bottom: 4px solid #272929;
     margin-bottom: 2px;
 }
 
@@ -20,5 +20,5 @@
     height: 0; 
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 4px solid #646464;
+    border-top: 4px solid #272929;
 }
