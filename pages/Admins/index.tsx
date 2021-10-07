@@ -1,32 +1,62 @@
 import React from 'react';
 import Layout from "../../components/Layout/Layout";
 import styles from './Admins.module.css';
-import { Grid, Button, Box, List, ListItem } from "@mui/material";
-// import firebase from "../../firebase/firebase";
+import { Button, List, ListItem } from "@mui/material";
+import { AdminItem } from '../../components/AdminItem/AdminItem';
+import itemstyles from '../../components/AdminItem/AdminItem.module.css';
+import firebase from "../../firebase/firebase";
 import { getDocs } from '@firebase/firestore';
 
 const AdminPage: React.FunctionComponent = () => {
 
-  const AdminRow = ({ name, role, email, phone }) => {
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-    };
-
+  const renderCategoryHeader = () => {
     return (
-      <ListItem className={styles['row']}>
-        <div className={styles['name']}>{name}</div>
-        <div className={styles['name']}>{role}</div>
-        <div className={styles['name']}>{email}</div>
-        <div className={styles['name']}>{phone}</div>
-        <div className={styles['name']}>
-          <Button className={styles['manageButton']}>herro</Button>
+      <div className={styles['section-header']}>
+        <div className={itemstyles['name']} id={styles['category']}>
+          <body id={styles['category-text']}>Name</body>
         </div>
-      </ListItem>
+        <div className={itemstyles['role']} id={styles['category']}>
+          <body id={styles['category-text']}>Role</body>
+        </div>
+        <div className={itemstyles['email']} id={styles['category']}>
+          <body id={styles['category-text']}>Email</body>
+        </div>
+        <div className={itemstyles['phone']} id={styles['category']}>
+          <body id={styles['category-text']}>Phone</body>
+        </div>
+        <div className={itemstyles['buttons-header']} id={styles['category-text']}>Manage</div>
+      </div>
+    )
+  }
+
+  const temp = [
+    { name: 'Firstname Lastname', role: 'admin', email: "pres@google.com", phone: "8575009958" },
+    { name: 'Firstname Lastname', role: 'admin', email: "pres@google.com", phone: "8575009958" },
+  ]
+
+  const renderAdminList = () => {
+    return (
+      <List className={styles['list']}>
+        {
+          temp.map((admin) => {
+            return (
+              <AdminItem name={admin.name} email={admin.email} role={admin.role}
+                phone={admin.phone} />
+            )
+          })
+        }
+      </List>
+    )
+  }
+
+  const renderFilters = () => {
+    return (
+      <ListItem className={styles['row']} />
     );
   }
 
+
+  // Query Firebase
   // const db = getFirestore(firebase);
   // const dbQuery = query(collection(db, "admins"));
   // const getAdmins = async () => {
@@ -44,21 +74,9 @@ const AdminPage: React.FunctionComponent = () => {
           <Button className={styles['button']}>INVITE ADMIN</Button>
         </div>
         <List className={styles['table']}>
-          <AdminRow name="harold" role="president" email="pres@google.com" phone="8575009958" />
-          <AdminRow name="harolddddddddddd" role="presidentttttt" email="pres@google.commmm" phone="8575009958" />
-          <AdminRow name="harolddddddddddd" role="president" email="pres@google.com" phone="8575009958" />
-          <AdminRow name="harolddddddddddd" role="president" email="pres@gogle.com" phone="8575009958" />
-          {/* {AdminRow()}
-          {AdminRow()}
-          {AdminRow()}
-          {AdminRow()} */}
-          {/* {admins.map(admin => (
-            <AdminRow
-              name={admin.name}
-              role={admin.}
-              email={ }
-              phone={ } />
-          ))} */}
+          {renderFilters()}
+          {renderCategoryHeader()}
+          {renderAdminList()}
         </List>
       </main>
     </Layout>

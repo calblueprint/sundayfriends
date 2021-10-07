@@ -1,0 +1,101 @@
+.list-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 68px;
+  padding-left: 2%;
+  padding-right: 2%;
+  border-top: 1px solid #EBEBEB;
+  color: #646464;
+}
+
+.name {
+  width: 20%;
+}
+
+.role {
+  width: 12%;
+}
+
+.email {
+  width: 20%;
+}
+
+.phone {
+  width: 15%
+}
+
+.buttons {
+  width: 33%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.buttons-header {
+  width: 25%
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  /* background-color: #FFD4C7; */
+  border: 1px solid #C8C8C8;
+  border-radius: 16.5px;
+  background-color: #EDEDED;
+  margin-right: 10px;
+}
+
+.action2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 30px;
+  /* background-color: #FFD4C7; */
+  border: 1px solid #C8C8C8;
+  border-radius: 16.5px;
+  background-color: #EDEDED;
+  margin-right: 10px;
+}
+
+.action:hover {
+  background-color: #cecccc;
+  color: #686868;
+}
+
+.action2:hover {
+  background-color: #cecccc;
+  color: #686868;
+}
+
+.message {
+  width: 36%;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+}
+
+.pos-change {
+  width: 7%;
+  color: #74AB67;
+  margin-left: 1%;
+}
+
+.neg-change {
+  width: 7%;
+  color: #EE512F;
+  margin-left: 1%;
+}
+
+.trash {
+  width: 2%;
+}
+
+.trash-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
