@@ -1,8 +1,7 @@
 import { initializeApp } from "firebase/app";
 import "firebase/auth";
-import { getFirestore, collection, query, where, doc, getDoc, getDocs, DocumentData } from 'firebase/firestore';
+import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
 import { Transaction } from '../types/types';
-
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,43 +17,58 @@ const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const transactionsCollection = collection(db, "transactions");
 
-const loadTransaction = async (doc: DocumentData): Promise<Transaction> => {
-  const adminDoc = await getDoc(doc.admin_id);
-  const familyDoc = await getDoc(doc.family_id);
-  const userDoc = await getDoc(doc.user_id);
-
-  const transaction = {
-    admin_id: adminDoc.id,
-    date: doc.date,
-    description: doc.description,
-    family_id: familyDoc.id,
-    point_gain: doc.point_gain,
-    user_id: userDoc.id
-  }
-  return transaction;
-}
-
-export const getTransaction = async (id: string): Promise<Transaction> => {
+/**
+ * Returns the transaction data from firestore with the given transactionId
+ */
+export const getTransaction = async (transactionId: string): Promise<Transaction> => {
   try {
-    const docRef = doc(db, "transactions", id);
+    const docRef = doc(db, "transactions", transactionId);
     const docSnap = await getDoc(docRef);
-    const loadedTransaction = await loadTransaction(docSnap.data());
-    return loadedTransaction;
+    return docSnap.data() as Transaction;
   } catch (e) {
     console.error(e);
     throw e;
   }
 }
 
+/**
+ * Returns all transaction data from firestore
+ */
 export const getAllTransactions = async (): Promise<Transaction[]> => {
   try {
     const dbQuery = query(transactionsCollection);
     const querySnapshots = await getDocs(dbQuery);
-    return Promise.all(querySnapshots.docs.map(async (doc) => await loadTransaction(doc.data())));
+    return querySnapshots.docs.map((doc) => doc.data() as Transaction);
   } catch (e) {
     console.warn(e);
     throw e;
   }
 }
+
+/**
+ * Adds the given transaction data to firestore
+ */
+export const addTransaction = async (transaction: Transaction) => {
+  try {
+    const newTransactionRef = doc(transactionsCollection);
+    await setDoc(newTransactionRef, transaction)
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
+/**
+ * Deletes the transaction from firestore with the given transactionId
+ */
+export const deleteTransaction = async (transactionId: string) => {
+  try {
+    const transactionRef = doc(transactionsCollection, transactionId);
+    await deleteDoc(transactionRef);
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
 
 export default firebaseApp;
