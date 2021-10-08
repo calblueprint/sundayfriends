@@ -1,0 +1,82 @@
+.list-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 68px;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-top: 1px solid #EBEBEB;
+    color: #646464;
+  }
+  
+ .date {
+    width: 8%;
+ }
+  
+ .username {
+    width: 14%;
+ }
+  
+ .fid {
+    width: 6%;
+ }
+  
+ .admin {
+    width: 14%;
+ }
+  
+ .redeem-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    background-color: #FFD4C7;
+    border: 1px solid #C8C8C8;
+    border-radius: 16.5px;
+ }
+  
+ .earn-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    background-color: #CBF2C5;
+    border: 1px solid #C8C8C8;
+    border-radius: 16.5px;
+ }
+  
+ .action {
+    width: 12%;
+ }
+  
+ .message {
+    width: 36%;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+ }
+  
+ .pos-change {
+    width: 7%;
+    color: #74AB67;
+    margin-left: 1%;
+ }
+  
+ .neg-change {
+    width: 7%;
+    color: #EE512F;
+    margin-left: 1%;
+ }
+  
+ .trash {
+    width: 2%;
+ }
+  
+ .trash-icon {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+ }
+ 
