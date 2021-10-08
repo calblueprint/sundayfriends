@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+}
+
+.card {
+  width: 350px;
+  height: 250px;
+  border-style: solid;
+  border: 1;
+  border-color: var(--grey-light);
+  color: var(--grey-dark);
+  border-radius: 5px;
+  padding-left: 6%;
+  padding-right: 6%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.headText {
+  padding-right: 5%;
+  text-decoration: underline;
+}
+
+.smallText {
+  font-size: small;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  padding-right: 10%;
+}
