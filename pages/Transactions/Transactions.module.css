@@ -1,0 +1,59 @@
+.h2 {
+  color: #525454;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.72px;
+  letter-spacing: 1px;
+  margin-left: 60px;
+}
+
+.container {
+  padding-left: 0px;
+  padding-top: 150px;
+  padding-left: 100px;
+  padding-right: 125px;
+  align-items: center;
+  height: 100%;
+}
+
+.button {
+  background-color: #cecccc;
+  color: #646464;
+  border-radius: 7px;
+  height: 33px;
+  font-size: 14px;
+}
+
+.button:hover {
+  background-color: #cecccc;
+  color: #646464;
+}
+
+.box {
+  height: 100%;
+}
+
+.tabbox {
+  height: 100%;
+  border: 2px solid #ebebeb;
+  border-top: 0px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.seltab {
+  border: 2px solid #ebebeb;
+  border-radius: 10px 10px 0px 0px;
+  width: 10vw;
+  margin-right: 7px;
+  color: #646464;
+}
+
+.tab {
+  width: 10vw;
+  margin-right: 7px;
+  background-color: #ebebeb;
+  border-radius: 10px 10px 0px 0px;
+  color: #646464;
+}
