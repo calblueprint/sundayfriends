@@ -6,6 +6,7 @@ import { AdminItem } from '../../components/AdminItem/AdminItem';
 import itemstyles from '../../components/AdminItem/AdminItem.module.css';
 import firebase from "../../firebase/firebase";
 import { getDocs } from '@firebase/firestore';
+import InviteAdminModal from '../../components/InviteAdminModal/InviteAdminModal';
 
 const AdminPage: React.FunctionComponent = () => {
 
@@ -70,7 +71,7 @@ const AdminPage: React.FunctionComponent = () => {
       <main className={styles['main']}>
         <div className={styles['header']}>
           <h2 className={styles['h2']}>ADMIN ACCOUNTS</h2>
-
+          <InviteAdminModal />
           <Button className={styles['button']}>INVITE ADMIN</Button>
         </div>
         <List className={styles['table']}>
