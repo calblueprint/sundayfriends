@@ -56,7 +56,11 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"inventory"}
           onClick={() => {
+<<<<<<< HEAD
             router.push(`/inventory`);
+=======
+            router.push(`/Inventory`);
+>>>>>>> d5c21f20b9a75100db05b217487203e860871c26
           }}
         >
           <ListItemText className={styles["item"]} primary={"Inventory"} />
