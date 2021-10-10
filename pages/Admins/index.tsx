@@ -24,8 +24,8 @@ const AdminPage: React.FunctionComponent = () => {
         <div className={itemstyles['phone']} id={styles['category']}>
           <body id={styles['category-text']}>Phone</body>
         </div>
-        <div className={itemstyles['buttons-header']} id={styles['category-text']}>Manage</div>
-      </div>
+        <div className={itemstyles['buttons']} id={styles['category-text']}>Manage</div>
+      </div >
     )
   }
 

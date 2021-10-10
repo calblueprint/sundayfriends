@@ -1,7 +1,6 @@
 .list-item {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   align-items: center;
   height: 68px;
   padding-left: 2%;
@@ -12,24 +11,33 @@
 
 .name {
   width: 20%;
+  /* min-width: 150px; */
+  min-width: 200px;
 }
 
 .role {
-  width: 12%;
+  width: 15%;
+  /* min-width: 150px; */
+  min-width: 100px;
 }
 
 .email {
   width: 20%;
+  /* min-width: 150px; */
+  min-width: 200px;
 }
 
 .phone {
-  width: 15%
+  /* width: 15%; */
+  min-width: 150px;
+  /* min-width: 310px; */
 }
 
 .buttons {
-  width: 33%;
+  /* width: 30%; */
   display: flex;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
+  min-width: 310px;
 }
 
 .buttons-header {
@@ -40,7 +48,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
+  min-width: 80px;
   height: 30px;
   /* background-color: #FFD4C7; */
   border: 1px solid #C8C8C8;
@@ -53,7 +61,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 180px;
+  min-width: 140px;
+  height: 30px;
+  /* background-color: #FFD4C7; */
+  border: 1px solid #C8C8C8;
+  border-radius: 16.5px;
+  background-color: #EDEDED;
+  margin-right: 10px;
+}
+
+.action3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 70px;
   height: 30px;
   /* background-color: #FFD4C7; */
   border: 1px solid #C8C8C8;
@@ -72,10 +93,9 @@
   color: #686868;
 }
 
-.message {
-  width: 36%;
-  flex-wrap: wrap;
-  word-wrap: break-word;
+.action3:hover {
+  background-color: #cecccc;
+  color: #686868;
 }
 
 .pos-change {

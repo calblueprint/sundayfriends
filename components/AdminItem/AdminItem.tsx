@@ -23,7 +23,7 @@ export const AdminItem: React.FunctionComponent<AdminItemProps> = ({
             <div className={styles['buttons']}>
                 <div className={styles['action']}>Delete</div>
                 <div className={styles['action2']}>Reset Password</div>
-                <div className={styles['action']}>Edit</div>
+                <div className={styles['action3']}>Edit</div>
             </div>
         </ListItem>
     );

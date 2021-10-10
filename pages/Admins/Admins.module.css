@@ -16,6 +16,8 @@
   background-color: #FFFFFF;
   height: 90%;
   border: 2px solid #ebebeb;
+  position: relative;
+  overflow: hidden;
 }
 
 .button {
