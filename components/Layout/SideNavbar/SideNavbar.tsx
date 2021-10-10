@@ -29,7 +29,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"users"}
           onClick={() => {
-            router.push(`/users`);
+            router.push(`/Users`);
           }}
         >
           <ListItemText className={styles["item"]} primary={"Users"} />
@@ -38,7 +38,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"admins"}
           onClick={() => {
-            router.push(`/admins`);
+            router.push(`/Admins`);
           }}
         >
           <ListItemText className={styles["item"]} primary={"Admins"} />
@@ -47,7 +47,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"transactions"}
           onClick={() => {
-            router.push(`/transactions`);
+            router.push(`/Transactions`);
           }}
         >
           <ListItemText className={styles["item"]} primary={"Transactions"} />
@@ -56,7 +56,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"inventory"}
           onClick={() => {
-            router.push(`/inventory`);
+            router.push(`/Inventory`);
           }}
         >
           <ListItemText className={styles["item"]} primary={"Inventory"} />
