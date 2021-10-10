@@ -21,7 +21,7 @@ import Icon from '../../assets/Icon';
 const TransactionsPage: React.FunctionComponent = () => {
  
    const BasicTabs = () => {
-       const [value, setValue] = React.useState(0);
+       const [value, setValue] = useState(0);
       
        const handleChange = (event, newValue) => {
            setValue(newValue);
