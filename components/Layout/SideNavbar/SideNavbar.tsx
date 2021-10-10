@@ -22,23 +22,45 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push("/");
           }}
-          disableRipple={true}
         >
           <ListItemText className={styles["item"]} primary={"Sunday Friends"} />
         </ListItem>
-        {["Users", "Admins", "Transactions", "Inventory"].map((text) => (
-          // iterate through items in the list to generate tabs for the navbar/drawer
-          <ListItem
-            button
-            key={text}
-            onClick={() => {
-              router.push(`/${text}`);
-            }}
-            disableRipple={true}
-          >
-            <ListItemText className={styles["item"]} primary={text} />
-          </ListItem>
-        ))}
+        <ListItem
+          button
+          key={"users"}
+          onClick={() => {
+            router.push(`/Users`);
+          }}
+        >
+          <ListItemText className={styles["item"]} primary={"Users"} />
+        </ListItem>
+        <ListItem
+          button
+          key={"admins"}
+          onClick={() => {
+            router.push(`/Admins`);
+          }}
+        >
+          <ListItemText className={styles["item"]} primary={"Admins"} />
+        </ListItem>
+        <ListItem
+          button
+          key={"transactions"}
+          onClick={() => {
+            router.push(`/Transactions`);
+          }}
+        >
+          <ListItemText className={styles["item"]} primary={"Transactions"} />
+        </ListItem>
+        <ListItem
+          button
+          key={"inventory"}
+          onClick={() => {
+            router.push(`/Inventory`);
+          }}
+        >
+          <ListItemText className={styles["item"]} primary={"Inventory"} />
+        </ListItem>
       </List>
     </Drawer>
   );
