@@ -17,6 +17,7 @@ import { TabPanel } from '../../components/TabPanel/TabPanel';
 import { TransactionItem } from '../../components/TransactionItem/TransactionItem';
 import { SortTriangles } from '../../components/SortTriangles/SortTriangles';
 import Icon from '../../assets/Icon';
+import { TransactionList } from '../../components/TransactionList/TransactionList';
  
 const TransactionsPage: React.FunctionComponent = () => {
  
@@ -47,7 +48,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                                className={styles['select']}
                                label="Filters"
                            >
-                               <MenuItem>Butt</MenuItem>
+                               <MenuItem>Keep it PG</MenuItem>
                            </Select>
                        </FormControl>
                    </div>
@@ -59,59 +60,10 @@ const TransactionsPage: React.FunctionComponent = () => {
            )
        }
  
-       const renderCategoryHeader = () => {
-           return (
-               <div className={styles['section-header']}>
-                   <div className={itemstyles['date']} id={styles['category']}>
-                       <body id={styles['category-text']}>Date</body>
-                       <SortTriangles/>
-                   </div>
-                   <div className={itemstyles['username']} id={styles['category']}>
-                       <body id={styles['category-text']}>User</body>
-                       <SortTriangles/>
-                   </div>
-                   <div className={itemstyles['fid']} id={styles['category']}>
-                       <body id={styles['category-text']}>Fid</body>
-                       <SortTriangles/>
-                   </div>
-                   <div className={itemstyles['admin']} id={styles['category']}>
-                       <body id={styles['category-text']}>Admin</body>
-                       <SortTriangles/>
-                   </div>
-                   <div className={itemstyles['action']} id={styles['category']}>
-                       <body id={styles['category-text']}>Action</body>
-                       <SortTriangles/>
-                   </div>
-                   <div className={itemstyles['message']} id={styles['category-text']}>Message</div>
-                   <div className={itemstyles['change']} id={styles['category-text']}>Change</div>
-               </div>
-           )
-       }
- 
-       const temp = [
-           {date: new Date(), username: 'Firstname Lastname', fid: 'H1234', admin: 'Firstname Lastname', message: 'short messaging explaining what the transaction was', change: 10},
-           {date: new Date(), username: 'Jacob Kim', fid: '431', admin: 'Cindy Zhang', message: 'Jacob > Cindy', change: -10},
-           {date: new Date(), username: 'bababooey', fid: '123', admin: 'Espinosa Dad', message: 'im not drunk i swear i am not i really am not i swera to god not drunk oh look its two lines and it looks good!', change: -10}
-       ]
- 
-       const renderHistory = () => {
- 
-           return(
-               <List className={styles['list']}>
-                   {
-                       temp.map((transaction) => {
-                           return(
-                               <TransactionItem date={transaction.date} username={transaction.username} fid={transaction.fid}
-                               admin={transaction.admin} message={transaction.message} change={transaction.change}/>
-                           )
-                       })
-                   }
-               </List>
-           )
-       }
+       
       
        return (
-           <Box sx={{ width: '100%', maxHeight: '62%'}}>
+           <Box className={styles['transaction-container']} >
            <Box>
                <Tabs value={value} onChange={handleChange} TabIndicatorProps={{style: {background: "white"}}}
                textColor={"inherit"} aria-label="basic tabs example">
@@ -123,22 +75,19 @@ const TransactionsPage: React.FunctionComponent = () => {
                <TabPanel value={value} index={0}>
                    <div>
                        {renderFilterHeader()}
-                       {renderCategoryHeader()}
-                       {renderHistory()}
+                       <TransactionList tabIndex={0}/>
                    </div>
                </TabPanel>
                <TabPanel value={value} index={1}>
                    <div>
                        {renderFilterHeader()}
-                       {renderCategoryHeader()}
-                       {renderHistory()}
+                       <TransactionList tabIndex={1}/>
                    </div>
                </TabPanel>
                <TabPanel value={value} index={2}>
                    <div>
                        {renderFilterHeader()}
-                       {renderCategoryHeader()}
-                       {renderHistory()}
+                       <TransactionList tabIndex={2}/>
                    </div>
                </TabPanel>
            </Box>

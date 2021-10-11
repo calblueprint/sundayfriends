@@ -8,3 +8,16 @@ export type Transaction = {
     pointGain: number;
     userId: string;
 }
+
+export type Admin = {
+    created_at: Date | Timestamp;
+    email: string;
+    full_name: string;
+}
+
+export type User = {
+    address: string,
+    created_at: Date | Timestamp;
+    //more stuff
+    full_name: string,
+}
