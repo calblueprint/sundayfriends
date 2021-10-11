@@ -10,6 +10,10 @@ a {
   text-decoration: none;
 }
 
+h1 {
+  color: var(--grey-dark);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -34,4 +38,5 @@ a {
   --while: #ffffff;
   --alert-text: #e94444;
   --alert: #fce3e3;
+  --hover: #f6f6f6;
 }

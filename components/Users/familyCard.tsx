@@ -1,52 +1,72 @@
-import { Box, Avatar } from "@mui/material";
+import { Box, Avatar, Grid, Modal } from "@mui/material";
 import styles from "./FamilyCard.module.css";
-
-type User = {
-  address: string;
-};
+import { Family, User } from "../../types/schema";
+import { useState } from "react";
 
 type FamilyCardProps = {
-  familyId: number;
-  totalPoints: number;
-  familyName: string;
-  userIds: number[];
+  family: Family;
+};
+
+type FamilyCardsProps = {
+  families: Family[];
 };
 
 type FamilyMemberProps = {
-  user: number;
+  user: User;
 };
 
 const FamilyMember: React.FC<FamilyMemberProps> = ({
   user,
 }: FamilyMemberProps) => {
-  return <div>{user}</div>;
-};
-
-const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
-  familyId,
-  familyName,
-  totalPoints,
-  userIds,
-}: FamilyCardProps) => {
   return (
-    <Box className={styles.card}>
-      <div>
-        <div className={styles.row}>
-          <div className={styles.row}>
-            <h2 className={styles.headText}>{familyName} </h2>
-            <div className={styles.smallText}>FID: {familyId}</div>
-          </div>
-          <h3>{totalPoints}</h3>
-        </div>
-        <div>
-          <div className={styles.row}>
-            <Avatar alt="smiley pic" src="/smiley.png" />
-            <div>Alexandria</div>
-          </div>
-        </div>
+    <Grid item xs={6}>
+      <div className={styles.familyMember}>
+        <Avatar alt="smiley pic" src="/smiley.png" />
+        <div>{user.full_name.split(" ")[0]}</div>
       </div>
-    </Box>
+    </Grid>
   );
 };
 
-export default FamilyCard;
+const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
+  family,
+}: FamilyCardProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div>
+      <Modal open={isOpen}>
+        <div className={styles.modal}> Hello this is a modal </div>
+      </Modal>
+      <Box className={styles.card} onClick={() => setIsOpen(true)}>
+        <div>
+          <div className={styles.row}>
+            <div className={styles.row}>
+              <h2 className={styles.headText}>{family.familyName} </h2>
+              <div className={styles.smallText}>FID: {family.familyId}</div>
+            </div>
+            <h3>{family.totalPoints}</h3>
+          </div>
+          <Grid container spacing={2}>
+            {family.userIds.map((user) => (
+              <FamilyMember key={user.email} user={user} />
+            ))}
+          </Grid>
+        </div>
+      </Box>
+    </div>
+  );
+};
+
+const FamilyCards: React.FunctionComponent<FamilyCardsProps> = ({
+  families,
+}: FamilyCardsProps) => {
+  return (
+    <div className={styles.familyCards}>
+      {families.map((family) => (
+        <FamilyCard key={family.familyId} family={family}></FamilyCard>
+      ))}
+    </div>
+  );
+};
+
+export default FamilyCards;
