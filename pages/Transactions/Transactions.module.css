@@ -80,8 +80,8 @@
 
 .transaction-container {
   width: 100%;
-  box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 15px 15px 30px 30px;
+  border-left: 2px solid #e6ecfe;
 }
 
 .box {
@@ -92,12 +92,13 @@
   height: fit-content;
   padding: 0%;
   border-radius: 0px 30px 30px 30px;
-  box-shadow: -3px 4px 8px 1px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e6ecfe;
+  border-left: 0px solid black;
 }
 
 .sel-tab {
-  border-top: 2px solid #e6ecfe;
-  border-right: 2px solid #e6ecfe;
+  border: 2px solid #e6ecfe;
+  border-left: 0px solid black;
   border-radius: 15px 15px 0px 0px;
   min-width: 110px;
   width: 12%;
@@ -225,5 +226,5 @@
 }
 
 .children {
-  margin-bottom: 0px;
+  margin: 0px;
 }

@@ -36,7 +36,7 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
             console.log(item);
             setAdminName(item.full_name);
         })
-    });
+    }, []);
 
    return (
        <ListItem className={styles['list-item']}>

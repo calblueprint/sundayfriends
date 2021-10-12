@@ -32,7 +32,7 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
             })
         }
         
-    });
+    }, []);
 
     const renderCategoryHeader = () => {
         return (
