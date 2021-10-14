@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import styles from './InviteAdminModal.module.css';
 
 export default function InviteAdminModal() {
     const [open, setOpen] = React.useState(false);
@@ -20,7 +21,7 @@ export default function InviteAdminModal() {
 
     return (
         <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <Button className={styles['button']} onClick={handleClickOpen}>
                 Open form dialog
             </Button>
             <Dialog open={open} onClose={handleClose}>

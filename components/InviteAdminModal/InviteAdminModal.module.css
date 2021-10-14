@@ -1,0 +1,11 @@
+.button {
+  background-color: #cecccc;
+  color: #646464;
+  border-radius: 7px;
+  height: 33px;
+  font-size: 14px;
+  font-family: Avenir;
+  font-weight: 800;
+  align-self: center;
+  margin-left: auto;
+}
