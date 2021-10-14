@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../ProfileInfo/Profilebox.module.css";
+import styles from "../ProfileInfo/ProfileInfo.module.css";
 import { Typography } from "@mui/material";
 
 type AboutInfoProps = {
@@ -20,22 +20,22 @@ type AboutInfoProps = {
             <Typography variant="h5" fontWeight="bold">About</Typography>
             <hr></hr>
             <div className={styles.info}>
-                <Typography variant="h6" fontWeight="bold">NAME</Typography>
+                <Typography variant="subtitle1" fontWeight="bold">NAME</Typography>
                 <Typography variant="subtitle2" color="#131313">{name}</Typography>
             </div>
             <br></br>
             <div className={styles.info}>
-                <div><Typography variant="h6" fontWeight="bold">ROLE</Typography></div>
+                <div><Typography variant="subtitle1" fontWeight="bold">ROLE</Typography></div>
                 <div><Typography variant="subtitle2" color="#131313">{role}</Typography></div>
             </div>
             <br></br>
             <div className={styles.info}>
-                <Typography variant="h6" fontWeight="bold">LAST ACTIVE</Typography>
+                <Typography variant="subtitle1" fontWeight="bold">LAST ACTIVE</Typography>
                 <Typography variant="subtitle2" color="#131313">{last_active}</Typography>
             </div>
             <br></br>
             <div className={styles.info}>
-                <Typography variant="h6" fontWeight="bold">DATE JOINED</Typography>
+                <Typography variant="subtitle1" fontWeight="bold">DATE JOINED</Typography>
                 <Typography variant="subtitle2" color="#131313">{date_joined}</Typography>  
             </div>
         </div>

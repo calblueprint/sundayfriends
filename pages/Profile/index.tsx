@@ -3,8 +3,9 @@ import Layout from "../../components/Layout/Layout";
 import styles from "./Profile.module.css" ;
 import Button from "@mui/material/Button";
 import { AboutInfo } from '../../components/ProfileInfo/AboutInfo';
-import { ContactInfo } from '../../components/ProfileInfo/ContactInfo';
+import { LoginDetails } from '../../components/ProfileInfo/LoginDetails';
 import { Typography } from '@mui/material';
+import router from 'next/router';
 
 const ProfileSettingsPage: React.FunctionComponent = () => {
     
@@ -12,8 +13,8 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
         return (
             <div className={styles.profile}>
                 <div className = {styles.namebar}>
-                    <Typography variant="h4">Cindy Zhang</Typography>
-                    <Button className={styles.button}>Edit</Button>
+                    <Typography variant="h4" fontWeight="bold">Cindy Zhang</Typography>
+                    <Button className={styles.button} onClick={() => {router.push(`./EditProfile`);}}>Edit</Button>
                 </div>
                 <hr></hr>
                 <div className = {styles.boxes}>
@@ -21,7 +22,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
                         <AboutInfo name="Cindy Zhang" role="Executive Director" last_active="September 20, 2021" date_joined="September 20, 2021"></AboutInfo>
                     </div>
                     <div className = {styles.box}>
-                        <ContactInfo email="chloeisarealdog@gmail.com" phone="123-456-7890" password="********"></ContactInfo>
+                        <LoginDetails email="chloeisarealdog@gmail.com" phone="123-456-7890" password="********"></LoginDetails>
                     </div>
                 </div>                
             </div>
