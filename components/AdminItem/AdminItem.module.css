@@ -50,24 +50,30 @@
   align-items: center;
   min-width: 80px;
   height: 30px;
-  /* background-color: #FFD4C7; */
+  background-color: #EDEDED;
   border: 1px solid #C8C8C8;
   border-radius: 16.5px;
-  background-color: #EDEDED;
   margin-right: 10px;
+  font-size: 14px;
+  font-family: Avenir;
+  /* font-weight: 800; */
+  color: #646464;
 }
 
 .action2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 140px;
+  min-width: 150px;
   height: 30px;
-  /* background-color: #FFD4C7; */
   border: 1px solid #C8C8C8;
   border-radius: 16.5px;
   background-color: #EDEDED;
   margin-right: 10px;
+  font-size: 14px;
+  font-family: Avenir;
+  /* font-weight: 800; */
+  color: #646464;
 }
 
 .action3 {
@@ -76,11 +82,14 @@
   align-items: center;
   min-width: 70px;
   height: 30px;
-  /* background-color: #FFD4C7; */
   border: 1px solid #C8C8C8;
   border-radius: 16.5px;
   background-color: #EDEDED;
   margin-right: 10px;
+  font-size: 14px;
+  font-family: Avenir;
+  /* font-weight: 800; */
+  color: #646464;
 }
 
 .action:hover {

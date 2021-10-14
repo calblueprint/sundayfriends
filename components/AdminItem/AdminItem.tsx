@@ -1,5 +1,5 @@
 import styles from '../AdminItem/AdminItem.module.css';
-import { ListItem, SvgIcon } from "@mui/material";
+import { ListItem, SvgIcon, Button } from "@mui/material";
 
 type AdminItemProps = {
     name: string,
@@ -21,9 +21,9 @@ export const AdminItem: React.FunctionComponent<AdminItemProps> = ({
             <div className={styles['email']}>{email}</div>
             <div className={styles['phone']}>{phone}</div>
             <div className={styles['buttons']}>
-                <div className={styles['action']}>Delete</div>
-                <div className={styles['action2']}>Reset Password</div>
-                <div className={styles['action3']}>Edit</div>
+                <Button className={styles['action']}>Delete</Button>
+                <Button className={styles['action2']}>Reset Password</Button>
+                <Button className={styles['action3']}>Edit</Button >
             </div>
         </ListItem>
     );
