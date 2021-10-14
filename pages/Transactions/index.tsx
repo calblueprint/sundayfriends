@@ -63,15 +63,13 @@ const TransactionsPage: React.FunctionComponent = () => {
        
       
        return (
-           <Box className={styles['transaction-container']} >
-           <Box>
-               <Tabs value={value} onChange={handleChange} TabIndicatorProps={{style: {background: "white"}}}
-               textColor={"inherit"} aria-label="basic tabs example">
-               <Tab label="History" className={value==0 ? styles['sel-tab'] : styles['tab']}/>
-               <Tab label="Redemptions" className={value==1 ? styles['sel-tab'] : styles['tab']}/>
-               <Tab label="Earnings" className={value==2 ? styles['sel-tab'] : styles['tab']}/>
-               </Tabs>
-           </Box>
+           <Box className={styles['transaction-container']}>
+               <Tabs value={value} onChange={handleChange} TabIndicatorProps={{style: {display: 'none'}}}
+                textColor={"inherit"} aria-label="basic tabs example" className={styles['tabs']}>
+                    <Tab label="History" className={value==0 ? styles['sel-tab'] : styles['tab']}/>
+                    <Tab label="Redemptions" className={value==1 ? styles['sel-tab'] : styles['tab']}/>
+                    <Tab label="Earnings" className={value==2 ? styles['sel-tab'] : styles['tab']}/>
+                </Tabs>
                <TabPanel value={value} index={0}>
                    <div>
                        {renderFilterHeader()}

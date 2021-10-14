@@ -24,8 +24,8 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
    message,
    change,
 }) => {
-    const [userName, setUserName] = useState("username not found");
-    const [adminName, setAdminName] = useState("adminname not found");
+    const [userName, setUserName] = useState("");
+    const [adminName, setAdminName] = useState("");
 
     useEffect(() => {
         getUser(userId).then(item => {

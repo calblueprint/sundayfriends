@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../assets/Icon';
+import { Box } from '@mui/system';
 import { TransactionItem } from '../TransactionItem/TransactionItem';
 import { SortTriangles } from '../SortTriangles/SortTriangles';
 import { List } from '@mui/material';
@@ -36,11 +37,11 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
 
     const renderCategoryHeader = () => {
         return (
-            <div className={styles['section-header']}>
-                <div className={itemstyles['date']} id={styles['category']}>
+            <Box className={styles['section-header']}>
+                <Box className={itemstyles['date']} id={styles['category']}>
                     <body id={styles['category-text']}>Date</body>
                     <SortTriangles/>
-                </div>
+                </Box>
                 <div className={itemstyles['username']} id={styles['category']}>
                     <body id={styles['category-text']}>User</body>
                     <SortTriangles/>
@@ -59,7 +60,7 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
                 </div>
                 <div className={itemstyles['message']} id={styles['category-text']}>Message</div>
                 <div className={itemstyles['change']} id={styles['category-text']}>Change</div>
-            </div>
+            </Box>
         )
     }
 

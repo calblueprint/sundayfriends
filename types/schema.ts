@@ -16,8 +16,15 @@ export type Admin = {
 }
 
 export type User = {
-    address: string,
+    address: string;
     created_at: Date | Timestamp;
-    //more stuff
-    full_name: string,
-}
+    email: string;
+    family_head: boolean;
+    family_id: number;
+    full_name: string;
+    last_active: Date | Timestamp;
+    parent: boolean;
+    points: number;
+    reward_eligible: boolean;
+    suspended: boolean;
+  };

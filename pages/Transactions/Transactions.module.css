@@ -81,27 +81,24 @@
 .transaction-container {
   width: 100%;
   border-radius: 15px 15px 30px 30px;
-  border-left: 2px solid #e6ecfe;
-}
-
-.box {
-  height: 100%;
 }
 
 .tab-box {
   height: fit-content;
   padding: 0%;
+  margin-left: 7px;
   border-radius: 0px 30px 30px 30px;
-  border: 2px solid #e6ecfe;
-  border-left: 0px solid black;
+  /* border: 2px solid #e6ecfe; */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 }
 
 .sel-tab {
-  border: 2px solid #e6ecfe;
-  border-left: 0px solid black;
+  /* border: 2px solid #e6ecfe; */
+  background-color: white;
   border-radius: 15px 15px 0px 0px;
   min-width: 110px;
   width: 12%;
+  margin-left: 7px;
   margin-right: 7px;
   color: #253c85;
   text-decoration-line: underline;
@@ -109,29 +106,32 @@
   text-decoration-color: #253c85;
   text-underline-offset: 6px;
   text-transform: none;
-  box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  margin-top: 10px;
 }
 
 .tab {
   min-width: 110px;
   width: 12%;
+  margin-left: 7px;
   margin-right: 7px;
   background-color: #526dc2;
   border-radius: 15px 15px 0px 0px;
   color: white;
   text-transform: none;
-  box-shadow: -3px 4px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  margin-top: 10px;
 }
 
 .filter-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 50px;
+  height: 70px;
   margin-left: 2%;
   margin-right: 2%;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
 .date-range {
