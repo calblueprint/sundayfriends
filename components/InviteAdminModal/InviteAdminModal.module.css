@@ -9,3 +9,12 @@
   align-self: center;
   margin-left: auto;
 }
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.modal {
+  width: 60%;
+}

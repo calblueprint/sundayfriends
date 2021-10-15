@@ -71,7 +71,9 @@ const AdminPage: React.FunctionComponent = () => {
       <main className={styles['main']}>
         <div className={styles['header']}>
           <h2 className={styles['h2']}>ADMIN ACCOUNTS</h2>
-          <InviteAdminModal />
+          <div className={styles['button']}>
+            <InviteAdminModal />
+          </div>
           {/* <Button className={styles['button']}>INVITE ADMIN</Button> */}
         </div>
         <List className={styles['table']}>
