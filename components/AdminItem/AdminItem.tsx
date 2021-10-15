@@ -21,9 +21,9 @@ export const AdminItem: React.FunctionComponent<AdminItemProps> = ({
             <div className={styles['email']}>{email}</div>
             <div className={styles['phone']}>{phone}</div>
             <div className={styles['buttons']}>
-                <Button className={styles['action']}>Delete</Button>
-                <Button className={styles['action2']}>Reset Password</Button>
-                <Button className={styles['action3']}>Edit</Button >
+                <Button className={styles['delete']}>Delete</Button>
+                <Button className={styles['reset']}>Reset Password</Button>
+                <Button className={styles['edit']}>Edit</Button >
             </div>
         </ListItem>
     );
