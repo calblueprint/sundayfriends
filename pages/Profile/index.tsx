@@ -13,7 +13,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
         return (
             <div className={styles.profile}>
                 <div className = {styles.namebar}>
-                    <Typography variant="h4" fontWeight="bold">Cindy Zhang</Typography>
+                    <h1> Cindy Zhang </h1>
                     <Button className={styles.button} onClick={() => {router.push(`./EditProfile`);}}>Edit</Button>
                 </div>
                 <hr></hr>
