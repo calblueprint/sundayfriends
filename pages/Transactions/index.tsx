@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from "../../components/Layout/Layout";
 import { Button,
    Tabs,
@@ -14,20 +14,59 @@ from "@mui/material";
 import styles from './Transactions.module.css';
 import itemstyles from '../../components/TransactionItem/TransactionItem.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
-import { TransactionItem } from '../../components/TransactionItem/TransactionItem';
-import { SortTriangles } from '../../components/SortTriangles/SortTriangles';
 import Icon from '../../assets/Icon';
+import { Transaction } from '../../types/schema';
 import { TransactionList } from '../../components/TransactionList/TransactionList';
+import { getAllTransactions } from '../../firebase/firestore/transaction'; 
+import { getAdmin } from '../../firebase/firestore/admin';
+import { getUser } from '../../firebase/firestore/user';
  
 const TransactionsPage: React.FunctionComponent = () => {
  
    const BasicTabs = () => {
        const [value, setValue] = useState(0);
+       const [allTransactions, setTransactions] = useState([]);
+
+       useEffect(() => {
+            getAllTransactions().then(items => {
+                for (let i = 0; i < items.length; i++) {
+                    getUser(items[i].userId).then(item => {
+                        items[i].userId = item.full_name;
+                    })
+                    getAdmin(items[i].adminId).then(item => {
+                        items[i].adminId = item.full_name;
+                    })
+                }
+                setTransactions(items);
+            })
+        }, []);
       
        const handleChange = (event, newValue) => {
            setValue(newValue);
        };
- 
+
+       const parseRedemptions = () => {
+            const newTransactions = allTransactions;
+            for (let i = 0; i < newTransactions.length; i++) {
+                const trans = allTransactions[i];
+                getUser(trans.userId).then(item => {
+                    newTransactions
+                })
+                getAdmin(trans.adminId).then(item => {
+
+                })
+            }
+
+            // for (let i = 0; i < items.length; i++) {
+            //     getUser(items[i].userId).then(item => {
+            //         items[i].userId = item.full_name;
+            //     })
+            //     getAdmin(items[i].adminId).then(item => {
+            //         items[i].adminId = item.full_name;
+            //     })
+            // }
+       }
+
        const renderFilterHeader = () => {
            return (
                <div className={styles['filter-row']}>
@@ -60,7 +99,6 @@ const TransactionsPage: React.FunctionComponent = () => {
            )
        }
  
-       
       
        return (
            <Box className={styles['transaction-container']}>
@@ -73,19 +111,21 @@ const TransactionsPage: React.FunctionComponent = () => {
                <TabPanel value={value} index={0}>
                    <div>
                        {renderFilterHeader()}
-                       <TransactionList tabIndex={0}/>
+                       {console.log(allTransactions)}
+                       <TransactionList tabIndex={0} transactions={allTransactions}/>
                    </div>
                </TabPanel>
                <TabPanel value={value} index={1}>
                    <div>
                        {renderFilterHeader()}
-                       <TransactionList tabIndex={1}/>
+                        
+                       <TransactionList tabIndex={1} transactions={allTransactions}/>
                    </div>
                </TabPanel>
                <TabPanel value={value} index={2}>
                    <div>
                        {renderFilterHeader()}
-                       <TransactionList tabIndex={2}/>
+                       <TransactionList tabIndex={2} transactions={allTransactions}/>
                    </div>
                </TabPanel>
            </Box>

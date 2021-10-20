@@ -1,5 +1,5 @@
 import firebaseApp from '../firebase';
-import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc, where } from 'firebase/firestore';
+import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc, where, orderBy } from 'firebase/firestore';
 import { Transaction } from '../../types/schema';
 
 const db = getFirestore(firebaseApp);
@@ -25,7 +25,7 @@ export const getTransaction = async (transactionId: string): Promise<Transaction
 export const getAllTransactions = async (): Promise<Transaction[]> => {
     try {
         // query everything in the transaction collection
-        const dbQuery = query(transactionsCollection);
+        const dbQuery = query(transactionsCollection, orderBy('date', 'desc'));
         const querySnapshots = await getDocs(dbQuery);
         return querySnapshots.docs.map((doc) => doc.data() as Transaction);
     } catch (e) {

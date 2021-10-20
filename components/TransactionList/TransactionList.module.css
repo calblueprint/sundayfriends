@@ -3,7 +3,7 @@
   flex-direction: row;
   height: 46px;
   align-items: center;
-  background-color: #e6ecfe;
+  background-color: var(--sapphire-light);
   padding-left: 2%;
   padding-right: 2%;
 }
@@ -18,11 +18,11 @@
   display: flex;
   flex-direction: row;
   justify-content: left;
-  color: #272929;
+  color: var(--noirish);
 }
 
 #category-text {
   font-weight: 500;
   margin-right: 10px;
-  color: #272929;
+  color: var(--noirish);
 }

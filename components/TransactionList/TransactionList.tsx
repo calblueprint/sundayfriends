@@ -7,33 +7,36 @@ import { List } from '@mui/material';
 import styles from '../TransactionList/TransactionList.module.css';
 import itemstyles from '../TransactionItem/TransactionItem.module.css';
 import { getAllTransactions, getPosTransactions, getNegTransactions } from '../../firebase/firestore/transaction';
+import { Transaction } from '../../types/schema';
 
 type TransactionListProps = {
     tabIndex: number,
+    transactions: Transaction[];
 };
  
 export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
     tabIndex, 
+    transactions
 }) => {
-    const [alltransactions, setTransactions] = useState([]);
+    // const [alltransactions, setTransactions] = useState([]);
 
-    useEffect(() => {
-        if (tabIndex == 0) {
-            getAllTransactions().then(items => {
-                setTransactions(items);
-            })
-        } else if (tabIndex == 1) {
-            getNegTransactions().then(items => {
-                console.log(items);
-                setTransactions(items);
-            })
-        } else if (tabIndex == 2) {
-            getPosTransactions().then(items => {
-                setTransactions(items)
-            })
-        }
+    // useEffect(() => {
+    //     if (tabIndex == 0) {
+    //         getAllTransactions().then(items => {
+    //             setTransactions(items);
+    //         })
+    //     } else if (tabIndex == 1) {
+    //         getNegTransactions().then(items => {
+    //             console.log(items);
+    //             setTransactions(items);
+    //         })
+    //     } else if (tabIndex == 2) {
+    //         getPosTransactions().then(items => {
+    //             setTransactions(items)
+    //         })
+    //     }
         
-    }, []);
+    // }, []);
 
     const renderCategoryHeader = () => {
         return (
@@ -69,14 +72,10 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
         return(
             <List className={styles['list']}>
                 {
-                    alltransactions.map((transaction) => {
-                        //get username from userid
-
-                        //get admin name from adminid
-
+                    transactions.map((transaction) => {
                         return(
-                            <TransactionItem date={transaction.date} userId={transaction.userId} fid={transaction.familyId}
-                            adminId={transaction.adminId} message={transaction.description} change={transaction.pointGain}/>
+                            <TransactionItem date={transaction.date} userName={transaction.userId} fid={transaction.familyId}
+                            adminName={transaction.adminId} message={transaction.description} change={transaction.pointGain}/>
                         )
                     })
                 }
