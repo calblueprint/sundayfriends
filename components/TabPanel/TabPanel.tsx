@@ -1,16 +1,16 @@
 import styles from "../../pages/Transactions/Transactions.module.css";
 import { Box } from "@mui/material";
 
-type TabPanelProps = {
+type TabPanelProps = React.PropsWithChildren<{
   index: number;
   value: number;
-};
+}>;
 
 export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
   children,
   index,
   value,
-}) => {
+}: TabPanelProps) => {
   return (
     <div
       role="tabpanel"

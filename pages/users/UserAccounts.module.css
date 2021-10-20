@@ -1,4 +1,21 @@
 .container {
   display: flex;
   padding: 5%;
+  flex-direction: column;
+}
+.familyCards {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.tabs {
+  margin-bottom: 50px;
+}
+
+.heading {
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: 1px;
 }
