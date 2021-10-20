@@ -22,7 +22,7 @@ const FamilyMember: React.FC<FamilyMemberProps> = ({
     <Grid item xs={6}>
       <div className={styles.familyMember}>
         <Avatar alt="smiley pic" src="/smiley.png" />
-        <div>{user.full_name.split(" ")[0]}</div>
+        <div>{user.full_name}</div>
       </div>
     </Grid>
   );
