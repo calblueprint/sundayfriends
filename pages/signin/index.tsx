@@ -1,48 +1,51 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
     Button,
     TextField
 } from "@mui/material";
-import { signinUser } from "../../firebase/auth";
+import { useAuth } from "../../firebase/auth";
+import { useRouter } from "next/router";
 import styles from './Signin.module.css';
 import { User } from "@firebase/auth";
 
+type LoginData = {
+    email: string,
+    password: string,
+}
+
 const SignInScreen: React.FC = () => {
 
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const { register, handleSubmit } = useForm();
+    const auth = useAuth();
+    const router = useRouter();
 
-    const handleSignin = async () => {
-        console.log('called');
-        const user = await signinUser(email, password);
-        console.log(user);
+    const handleSignin = (data: LoginData) => {
+        console.log('here');
+        console.log(auth.signInEmailPassword)
+        auth.signInEmailPassword(data.email, data.password);
+        router.push('/Transactions')
     }
 
     return (
-        <div className={styles['container']}>
-            <div className={styles['signin-container']}>
-                <TextField
-                    label='Username'
-                    required
-                    variant='filled'
-                    value={email}
-                    onChange={event => setEmail(event.target.value)}
-                />
-                <TextField
-                    label='Password'
-                    required
-                    hidden={true}
-                    variant='filled'
-                    value={password}
-                    onChange={event => setPassword(event.target.value)}
-                />
-                <Button
-                    variant='contained'
-                    onClick={handleSignin}                >
-                    Sign In
-                </Button>
+        <form onSubmit={handleSubmit(handleSignin)}>
+            <div className={styles['container']}>
+                <div className={styles['signin-container']}>
+                    <label>Email</label>
+                    <input
+                        id="email"
+                        name="email"
+                        {...register('email', { required: true })}
+                    />
+                    <label>Password</label>
+                    <input
+                        id="password"
+                        name="password"
+                        {...register('password', { required: true })}
+                    />
+                    <Button type='submit'>Sign In</Button>
+                </div>
             </div>
-        </div>
+        </form>
     )
 };
 
