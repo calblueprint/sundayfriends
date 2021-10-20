@@ -29,14 +29,6 @@ const TransactionsPage: React.FunctionComponent = () => {
 
        useEffect(() => {
             getAllTransactions().then(items => {
-                for (let i = 0; i < items.length; i++) {
-                    getUser(items[i].userId).then(item => {
-                        items[i].userId = item.full_name;
-                    })
-                    getAdmin(items[i].adminId).then(item => {
-                        items[i].adminId = item.full_name;
-                    })
-                }
                 setTransactions(items);
             })
         }, []);
@@ -44,28 +36,6 @@ const TransactionsPage: React.FunctionComponent = () => {
        const handleChange = (event, newValue) => {
            setValue(newValue);
        };
-
-       const parseRedemptions = () => {
-            const newTransactions = allTransactions;
-            for (let i = 0; i < newTransactions.length; i++) {
-                const trans = allTransactions[i];
-                getUser(trans.userId).then(item => {
-                    newTransactions
-                })
-                getAdmin(trans.adminId).then(item => {
-
-                })
-            }
-
-            // for (let i = 0; i < items.length; i++) {
-            //     getUser(items[i].userId).then(item => {
-            //         items[i].userId = item.full_name;
-            //     })
-            //     getAdmin(items[i].adminId).then(item => {
-            //         items[i].adminId = item.full_name;
-            //     })
-            // }
-       }
 
        const renderFilterHeader = () => {
            return (
@@ -99,7 +69,8 @@ const TransactionsPage: React.FunctionComponent = () => {
            )
        }
  
-      
+       const redemptions = allTransactions.filter(transaction => transaction.pointGain < 0);
+       const earnings = allTransactions.filter(transaction => transaction.pointGain >= 0);
        return (
            <Box className={styles['transaction-container']}>
                <Tabs value={value} onChange={handleChange} TabIndicatorProps={{style: {display: 'none'}}}
@@ -118,14 +89,13 @@ const TransactionsPage: React.FunctionComponent = () => {
                <TabPanel value={value} index={1}>
                    <div>
                        {renderFilterHeader()}
-                        
-                       <TransactionList tabIndex={1} transactions={allTransactions}/>
+                       <TransactionList tabIndex={1} transactions={redemptions}/>
                    </div>
                </TabPanel>
                <TabPanel value={value} index={2}>
                    <div>
                        {renderFilterHeader()}
-                       <TransactionList tabIndex={2} transactions={allTransactions}/>
+                       <TransactionList tabIndex={2} transactions={earnings}/>
                    </div>
                </TabPanel>
            </Box>

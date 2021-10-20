@@ -24,19 +24,6 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
    message,
    change,
 }) => {
-    // const [userName, setUserName] = useState("");
-    // const [adminName, setAdminName] = useState("");
-
-    // useEffect(() => {
-    //     getUser(userId).then(item => {
-    //         console.log(item);
-    //         setUserName(item.full_name);
-    //     })
-    //     getAdmin(adminId).then(item => {
-    //         console.log(item);
-    //         setAdminName(item.full_name);
-    //     })
-    // }, []);
 
    return (
        <ListItem className={styles['list-item']}>

@@ -10,33 +10,12 @@ import { getAllTransactions, getPosTransactions, getNegTransactions } from '../.
 import { Transaction } from '../../types/schema';
 
 type TransactionListProps = {
-    tabIndex: number,
     transactions: Transaction[];
 };
  
 export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
-    tabIndex, 
     transactions
 }) => {
-    // const [alltransactions, setTransactions] = useState([]);
-
-    // useEffect(() => {
-    //     if (tabIndex == 0) {
-    //         getAllTransactions().then(items => {
-    //             setTransactions(items);
-    //         })
-    //     } else if (tabIndex == 1) {
-    //         getNegTransactions().then(items => {
-    //             console.log(items);
-    //             setTransactions(items);
-    //         })
-    //     } else if (tabIndex == 2) {
-    //         getPosTransactions().then(items => {
-    //             setTransactions(items)
-    //         })
-    //     }
-        
-    // }, []);
 
     const renderCategoryHeader = () => {
         return (
@@ -74,8 +53,8 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
                 {
                     transactions.map((transaction) => {
                         return(
-                            <TransactionItem date={transaction.date} userName={transaction.userId} fid={transaction.familyId}
-                            adminName={transaction.adminId} message={transaction.description} change={transaction.pointGain}/>
+                            <TransactionItem date={transaction.date} userName={transaction.userName} fid={transaction.familyId}
+                            adminName={transaction.adminName} message={transaction.description} change={transaction.pointGain}/>
                         )
                     })
                 }
