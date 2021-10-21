@@ -90,8 +90,8 @@ export default function InviteAdminModal() {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Send Invites</Button>
+          <Button variant="outlined" className={styles['edit']} onClick={handleClose}>Cancel</Button>
+          <Button variant="contained" className={styles['edit']} onClick={handleClose}>Send Invites</Button>
         </DialogActions>
       </Dialog>
       {/* </div> */}

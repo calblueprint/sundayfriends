@@ -20,3 +20,19 @@
   /* width: 100%;
   display: flex; */
 }
+
+.cancel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 70px;
+  height: 30px;
+  border: 1px solid #C8C8C8;
+  border-radius: 16.5px;
+  background-color: var(--off-white);
+  margin-right: 10px;
+  font-size: 14px;
+  font-family: Avenir;
+  /* font-weight: 800; */
+  color: var(--grey-darker);
+}

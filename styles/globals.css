@@ -6,7 +6,6 @@ body {
 }
 
 h2 {
-  color: #253C85;
   font-family: Avenir;
   font-style: normal;
   font-weight: 900;
@@ -29,6 +28,8 @@ h2 {
   line-height: 29.72px;
   letter-spacing: 1px;
   margin-left: 60px;
+h1 {
+  color: var(--grey-dark);
 }
 
 * {
@@ -55,4 +56,5 @@ h2 {
   --while: #ffffff;
   --alert-text: #e94444;
   --alert: #fce3e3;
+  --hover: #f6f6f6;
 }
