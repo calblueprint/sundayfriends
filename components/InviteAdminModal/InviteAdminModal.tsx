@@ -24,41 +24,77 @@ export default function InviteAdminModal() {
       <Button className={styles['button']} onClick={handleClickOpen}>
         INVITE ADMIN
       </Button>
-      <div className={styles['modal']}>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>INVITE ADMINS</DialogTitle>
-          <DialogContent className={styles["modal"]}>
-            {/* <DialogContentText>
+      {/* <div className={styles['modal']}> */}
+      <Dialog maxWidth="sm" fullWidth={true} open={open} onClose={handleClose}>
+        <DialogTitle>INVITE ADMINS</DialogTitle>
+        <DialogContent className={styles["modal"]}>
+          {/* <DialogContentText>
               To subscribe to this website, please enter your email address here. We
               will send updates occasionally.
             </DialogContentText> */}
-            <div className={styles['container']}>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Full Name"
-                type="text"
-                variant="standard"
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="email"
-                label="Email Address"
-                type="email"
-                variant="standard"
-              />
-            </div>
+          <div className={styles['container']}>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Full Name"
+              type="text"
+              variant="standard"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="email"
+              label="Email Address"
+              type="email"
+              variant="standard"
+            />
+          </div>
+          <div className={styles['container']}>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Full Name"
+              type="text"
+              variant="standard"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="email"
+              label="Email Address"
+              type="email"
+              variant="standard"
+            />
+          </div>
+          <div className={styles['container']}>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Full Name"
+              type="text"
+              variant="standard"
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="email"
+              label="Email Address"
+              type="email"
+              variant="standard"
+            />
+          </div>
 
 
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Send Invites</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Send Invites</Button>
+        </DialogActions>
+      </Dialog>
+      {/* </div> */}
     </div>
   );
 }
