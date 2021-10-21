@@ -92,28 +92,16 @@
   color: var(--grey-darker);
 }
 
-.action:hover {
+.delete:hover {
   background-color: var(--grey-alt);
 }
 
-.action2:hover {
+.reset:hover {
   background-color: var(--grey-alt);
 }
 
-.action3:hover {
+.edit:hover {
   background-color: var(--grey-alt);
-}
-
-.pos-change {
-  width: 7%;
-  color: #74AB67;
-  margin-left: 1%;
-}
-
-.neg-change {
-  width: 7%;
-  color: #EE512F;
-  margin-left: 1%;
 }
 
 .trash {
