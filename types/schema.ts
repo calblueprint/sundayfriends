@@ -1,12 +1,12 @@
 import { Timestamp } from "@firebase/firestore"
 
 export type Transaction = {
-    adminName: string;
+    admin_name: string;
     date: Date | Timestamp;
     description: string | null;
-    familyId: string;
-    pointGain: number;
-    userName: string;
+    family_id: string;
+    point_gain: number;
+    user_name: string;
 }
 
 export type Admin = {

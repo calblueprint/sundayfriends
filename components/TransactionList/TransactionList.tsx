@@ -53,8 +53,8 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
                 {
                     transactions.map((transaction) => {
                         return(
-                            <TransactionItem date={transaction.date} userName={transaction.userName} fid={transaction.familyId}
-                            adminName={transaction.adminName} message={transaction.description} change={transaction.pointGain}/>
+                            <TransactionItem date={transaction.date} userName={transaction.user_name} fid={transaction.family_id}
+                            adminName={transaction.admin_name} message={transaction.description} change={transaction.point_gain}/>
                         )
                     })
                 }

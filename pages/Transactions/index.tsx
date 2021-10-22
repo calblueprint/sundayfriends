@@ -69,8 +69,8 @@ const TransactionsPage: React.FunctionComponent = () => {
            )
        }
  
-       const redemptions = allTransactions.filter(transaction => transaction.pointGain < 0);
-       const earnings = allTransactions.filter(transaction => transaction.pointGain >= 0);
+       const redemptions = allTransactions.filter(transaction => transaction.point_gain < 0);
+       const earnings = allTransactions.filter(transaction => transaction.point_gain >= 0);
        return (
            <Box className={styles['transaction-container']}>
                <Tabs value={value} onChange={handleChange} TabIndicatorProps={{style: {display: 'none'}}}
@@ -82,7 +82,6 @@ const TransactionsPage: React.FunctionComponent = () => {
                <TabPanel value={value} index={0}>
                    <div>
                        {renderFilterHeader()}
-                       {console.log(allTransactions)}
                        <TransactionList transactions={allTransactions}/>
                    </div>
                </TabPanel>
