@@ -25,76 +25,108 @@ export default function InviteAdminModal() {
         INVITE ADMIN
       </Button>
       {/* <div className={styles['modal']}> */}
-      <Dialog maxWidth="sm" fullWidth={true} open={open} onClose={handleClose}>
-        <DialogTitle>INVITE ADMINS</DialogTitle>
-        <DialogContent className={styles["modal"]}>
-          {/* <DialogContentText>
+      <Dialog classes={{ paper: styles['modal'] }} maxWidth="md" fullWidth={true} open={open} onClose={handleClose}>
+        {/* <DialogTitle>INVITE ADMINS</DialogTitle> */}
+        <h2 className={styles['title']}>INVITE ADMINS</h2>
+        {/* <DialogContent> */}
+        {/* <DialogContentText>
               To subscribe to this website, please enter your email address here. We
               will send updates occasionally.
             </DialogContentText> */}
-          <div className={styles['container']}>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Full Name"
-              type="text"
-              variant="standard"
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="email"
-              label="Email Address"
-              type="email"
-              variant="standard"
-            />
+        <div className={styles['form']}>
+          <div className={styles['row']}>
+            <div className={styles['col']}>
+              <h4>FULL NAME *</h4>
+            </div>
+            <div className={styles['col']}>
+              <h4>EMAIL *</h4>
+            </div>
           </div>
-          <div className={styles['container']}>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Full Name"
-              type="text"
-              variant="standard"
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="email"
-              label="Email Address"
-              type="email"
-              variant="standard"
-            />
+          <div className={styles['row']}>
+            <div className={styles['col']}>
+              <TextField
+                fullWidth
+                autoFocus
+                margin="dense"
+                id="name"
+                placeholder="Firstname Lastname"
+                type="text"
+                variant="standard"
+              />
+            </div>
+            <div className={styles['col']}>
+              <TextField
+                fullWidth
+                autoFocus
+                margin="dense"
+                id="name"
+                placeholder="thisisanemail@email.com"
+                type="text"
+                variant="standard"
+              />
+            </div>
           </div>
-          <div className={styles['container']}>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Full Name"
-              type="text"
-              variant="standard"
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="email"
-              label="Email Address"
-              type="email"
-              variant="standard"
-            />
+          <div className={styles['row']}>
+            <div className={styles['col']}>
+              <TextField
+                fullWidth
+                autoFocus
+                margin="dense"
+                id="name"
+                placeholder="Firstname Lastname"
+                type="text"
+                variant="standard"
+              />
+            </div>
+            <div className={styles['col']}>
+              <TextField
+                fullWidth
+                autoFocus
+                margin="dense"
+                id="name"
+                placeholder="thisisanemail@email.com"
+                type="text"
+                variant="standard"
+              />
+            </div>
+          </div>
+          <div className={styles['row']}>
+            <div className={styles['col']}>
+              <TextField
+                fullWidth
+                autoFocus
+                margin="dense"
+                id="name"
+                // label="Full Name"
+                placeholder="Firstname Lastname"
+                type="text"
+                variant="standard"
+              />
+            </div>
+            <div className={styles['col']}>
+              <TextField
+                fullWidth
+                autoFocus
+                margin="dense"
+                id="name"
+                // label="Full Name"
+                placeholder="thisisanemail@email.com"
+                type="text"
+                variant="standard"
+              />
+            </div>
           </div>
 
-
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" className={styles['edit']} onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" className={styles['edit']} onClick={handleClose}>Send Invites</Button>
-        </DialogActions>
-      </Dialog>
+        </div>
+        <div className={styles['actions']}>
+          <DialogActions>
+            <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+            <Button variant="contained" className={styles['edit']} onClick={handleClose}>Send Invites</Button>
+          </DialogActions>
+        </div>
+        {/* </DialogContent> */}
+      </Dialog >
       {/* </div> */}
-    </div>
+    </div >
   );
 }
