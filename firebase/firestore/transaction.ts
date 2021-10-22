@@ -1,8 +1,8 @@
 import firebaseApp from '../firebase';
-import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
+import 'firebase/firestore';
 import { Transaction } from '../../types/schema';
 
-const db = getFirestore(firebaseApp);
+const db = firebaseApp.firestore();
 const transactionsCollection = collection(db, "transactions");
 
 /**
