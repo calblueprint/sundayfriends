@@ -6,10 +6,7 @@ import { AdminItem } from '../../components/AdminItem/AdminItem';
 import itemstyles from '../../components/AdminItem/AdminItem.module.css';
 import firebase from "../../firebase/firebase";
 import { getDocs } from '@firebase/firestore';
-<<<<<<< HEAD
 import InviteAdminModal from '../../components/InviteAdminModal/InviteAdminModal';
-=======
->>>>>>> main
 
 const AdminPage: React.FunctionComponent = () => {
 

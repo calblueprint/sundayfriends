@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import styles from './InviteAdminModal.module.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export default function InviteAdminModal() {
   const [open, setOpen] = React.useState(false);
@@ -18,6 +19,15 @@ export default function InviteAdminModal() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        // Purple and green play nicely together.
+        main: '#253C85',
+      },
+    },
+  });
 
   return (
     <div>
@@ -120,8 +130,10 @@ export default function InviteAdminModal() {
         </div>
         <div className={styles['actions']}>
           <DialogActions>
-            <Button variant="outlined" onClick={handleClose}>Cancel</Button>
-            <Button variant="contained" className={styles['edit']} onClick={handleClose}>Send Invites</Button>
+            <ThemeProvider theme={theme}>
+              <Button style={{ textTransform: 'none' }} variant="outlined" onClick={handleClose}>Cancel</Button>
+              <Button style={{ textTransform: 'none' }} variant="contained" onClick={handleClose}>Send Invites</Button>
+            </ThemeProvider>
           </DialogActions>
         </div>
         {/* </DialogContent> */}

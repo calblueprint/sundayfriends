@@ -74,6 +74,10 @@
   padding-top: 4%;
 }
 
-.edit {
+.send {
+  background-color: #253C85;
+}
+
+.cancel {
   background-color: #253C85;
 }

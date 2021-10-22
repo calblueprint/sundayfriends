@@ -34,9 +34,7 @@
 }
 
 .buttons {
-  /* width: 30%; */
   display: flex;
-  /* justify-content: space-evenly; */
   min-width: 310px;
 }
 
@@ -56,8 +54,8 @@
   margin-right: 10px;
   font-size: 14px;
   font-family: Avenir;
-  /* font-weight: 800; */
   color: var(--grey-darker);
+  text-transform: none;
 }
 
 .reset {
@@ -72,8 +70,8 @@
   margin-right: 10px;
   font-size: 14px;
   font-family: Avenir;
-  /* font-weight: 800; */
   color: var(--grey-darker);
+  text-transform: none;
 }
 
 .edit {
@@ -88,8 +86,8 @@
   margin-right: 10px;
   font-size: 14px;
   font-family: Avenir;
-  /* font-weight: 800; */
   color: var(--grey-darker);
+  text-transform: none;
 }
 
 .delete:hover {
