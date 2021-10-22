@@ -83,19 +83,19 @@ const TransactionsPage: React.FunctionComponent = () => {
                    <div>
                        {renderFilterHeader()}
                        {console.log(allTransactions)}
-                       <TransactionList tabIndex={0} transactions={allTransactions}/>
+                       <TransactionList transactions={allTransactions}/>
                    </div>
                </TabPanel>
                <TabPanel value={value} index={1}>
                    <div>
                        {renderFilterHeader()}
-                       <TransactionList tabIndex={1} transactions={redemptions}/>
+                       <TransactionList transactions={redemptions}/>
                    </div>
                </TabPanel>
                <TabPanel value={value} index={2}>
                    <div>
                        {renderFilterHeader()}
-                       <TransactionList tabIndex={2} transactions={earnings}/>
+                       <TransactionList transactions={earnings}/>
                    </div>
                </TabPanel>
            </Box>

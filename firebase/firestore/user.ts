@@ -1,5 +1,5 @@
 import firebaseApp from '../firebase';
-import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc, where } from 'firebase/firestore';
+import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc, where, orderBy } from 'firebase/firestore';
 import { User } from '../../types/schema';
 
 const db = getFirestore(firebaseApp);
@@ -15,6 +15,21 @@ export const getUser = async (userId: string): Promise<User> => {
         return docSnap.data() as User;
     } catch (e) {
         console.error(e);
+        throw e;
+    }
+}
+
+/**
+ * Returns all user data from firestore
+ */
+ export const getAllUsers = async (): Promise<User[]> => {
+    try {
+        // query everything in the user collection
+        const dbQuery = query(userCollection, orderBy('full_name'));
+        const querySnapshots = await getDocs(dbQuery);
+        return querySnapshots.docs.map((doc) => doc.data() as User);
+    } catch (e) {
+        console.warn(e);
         throw e;
     }
 }

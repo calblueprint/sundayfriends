@@ -15,6 +15,14 @@ export type Admin = {
     full_name: string;
 }
 
+export type Family = {
+    totalPoints: number;
+    familyName: string;
+    userIds: User[];
+    familyId: number;
+    totalTransactions: number;
+  };
+
 export type User = {
     address: string;
     created_at: Date | Timestamp;
