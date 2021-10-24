@@ -9,7 +9,13 @@ import { Button,
    FormControl,
    InputLabel,
    Select,
-   MenuItem}
+   MenuItem,
+   Popover,
+   TextField,
+   RadioGroup,
+   FormControlLabel,
+   Radio,
+   Autocomplete,}
 from "@mui/material";
 import styles from './Transactions.module.css';
 import itemstyles from '../../components/TransactionItem/TransactionItem.module.css';
@@ -18,20 +24,32 @@ import Icon from '../../assets/Icon';
 import { Transaction } from '../../types/schema';
 import { TransactionList } from '../../components/TransactionList/TransactionList';
 import { getAllTransactions } from '../../firebase/firestore/transaction'; 
-import { getAdmin } from '../../firebase/firestore/admin';
-import { getUser } from '../../firebase/firestore/user';
+import { getAllUsers } from '../../firebase/firestore/user';
  
 const TransactionsPage: React.FunctionComponent = () => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [allUsers, setUsers] = React.useState([]);
+    const [allTransactions, setTransactions] = useState([]);
+
+    useEffect(() => {
+        getAllUsers().then(users => {
+            setUsers(users);
+        })
+        getAllTransactions().then(items => {
+            setTransactions(items);
+        })
+    }, []);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
  
    const BasicTabs = () => {
        const [value, setValue] = useState(0);
-       const [allTransactions, setTransactions] = useState([]);
-
-       useEffect(() => {
-            getAllTransactions().then(items => {
-                setTransactions(items);
-            })
-        }, []);
       
        const handleChange = (event, newValue) => {
            setValue(newValue);
@@ -101,6 +119,8 @@ const TransactionsPage: React.FunctionComponent = () => {
        );
    }
     
+   const addOpen = Boolean(anchorEl);
+   const popoverid = addOpen ? 'simple-popover' : undefined;
    return(
        <Layout title='Transactions'>
            <div className={styles['screen']}>
@@ -110,7 +130,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                        <h2 className={styles['h2']}>TRANSACTIONS</h2>
                    </div>
                    <div className={styles['button-container']}>
-                       <Button className={styles['add-button']}>
+                       <Button aria-describedby={popoverid} className={styles['add-button']} onClick={handleClick}>
                            <Icon className={styles['add-icon']} type={"add"}></Icon>
                            Add
                        </Button>
@@ -119,6 +139,100 @@ const TransactionsPage: React.FunctionComponent = () => {
                            Upload
                        </Button>
                    </div>
+                   <Popover 
+                   PaperProps={{className: styles['popover-container']}}
+                   open={addOpen} 
+                   id={popoverid}
+                   anchorEl={anchorEl}
+                   onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}>
+                        <div className={styles['popover-header']}>
+                            <h3 className={styles['add-title']}>Add Transaction</h3>
+                            <div className={styles['x-button']} onClick={handleClose}>
+                                <Icon  type={"close"}></Icon>
+                            </div>
+                        </div>
+                        <div>
+                            <p className={styles['select-category']}>
+                                USER
+                            </p>
+
+                            <Autocomplete
+                                id="country-select-demo"
+                                sx={{ width: 300 }}
+                                options={allUsers}
+                                autoHighlight
+                                getOptionLabel={(option) => option.full_name}
+                                size='small'
+                                // renderOption={(props, option) => (
+                                //     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                //     <img
+                                //         loading="lazy"
+                                //         width="20"
+                                //         src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                                //         srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                                //         alt=""
+                                //     />
+                                //     {option.label} ({option.code}) +{option.phone}
+                                //     </Box>
+                                // )}
+                                renderInput={(params) => (
+                                    <TextField
+                                    className= {styles['autocomplete-text-field']}
+                                    {...params}
+                                    label="Select User"
+                                    InputLabelProps={{
+                                        className: styles['autocomplete-input']
+                                    }}
+                                    inputProps={{
+                                        ...params.inputProps,
+                                        autoComplete: 'new-password', // disable autocomplete and autofill
+                                    }}
+                                    />
+                                )}
+                            />
+                        </div>
+                        <div className={styles['amount-action']}>
+                            <div id={styles['amount']}>
+                                <p className={styles['select-category']}>AMOUNT</p>
+                                <TextField
+                                    className={styles['amount-field']}
+                                    rows={1}
+                                    defaultValue="10"
+                                    variant="standard"
+                                    type='number'
+                                />
+                            </div>
+                            <div id={styles['action']}>
+                                <p className={styles['select-category']}>ACTION</p>
+                                <RadioGroup row>
+                                    <FormControlLabel value="female" control={<Radio />} label={<p className={styles['radio-label']}>Redeem</p>} />
+                                    <FormControlLabel value="male" control={<Radio />} label={<p className={styles['radio-label']}>Earn</p>} />
+                                </RadioGroup>
+                            </div>
+                        </div>
+                        <div>
+                            <p className={styles['select-category']}>MESSAGE</p>
+                            <TextField
+                                className={styles['message-field']}
+                                multiline
+                                rows={2}
+                                placeholder="Explain how user redeemed or earned credits (max 100 characters)"
+                                variant="standard"
+                                inputProps={{maxLength: 100, className: styles['message-field-input']}}
+                                />
+                        </div>
+                        <Button className={styles['confirm-button']}>
+                           Confirm
+                       </Button>
+                   </Popover>
                </div>
                {BasicTabs()}
            </div>

@@ -228,3 +228,112 @@
 .children {
   margin: 0px;
 }
+
+.popover-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  margin-top: 1%;
+  border: 2px solid rgba(234, 234, 234, 0.4);
+  border-radius: 8px;
+  width: 370px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+}
+
+.popover-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-title {
+  color: #253c85;
+  margin-bottom: 10px;
+}
+
+.x-button {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.x-button:hover {
+  opacity: 0.5;
+  transition-duration: 0.2s;
+}
+
+.select-category {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.autocomplete-text-field {
+  background-color: #f7f7f7;
+}
+
+.autocomplete-input {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.amount-action {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin-top: 10px;
+  gap: 20px;
+}
+
+.amount-field {
+  width: 90%;
+}
+
+#amount {
+  flex: 2;
+}
+
+#action {
+  flex: 4;
+}
+
+.radio-label {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+
+  color: #646464;
+}
+
+.message-field {
+  width: 100%;
+  background-color: #f7f7f7;
+}
+
+.message-field-input {
+  font-size: 12px;
+  line-height: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.confirm-button {
+  align-self: flex-end;
+  background-color: var(--sapphire);
+  color: white;
+  border-radius: 7px;
+  height: 33px;
+  font-size: 14px;
+  text-transform: none;
+  margin-top: 20px;
+  width: 89px;
+}

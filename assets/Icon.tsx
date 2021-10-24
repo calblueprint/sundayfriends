@@ -9,7 +9,8 @@ export type IconType =
    | "add"
    | "upload"
    | "transaction"
-   | "trash";
+   | "trash"
+   | "close";
  
  
 const IconSvgs: Record<IconType, React.ReactElement> = {
@@ -86,6 +87,13 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
         4 0.333344H8C8.73638 0.333344 9.33333 0.930297 9.33333 1.66668V2.33334H12V3.66668H10.6667V12.3333C10.6667
         13.0697 10.0697 13.6667 9.33333 13.6667ZM2.66667 3.66668V12.3333H9.33333V3.66668H2.66667ZM4
         1.66668V2.33334H8V1.66668H4ZM8 11H6.66667V5.00001H8V11ZM5.33333 11H4V5.00001H5.33333V11Z" fill="#525454"/>
+    </SvgIcon>
+   ),
+   close: (
+    <SvgIcon width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11.5" cy="11.5" r="11.5" fill="#EBEBEB"/>
+        <path d="M9.2002 9.19983L13.8002 13.7998" stroke="#646464" stroke-width="1.15" stroke-linecap="round"/>
+        <path d="M9.2002 13.8003L13.8002 9.20029" stroke="#646464" stroke-width="1.15" stroke-linecap="round"/>
     </SvgIcon>
    )
 }
