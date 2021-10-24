@@ -1,0 +1,28 @@
+.section-header {
+  display: flex;
+  flex-direction: row;
+  height: 46px;
+  align-items: center;
+  background-color: var(--sapphire-light);
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.list {
+  padding-top: 0%;
+  padding-bottom: 0%;
+  height: fit-content;
+}
+
+#category {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  color: var(--noirish);
+}
+
+#category-text {
+  font-weight: 500;
+  margin-right: 10px;
+  color: var(--noirish);
+}
