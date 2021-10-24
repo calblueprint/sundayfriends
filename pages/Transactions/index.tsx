@@ -183,8 +183,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                                 getOptionLabel={(option) => option.full_name}
                                 size='small'
                                 // renderOption={(props, option) => (
-                                //     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props} 
-                                //     onClick={() => setAddUser(option.full_name)}>
+                                //     <Box component="li" {...props}>
                                 //         {option.full_name}
                                 //     </Box>
                                 // )}
