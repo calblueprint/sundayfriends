@@ -30,6 +30,11 @@ const TransactionsPage: React.FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [allUsers, setUsers] = React.useState([]);
     const [allTransactions, setTransactions] = useState([]);
+    const [success, setSuccess] = useState(false);
+    const [addUser, setAddUser] = useState('');
+    const [addPoints, setAddPoints] = useState('');
+    const [addSign, setAddSign] = useState('');
+    const [addMessage, setAddMessage] = useState('');
 
     useEffect(() => {
         getAllUsers().then(users => {
@@ -40,13 +45,40 @@ const TransactionsPage: React.FunctionComponent = () => {
         })
     }, []);
 
+    const sleep = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
+    const handleConfirm = () => {
+        //handle post request
+        console.log(addMessage);
+        setSuccess(true);
+        
+    }
+
+    const handleAddMore = () => {
+        resetFields();
+        setSuccess(false);
+    }
+
     const handleClose = () => {
         setAnchorEl(null);
+        sleep(1000).then(() => {
+            setSuccess(false);
+        })
+        resetFields();
     };
+
+    const resetFields = () => {
+        setAddUser('');
+        setAddPoints('');
+        setAddSign('');
+        setAddMessage('');
+    }
  
    const BasicTabs = () => {
        const [value, setValue] = useState(0);
@@ -118,52 +150,31 @@ const TransactionsPage: React.FunctionComponent = () => {
            </Box>
        );
    }
-    
-   const addOpen = Boolean(anchorEl);
-   const popoverid = addOpen ? 'simple-popover' : undefined;
-   return(
-       <Layout title='Transactions'>
-           <div className={styles['screen']}>
-               <div className={styles['container']}>
-                   <div className={styles['title-div']}>
-                       <Icon className={styles['transaction-icon']} type={"transaction"}></Icon>
-                       <h2 className={styles['h2']}>TRANSACTIONS</h2>
-                   </div>
-                   <div className={styles['button-container']}>
-                       <Button aria-describedby={popoverid} className={styles['add-button']} onClick={handleClick}>
-                           <Icon className={styles['add-icon']} type={"add"}></Icon>
-                           Add
-                       </Button>
-                       <Button className={styles['upload-button']}>
-                           <Icon className={styles['add-icon']} type={"upload"}></Icon>
-                           Upload
-                       </Button>
-                   </div>
-                   <Popover 
-                   PaperProps={{className: styles['popover-container']}}
-                   open={addOpen} 
-                   id={popoverid}
-                   anchorEl={anchorEl}
-                   onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}>
-                        <div className={styles['popover-header']}>
+
+   const popoverContent = () => {
+       switch(success) {
+           case true:
+                return(
+                    <div className={styles['success-div']}>
+                        <p className={styles['success-title']}>Success!</p>
+                        <p className={styles['success-message']}>Transaction for {addUser} has been added</p>
+                        <div>
+                            <Button className={styles['success-close-button']} onClick={handleClose}>Close</Button>
+                            <Button className={styles['add-more-button']} onClick={handleAddMore}>Add More</Button>
+                        </div>
+                    </div>
+                )
+           case false:
+               return(
+                   <div className={styles['popover-div']}>
+                       <div className={styles['popover-header']}>
                             <h3 className={styles['add-title']}>Add Transaction</h3>
                             <div className={styles['x-button']} onClick={handleClose}>
                                 <Icon  type={"close"}></Icon>
                             </div>
                         </div>
                         <div>
-                            <p className={styles['select-category']}>
-                                USER
-                            </p>
-
+                            <p className={styles['select-category']}>USER</p>
                             <Autocomplete
                                 id="country-select-demo"
                                 sx={{ width: 300 }}
@@ -172,15 +183,9 @@ const TransactionsPage: React.FunctionComponent = () => {
                                 getOptionLabel={(option) => option.full_name}
                                 size='small'
                                 // renderOption={(props, option) => (
-                                //     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                //     <img
-                                //         loading="lazy"
-                                //         width="20"
-                                //         src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                                //         srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                                //         alt=""
-                                //     />
-                                //     {option.label} ({option.code}) +{option.phone}
+                                //     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props} 
+                                //     onClick={() => setAddUser(option.full_name)}>
+                                //         {option.full_name}
                                 //     </Box>
                                 // )}
                                 renderInput={(params) => (
@@ -208,6 +213,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                                     defaultValue="10"
                                     variant="standard"
                                     type='number'
+                                    onChange={(e) => setAddPoints(e.target.value)}
                                 />
                             </div>
                             <div id={styles['action']}>
@@ -227,12 +233,55 @@ const TransactionsPage: React.FunctionComponent = () => {
                                 placeholder="Explain how user redeemed or earned credits (max 100 characters)"
                                 variant="standard"
                                 inputProps={{maxLength: 100, className: styles['message-field-input']}}
+                                onChange={(e) => setAddMessage(e.target.value)}
                                 />
                         </div>
-                        <Button className={styles['confirm-button']}>
-                           Confirm
+                        <Button className={styles['confirm-button']} onClick={handleConfirm}>
+                            Confirm
+                        </Button>
+                   </div>
+               )
+       }
+   }
+    
+   const addOpen = Boolean(anchorEl);
+   const popoverid = addOpen ? 'simple-popover' : undefined;
+   return(
+       <Layout title='Transactions'>
+           <div className={styles['screen']}>
+               <div className={styles['container']}>
+                   <div className={styles['title-div']}>
+                       <Icon className={styles['transaction-icon']} type={"transaction"}></Icon>
+                       <h2 className={styles['h2']}>TRANSACTIONS</h2>
+                   </div>
+                   <div className={styles['button-container']}>
+                       <Button aria-describedby={popoverid} className={styles['add-button']} onClick={handleClick}>
+                           <Icon className={styles['add-icon']} type={"add"}></Icon>
+                           Add
                        </Button>
-                   </Popover>
+                       <Button className={styles['upload-button']}>
+                           <Icon className={styles['add-icon']} type={"upload"}></Icon>
+                           Upload
+                       </Button>
+                   </div>
+                   <Popover 
+                        PaperProps={{className: styles['popover-container']}}
+                        open={addOpen} 
+                        id={popoverid}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}>
+                            
+                        {popoverContent()}
+                            
+                    </Popover>
                </div>
                {BasicTabs()}
            </div>

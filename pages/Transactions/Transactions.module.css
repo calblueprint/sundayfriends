@@ -237,9 +237,16 @@
   border: 2px solid rgba(234, 234, 234, 0.4);
   border-radius: 8px;
   width: 370px;
+  height: 400px;
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 30px;
+  overflow: hidden;
+}
+
+.popover-div {
+  display: flex;
+  flex-direction: column;
 }
 
 .popover-header {
@@ -263,6 +270,53 @@
 .x-button:hover {
   opacity: 0.5;
   transition-duration: 0.2s;
+}
+
+.success-div {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 15%;
+}
+
+.success-title {
+  color: var(--noirish);
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  letter-spacing: 2px;
+  line-height: 31px;
+  text-transform: none;
+  margin: 0px;
+}
+
+.success-message {
+  text-align: center;
+  margin-bottom: 15%;
+}
+
+.success-close-button {
+  color: #525454;
+  border: 1.3px solid #525454;
+  border-radius: 7px;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 19px;
+  text-transform: none;
+}
+
+.add-more-button {
+  background-color: var(--sapphire);
+  color: white;
+  border-radius: 7px;
+  font-size: 14px;
+  margin-left: 20px;
+  text-transform: none;
 }
 
 .select-category {
