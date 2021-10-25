@@ -1,12 +1,14 @@
 import React from 'react';
 import Layout from "../../components/Layout/Layout";
 import styles from './Admins.module.css';
-import { Button, List, ListItem } from "@mui/material";
+import { Button, List, ListItem, Input } from "@mui/material";
+import Icon from "../../assets/Icon";
 import { AdminItem } from '../../components/AdminItem/AdminItem';
 import itemstyles from '../../components/AdminItem/AdminItem.module.css';
 import firebase from "../../firebase/firebase";
 import { getDocs } from '@firebase/firestore';
 import InviteAdminModal from '../../components/InviteAdminModal/InviteAdminModal';
+import { SortTriangles } from "../../components/SortTriangles/SortTriangles";
 
 const AdminPage: React.FunctionComponent = () => {
 
@@ -14,7 +16,8 @@ const AdminPage: React.FunctionComponent = () => {
     return (
       <div className={styles['section-header']}>
         <div className={itemstyles['name']} id={styles['category']}>
-          <body id={styles['category-text']}>Name</body>
+          <body id={styles['category-text']}>Admin</body>
+          {/* <SortTriangles /> */}
         </div>
         <div className={itemstyles['role']} id={styles['category']}>
           <body id={styles['category-text']}>Role</body>
@@ -23,7 +26,7 @@ const AdminPage: React.FunctionComponent = () => {
           <body id={styles['category-text']}>Email</body>
         </div>
         <div className={itemstyles['phone']} id={styles['category']}>
-          <body id={styles['category-text']}>Phone</body>
+          <body id={styles['category-text']}>Phone #</body>
         </div>
         <div className={itemstyles['buttons']} id={styles['category-text']}>Manage</div>
       </div >
@@ -31,6 +34,10 @@ const AdminPage: React.FunctionComponent = () => {
   }
 
   const temp = [
+    { name: 'Firstname Lastname', role: 'admin', email: "pres@google.com", phone: "8575009958" },
+    { name: 'Firstname Lastname', role: 'admin', email: "pres@google.com", phone: "8575009958" },
+    { name: 'Firstname Lastname', role: 'admin', email: "pres@google.com", phone: "8575009958" },
+    { name: 'Firstname Lastname', role: 'admin', email: "pres@google.com", phone: "8575009958" },
     { name: 'Firstname Lastname', role: 'admin', email: "pres@google.com", phone: "8575009958" },
     { name: 'Firstname Lastname', role: 'admin', email: "pres@google.com", phone: "8575009958" },
   ]
@@ -52,7 +59,16 @@ const AdminPage: React.FunctionComponent = () => {
 
   const renderFilters = () => {
     return (
-      <ListItem className={styles['row']} />
+      <ListItem className={styles['topRow']}>
+        <Input
+          disableUnderline={true}
+          placeholder="Search for an admin"
+          className={styles["search-bar"]}
+          endAdornment={
+            <Icon className={styles["search-icon"]} type={"search"}></Icon>
+          }
+        />
+      </ListItem>
     );
   }
 
@@ -70,7 +86,8 @@ const AdminPage: React.FunctionComponent = () => {
     <Layout title='Admins'>
       <main className={styles['main']}>
         <div className={styles['header']}>
-          <h2 className={styles['h2']}>ADMIN ACCOUNTS</h2>
+          <Icon className={styles["admin-icon"]} type={"admin"}></Icon>
+          <h2 className={styles['title']}>ADMIN ACCOUNTS</h2>
           <div className={styles['button']}>
             <InviteAdminModal />
           </div>

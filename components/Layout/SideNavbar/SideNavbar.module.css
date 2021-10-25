@@ -20,7 +20,7 @@
   width: 180px;
   box-sizing: border-box;
   border-radius: 0px 35px 35px 0px;
-  background-color: var(--sapphire-muted);
+  background-color: var(--sapphire);
   color: white;
   border: transparent;
 }

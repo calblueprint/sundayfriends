@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import styles from './InviteAdminModal.module.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Icon from "../../assets/Icon";
 
 export default function InviteAdminModal() {
   const [open, setOpen] = React.useState(false);
@@ -31,13 +32,22 @@ export default function InviteAdminModal() {
 
   return (
     <div>
-      <Button className={styles['button']} onClick={handleClickOpen}>
-        INVITE ADMIN
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button className={styles['text']} variant="contained" style={{ textTransform: 'none' }} onClick={handleClickOpen}>
+          Invite Admin
+        </Button>
+      </ThemeProvider>
       {/* <div className={styles['modal']}> */}
       <Dialog classes={{ paper: styles['modal'] }} maxWidth="md" fullWidth={true} open={open} onClose={handleClose}>
         {/* <DialogTitle>INVITE ADMINS</DialogTitle> */}
-        <h2 className={styles['title']}>INVITE ADMINS</h2>
+
+        <h2 className={styles['title']}>
+          <Icon
+            className={styles["invite-icon"]}
+            type={"invite"}
+          ></Icon>
+          INVITE ADMINS
+        </h2>
         {/* <DialogContent> */}
         {/* <DialogContentText>
               To subscribe to this website, please enter your email address here. We
@@ -46,34 +56,10 @@ export default function InviteAdminModal() {
         <div className={styles['form']}>
           <div className={styles['row']}>
             <div className={styles['col']}>
-              <h4>FULL NAME *</h4>
+              <h4 className={styles['text']}> FULL NAME *</h4>
             </div>
             <div className={styles['col']}>
-              <h4>EMAIL *</h4>
-            </div>
-          </div>
-          <div className={styles['row']}>
-            <div className={styles['col']}>
-              <TextField
-                fullWidth
-                autoFocus
-                margin="dense"
-                id="name"
-                placeholder="Firstname Lastname"
-                type="text"
-                variant="standard"
-              />
-            </div>
-            <div className={styles['col']}>
-              <TextField
-                fullWidth
-                autoFocus
-                margin="dense"
-                id="name"
-                placeholder="thisisanemail@email.com"
-                type="text"
-                variant="standard"
-              />
+              <h4 className={styles['text']}>EMAIL *</h4>
             </div>
           </div>
           <div className={styles['row']}>
@@ -86,6 +72,7 @@ export default function InviteAdminModal() {
                 placeholder="Firstname Lastname"
                 type="text"
                 variant="standard"
+                className={styles['font']}
               />
             </div>
             <div className={styles['col']}>
@@ -97,6 +84,33 @@ export default function InviteAdminModal() {
                 placeholder="thisisanemail@email.com"
                 type="text"
                 variant="standard"
+                className={styles['font']}
+              />
+            </div>
+          </div>
+          <div className={styles['row']}>
+            <div className={styles['col']}>
+              <TextField
+                fullWidth
+                autoFocus
+                margin="dense"
+                id="name"
+                placeholder="Firstname Lastname"
+                type="text"
+                variant="standard"
+                className={styles['font']}
+              />
+            </div>
+            <div className={styles['col']}>
+              <TextField
+                fullWidth
+                autoFocus
+                margin="dense"
+                id="name"
+                placeholder="thisisanemail@email.com"
+                type="text"
+                variant="standard"
+                className={styles['font']}
               />
             </div>
           </div>
@@ -111,6 +125,7 @@ export default function InviteAdminModal() {
                 placeholder="Firstname Lastname"
                 type="text"
                 variant="standard"
+                className={styles['font']}
               />
             </div>
             <div className={styles['col']}>
@@ -123,6 +138,7 @@ export default function InviteAdminModal() {
                 placeholder="thisisanemail@email.com"
                 type="text"
                 variant="standard"
+                className={styles['font']}
               />
             </div>
           </div>
@@ -131,8 +147,8 @@ export default function InviteAdminModal() {
         <div className={styles['actions']}>
           <DialogActions>
             <ThemeProvider theme={theme}>
-              <Button style={{ textTransform: 'none' }} variant="outlined" onClick={handleClose}>Cancel</Button>
-              <Button style={{ textTransform: 'none' }} variant="contained" onClick={handleClose}>Send Invites</Button>
+              <Button style={{ textTransform: 'none' }} className={styles['font']} variant="outlined" onClick={handleClose}>Cancel</Button>
+              <Button style={{ textTransform: 'none' }} className={styles['font']} variant="contained" onClick={handleClose}>Send Invites</Button>
             </ThemeProvider>
           </DialogActions>
         </div>

@@ -72,6 +72,8 @@
 .title {
   display: flex;
   padding-top: 4%;
+  padding-left: 0%;
+  margin-left: 30px;
 }
 
 .send {
@@ -80,4 +82,22 @@
 
 .cancel {
   background-color: #253C85;
+}
+
+.text {
+  font-family: Avenir;
+  font-style: normal;
+}
+
+.invite-icon {
+  /* margin-left: 5%; */
+  margin-right: 3%;
+}
+
+.font {
+  font-family: Avenir;
+}
+
+.h4 {
+  font-family: Avenir;
 }
