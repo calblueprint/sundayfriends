@@ -5,9 +5,22 @@ body {
   font-family: Avenir;
 }
 
+h2 {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.72px;
+  letter-spacing: 1px;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h1 {
+  color: var(--grey-dark);
 }
 
 * {
@@ -34,4 +47,8 @@ a {
   --while: #ffffff;
   --alert-text: #e94444;
   --alert: #fce3e3;
+  --grey-darker: #646464;
+  --grey-alt: #cecccc;
+  --off-white: #ededed;
+  --hover: #f6f6f6;
 }
