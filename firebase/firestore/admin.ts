@@ -1,18 +1,17 @@
 import firebaseApp from '../firebase';
-import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc, where } from 'firebase/firestore';
+import 'firebase/firestore';
 import { Admin } from '../../types/schema';
 
-const db = getFirestore(firebaseApp);
-const adminCollection = collection(db, "admins");
+const db = firebaseApp.firestore();
+const adminCollection = db.collection('admins');
 
 /**
  * Returns the admin data from firestore with the given adminId
  */
 export const getAdmin = async (adminId: string): Promise<Admin> => {
     try {
-        const docRef = doc(db, "admins", adminId);
-        const docSnap = await getDoc(docRef);
-        return docSnap.data() as Admin;
+        const doc = await adminCollection.doc(adminId).get();
+        return doc.data() as Admin;
     } catch (e) {
         console.error(e);
         throw e;
@@ -24,8 +23,7 @@ export const getAdmin = async (adminId: string): Promise<Admin> => {
  */
 export const addAdmin = async (admin: Admin) => {
     try {
-        const newAdminRef = doc(adminCollection);
-        await setDoc(newAdminRef, admin)
+        await adminCollection.doc().set(admin);
     } catch (e) {
         console.warn(e);
         throw e;
@@ -37,8 +35,7 @@ export const addAdmin = async (admin: Admin) => {
  */
 export const deleteAdmin = async (adminId: string) => {
     try {
-        const adminRef = doc(adminCollection, adminId);
-        await deleteDoc(adminRef);
+        await adminCollection.doc(adminId).delete();
     } catch (e) {
         console.warn(e);
         throw e;
