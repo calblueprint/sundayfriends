@@ -22,8 +22,8 @@ import { TransactionList } from '../../components/TransactionList/TransactionLis
 import { getAllTransactions } from '../../firebase/firestore/transaction';
 import { getAdmin } from '../../firebase/firestore/admin';
 import { getUser } from '../../firebase/firestore/user';
-import { useAuth } from '../../firebase/auth/useAuth';
-import { useRouter } from 'next/router';
+import { useAuth } from "../../firebase/auth/useAuth";
+import { useRouter } from "next/router";
 
 const TransactionsPage: React.FunctionComponent = () => {
 
@@ -31,12 +31,10 @@ const TransactionsPage: React.FunctionComponent = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if (!loading && !authUser) {
+        if (!authUser && !loading) {
             router.push('/');
         }
     }, [authUser, loading]);
-
-    console.log(authUser)
 
     const BasicTabs = () => {
         const [value, setValue] = useState(0);
