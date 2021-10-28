@@ -6,8 +6,20 @@ import { AdminItem } from '../../components/AdminItem/AdminItem';
 import itemstyles from '../../components/AdminItem/AdminItem.module.css';
 import firebase from "../../firebase/firebase";
 import { getDocs } from '@firebase/firestore';
+import { useAuth } from '../../firebase/auth/useAuth';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const AdminPage: React.FunctionComponent = () => {
+
+  const { authUser, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!authUser && !loading) {
+      router.push('/');
+    }
+  }, [authUser, loading]);
 
   const renderCategoryHeader = () => {
     return (
