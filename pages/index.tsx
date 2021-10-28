@@ -33,6 +33,7 @@ const SignInScreen: React.FC = () => {
           <input
             id="password"
             name="password"
+            type="password"
             {...register('password', { required: true })}
           />
           <Button type='submit'>Sign In</Button>
