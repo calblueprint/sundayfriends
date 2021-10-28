@@ -1,46 +1,37 @@
 import { useState, useEffect } from "react";
 import firebaseApp from "../firebase";
 import { getAdmin } from "../firestore/admin";
+import { Admin } from "../../types/schema";
 
 const auth = firebaseApp.auth();
 
 export type AuthData = {
-    uid: string,
-    email: string,
-}
-
-export type UserAuth = {
-    authUser: AuthData,
+    authUser: Admin,
     loading: Boolean,
 }
 
-const getUserData = (user) => {
-    return {
-        uid: user.uid,
-        email: user.email,
-    } as AuthData;
-}
-
+// TODO handle/throw errors accordingly
 export const signInWithEmailAndPassword = async (email: string, password: string) => {
-    await auth.signInWithEmailAndPassword(email, password);
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
 }
 
 export const registerWithEmailAndPassword = async (email: string, password: string) => {
-    await auth.createUserWithEmailAndPassword(email, password);
-}
-
-const verifyAdmin = async (uid: string): Promise<boolean> => {
-    const doc = await getAdmin(uid);
-    console.log(doc)
-    console.log('12314324')
-    if (doc) {
-        return true;
+    try {
+        await auth.createUserWithEmailAndPassword(email, password);
+    } catch (e) {
+        console.error(e);
+        throw e;
     }
-    return false;
+    // TODO make sure an entry with corresponding info is created in the admins table
 }
 
 const useFirebaseAuth = () => {
-    const [authUser, setAuthUser] = useState<AuthData>(null);
+    const [authUser, setAuthUser] = useState<Admin>(null);
     const [loading, setLoading] = useState<Boolean>(false);
 
     const handleAuthChange = async (authState) => {
@@ -51,20 +42,19 @@ const useFirebaseAuth = () => {
         }
 
         setLoading(true);
-        const userData = getUserData(authState);
-        const isAdmin = await verifyAdmin(userData.uid);
-        console.log('sfdsafsfas')
-        console.log(isAdmin)
-        if (isAdmin) {
-            setAuthUser(userData);
+        // verify if adminData exists
+        const adminData = await getAdmin(authState.uid);
+        if (adminData) {
+            setAuthUser(adminData);
         } else {
             setAuthUser(null);
             await auth.signOut();
-            throw new Error('not an admin');
+            throw new Error("Not an admin user");
         }
         setLoading(false);
     }
 
+    // add observer to deal with changes in auth state
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(handleAuthChange);
         return () => unsubscribe();

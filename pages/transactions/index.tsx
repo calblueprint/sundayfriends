@@ -36,6 +36,8 @@ const TransactionsPage: React.FunctionComponent = () => {
         }
     }, [authUser, loading]);
 
+    console.log(authUser)
+
     const BasicTabs = () => {
         const [value, setValue] = useState(0);
         const [allTransactions, setTransactions] = useState([]);
