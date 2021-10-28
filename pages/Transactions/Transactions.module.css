@@ -328,6 +328,10 @@
   text-transform: uppercase;
 }
 
+.autocomplete-option-select:hover {
+  background-color: var(--sapphire);
+}
+
 .autocomplete-text-field {
   background-color: #f7f7f7;
 }

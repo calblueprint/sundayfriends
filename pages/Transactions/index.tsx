@@ -21,19 +21,19 @@ import styles from './Transactions.module.css';
 import itemstyles from '../../components/TransactionItem/TransactionItem.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
 import Icon from '../../assets/Icon';
-import { Transaction } from '../../types/schema';
 import { TransactionList } from '../../components/TransactionList/TransactionList';
-import { getAllTransactions } from '../../firebase/firestore/transaction'; 
+import { getAllTransactions, addTransaction } from '../../firebase/firestore/transaction'; 
 import { getAllUsers } from '../../firebase/firestore/user';
+import { Transaction } from '../../types/schema';
  
 const TransactionsPage: React.FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [allUsers, setUsers] = React.useState([]);
     const [allTransactions, setTransactions] = useState([]);
     const [success, setSuccess] = useState(false);
-    const [addUser, setAddUser] = useState('');
-    const [addPoints, setAddPoints] = useState('');
-    const [addSign, setAddSign] = useState('');
+    const [addUser, setAddUser] = useState(null);
+    const [addPoints, setAddPoints] = useState('10');
+    const [addType, setAddType] = useState('');
     const [addMessage, setAddMessage] = useState('');
 
     useEffect(() => {
@@ -54,8 +54,22 @@ const TransactionsPage: React.FunctionComponent = () => {
     };
 
     const handleConfirm = () => {
-        //handle post request
+        console.log(addUser.family_id);
+        console.log(addPoints);
+        console.log(addType);
         console.log(addMessage);
+
+        //handle post request
+        const adding = {
+            admin_name: 'current Admin',
+            date: new Date(),
+            description: addMessage,
+            family_id: addUser.family_id,
+            point_gain: addType == 'redeem' ? -parseInt(addPoints) : parseInt(addPoints),
+            user_name: addUser.full_name,
+        }
+        addTransaction(adding as Transaction);
+
         setSuccess(true);
         
     }
@@ -75,8 +89,8 @@ const TransactionsPage: React.FunctionComponent = () => {
 
     const resetFields = () => {
         setAddUser('');
-        setAddPoints('');
-        setAddSign('');
+        setAddPoints('10');
+        setAddType('');
         setAddMessage('');
     }
  
@@ -157,7 +171,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                 return(
                     <div className={styles['success-div']}>
                         <p className={styles['success-title']}>Success!</p>
-                        <p className={styles['success-message']}>Transaction for {addUser} has been added</p>
+                        <p className={styles['success-message']}>Transaction for {addUser.full_name} has been added</p>
                         <div>
                             <Button className={styles['success-close-button']} onClick={handleClose}>Close</Button>
                             <Button className={styles['add-more-button']} onClick={handleAddMore}>Add More</Button>
@@ -176,17 +190,18 @@ const TransactionsPage: React.FunctionComponent = () => {
                         <div>
                             <p className={styles['select-category']}>USER</p>
                             <Autocomplete
+                                onChange={(event, value) => setAddUser(value)}
                                 id="country-select-demo"
                                 sx={{ width: 300 }}
                                 options={allUsers}
                                 autoHighlight
                                 getOptionLabel={(option) => option.full_name}
                                 size='small'
-                                // renderOption={(props, option) => (
-                                //     <Box component="li" {...props}>
-                                //         {option.full_name}
-                                //     </Box>
-                                // )}
+                                renderOption={(props, option) => (
+                                    <Box component='li' sx={{ style:{backgroundColor: 'black' } }} {...props}>
+                                        {option.full_name}
+                                    </Box>
+                                )}
                                 renderInput={(params) => (
                                     <TextField
                                     className= {styles['autocomplete-text-field']}
@@ -199,6 +214,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                                         ...params.inputProps,
                                         autoComplete: 'new-password', // disable autocomplete and autofill
                                     }}
+                                    onChange={(e) => setAddUser(e.target.value)}
                                     />
                                 )}
                             />
@@ -217,9 +233,9 @@ const TransactionsPage: React.FunctionComponent = () => {
                             </div>
                             <div id={styles['action']}>
                                 <p className={styles['select-category']}>ACTION</p>
-                                <RadioGroup row>
-                                    <FormControlLabel value="female" control={<Radio />} label={<p className={styles['radio-label']}>Redeem</p>} />
-                                    <FormControlLabel value="male" control={<Radio />} label={<p className={styles['radio-label']}>Earn</p>} />
+                                <RadioGroup row onChange={(e) => setAddType(e.target.value)}>
+                                    <FormControlLabel value="redeem" control={<Radio />} label={<p className={styles['radio-label']}>Redeem</p>} />
+                                    <FormControlLabel value="earn" control={<Radio />} label={<p className={styles['radio-label']}>Earn</p>} />
                                 </RadioGroup>
                             </div>
                         </div>
