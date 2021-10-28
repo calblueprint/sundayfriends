@@ -38,14 +38,8 @@ const TransactionsPage: React.FunctionComponent = () => {
               ></Icon>
             </Box>
             <Box className={styles["date-display"]}>Sep 5 - Sep 12</Box>
-            <Icon
-              className={styles["chevron-left"]}
-              type={"chevronLeft"}
-            ></Icon>
-            <Icon
-              className={styles["chevron-right"]}
-              type={"chevronRight"}
-            ></Icon>
+            <Icon className={styles["chevron"]} type={"chevronLeft"}></Icon>
+            <Icon className={styles["chevron"]} type={"chevronRight"}></Icon>
           </div>
           <div className={styles["filters"]}>
             <FormControl className={styles["filter-select"]} size="small">

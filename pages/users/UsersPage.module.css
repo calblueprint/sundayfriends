@@ -10,7 +10,13 @@
 }
 
 .tabs {
-  margin-bottom: 50px;
+  margin-bottom: 35px;
+}
+
+.tab {
+  font-weight: bold;
+  color: var(--grey-mid);
+  text-transform: none;
 }
 
 .heading {
