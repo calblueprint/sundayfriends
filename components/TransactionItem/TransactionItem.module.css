@@ -36,7 +36,7 @@
 }
 
 .adminV2 {
-  width: 17%;
+  width: 19%;
 }
 
 .redeem-action {
@@ -66,7 +66,7 @@
 }
 
 .actionV2 {
-  width: 17%;
+  width: 16%;
 }
 
 .message {
@@ -82,7 +82,7 @@
 }
 
 .pos-changeV2 {
-  width: 12%;
+  width: 11%;
   color: #74ab67;
   margin-left: 1%;
 }
@@ -103,7 +103,7 @@
 }
 
 .neg-changeV2 {
-  width: 12%;
+  width: 11%;
   color: #ee512f;
   margin-left: 1%;
 }
