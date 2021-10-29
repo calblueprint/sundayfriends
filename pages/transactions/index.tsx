@@ -95,6 +95,13 @@ const TransactionsPage: React.FunctionComponent = () => {
  
    const BasicTabs = () => {
        const [value, setValue] = useState(0);
+       const [allTransactions, setTransactions] = useState([]);
+
+       useEffect(() => {
+            getAllTransactions().then(items => {
+                setTransactions(items);
+            })
+        }, []);
       
        const handleChange = (event, newValue) => {
            setValue(newValue);
