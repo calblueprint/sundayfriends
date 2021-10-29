@@ -6,31 +6,18 @@
   justify-content: center;
   align-items: center;
   background-color: #FAFAFA;
-}
-
-.h2 {
-  color: #646464;
-  font-family: Avenir;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 29.72px;
-  letter-spacing: 1px;
-  margin-left: 60px;
-}
-
-.container {
-  padding-left: 5%;
-  padding-right: 5%;
-  align-items: center;
+  height: 800px;
 }
 
 .table {
+  width: 90%;
   align-items: center;
   border-radius: 30px;
   background-color: #FFFFFF;
-  height: 600px;
+  height: 90%;
   border: 2px solid #ebebeb;
+  position: relative;
+  overflow: hidden;
 }
 
 .button {
@@ -39,7 +26,10 @@
   border-radius: 7px;
   height: 33px;
   font-size: 14px;
-  float: right;
+  font-family: Avenir;
+  font-weight: 800;
+  align-self: center;
+  margin-left: auto;
 }
 
 .button:hover {
@@ -47,6 +37,67 @@
   color: #646464;
 }
 
-.buttons {
-  margin-left: 16%;
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 2%;
+  padding-right: 2%;
+  height: 10%;
+  border-bottom: 1px solid #ebebeb;
+  color: #646464;
+  font-size: 13px;
+}
+
+.header {
+  width: 90%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.manageButton {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.tableHeader {
+  background: #EDEDED;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 2%;
+  padding-right: 2%;
+  height: 10%;
+  font-weight: 800;
+  color: #646464;
+  font-family: Avenir;
+  font-size: 14px;
+}
+
+.section-header {
+  display: flex;
+  flex-direction: row;
+  height: 46px;
+  align-items: center;
+  background-color: #E6ECFE;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+#category-text {
+  font-weight: 500;
+  color: #272929;
+}
+
+.list {
+  padding-top: 0%;
+  padding-bottom: 0%;
+  height: fit-content;
 }

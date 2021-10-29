@@ -13,27 +13,30 @@
 }
 
 .date {
-  width: 8%;
+  width: 9%;
 }
 
 .dateV2 {
-  width: 12%;
+  width: 13%;
 }
 
 .username {
-  width: 14%;
+  width: 12%;
+  min-width: 90px;
 }
 
 .fid {
   width: 6%;
+  min-width: 60px;
 }
 
 .admin {
   width: 14%;
+  min-width: 80px;
 }
 
 .adminV2 {
-  width: 18%;
+  width: 17%;
 }
 
 .redeem-action {
@@ -63,7 +66,7 @@
 }
 
 .actionV2 {
-  width: 15%;
+  width: 17%;
 }
 
 .message {
@@ -73,37 +76,41 @@
 }
 
 .messageV2 {
-  width: 40%;
+  width: 37%;
   flex-wrap: wrap;
   word-wrap: break-word;
 }
 
-.pos-change {
-  width: 7%;
+.pos-changeV2 {
+  width: 12%;
   color: #74ab67;
   margin-left: 1%;
 }
 
-.pos-changeV2 {
-  width: 10%;
+.pos-change {
+  width: 7%;
+  min-width: 40px;
   color: #74ab67;
   margin-left: 1%;
+  flex-wrap: nowrap;
 }
 
 .neg-change {
   width: 7%;
   color: #ee512f;
   margin-left: 1%;
+  min-width: 40px;
 }
 
 .neg-changeV2 {
-  width: 10%;
+  width: 12%;
   color: #ee512f;
   margin-left: 1%;
 }
 
 .trash {
   width: 2%;
+  min-width: 30px;
 }
 
 .trash-icon {

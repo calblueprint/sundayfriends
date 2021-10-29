@@ -5,6 +5,8 @@ import Icon from "../../../assets/Icon";
 import { TransactionItem } from "../../TransactionItem/TransactionItem";
 import { SortTriangles } from "../../../components/SortTriangles/SortTriangles";
 import itemstyles from "../../../components/TransactionItem/TransactionItem.module.css";
+import { getAllTransactions } from "../../../firebase/firestore/transaction";
+import React, { useState, useEffect } from "react";
 
 type UserModalProps = {
   family?: Family;
@@ -23,33 +25,13 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
   isFamilyPath,
   setIsOpenFam,
 }: UserModalProps) => {
-  const temp = [
-    {
-      date: new Date(),
-      username: "Firstname Lastname",
-      fid: "H1234",
-      admin: "Firstname Lastname",
-      message: "short messaging explaining what the transaction was",
-      change: 10,
-    },
-    {
-      date: new Date(),
-      username: "Jacob Kim",
-      fid: "431",
-      admin: "Cindy Zhang",
-      message: "Jacob > Cindy",
-      change: -10,
-    },
-    {
-      date: new Date(),
-      username: "bababooey",
-      fid: "123",
-      admin: "Espinosa Dad",
-      message:
-        "im not drunk i swear i am not i really am not i swera to god not drunk oh look its two lines and it looks good!",
-      change: -10,
-    },
-  ];
+  const [allTransactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    getAllTransactions().then((items) => {
+      setTransactions(items);
+    });
+  }, []);
   return (
     <Modal open={isOpen}>
       <div className={styles["modal"]}>
@@ -191,14 +173,14 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
         </div>
         <div className={styles["transactionBox"]}>
           <List className={styles["list"]}>
-            {temp.map((transaction) => {
+            {allTransactions.map((transaction) => {
               return (
                 <TransactionItem
-                  key={transaction.fid}
+                  key={transaction.user_name}
                   date={transaction.date}
-                  admin={transaction.admin}
-                  message={transaction.message}
-                  change={transaction.change}
+                  adminName={transaction.admin_name}
+                  message={transaction.description}
+                  change={transaction.point_gain}
                 />
               );
             })}

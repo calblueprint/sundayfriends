@@ -1,32 +1,40 @@
+import React, { useState, useEffect } from "react";
 import styles from "../TransactionItem/TransactionItem.module.css";
-import { ListItem, SvgIcon } from "@mui/material";
+import { ListItem } from "@mui/material";
 import Icon from "../../assets/Icon";
+import { Timestamp } from "@firebase/firestore";
+import { getAdmin } from "../../firebase/firestore/admin";
+import { Admin, User } from "../../types/schema";
+import { getUser } from "../../firebase/firestore/user";
 
 type TransactionItemProps = {
-  date: Date;
-  username?: string;
+  date: Date | Timestamp;
+  userName?: string;
   fid?: string;
-  admin: string;
+  adminName: string;
   message: string;
   change: number;
 };
 
 export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
   date,
-  username,
+  userName,
   fid,
-  admin,
+  adminName,
   message,
   change,
 }: TransactionItemProps) => {
+  const dateFormat = new Date(date.toMillis());
   return (
     <ListItem className={styles["list-item"]}>
       <div className={fid ? styles["date"] : styles["dateV2"]}>
-        {date.toLocaleDateString("en-US")}
+        {dateFormat.toLocaleDateString("en-US")}
       </div>
-      {username ? <div className={styles["username"]}>{username}</div> : null}
+      {userName ? <div className={styles["username"]}>{userName}</div> : null}
       {fid ? <div className={styles["fid"]}>{fid}</div> : null}
-      <div className={fid ? styles["admin"] : styles["adminV2"]}>{admin}</div>
+      <div className={fid ? styles["admin"] : styles["adminV2"]}>
+        {adminName}
+      </div>
       <div className={fid ? styles["action"] : styles["actionV2"]}>
         {change > 0 ? (
           <div className={styles["earn-action"]}>Earn</div>

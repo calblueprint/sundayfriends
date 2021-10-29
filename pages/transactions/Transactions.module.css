@@ -42,7 +42,7 @@
 }
 
 .add-button {
-  background-color: #253c85;
+  background-color: var(--sapphire);
   color: white;
   border-radius: 7px;
   height: 33px;
@@ -53,7 +53,7 @@
 }
 
 .upload-button {
-  background-color: #253c85;
+  background-color: var(--sapphire);
   color: white;
   border-radius: 7px;
   height: 33px;
@@ -63,12 +63,12 @@
 }
 
 .add-button:hover {
-  background-color: #253c85;
+  background-color: var(--sapphire);
   color: #686868;
 }
 
 .upload-button:hover {
-  background-color: #253c85;
+  background-color: var(--sapphire);
   color: #686868;
 }
 
@@ -76,65 +76,76 @@
   width: 20px;
   height: 20px;
   margin-right: 4px;
-  fill: var(--white);
 }
 
-.box {
-  height: 100%;
+.transaction-container {
+  width: 100%;
+  border-radius: 15px 15px 30px 30px;
 }
 
 .tab-box {
   height: fit-content;
   padding: 0%;
-  border: 2px solid #ebebeb;
-  border-radius: 0px 10px 10px 10px;
+  margin-left: 7px;
+  border-radius: 0px 30px 30px 30px;
+  /* border: 2px solid #e6ecfe; */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 }
 
 .sel-tab {
-  border: 2px solid #ebebeb;
-  border-radius: 10px 10px 0px 0px;
-  min-width: 8vw;
+  /* border: 2px solid #e6ecfe; */
+  background-color: white;
+  border-radius: 15px 15px 0px 0px;
+  min-width: 110px;
+  width: 12%;
+  margin-left: 7px;
   margin-right: 7px;
-  color: #253c85;
+  color: var(--sapphire);
   text-decoration-line: underline;
   text-decoration-thickness: 2px;
-  text-decoration-color: #253c85;
+  text-decoration-color: var(--sapphire);
   text-underline-offset: 6px;
   text-transform: none;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  margin-top: 10px;
 }
 
 .tab {
-  min-width: 8vw;
+  min-width: 110px;
+  width: 12%;
+  margin-left: 7px;
   margin-right: 7px;
-  background-color: #526dc2;
-  border-radius: 10px 10px 0px 0px;
+  background-color: var(--sapphire-mid);
+  border-radius: 15px 15px 0px 0px;
   color: white;
   text-transform: none;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  margin-top: 10px;
 }
 
 .filter-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 50px;
+  height: 70px;
   margin-left: 2%;
   margin-right: 2%;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
 .date-range {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 25%;
+  width: 300px;
 }
 
 .calendar-box {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e6ecfe;
+  background-color: var(--sapphire-light);
   height: 35px;
   width: 35px;
   border-radius: 6px;
@@ -148,7 +159,7 @@
 .date-display {
   display: flex;
   align-items: center;
-  background-color: #e6ecfe;
+  background-color: var(--sapphire-light);
   padding: 8px;
   padding-left: 12px;
   padding-right: 12px;
@@ -164,7 +175,6 @@
   cursor: pointer;
   width: 15px;
   height: 15px;
-  stroke: var(--sapphire);
 }
 
 .chevron-right {
@@ -172,7 +182,6 @@
   cursor: pointer;
   width: 15px;
   height: 15px;
-  stroke: var(--sapphire);
 }
 
 .filters {
@@ -183,6 +192,7 @@
 
 .filter-select {
   width: 25%;
+  min-width: 80px;
 }
 
 .filter-label {
@@ -193,7 +203,7 @@
 .select {
   height: 35px;
   align-items: center;
-  background-color: #e6ecfe;
+  background-color: var(--sapphire-light);
   border-radius: 12px;
   border: 0px solid black;
 }
@@ -202,6 +212,7 @@
   border: 1px solid #f0f0f0;
   border-radius: 19.5px;
   width: 30%;
+  min-width: 175px;
   height: 36px;
   font-family: Avenir;
   font-size: 12px;
@@ -241,4 +252,9 @@
   font-weight: 500;
   margin-right: 10px;
   color: #272929;
+}
+
+.children {
+  margin: 0px;
+  margin-top: 0px;
 }
