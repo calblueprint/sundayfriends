@@ -2,27 +2,69 @@ import React from 'react';
 import Layout from "../../components/Layout/Layout";
 import styles from "./Profile.module.css" ;
 import Button from "@mui/material/Button";
-import { AboutInfo } from '../../components/ProfileInfo/AboutInfo';
-import { LoginDetails } from '../../components/ProfileInfo/LoginDetails';
-import { Typography } from '@mui/material';
-import router from 'next/router';
+import { ProfileInfo, FieldInfo } from '../../components/ProfileInfo/ProfileInfo';
+import Icon from "../../assets/Icon";
 
 const ProfileSettingsPage: React.FunctionComponent = () => {
     
+    const aboutData: FieldInfo[] = [
+        {
+            iconName: 'nameicon',
+            fieldName: 'NAME',
+            fieldValue: 'Cindy Zhang'
+        },
+        {
+            iconName: 'singleperson',
+            fieldName: 'ROLE',
+            fieldValue: 'Executive Director'
+        },
+        {
+            iconName: 'lastactive',
+            fieldName: 'LAST ACTIVE',
+            fieldValue: 'October 20, 2021'
+        },
+        {
+            iconName: 'datejoined',
+            fieldName: 'DATE JOINED',
+            fieldValue: 'January 20, 2021'
+        }
+    ]
+
+    const loginInfo: FieldInfo[] = [
+        {
+            iconName: 'email',
+            fieldName: 'EMAIL',
+            fieldValue: 'chloeisnotarealdog@gmail.com'
+        },
+        {
+            iconName: 'phone',
+            fieldName: 'PHONE #',
+            fieldValue: '(123) 456 - 7890'
+        },
+        {
+            iconName: 'password',
+            fieldName: 'PASSWORD',
+            fieldValue: '*******'
+        }
+    ]
+
     const displayinfo = () => {
         return (
             <div className={styles.profile}>
                 <div className = {styles.namebar}>
-                    <h1> Cindy Zhang </h1>
-                    <Button className={styles.button} onClick={() => {router.push(`./EditProfile`);}}>Edit</Button>
+                    <div className={styles.h1}> Cindo Zhang </div>
+                    <Button className={styles.button}>
+                        <Icon type="editpencil" className={styles.editicon}></Icon>
+                        Edit
+                    </Button>
                 </div>
-                <hr></hr>
+                <hr className={styles.hr}></hr>
                 <div className = {styles.boxes}>
                     <div className = {styles.box}>
-                        <AboutInfo name="Cindy Zhang" role="Executive Director" last_active="September 20, 2021" date_joined="September 20, 2021"></AboutInfo>
+                       <ProfileInfo data={aboutData} cardTitle='About'/>
                     </div>
                     <div className = {styles.box}>
-                        <LoginDetails email="chloeisarealdog@gmail.com" phone="123-456-7890" password="********"></LoginDetails>
+                        <ProfileInfo data={loginInfo} cardTitle='Login Details'/>
                     </div>
                 </div>                
             </div>
@@ -31,8 +73,11 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
 
     return (
         <Layout title = 'Profile'>
-            <div className = {styles.all}>
-                <h2 className={styles.h2}>PROFILE SETTINGS</h2>
+            <div className = {styles.page}>
+                <div className={styles.pagetitle}>
+                    <Icon type="settings"></Icon>
+                    <h2>PROFILE SETTINGS</h2>
+                </div>
                 {displayinfo()}
             </div>
         </Layout>

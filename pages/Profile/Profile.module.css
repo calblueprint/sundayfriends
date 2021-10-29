@@ -1,16 +1,20 @@
-.all {
+
+.page {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 92px;
-    width:100vh;
+    margin: 7%;
+    margin-top: 10%;
+    width:100%;
     height: 100%;
-    min-height: 100%;
+    background-color: #FAFAFA 100vh;
 }
 
-.h2 {
-    margin-left: 5%;
-    margin-right: 5%;
+.pagetitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1%;
 }
 
 .namebar {
@@ -18,44 +22,58 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .boxes {
-    width: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 10px;
-    gap: 4%;
+    margin-top: 2%;
+    gap: 5%;
 }
 
 .box {
-    padding: 5%;
+    padding: 4%;
     align-content: space-between;
     align-items: center;
-    border: 1px ;
+    border: 2px solid var(--sapphire-light);
     border-radius: 25px;
-    border-style: outset;
     width: 100%;
     background-color: white;
 }
 
-.profile {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-}
-
 .button {
-    background-color: #253C85;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--sapphire);
     color: white;
     border-radius: 7px;
-    height: 33px;
+    width: 84px;
+    height: 37px;
     font-size: 14px;
     margin-right: 20px;
     text-transform: none;
 }
 
+.h1 {
+    width: 218px;
+    height: 47px;
+    left: 193px;
+    top: 208px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 47px;
+    color: var(--noirish);
+}
+
+.hr {
+    height: 2px;
+    background-color: var(--sapphire-light);
+}
