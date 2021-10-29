@@ -18,7 +18,6 @@ import { Button,
    Autocomplete,}
 from "@mui/material";
 import styles from './Transactions.module.css';
-import itemstyles from '../../components/TransactionItem/TransactionItem.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
 import Icon from '../../assets/Icon';
 import { TransactionList } from '../../components/TransactionList/TransactionList';
@@ -189,6 +188,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                         </div>
                         <div>
                             <p className={styles['select-category']}>USER</p>
+                            
                             <Autocomplete
                                 onChange={(event, value) => setAddUser(value)}
                                 id="country-select-demo"

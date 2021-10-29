@@ -6,7 +6,6 @@ import { SortTriangles } from '../SortTriangles/SortTriangles';
 import { List } from '@mui/material';
 import styles from '../TransactionList/TransactionList.module.css';
 import itemstyles from '../TransactionItem/TransactionItem.module.css';
-import { getAllTransactions, getPosTransactions, getNegTransactions } from '../../firebase/firestore/transaction';
 import { Transaction } from '../../types/schema';
 
 type TransactionListProps = {
