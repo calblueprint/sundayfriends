@@ -23,7 +23,7 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 1%;
-    margin-bottom: 1%;
+    margin-bottom: 3%;
 }
 
 .boxes {
@@ -31,7 +31,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 2%;
+    margin-top: 4%;
     gap: 5%;
 }
 
@@ -75,5 +75,5 @@
 
 .hr {
     height: 2px;
-    background-color: var(--sapphire-light);
+    color: var(--sapphire-light);
 }

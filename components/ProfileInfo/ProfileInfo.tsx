@@ -26,7 +26,7 @@ type ProfileInfoProps = {
             <br></br>
             {
                 data.map((field) => (
-                    <div>
+                    <div key={field.fieldName}>
                         <div className={styles.info}>
                             <div className={styles.fields}>
                                 <Icon type={field.iconName}/>
