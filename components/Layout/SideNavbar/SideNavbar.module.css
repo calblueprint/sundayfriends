@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 26px;
+  margin-bottom: 20px;
   color: var(--grey-light);
   flex-direction: column;
 }
@@ -35,6 +35,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 11.5px;
+  margin-top: 25px;
 }
 
 .border {
