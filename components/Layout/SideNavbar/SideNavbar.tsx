@@ -1,4 +1,3 @@
-import React from "react";
 import { Drawer, List, ListItem, ListItemText } from "@mui/material";
 import { useRouter } from "next/router";
 import styles from "./SideNavbar.module.css";
@@ -35,7 +34,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"users"}
           onClick={() => {
-            router.push(`/Users`);
+            router.push(`/users`);
           }}
           className={styles.item}
         >
@@ -48,7 +47,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"admins"}
           onClick={() => {
-            router.push(`/Admins`);
+            router.push(`/admins`);
           }}
           className={styles.item}
         >
@@ -61,7 +60,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"transactions"}
           onClick={() => {
-            router.push(`/Transactions`);
+            router.push(`/transactions`);
           }}
           className={styles.item}
         >
@@ -74,7 +73,7 @@ const SideNavbar: React.FunctionComponent = () => {
           button
           key={"inventory"}
           onClick={() => {
-            router.push(`/Inventory`);
+            router.push(`/inventory`);
           }}
           className={styles.item}
         >
