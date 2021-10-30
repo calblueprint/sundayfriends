@@ -2,9 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
   color: var(--grey-light);
   flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 15px;
 }
 
 .list {
@@ -19,7 +20,7 @@
 }
 
 .sidenav-paper {
-  width: 120px;
+  width: 160px;
   box-sizing: border-box;
   border-radius: 0px 35px 35px 0px;
   background-color: var(--sapphire);
@@ -28,13 +29,12 @@
 }
 
 .SFlogo {
-  transform: scale(1.8);
+  transform: scale(2.5);
 }
 
 .icon {
   display: flex;
   justify-content: center;
-  margin-bottom: 11.5px;
   margin-top: 25px;
 }
 
@@ -45,8 +45,8 @@
   background-color: white;
   border-radius: 50%;
   margin: 26px;
-  width: 62px;
-  height: 62px;
+  width: 85px;
+  height: 85px;
   left: 24px;
   top: 33px;
 }
