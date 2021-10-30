@@ -12,7 +12,7 @@ export type Transaction = {
 export type Family = {
   total_points: number;
   family_name: string;
-  user_ids: string[];
+  user_ids: User[];
   family_id: string;
 };
 

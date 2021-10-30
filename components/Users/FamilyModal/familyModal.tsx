@@ -1,6 +1,6 @@
 import { Modal } from "@mui/material";
 import styles from "./FamilyModal.module.css";
-import { Family, User } from "../../../types/schema";
+import { Family } from "../../../types/schema";
 import Icon from "../../../assets/Icon";
 import UserList from "../UsersList/usersList";
 
@@ -8,14 +8,12 @@ type FamilyModalProps = {
   family: Family;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  users: User[];
 };
 
 const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
   family,
   isOpen,
   setIsOpen,
-  users,
 }: FamilyModalProps) => {
   return (
     <Modal open={isOpen}>
@@ -57,7 +55,7 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
         <h4>Family Members</h4>
         <div className={styles["modalContent"]}>
           <UserList
-            users={users}
+            users={family.user_ids}
             family={family}
             isFamilyPath={true}
             setIsOpenFam={setIsOpen}

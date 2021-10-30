@@ -35,31 +35,11 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
   family,
 }: FamilyCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const getUsersById = async (user_ids: string[]): Promise<User[]> => {
-      const users = [];
-      user_ids.map((user) =>
-        getUser(user).then((items) => {
-          users.push(items);
-        })
-      );
-      return users;
-    };
-    getUsersById(family?.user_ids).then((items) => {
-      setUsers(items);
-    });
-  }, [family]);
 
   return (
     <div>
-      <FamilyModal
-        family={family}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        users={users}
-      />
+      {/* {console.log(family)} */}
+      <FamilyModal family={family} isOpen={isOpen} setIsOpen={setIsOpen} />
       <Box className={styles["card"]} onClick={() => setIsOpen(true)}>
         <div>
           <div className={styles["row"]}>
@@ -70,10 +50,9 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
             <h3>{family.total_points}</h3>
           </div>
           <Grid container spacing={2}>
-            {users !== [] &&
-              users?.map((user) => (
-                <FamilyMember key={user.full_name} user={user} />
-              ))}
+            {family.user_ids.map((user) => (
+              <FamilyMember key={user.full_name} user={user} />
+            ))}
           </Grid>
         </div>
       </Box>

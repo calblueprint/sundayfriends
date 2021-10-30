@@ -10,7 +10,8 @@ const userCollection = db.collection("users");
  */
 export const getUser = async (userId: string): Promise<User> => {
   try {
-    const trimedId = userId.replace(/\s/g, "");
+    const trimedId = userId.toString().replace(/\s/g, "");
+    // console.log(userId.toString());
     const doc = await userCollection.doc(trimedId).get();
     return doc.data() as User;
   } catch (e) {
