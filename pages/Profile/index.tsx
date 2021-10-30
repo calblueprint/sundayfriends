@@ -53,7 +53,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
             <div className={styles.profile}>
                 <div className = {styles.namebar}>
                     <h1> Cindo Zhang </h1>
-                    <Button className={styles.button}>
+                    <Button variant="contained" className={styles.button}>
                         <Icon type="editpencil" className={styles.editicon}></Icon>
                         Edit
                     </Button>
