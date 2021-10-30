@@ -10,7 +10,8 @@ export type IconType =
    | "upload"
    | "transaction"
    | "trash"
-   | "close";
+   | "close"
+   | "dropTriangle";
  
  
 const IconSvgs: Record<IconType, React.ReactElement> = {
@@ -94,6 +95,11 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
         <circle cx="11.5" cy="11.5" r="11.5" fill="#EBEBEB"/>
         <path d="M9.2002 9.19983L13.8002 13.7998" stroke="#646464" stroke-width="1.15" stroke-linecap="round"/>
         <path d="M9.2002 13.8003L13.8002 9.20029" stroke="#646464" stroke-width="1.15" stroke-linecap="round"/>
+    </SvgIcon>
+   ),
+   dropTriangle: (
+    <SvgIcon width="9" height="4" viewBox="0 0 9 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 4H9L4.5 0L0 4Z" fill="#646464"/>
     </SvgIcon>
    )
 }

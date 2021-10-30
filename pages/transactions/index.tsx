@@ -15,6 +15,9 @@ import { Button,
    RadioGroup,
    FormControlLabel,
    Radio,
+   Accordion,
+   AccordionSummary,
+   AccordionDetails,
    Autocomplete,}
 from "@mui/material";
 import styles from './Transactions.module.css';
@@ -30,6 +33,8 @@ const TransactionsPage: React.FunctionComponent = () => {
     const [allUsers, setUsers] = React.useState([]);
     const [allTransactions, setTransactions] = useState([]);
     const [success, setSuccess] = useState(false);
+    const [selectedUser, setSelectedUser] = useState('Select User')
+    const [expanded, setExpanded] = useState(false);
     const [addUser, setAddUser] = useState(null);
     const [addPoints, setAddPoints] = useState('10');
     const [addType, setAddType] = useState('');
@@ -44,6 +49,11 @@ const TransactionsPage: React.FunctionComponent = () => {
         })
     }, []);
 
+    /*
+    added this sleep function because handleClose function set success back to false before the anchor was set to null
+    (meaning that the) popover would switch back to the first page before closing.
+    The sleep makes this look cleaner, but let me know if there is a less hacky fix.
+    */
     const sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -51,6 +61,20 @@ const TransactionsPage: React.FunctionComponent = () => {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const handleExpand = () => {
+        setExpanded(!expanded);
+    }
+
+    const selectAutocomplete = (value) => {
+        setAddUser(value);
+        if (value != null) {
+            setSelectedUser(value.full_name);
+        } else {
+            setSelectedUser('Select User');
+        }
+        setExpanded(false);
+    }
 
     const handleConfirm = () => {
         console.log(addUser.family_id);
@@ -195,36 +219,47 @@ const TransactionsPage: React.FunctionComponent = () => {
                         </div>
                         <div>
                             <p className={styles['select-category']}>USER</p>
-                            
-                            <Autocomplete
-                                onChange={(event, value) => setAddUser(value)}
-                                id="country-select-demo"
-                                sx={{ width: 300 }}
-                                options={allUsers}
-                                autoHighlight
-                                getOptionLabel={(option) => option.full_name}
-                                size='small'
-                                renderOption={(props, option) => (
-                                    <Box component='li' sx={{ style:{backgroundColor: 'black' } }} {...props}>
-                                        {option.full_name}
-                                    </Box>
-                                )}
-                                renderInput={(params) => (
-                                    <TextField
-                                    className= {styles['autocomplete-text-field']}
-                                    {...params}
-                                    label="Select User"
-                                    InputLabelProps={{
-                                        className: styles['autocomplete-input']
-                                    }}
-                                    inputProps={{
-                                        ...params.inputProps,
-                                        autoComplete: 'new-password', // disable autocomplete and autofill
-                                    }}
-                                    onChange={(e) => setAddUser(e.target.value)}
+                            <Accordion expanded={expanded} onChange={handleExpand}>
+                                <AccordionSummary
+                                expandIcon={<Icon className={styles['drop-triangle']} type={"dropTriangle"}></Icon>}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                                className={styles['accordion']}
+                                >
+                                <div>{selectedUser}</div>
+                                </AccordionSummary>
+                                <AccordionDetails style={{padding: '0px'}}>
+                                    <Autocomplete
+                                        onChange={(event, value) => selectAutocomplete(value)}
+                                        id="country-select-demo"
+                                        options={allUsers}
+                                        autoHighlight
+                                        getOptionLabel={(option) => option.full_name}
+                                        size='small'
+                                        forcePopupIcon={false}
+                                        renderOption={(props, option) => (
+                                            <Box component='li' sx={{ style:{backgroundColor: 'black' } }} {...props}>
+                                                {option.full_name}
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => (
+                                            <TextField
+                                            className= {styles['autocomplete-text-field']}
+                                            {...params}
+                                            label="Select User"
+                                            InputLabelProps={{
+                                                className: styles['autocomplete-input']
+                                            }}
+                                            inputProps={{
+                                                ...params.inputProps,
+                                                autoComplete: 'new-password', // disable autocomplete and autofill
+                                            }}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
+                                </AccordionDetails>
+                            </Accordion>
+                            
                         </div>
                         <div className={styles['amount-action']}>
                             <div id={styles['amount']}>

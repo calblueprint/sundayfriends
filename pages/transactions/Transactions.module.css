@@ -237,7 +237,6 @@
   border: 2px solid rgba(234, 234, 234, 0.4);
   border-radius: 8px;
   width: 370px;
-  height: 400px;
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 30px;
@@ -328,12 +327,22 @@
   text-transform: uppercase;
 }
 
+.accordion {
+  background-color: #eaeaea;
+  margin-top: 0px;
+}
+
+.drop-triangle {
+  width: 10px;
+  height: 5px;
+}
+
 .autocomplete-option-select:hover {
   background-color: var(--sapphire);
 }
 
 .autocomplete-text-field {
-  background-color: #f7f7f7;
+  background-color: white;
 }
 
 .autocomplete-input {
