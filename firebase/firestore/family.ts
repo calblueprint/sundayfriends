@@ -1,18 +1,17 @@
 import firebaseApp from '../firebase';
-import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc, where, orderBy } from 'firebase/firestore';
+import 'firebase/firestore';
 import { Family } from '../../types/schema';
 
-const db = getFirestore(firebaseApp);
-const familyCollection = collection(db, "families");
+const db = firebaseApp.firestore();
+const familyCollection = db.collection('families');
 
 /**
- * Returns the family data from firestore with the given familyId
+ * Returns the family data from firestore with the given userId
  */
 export const getFamily = async (familyId: string): Promise<Family> => {
     try {
-        const docRef = doc(db, "families", familyId);
-        const docSnap = await getDoc(docRef);
-        return docSnap.data() as Family;
+        const doc = await familyCollection.doc(familyId).get();
+        return doc.data() as Family;
     } catch (e) {
         console.error(e);
         throw e;
@@ -20,27 +19,24 @@ export const getFamily = async (familyId: string): Promise<Family> => {
 }
 
 /**
- * Returns all family data from firestore
+ * Returns all the families from firestore
  */
  export const getAllFamilies = async (): Promise<Family[]> => {
     try {
-        // query everything in the family collection
-        const dbQuery = query(familyCollection, orderBy('familyName'));
-        const querySnapshots = await getDocs(dbQuery);
-        return querySnapshots.docs.map((doc) => doc.data() as Family);
+      const allFamilies = await familyCollection.get();
+      return allFamilies.docs.map((doc) => doc.data() as Family);
     } catch (e) {
-        console.warn(e);
-        throw e;
+      console.warn(e);
+      throw e;
     }
-}
+  };
 
 /**
  * Adds the given family data to firestore
  */
 export const addFamily = async (family: Family) => {
     try {
-        const newFamilyRef = doc(familyCollection);
-        await setDoc(newFamilyRef, family)
+        await familyCollection.doc().set(family);
     } catch (e) {
         console.warn(e);
         throw e;
@@ -52,8 +48,7 @@ export const addFamily = async (family: Family) => {
  */
 export const deleteFamily = async (familyId: string) => {
     try {
-        const familyRef = doc(familyCollection, familyId);
-        await deleteDoc(familyRef);
+        await familyCollection.doc(familyId).delete();
     } catch (e) {
         console.warn(e);
         throw e;

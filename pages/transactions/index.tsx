@@ -33,6 +33,7 @@ const TransactionsPage: React.FunctionComponent = () => {
     const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
     const [allUsers, setUsers] = React.useState([]);
     const [allTransactions, setTransactions] = useState([]);
+
     const [success, setSuccess] = useState(false);
     const [selectedUser, setSelectedUser] = useState('Select User')
     const [expanded, setExpanded] = useState(false);
@@ -40,6 +41,8 @@ const TransactionsPage: React.FunctionComponent = () => {
     const [addPoints, setAddPoints] = useState('10');
     const [addType, setAddType] = useState('');
     const [addMessage, setAddMessage] = useState('');
+
+    const [uploadFile, setUploadFile] = useState();
 
     useEffect(() => {
         getAllUsers().then(users => {
@@ -115,10 +118,15 @@ const TransactionsPage: React.FunctionComponent = () => {
     }
 
     const resetFields = () => {
+        setSelectedUser('Select User')
         setAddUser('');
         setAddPoints('10');
         setAddType('');
         setAddMessage('');
+    }
+
+    const handleUpload = () => {
+
     }
 
     const handleUploadConfirm = () => {
@@ -227,7 +235,36 @@ const TransactionsPage: React.FunctionComponent = () => {
                         </div>
                         <div>
                             <p className={styles['select-category']}>USER</p>
-                            <Accordion expanded={expanded} onChange={handleExpand} disableGutters>
+                            <Autocomplete
+                                onChange={(event, value) => selectAutocomplete(value)}
+                                id="country-select-demo"
+                                options={allUsers}
+                                autoHighlight
+                                getOptionLabel={(option) => option.full_name}
+                                size='small'
+                                forcePopupIcon={false}
+                                renderOption={(props, option) => (
+                                    <Box component='li' sx={{ style:{backgroundColor: 'black' } }} {...props}>
+                                        {option.full_name}
+                                    </Box>
+                                )}
+                                renderInput={(params) => (
+                                    <TextField
+                                    className= {styles['autocomplete-text-field']}
+                                    {...params}
+                                    label="Select User"
+                                    InputLabelProps={{
+                                        className: styles['autocomplete-input']
+                                    }}
+                                    inputProps={{
+                                        ...params.inputProps,
+                                        autoComplete: 'new-password', // disable autocomplete and autofill
+                                    }}
+                                    />
+                                )}
+                            />
+
+                            {/* <Accordion expanded={expanded} onChange={handleExpand} disableGutters>
                                 <AccordionSummary
                                 expandIcon={<Icon className={styles['drop-triangle']} type={"dropTriangle"}></Icon>}
                                 aria-controls="panel1a-content"
@@ -237,36 +274,9 @@ const TransactionsPage: React.FunctionComponent = () => {
                                 <div>{selectedUser}</div>
                                 </AccordionSummary>
                                 <AccordionDetails style={{padding: '0px'}}>
-                                    <Autocomplete
-                                        onChange={(event, value) => selectAutocomplete(value)}
-                                        id="country-select-demo"
-                                        options={allUsers}
-                                        autoHighlight
-                                        getOptionLabel={(option) => option.full_name}
-                                        size='small'
-                                        forcePopupIcon={false}
-                                        renderOption={(props, option) => (
-                                            <Box component='li' sx={{ style:{backgroundColor: 'black' } }} {...props}>
-                                                {option.full_name}
-                                            </Box>
-                                        )}
-                                        renderInput={(params) => (
-                                            <TextField
-                                            className= {styles['autocomplete-text-field']}
-                                            {...params}
-                                            label="Select User"
-                                            InputLabelProps={{
-                                                className: styles['autocomplete-input']
-                                            }}
-                                            inputProps={{
-                                                ...params.inputProps,
-                                                autoComplete: 'new-password', // disable autocomplete and autofill
-                                            }}
-                                            />
-                                        )}
-                                    />
+                                    
                                 </AccordionDetails>
-                            </Accordion>
+                            </Accordion> */}
                             
                         </div>
                         <div className={styles['amount-action']}>
@@ -330,20 +340,25 @@ const TransactionsPage: React.FunctionComponent = () => {
                          <div className={styles['x-button']} onClick={handleUploadClose}>
                              <Icon  type={"close"}></Icon>
                          </div>
-                     </div>
-                     <p className={styles['upload-message']}>Selected file should be .csv</p>
-                     <div>
-                         <p className={styles['select-category']}>MESSAGE</p>
-                         <TextField
-                             className={styles['message-field']}
-                             multiline
-                             rows={2}
-                             placeholder="Explain how user redeemed or earned credits (max 100 characters)"
-                             variant="standard"
-                             inputProps={{maxLength: 100, className: styles['message-field-input']}}
-                             onChange={(e) => setAddMessage(e.target.value)}
-                             />
-                     </div>
+                    </div>
+                    <p className={styles['upload-message']}>Selected file should be .csv</p>
+                    {uploadFile == null ?
+                        <label htmlFor="contained-button-file">
+                            <Input style={{display: 'none'}} id="contained-button-file" type="file" onChange={(event) => {}}/>
+                            <div className={styles['upload-file-box']}>
+                                <div className={styles['upload-add-line']}>
+                                    <Icon className={styles['add-file-icon']} type={"addGray"}></Icon>
+                                    <p className={styles['upload-add-file']}>Add file</p>
+                                </div>
+                            </div>
+                        </label> 
+                        :  
+                        <label htmlFor="contained-button-file">
+                            <Input style={{display: 'none'}} id="contained-button-file" type="file"/>
+                            this is the file!
+                        </label>
+                    }
+                     
                      <Button className={styles['confirm-button']} onClick={handleUploadConfirm}>
                          Upload
                      </Button>
@@ -392,7 +407,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                         {addPopoverContent()}
                     </Popover>
                     <Popover 
-                        PaperProps={{className: styles['popover-container']}}
+                        PaperProps={{className: styles['upload-popover-container']}}
                         open={uploadOpen} 
                         id={uploadpopoverid}
                         anchorEl={uploadAnchorEl}
