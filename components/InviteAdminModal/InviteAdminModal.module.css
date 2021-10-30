@@ -17,6 +17,7 @@
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
+  padding-bottom: 15px;
   /* align-items: baseline; */
 }
 
@@ -34,8 +35,8 @@
   /* width: 100%;
   display: flex; */
   border-radius: 20px;
-  height: 400px;
-  width: 700px;
+  height: 470px;
+  width: 750px;
   padding-bottom: 2%;
   padding-right: 2%;
   padding-left: 1%;
@@ -58,14 +59,6 @@
 }
 
 .actions {
-  /* display: flex; */
-  /*align-items: center; */
-  /* padding-top: 20px; */
-  /* margin-bottom: auto; */
-  /* margin-top: auto; */
-  /* flex-direction: row;
-  align-self: flex-end;
-  justify-content: flex-end; */
   margin-top: auto;
 }
 
