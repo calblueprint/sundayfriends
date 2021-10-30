@@ -51,7 +51,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
               <button className={styles["navButton"]}>
                 <Icon className={styles["chevron"]} type={"chevronRight"} />
               </button>
-              {family.familyName} Family / {user?.full_name}
+              {family.family_name} Family / {user?.full_name}
             </div>
           ) : null}
           <button
@@ -113,7 +113,9 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                     {user?.family_head ? "Head" : "Member"}
                   </div>
                   <div className={styles["infoSpacing"]}>{user?.email}</div>
-                  <div className={styles["infoSpacing"]}>{user?.address}</div>
+                  <div className={styles["infoSpacing"]}>
+                    {user?.phone_number}
+                  </div>
                   <div className={styles["infoSpacing"]}>password</div>
                 </div>
               </div>

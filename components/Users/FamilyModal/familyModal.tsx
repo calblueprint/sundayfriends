@@ -1,6 +1,6 @@
 import { Modal } from "@mui/material";
 import styles from "./FamilyModal.module.css";
-import { Family } from "../../../types/schema";
+import { Family, User } from "../../../types/schema";
 import Icon from "../../../assets/Icon";
 import UserList from "../UsersList/usersList";
 
@@ -8,12 +8,14 @@ type FamilyModalProps = {
   family: Family;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  users: User[];
 };
 
 const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
   family,
   isOpen,
   setIsOpen,
+  users,
 }: FamilyModalProps) => {
   return (
     <Modal open={isOpen}>
@@ -26,7 +28,7 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
             <button className={styles["navButton"]}>
               <Icon className={styles["chevron"]} type={"chevronRight"} />
             </button>
-            {family.familyName} Family
+            {family.family_name} Family
           </div>
           <button
             className={styles["closeButton"]}
@@ -37,17 +39,17 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
         </div>
         <div className={styles["modalHeading"]}>
           <div className={styles["familyName"]}>
-            <h1 className={styles["header"]}>{family.familyName} Family</h1>
+            <h1 className={styles["header"]}>{family.family_name} Family</h1>
             <div className={styles["colSpacing"]}>
-              <h4>FID: {family.familyId}</h4>
+              <h4>FID: {family.family_id}</h4>
               <h4>*</h4>
-              <h4>{family.userIds.length} Members</h4>
+              <h4>{family.user_ids.length} Members</h4>
               <h4>*</h4>
-              <h4>Total Transactions: {family.totalPoints}</h4>
+              <h4>Total Transactions: {family.total_points}</h4>
             </div>
           </div>
           <div>
-            <h1 className={styles["header"]}>{family.totalPoints}</h1>
+            <h1 className={styles["header"]}>{family.total_points}</h1>
             <h4>Total Balance</h4>
           </div>
         </div>
@@ -55,7 +57,7 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
         <h4>Family Members</h4>
         <div className={styles["modalContent"]}>
           <UserList
-            users={family.userIds}
+            users={users}
             family={family}
             isFamilyPath={true}
             setIsOpenFam={setIsOpen}

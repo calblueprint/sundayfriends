@@ -10,10 +10,10 @@ export type Transaction = {
 };
 
 export type Family = {
-  totalPoints: number;
-  familyName: string;
-  userIds: User[];
-  familyId: number;
+  total_points: number;
+  family_name: string;
+  user_ids: string[];
+  family_id: string;
 };
 
 export type Admin = {
@@ -34,4 +34,5 @@ export type User = {
   points: number;
   reward_eligible: boolean;
   suspended: boolean;
+  phone_number: string;
 };

@@ -10,10 +10,24 @@ const userCollection = db.collection("users");
  */
 export const getUser = async (userId: string): Promise<User> => {
   try {
-    const doc = await userCollection.doc(userId).get();
+    const trimedId = userId.replace(/\s/g, "");
+    const doc = await userCollection.doc(trimedId).get();
     return doc.data() as User;
   } catch (e) {
     console.error(e);
+    throw e;
+  }
+};
+
+/**
+ * Returns all the users from firestore
+ */
+export const getAllUsers = async (): Promise<User[]> => {
+  try {
+    const allUsers = await userCollection.get();
+    return allUsers.docs.map((doc) => doc.data() as User);
+  } catch (e) {
+    console.warn(e);
     throw e;
   }
 };

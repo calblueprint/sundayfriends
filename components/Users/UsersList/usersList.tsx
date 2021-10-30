@@ -51,7 +51,7 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
         {user.points}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["lastActive"]}`}>
-        {user.last_active.toLocaleString().split(",")[0]}
+        {new Date(user.last_active.toMillis()).toLocaleDateString()}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["manage"]}`}>
         <Button className={styles["button"]}>Delete</Button>
