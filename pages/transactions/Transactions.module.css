@@ -257,13 +257,14 @@
 
 .add-title {
   color: #253c85;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .x-button {
   width: 25px;
   height: 25px;
   cursor: pointer;
+  margin-top: 15px;
 }
 
 .x-button:hover {
@@ -328,8 +329,11 @@
 }
 
 .accordion {
+  background-color: #f7f7f7;
+}
+
+.accordion-open {
   background-color: #eaeaea;
-  margin-top: 0px;
 }
 
 .drop-triangle {
@@ -403,4 +407,10 @@
   text-transform: none;
   margin-top: 20px;
   width: 89px;
+}
+
+.upload-message {
+  font-size: 12px;
+  margin: 10px;
+  color: #525454;
 }

@@ -29,7 +29,8 @@ import { getAllUsers } from '../../firebase/firestore/user';
 import { Transaction } from '../../types/schema';
  
 const TransactionsPage: React.FunctionComponent = () => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [addAnchorEl, setAddAnchorEl] = React.useState(null);
+    const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
     const [allUsers, setUsers] = React.useState([]);
     const [allTransactions, setTransactions] = useState([]);
     const [success, setSuccess] = useState(false);
@@ -58,9 +59,13 @@ const TransactionsPage: React.FunctionComponent = () => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+    const clickAddButton = (event) => {
+        setAddAnchorEl(event.currentTarget);
     };
+
+    const clickUploadButton = (event) => {
+        setUploadAnchorEl(event.currentTarget);
+    }
 
     const handleExpand = () => {
         setExpanded(!expanded);
@@ -76,12 +81,7 @@ const TransactionsPage: React.FunctionComponent = () => {
         setExpanded(false);
     }
 
-    const handleConfirm = () => {
-        console.log(addUser.family_id);
-        console.log(addPoints);
-        console.log(addType);
-        console.log(addMessage);
-
+    const handleAddConfirm = () => {
         //handle post request
         const adding = {
             admin_name: 'current Admin',
@@ -102,19 +102,27 @@ const TransactionsPage: React.FunctionComponent = () => {
         setSuccess(false);
     }
 
-    const handleClose = () => {
-        setAnchorEl(null);
+    const handleAddClose = () => {
+        setAddAnchorEl(null);
         sleep(1000).then(() => {
             setSuccess(false);
         })
         resetFields();
     };
 
+    const handleUploadClose = () => {
+        setUploadAnchorEl(null);
+    }
+
     const resetFields = () => {
         setAddUser('');
         setAddPoints('10');
         setAddType('');
         setAddMessage('');
+    }
+
+    const handleUploadConfirm = () => {
+        
     }
  
    const BasicTabs = () => {
@@ -195,7 +203,7 @@ const TransactionsPage: React.FunctionComponent = () => {
        );
    }
 
-   const popoverContent = () => {
+   const addPopoverContent = () => {
        switch(success) {
            case true:
                 return(
@@ -203,7 +211,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                         <p className={styles['success-title']}>Success!</p>
                         <p className={styles['success-message']}>Transaction for {addUser.full_name} has been added</p>
                         <div>
-                            <Button className={styles['success-close-button']} onClick={handleClose}>Close</Button>
+                            <Button className={styles['success-close-button']} onClick={handleAddClose}>Close</Button>
                             <Button className={styles['add-more-button']} onClick={handleAddMore}>Add More</Button>
                         </div>
                     </div>
@@ -213,18 +221,18 @@ const TransactionsPage: React.FunctionComponent = () => {
                    <div className={styles['popover-div']}>
                        <div className={styles['popover-header']}>
                             <h3 className={styles['add-title']}>Add Transaction</h3>
-                            <div className={styles['x-button']} onClick={handleClose}>
+                            <div className={styles['x-button']} onClick={handleAddClose}>
                                 <Icon  type={"close"}></Icon>
                             </div>
                         </div>
                         <div>
                             <p className={styles['select-category']}>USER</p>
-                            <Accordion expanded={expanded} onChange={handleExpand}>
+                            <Accordion expanded={expanded} onChange={handleExpand} disableGutters>
                                 <AccordionSummary
                                 expandIcon={<Icon className={styles['drop-triangle']} type={"dropTriangle"}></Icon>}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
-                                className={styles['accordion']}
+                                className={expanded ? styles['accordion-open'] : styles['accordion']}
                                 >
                                 <div>{selectedUser}</div>
                                 </AccordionSummary>
@@ -293,16 +301,61 @@ const TransactionsPage: React.FunctionComponent = () => {
                                 onChange={(e) => setAddMessage(e.target.value)}
                                 />
                         </div>
-                        <Button className={styles['confirm-button']} onClick={handleConfirm}>
+                        <Button className={styles['confirm-button']} onClick={handleAddConfirm}>
                             Confirm
                         </Button>
                    </div>
                )
        }
    }
+
+   const uploadPopoverContent = () => {
+    switch(success) {
+        case true:
+             return(
+                 <div className={styles['success-div']}>
+                     <p className={styles['success-title']}>Success!</p>
+                     <p className={styles['success-message']}>Transaction for {addUser.full_name} has been added</p>
+                     <div>
+                         <Button className={styles['success-close-button']} onClick={handleAddClose}>Close</Button>
+                         <Button className={styles['add-more-button']} onClick={handleAddMore}>Add More</Button>
+                     </div>
+                 </div>
+             )
+        case false:
+            return(
+                <div className={styles['popover-div']}>
+                    <div className={styles['popover-header']}>
+                         <h3 className={styles['add-title']}>Upload your file</h3>
+                         <div className={styles['x-button']} onClick={handleUploadClose}>
+                             <Icon  type={"close"}></Icon>
+                         </div>
+                     </div>
+                     <p className={styles['upload-message']}>Selected file should be .csv</p>
+                     <div>
+                         <p className={styles['select-category']}>MESSAGE</p>
+                         <TextField
+                             className={styles['message-field']}
+                             multiline
+                             rows={2}
+                             placeholder="Explain how user redeemed or earned credits (max 100 characters)"
+                             variant="standard"
+                             inputProps={{maxLength: 100, className: styles['message-field-input']}}
+                             onChange={(e) => setAddMessage(e.target.value)}
+                             />
+                     </div>
+                     <Button className={styles['confirm-button']} onClick={handleUploadConfirm}>
+                         Upload
+                     </Button>
+                </div>
+            )
+         }
+    }
     
-   const addOpen = Boolean(anchorEl);
-   const popoverid = addOpen ? 'simple-popover' : undefined;
+   const addOpen = Boolean(addAnchorEl);
+   const uploadOpen = Boolean(uploadAnchorEl);
+   const popoverid = addOpen ? 'add-popover' : undefined;
+   const uploadpopoverid = uploadOpen ? 'upload-popover' : undefined;
    return(
        <Layout title='Transactions'>
            <div className={styles['screen']}>
@@ -312,11 +365,11 @@ const TransactionsPage: React.FunctionComponent = () => {
                        <h2 className={styles['h2']}>TRANSACTIONS</h2>
                    </div>
                    <div className={styles['button-container']}>
-                       <Button aria-describedby={popoverid} className={styles['add-button']} onClick={handleClick}>
+                       <Button aria-describedby={popoverid} className={styles['add-button']} onClick={clickAddButton}>
                            <Icon className={styles['add-icon']} type={"add"}></Icon>
                            Add
                        </Button>
-                       <Button className={styles['upload-button']}>
+                       <Button aria-describedby={uploadpopoverid} className={styles['upload-button']} onClick={clickUploadButton}>
                            <Icon className={styles['add-icon']} type={"upload"}></Icon>
                            Upload
                        </Button>
@@ -325,8 +378,8 @@ const TransactionsPage: React.FunctionComponent = () => {
                         PaperProps={{className: styles['popover-container']}}
                         open={addOpen} 
                         id={popoverid}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
+                        anchorEl={addAnchorEl}
+                        onClose={handleAddClose}
                         anchorOrigin={{
                             vertical: 'bottom',
                             horizontal: 'right',
@@ -336,8 +389,24 @@ const TransactionsPage: React.FunctionComponent = () => {
                             horizontal: 'right',
                         }}>
                             
-                        {popoverContent()}
+                        {addPopoverContent()}
+                    </Popover>
+                    <Popover 
+                        PaperProps={{className: styles['popover-container']}}
+                        open={uploadOpen} 
+                        id={uploadpopoverid}
+                        anchorEl={uploadAnchorEl}
+                        onClose={handleUploadClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}>
                             
+                        {uploadPopoverContent()} 
                     </Popover>
                </div>
                {BasicTabs()}
