@@ -27,12 +27,12 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     ),
     chevronLeft: (
         <SvgIcon viewBox="0, 0, 8, 13">
-            <path d="M6.5 1L1 6.19444L6.5 12" stroke="#253C85" stroke-width="1.57143" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M6.5 1L1 6.19444L6.5 12" stroke="#253C85" strokeWidth="1.57143" strokeLinecap="round" strokeLinejoin="round" />
         </SvgIcon>
     ),
     chevronRight: (
         <SvgIcon viewBox="0, 0, 8, 13">
-            <path d="M1 1L6.5 6.19444L1 12" stroke="#253C85" stroke-width="1.57143" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M1 1L6.5 6.19444L1 12" stroke="#253C85" strokeWidth="1.57143" strokeLinecap="round" strokeLinejoin="round" />
         </SvgIcon>
     ),
     search: (
