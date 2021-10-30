@@ -11,7 +11,6 @@ const userCollection = db.collection("users");
 export const getUser = async (userId: string): Promise<User> => {
   try {
     const trimedId = userId.toString().replace(/\s/g, "");
-    // console.log(userId.toString());
     const doc = await userCollection.doc(trimedId).get();
     return doc.data() as User;
   } catch (e) {
@@ -36,7 +35,7 @@ export const getAllUsers = async (): Promise<User[]> => {
 /**
  * Adds the given user data to firestore
  */
-export const addUser = async (user: User) => {
+export const addUser = async (user: User): Promise<void> => {
   try {
     await userCollection.doc().set(user);
   } catch (e) {
@@ -48,7 +47,7 @@ export const addUser = async (user: User) => {
 /**
  * Deletes the user from firestore with the given userId
  */
-export const deleteUser = async (userId: string) => {
+export const deleteUser = async (userId: string): Promise<void> => {
   try {
     await userCollection.doc(userId).delete();
   } catch (e) {

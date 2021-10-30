@@ -37,7 +37,9 @@ export const getAllTransactions = async (): Promise<Transaction[]> => {
 /**
  * Adds the given transaction data to firestore
  */
-export const addTransaction = async (transaction: Transaction) => {
+export const addTransaction = async (
+  transaction: Transaction
+): Promise<void> => {
   try {
     await transactionsCollection.doc().set(transaction);
   } catch (e) {
@@ -49,7 +51,9 @@ export const addTransaction = async (transaction: Transaction) => {
 /**
  * Deletes the transaction from firestore with the given transactionId
  */
-export const deleteTransaction = async (transactionId: string) => {
+export const deleteTransaction = async (
+  transactionId: string
+): Promise<void> => {
   try {
     await transactionsCollection.doc(transactionId).delete();
   } catch (e) {

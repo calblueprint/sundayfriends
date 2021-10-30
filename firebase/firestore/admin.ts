@@ -21,7 +21,7 @@ export const getAdmin = async (adminId: string): Promise<Admin> => {
 /**
  * Adds the given admin data to firestore
  */
-export const addAdmin = async (admin: Admin) => {
+export const addAdmin = async (admin: Admin): Promise<void> => {
   try {
     await adminCollection.doc().set(admin);
   } catch (e) {
@@ -33,7 +33,7 @@ export const addAdmin = async (admin: Admin) => {
 /**
  * Deletes the admin from firestore with the given adminId
  */
-export const deleteAdmin = async (adminId: string) => {
+export const deleteAdmin = async (adminId: string): Promise<void> => {
   try {
     await adminCollection.doc(adminId).delete();
   } catch (e) {

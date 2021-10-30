@@ -1,9 +1,8 @@
 import { Box, Avatar, Grid } from "@mui/material";
 import styles from "./FamilyCard.module.css";
 import { Family, User } from "../../../types/schema";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import FamilyModal from "../FamilyModal/familyModal";
-import { getUser } from "../../../firebase/firestore/user";
 
 type FamilyCardProps = {
   family: Family;
@@ -22,7 +21,6 @@ const FamilyMember: React.FC<FamilyMemberProps> = ({
 }: FamilyMemberProps) => {
   return (
     <Grid item xs={6}>
-      {console.log(user.full_name)}
       <div className={styles["familyMember"]}>
         <Avatar alt="smiley pic" src="/smiley.png" />
         <div>{user.full_name}</div>
@@ -35,10 +33,8 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
   family,
 }: FamilyCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div>
-      {/* {console.log(family)} */}
       <FamilyModal family={family} isOpen={isOpen} setIsOpen={setIsOpen} />
       <Box className={styles["card"]} onClick={() => setIsOpen(true)}>
         <div>
