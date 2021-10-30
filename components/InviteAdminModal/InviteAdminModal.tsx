@@ -21,14 +21,67 @@ export default function InviteAdminModal() {
     setOpen(false);
   };
 
+  const [state, setState] = React.useState({
+    name1: "",
+    email1: "",
+    name2: "",
+    email2: "",
+    name3: "",
+    email3: "",
+  })
+
+  function handleChange(evt) {
+    const value = evt.target.value;
+    setState({
+      ...state,
+      [evt.target.name]: value
+    });
+  }
+
   const theme = createTheme({
     palette: {
       primary: {
-        // Purple and green play nicely together.
         main: '#253C85',
       },
     },
   });
+
+  // const adminRow = (num) => {
+  //   return (
+  //     <div className={styles['row']}>
+  //       <div className={styles['col']}>
+  //         <TextField
+  //           name="name1"
+  //           value={state.name1}
+  //           onChange={handleChange}
+  //           fullWidth
+  //           autoFocus
+  //           margin="dense"
+  //           id="name"
+  //           placeholder="Firstname Lastname"
+  //           type="text"
+  //           variant="standard"
+  //           className={styles['font']}
+  //         />
+  //       </div>
+  //       <div className={styles['col']}>
+  //         <TextField
+  //           name="email1"
+  //           value={state.email1}
+  //           onChange={handleChange}
+  //           fullWidth
+  //           autoFocus
+  //           margin="dense"
+  //           id="name"
+  //           placeholder="thisisanemail@email.com"
+  //           type="text"
+  //           variant="standard"
+  //           className={styles['font']}
+  //         />
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div>
@@ -37,9 +90,7 @@ export default function InviteAdminModal() {
           Invite Admin
         </Button>
       </ThemeProvider>
-      {/* <div className={styles['modal']}> */}
       <Dialog classes={{ paper: styles['modal'] }} maxWidth="md" fullWidth={true} open={open} onClose={handleClose}>
-        {/* <DialogTitle>INVITE ADMINS</DialogTitle> */}
 
         <h2 className={styles['title']}>
           <Icon
@@ -48,11 +99,6 @@ export default function InviteAdminModal() {
           ></Icon>
           INVITE ADMINS
         </h2>
-        {/* <DialogContent> */}
-        {/* <DialogContentText>
-              To subscribe to this website, please enter your email address here. We
-              will send updates occasionally.
-            </DialogContentText> */}
         <div className={styles['form']}>
           <div className={styles['row']}>
             <div className={styles['col']}>
@@ -62,9 +108,15 @@ export default function InviteAdminModal() {
               <h4 className={styles['text']}>EMAIL *</h4>
             </div>
           </div>
+          {/* {adminRow(1)}
+          {adminRow(2)}
+          {adminRow(3)} */}
           <div className={styles['row']}>
             <div className={styles['col']}>
               <TextField
+                name="name1"
+                value={state.name1}
+                onChange={handleChange}
                 fullWidth
                 autoFocus
                 margin="dense"
@@ -77,6 +129,9 @@ export default function InviteAdminModal() {
             </div>
             <div className={styles['col']}>
               <TextField
+                name="email1"
+                value={state.email1}
+                onChange={handleChange}
                 fullWidth
                 autoFocus
                 margin="dense"
@@ -91,6 +146,9 @@ export default function InviteAdminModal() {
           <div className={styles['row']}>
             <div className={styles['col']}>
               <TextField
+                name="name2"
+                value={state.name2}
+                onChange={handleChange}
                 fullWidth
                 autoFocus
                 margin="dense"
@@ -103,6 +161,9 @@ export default function InviteAdminModal() {
             </div>
             <div className={styles['col']}>
               <TextField
+                name="email2"
+                value={state.email2}
+                onChange={handleChange}
                 fullWidth
                 autoFocus
                 margin="dense"
@@ -117,11 +178,13 @@ export default function InviteAdminModal() {
           <div className={styles['row']}>
             <div className={styles['col']}>
               <TextField
+                name="name3"
+                value={state.name3}
+                onChange={handleChange}
                 fullWidth
                 autoFocus
                 margin="dense"
                 id="name"
-                // label="Full Name"
                 placeholder="Firstname Lastname"
                 type="text"
                 variant="standard"
@@ -130,11 +193,13 @@ export default function InviteAdminModal() {
             </div>
             <div className={styles['col']}>
               <TextField
+                name="email3"
+                value={state.email3}
+                onChange={handleChange}
                 fullWidth
                 autoFocus
                 margin="dense"
                 id="name"
-                // label="Full Name"
                 placeholder="thisisanemail@email.com"
                 type="text"
                 variant="standard"
@@ -152,9 +217,7 @@ export default function InviteAdminModal() {
             </ThemeProvider>
           </DialogActions>
         </div>
-        {/* </DialogContent> */}
       </Dialog >
-      {/* </div> */}
     </div >
   );
 }

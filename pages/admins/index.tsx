@@ -68,19 +68,10 @@ const AdminPage: React.FunctionComponent = () => {
             <Icon className={styles["search-icon"]} type={"search"}></Icon>
           }
         />
+        <p className={styles['label']}><b>6</b> Total Admin</p>
       </ListItem>
     );
   }
-
-
-  // Query Firebase
-  // const db = getFirestore(firebase);
-  // const dbQuery = query(collection(db, "admins"));
-  // const getAdmins = async () => {
-  //   const qs = await getDocs(dbQuery);
-  //   return qs;
-  // }
-  // const admins = getAdmins();
 
   return (
     <Layout title='Admins'>
