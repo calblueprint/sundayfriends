@@ -1,16 +1,16 @@
 import styles from "../../pages/Transactions/Transactions.module.css";
 import { Box } from "@mui/material";
 
-type TabPanelProps = {
+type TabPanelProps = React.PropsWithChildren<{
   index: number;
   value: number;
-};
+}>;
 
 export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
   children,
   index,
   value,
-}) => {
+}: TabPanelProps) => {
   return (
     <div
       role="tabpanel"
@@ -20,8 +20,8 @@ export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
       aria-labelledby={`simple-tab-${index}`}
     >
       {value === index && (
-        <Box sx={{ p: 3 }} className={styles["tabbox"]}>
-          <h3>{children}</h3>
+        <Box sx={{ p: 3 }} className={styles["tab-box"]}>
+          <h3 className={styles['children']}>{children}</h3>
         </Box>
       )}
     </div>
