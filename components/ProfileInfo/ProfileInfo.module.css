@@ -1,0 +1,18 @@
+.box {
+    display: flex;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+    margin-right: 20%;
+}
+
+.fields {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
