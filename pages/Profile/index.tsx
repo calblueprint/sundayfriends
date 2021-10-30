@@ -54,7 +54,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
                 <div className = {styles.namebar}>
                     <div className={styles.h1}> Cindo Zhang </div>
                     <Button className={styles.button}>
-                        <Icon type="editpencil" className={styles.editicon}></Icon>
+                        <Icon type="editpencil" className={styles.editicon}/>
                         Edit
                     </Button>
                 </div>

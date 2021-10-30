@@ -2,6 +2,7 @@ import React from "react";
 import { Drawer, List, ListItem, ListItemText } from "@mui/material";
 import { useRouter } from "next/router";
 import styles from "./SideNavbar.module.css";
+import Icon from "../../../assets/Icon";
 
 const SideNavbar: React.FunctionComponent = () => {
   const router = useRouter();
@@ -22,8 +23,13 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push("/");
           }}
+          className={styles.navbar}
         >
-          <ListItemText className={styles["item"]} primary={"Sunday Friends"} />
+        <div className={styles.icon}>
+          <div className={styles.border}>
+            <Icon type="sundayfriendslogo" className={styles.SFlogo}/>
+          </div>
+        </div>        
         </ListItem>
         <ListItem
           button
@@ -31,7 +37,11 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push(`/Users`);
           }}
+          className={styles.item}
         >
+        <div className={styles.icon}>
+          <Icon type="usersnavicon" className={styles.pageicons}/>
+        </div>
           <ListItemText className={styles["item"]} primary={"Users"} />
         </ListItem>
         <ListItem
@@ -40,7 +50,11 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push(`/Admins`);
           }}
+          className={styles.item}
         >
+        <div className={styles.icon}>
+          <Icon type="adminnavicon" className={styles.pageicons}/>
+        </div>
           <ListItemText className={styles["item"]} primary={"Admins"} />
         </ListItem>
         <ListItem
@@ -49,7 +63,11 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push(`/Transactions`);
           }}
+          className={styles.item}
         >
+        <div className={styles.icon}>
+          <Icon type="transactionsnavicon" className={styles.pageicons}/>
+        </div>
           <ListItemText className={styles["item"]} primary={"Transactions"} />
         </ListItem>
         <ListItem
@@ -58,7 +76,11 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push(`/Inventory`);
           }}
+          className={styles.item}
         >
+        <div className={styles.icon}>
+          <Icon type="inventorynavicon" className={styles.pageicons}/>
+        </div>
           <ListItemText className={styles["item"]} primary={"Inventory"} />
         </ListItem>
       </List>

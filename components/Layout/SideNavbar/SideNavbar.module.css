@@ -2,7 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 5%;
+  margin-bottom: 26px;
+  color: var(--grey-light);
+  flex-direction: column;
 }
 
 .list {
@@ -11,16 +13,50 @@
 }
 
 .sidenav {
-  width: 180px;
+  width: 120px;
   flex-shrink: 0;
   box-sizing: border-box;
 }
 
 .sidenav-paper {
-  width: 180px;
+  width: 120px;
   box-sizing: border-box;
   border-radius: 0px 35px 35px 0px;
-  background-color: var(--sapphire-muted);
+  background-color: var(--sapphire);
   color: white;
   border: transparent;
+}
+
+.SFlogo {
+  transform: scale(1.8);
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 11.5px;
+}
+
+.border {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 50%;
+  margin: 26px;
+  width: 62px;
+  height: 62px;
+  left: 24px;
+  top: 33px;
+}
+
+.pageicons {
+  transform: scale(1.5);
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
