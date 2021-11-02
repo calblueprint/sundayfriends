@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import firebaseApp from "./firebaseApp";
 import { User } from "@firebase/auth-types";
 import { checkAdminId } from "./firestore/admin";
@@ -52,7 +52,7 @@ export const signOut = async (): Promise<void> => {
 
 const AuthContext = createContext<User>(null);
 
-export const AuthProvider: React.FC = ({ children }): JSX.Element => {
+export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }): JSX.Element => {
     const [authUser, setAuthUser] = useState<User>(null);
 
     useEffect(() => {
