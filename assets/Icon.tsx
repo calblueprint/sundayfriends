@@ -261,7 +261,6 @@ type Props = {
 };
 
 const Icon: React.FC<Props> = ({ className, type }: Props) => {
-  console.log(`I am now trying to render ${type} and it is: ${IconSvgs[type]}`)
   return React.cloneElement(IconSvgs[type], {
     className,
   });
