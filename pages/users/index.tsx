@@ -18,7 +18,9 @@ type UserPageProps = {
   currentAdmin: Admin
 }
 
-const UsersPage: React.FunctionComponent<UserPageProps> = () => {
+const UsersPage: React.FunctionComponent<UserPageProps> = ({
+  currentAdmin
+}) => {
   const users = [
     {
       address: "2419 Yes Ave",
