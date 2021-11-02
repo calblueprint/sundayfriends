@@ -1,0 +1,104 @@
+.modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+  width: 80%;
+  height: 90%;
+  background-color: white;
+  border-radius: 20px;
+  top: 5%;
+  left: 10%;
+}
+
+.colSpacing {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.familyName {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.modalHeading {
+  display: flex;
+  flex-direction: row;
+  color: var(--grey-dark);
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 0%;
+}
+
+.addIcon {
+  border-radius: 50%;
+  background-color: var(--grey-light);
+  padding-left: 10px;
+  padding-top: 9px;
+  width: 35px;
+  height: 35px;
+}
+
+.chevron {
+  fill: none;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  stroke: var(--grey-mid);
+}
+
+.navBar {
+  display: flex;
+  color: var(--grey-mid);
+  flex-direction: row;
+  place-items: center;
+}
+
+.break {
+  width: 100%;
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  height: 45%;
+  margin-bottom: 5%;
+}
+
+.userAdd {
+  border-radius: 50%;
+  background-color: var(--grey-light);
+  fill: var(--grey-mid);
+  padding: 8px;
+  width: 35px;
+  height: 35px;
+}
+
+.addTransaction {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5%;
+  color: var(--grey-mid);
+  justify-content: space-between;
+  width: 19%;
+  place-items: center;
+  cursor: pointer;
+}
+
+.navButton {
+  background-color: transparent;
+  border: 0px;
+}

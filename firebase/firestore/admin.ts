@@ -3,7 +3,7 @@ import 'firebase/firestore';
 import { Admin } from '../../types/schema';
 
 const db = firebaseApp.firestore();
-const adminCollection = db.collection('admins');
+const adminCollection = db.collection("admins");
 
 /**
  * Checks if given uuid belongs to an admin
