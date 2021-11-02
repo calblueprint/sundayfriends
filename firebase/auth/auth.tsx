@@ -11,7 +11,7 @@ export type AuthData = {
 }
 
 // TODO handle/throw errors accordingly
-export const signInWithEmailAndPassword = async (email: string, password: string) => {
+export const signInWithEmailAndPassword = async (email: string, password: string): Promise<void> => {
     try {
         await auth.signInWithEmailAndPassword(email, password);
     } catch (e) {
@@ -20,7 +20,7 @@ export const signInWithEmailAndPassword = async (email: string, password: string
     }
 }
 
-export const registerWithEmailAndPassword = async (email: string, password: string) => {
+export const registerWithEmailAndPassword = async (email: string, password: string): Promise<void> => {
     try {
         await auth.createUserWithEmailAndPassword(email, password);
     } catch (e) {
@@ -30,7 +30,7 @@ export const registerWithEmailAndPassword = async (email: string, password: stri
     // TODO make sure an entry with corresponding info is created in the admins table
 }
 
-const useFirebaseAuth = () => {
+const useFirebaseAuth = (): AuthData => {
     const [authUser, setAuthUser] = useState<Admin>(null);
     const [loading, setLoading] = useState<Boolean>(false);
 
