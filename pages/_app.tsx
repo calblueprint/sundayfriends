@@ -1,11 +1,11 @@
-import AuthUserProvider from "../firebase/auth/useAuth";
+import { AuthProvider } from "../firebase/auth";
 import "../styles/globals.css";
 
 const MyApp = ({ Component, pageProps }) => {
   return (
-    <AuthUserProvider>
+    <AuthProvider>
       <Component {...pageProps} />
-    </AuthUserProvider>
+    </AuthProvider>
   );
 }
 

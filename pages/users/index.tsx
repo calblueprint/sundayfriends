@@ -5,7 +5,7 @@ import UsersList from "../../components/Users/usersList";
 // import { Family, User } from "../../types/schema";
 import { Tabs, Tab } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../firebase/auth/useAuth";
+//import { useAuth } from "../../firebase/auth/useAuth";
 import { useRouter } from "next/router";
 // import firstore;
 // import { firestore } from "firebase-admin";
@@ -27,15 +27,6 @@ const UsersPage: React.FunctionComponent = () => {
   //   if (!familiesLoading && families) {
   //     families.docs.map((doc) => console.log(doc.data()));
   //   }
-
-  const { authUser, loading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!authUser && !loading) {
-      router.push('/');
-    }
-  }, [authUser, loading]);
 
   const users = [
     {

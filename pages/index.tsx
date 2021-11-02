@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { signInWithEmailAndPassword } from "../firebase/auth/auth";
+import { signInWithEmailAndPassword } from "../firebase/auth";
 import { useRouter } from "next/router";
 import styles from './Signin.module.css';
 
@@ -9,14 +9,20 @@ type LoginData = {
   password: string,
 }
 
+// TODO improve UI for sigin in screen
 const SignInScreen: React.FC = () => {
 
   const { register, handleSubmit } = useForm();
   const router = useRouter();
 
   const handleSignin = async (data: LoginData) => {
-    await signInWithEmailAndPassword(data.email, data.password);
-    router.push('/transactions');
+    try {
+      await signInWithEmailAndPassword(data.email, data.password);
+      router.push('/transactions');
+    } catch (e) {
+      // TODO improve error handling
+      console.error(e);
+    }
   }
 
   return (

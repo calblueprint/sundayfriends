@@ -1,4 +1,4 @@
-import firebaseApp from '../firebase';
+import firebaseApp from '../firebaseApp';
 import 'firebase/firestore';
 import { User } from '../../types/schema';
 

@@ -22,19 +22,18 @@ import { TransactionList } from '../../components/TransactionList/TransactionLis
 import { getAllTransactions } from '../../firebase/firestore/transaction';
 import { getAdmin } from '../../firebase/firestore/admin';
 import { getUser } from '../../firebase/firestore/user';
-import { useAuth } from "../../firebase/auth/useAuth";
-import { useRouter } from "next/router";
+import firebaseAdmin from '../../firebase/firebaseAdmin';
+import { GetServerSidePropsContext } from 'next';
+import { Admin } from "../../types/schema";
+import nookies from "nookies";
 
-const TransactionsPage: React.FunctionComponent = () => {
+type TransactionProps = {
+    currentAdmin: Admin
+};
 
-    const { authUser, loading } = useAuth();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (!authUser && !loading) {
-            router.push('/');
-        }
-    }, [authUser, loading]);
+const TransactionsPage: React.FunctionComponent<TransactionProps> = ({
+    currentAdmin
+}) => {
 
     const BasicTabs = () => {
         const [value, setValue] = useState(0);
@@ -138,6 +137,27 @@ const TransactionsPage: React.FunctionComponent = () => {
 
         </Layout>
     );
+}
+
+// Use SSR to load admins!
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    try {
+        const cookies = nookies.get(ctx);
+        const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+        const adminUid = userToken.uid;
+        const adminData = await getAdmin(adminUid);
+        return {
+            props: { currentAdmin: adminData }
+        };
+    } catch (e) {
+        console.error(e);
+        return {
+            redirect: {
+                permament: false,
+                destination: '/',
+            }
+        }
+    }
 }
 
 export default TransactionsPage;
