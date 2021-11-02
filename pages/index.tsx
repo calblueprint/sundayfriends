@@ -12,16 +12,17 @@ type LoginData = {
 // TODO improve UI for sigin in screen
 const SignInScreen: React.FC = () => {
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
 
+  // TODO clear fields after error in submission
   const handleSignin = async (data: LoginData) => {
     try {
       await signInWithEmailAndPassword(data.email, data.password);
       router.push('/transactions');
     } catch (e) {
-      // TODO improve error handling
-      console.error(e);
+      reset();
+      console.error('Failed to sign in');
     }
   }
 

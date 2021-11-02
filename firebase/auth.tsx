@@ -1,12 +1,16 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import firebaseApp from "./firebaseApp";
+import { User } from "@firebase/auth-types";
 import { checkAdminId } from "./firestore/admin";
 import nookies from "nookies";
 
 const auth = firebaseApp.auth();
 
+/**
+ * NOTE: We may need to update types for firebase auth in the future
+ */
 export type AuthData = {
-    authUser: any,
+    authUser: User,
     loading: boolean,
 }
 
@@ -22,7 +26,7 @@ export const signInWithEmailAndPassword = async (email: string, password: string
             throw new Error(`${email} is not an admin user`);
         }
     } catch (e) {
-        console.error(e);
+        console.error(e.message);
         throw e;
     }
 }
@@ -46,16 +50,13 @@ export const signOut = async (): Promise<void> => {
     };
 }
 
-const AuthContext = createContext<AuthData>({
-    authUser: null,
-    loading: true
-});
+const AuthContext = createContext<User>(null);
 
-export const AuthProvider = ({ children }): JSX.Element => {
-    const [authUser, setAuthUser] = useState(null);
+export const AuthProvider: React.FC = ({ children }): JSX.Element => {
+    const [authUser, setAuthUser] = useState<User>(null);
 
     useEffect(() => {
-        return auth.onIdTokenChanged(async (user) => {
+        return auth.onIdTokenChanged(async (user: User): Promise<void> => {
             if (!user) {
                 setAuthUser(null);
                 nookies.set(undefined, 'token', '', { path: '/' });
@@ -70,6 +71,6 @@ export const AuthProvider = ({ children }): JSX.Element => {
     return <AuthContext.Provider value={authUser}>{children}</AuthContext.Provider>;
 }
 
-export const useAuth = (): AuthData => {
+export const useAuth = (): User => {
     return useContext(AuthContext);
 }

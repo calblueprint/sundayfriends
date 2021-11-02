@@ -4,12 +4,19 @@ import styles from './Admins.module.css';
 import { Button, List, ListItem } from "@mui/material";
 import { AdminItem } from '../../components/AdminItem/AdminItem';
 import itemstyles from '../../components/AdminItem/AdminItem.module.css';
-import firebase from "../../firebase/firebaseApp";
-import { getDocs } from '@firebase/firestore';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import firebaseAdmin from '../../firebase/firebaseAdmin';
+import { GetServerSidePropsContext } from 'next';
+import { Admin } from "../../types/schema";
+import { getAdmin } from '../../firebase/firestore/admin';
+import nookies from "nookies";
 
-const AdminPage: React.FunctionComponent = () => {
+type AdminPageProps = {
+  currentAdmin: Admin
+}
+
+const AdminPage: React.FunctionComponent<AdminPageProps> = ({
+  currentAdmin
+}) => {
 
   const renderCategoryHeader = () => {
     return (
@@ -83,6 +90,27 @@ const AdminPage: React.FunctionComponent = () => {
       </main>
     </Layout>
   );
+}
+
+// Use SSR to load admins!
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    return {
+      props: { currentAdmin: adminData }
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        permament: false,
+        destination: '/',
+      }
+    }
+  }
 }
 
 export default AdminPage;

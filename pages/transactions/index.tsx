@@ -27,11 +27,11 @@ import { GetServerSidePropsContext } from 'next';
 import { Admin } from "../../types/schema";
 import nookies from "nookies";
 
-type TransactionProps = {
+type TransactionPageProps = {
     currentAdmin: Admin
 };
 
-const TransactionsPage: React.FunctionComponent<TransactionProps> = ({
+const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     currentAdmin
 }) => {
 

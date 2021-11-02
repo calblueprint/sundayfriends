@@ -9,8 +9,19 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 // import firstore;
 // import { firestore } from "firebase-admin";
+import firebaseAdmin from '../../firebase/firebaseAdmin';
+import { GetServerSidePropsContext } from 'next';
+import { Admin } from "../../types/schema";
+import { getAdmin } from '../../firebase/firestore/admin';
+import nookies from "nookies";
 
-const UsersPage: React.FunctionComponent = () => {
+type UserPageProps = {
+  currentAdmin: Admin
+}
+
+const UsersPage: React.FunctionComponent<UserPageProps> = ({
+  currentAdmin
+}) => {
   //   const db = getFirestore(firebase);
   //   const dbQuery = query(collection(db, "families"));
   //   const getFamilies = async () => {
@@ -147,5 +158,25 @@ const UsersPage: React.FunctionComponent = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    return {
+      props: { currentAdmin: adminData }
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        permament: false,
+        destination: '/',
+      }
+    }
+  }
+}
 
 export default UsersPage;
