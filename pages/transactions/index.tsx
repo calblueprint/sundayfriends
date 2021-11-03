@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import { Button,
    Tabs,
@@ -127,16 +127,9 @@ const TransactionsPage: React.FunctionComponent = () => {
  
    const BasicTabs = () => {
        const [value, setValue] = useState(0);
-       const [allTransactions, setTransactions] = useState([]);
 
-       useEffect(() => {
-            getAllTransactions().then(items => {
-                setTransactions(items);
-            })
-        }, []);
-      
        const handleChange = (event, newValue) => {
-           setValue(newValue);
+          setValue(newValue);
        };
 
        const renderFilterHeader = () => {
