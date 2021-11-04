@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Box, Avatar, Grid } from "@mui/material";
 import styles from "./FamilyCard.module.css";
 import { Family, User } from "../../../types/schema";
