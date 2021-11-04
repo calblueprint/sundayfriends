@@ -94,7 +94,9 @@ const TransactionsPage: React.FunctionComponent = () => {
         addTransaction(adding as Transaction);
 
         setSuccess(true);
-        
+        getAllTransactions().then(items => {
+            setTransactions(items);
+        })
     }
 
     const handleAddMore = () => {
