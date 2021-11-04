@@ -106,6 +106,7 @@ const TransactionsPage: React.FunctionComponent = () => {
         setAddAnchorEl(null);
         sleep(1000).then(() => {
             setSuccess(false);
+            setAddUser(null);
         })
         resetFields();
     };
@@ -115,7 +116,8 @@ const TransactionsPage: React.FunctionComponent = () => {
     }
 
     const resetFields = () => {
-        setAddUser('');
+        setSelectedUser('Select User');
+        
         setAddPoints('10');
         setAddType('');
         setAddMessage('');

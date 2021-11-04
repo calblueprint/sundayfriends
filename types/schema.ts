@@ -9,13 +9,6 @@ export type Transaction = {
   user_name: string;
 };
 
-export type Family = {
-  totalPoints: number;
-  familyName: string;
-  userIds: User[];
-  familyId: number;
-};
-
 export type Admin = {
   created_at: Date | Timestamp;
   email: string;
