@@ -3,10 +3,25 @@ import Layout from "../../components/Layout/Layout";
 import styles from "./UsersPage.module.css";
 import FamilyCards from "../../components/Users/FamilyCard/familyCard";
 import { Tabs, Tab } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+//import { useAuth } from "../../firebase/auth/useAuth";
+import { useRouter } from "next/router";
+// import firstore;
+// import { firestore } from "firebase-admin";
+import firebaseAdmin from '../../firebase/firebaseAdmin';
+import { GetServerSidePropsContext } from 'next';
+import { Admin, User } from "../../types/schema";
+import { getAdmin } from '../../firebase/firestore/admin';
+import nookies from "nookies";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
 
-const UsersPage: React.FunctionComponent = () => {
+type UserPageProps = {
+  currentAdmin: Admin
+}
+
+const UsersPage: React.FunctionComponent<UserPageProps> = ({
+  currentAdmin
+}) => {
   const users = [
     {
       address: "2419 Yes Ave",
@@ -126,5 +141,25 @@ const UsersPage: React.FunctionComponent = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    return {
+      props: { currentAdmin: adminData }
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        permament: false,
+        destination: '/',
+      }
+    }
+  }
+}
 
 export default UsersPage;
