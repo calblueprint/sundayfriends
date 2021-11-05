@@ -15,6 +15,12 @@ export type Admin = {
     full_name: string;
 }
 
+export type AdminInvite = {
+    email: string;
+    full_name: string;
+    valid: boolean;
+}
+
 export type User = {
     address: string;
     created_at: Date | Timestamp;
@@ -27,4 +33,4 @@ export type User = {
     points: number;
     reward_eligible: boolean;
     suspended: boolean;
-  };
+};

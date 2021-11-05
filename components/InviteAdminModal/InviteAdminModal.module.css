@@ -59,6 +59,7 @@
 }
 
 .actions {
+  padding: 10px;
   margin-top: auto;
 }
 
@@ -69,26 +70,18 @@
   margin-left: 30px;
 }
 
-.send {
-  background-color: #253C85;
-}
-
-.cancel {
-  background-color: #253C85;
-}
-
 .text {
   font-family: Avenir;
   font-style: normal;
 }
 
 .invite-icon {
-  /* margin-left: 5%; */
   margin-right: 3%;
 }
 
 .font {
   font-family: Avenir;
+  text-transform: none;
 }
 
 .h4 {
