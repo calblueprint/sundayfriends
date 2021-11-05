@@ -17,11 +17,7 @@ const SideNavbar: React.FunctionComponent = () => {
     >
       <List className={styles.list}>
         <ListItem
-          button
           key="logo"
-          onClick={() => {
-            router.push("/");
-          }}
           className={styles.navbar}
         >
         <div className={styles.icon}>

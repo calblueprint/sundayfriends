@@ -2,11 +2,6 @@
     display: flex;
 }
 
-.fields {
-    display: flex;
-    flex-direction: row;
-}
-
 .info {
     display: flex;
     flex-direction: row;

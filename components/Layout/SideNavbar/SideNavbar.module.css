@@ -22,7 +22,7 @@
 .sidenav-paper {
   width: 160px;
   box-sizing: border-box;
-  border-radius: 0px 35px 35px 0px;
+  border-radius: 0px 20px 20px 0px;
   background-color: var(--sapphire);
   color: white;
   border: transparent;
