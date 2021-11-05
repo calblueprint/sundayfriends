@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import styles from "../TransactionItem/TransactionItem.module.css";
 import { ListItem } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Timestamp } from "@firebase/firestore";
-import { getAdmin } from "../../firebase/firestore/admin";
-import { Admin, User } from "../../types/schema";
-import { getUser } from "../../firebase/firestore/user";
 
 type TransactionItemProps = {
   date: Date | Timestamp;

@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Modal } from "@mui/material";
 import styles from "./FamilyModal.module.css";
 import { Family } from "../../../types/schema";
