@@ -5,15 +5,19 @@
   color: var(--grey-light);
   flex-direction: column;
   font-size: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .list {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  width: 110px;
 }
 
 .sidenav {
-  width: 120px;
+  width: 100px;
   flex-shrink: 0;
   box-sizing: border-box;
 }
@@ -28,7 +32,7 @@
 }
 
 .SFlogo {
-  transform: scale(2.5);
+  transform: scale(2);
 }
 
 .icon {
@@ -43,8 +47,8 @@
   background-color: white;
   border-radius: 50%;
   margin: 26px;
-  width: 85px;
-  height: 85px;
+  width: 70px;
+  height: 70px;
   left: 24px;
   top: 33px;
 }
