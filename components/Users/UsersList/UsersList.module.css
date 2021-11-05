@@ -1,0 +1,88 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  width: 100%;
+}
+
+.tableHead {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.06);
+}
+
+.headingRow {
+  font-weight: bold;
+  font-family: Avenir;
+  background-color: var(--sapphire-light);
+}
+
+.tableRow {
+  font-family: Avenir;
+  color: var(--grey-dark);
+}
+
+.name {
+  width: 15%;
+  padding-left: 3%;
+}
+
+.FID {
+  width: 10%;
+}
+
+.role {
+  width: 10%;
+}
+
+.email {
+  width: 15%;
+}
+
+.balance {
+  width: 10%;
+}
+
+.lastActive {
+  width: 12%;
+}
+
+.manage {
+  width: 28%;
+}
+
+.button {
+  font-size: x-small;
+  color: var(--grey-dark);
+  border: 1px solid;
+  border-radius: 15px;
+  border-color: var(--grey-mid);
+  height: 30px;
+  font-size: 14px;
+  margin-right: 10px;
+  text-transform: none;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.button:hover {
+  background-color: var(--grey-light);
+}
+
+.viewButton {
+  font-size: x-small;
+  background-color: var(--sapphire-light);
+  color: var(--grey-dark);
+  border-radius: 15px;
+  height: 30px;
+  font-size: 14px;
+  margin-right: 10px;
+  text-transform: none;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.viewButton:hover {
+  background-color: var(--sapphire);
+  color: var(--white);
+}

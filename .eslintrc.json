@@ -1,13 +1,11 @@
 {
     "env": {
         "browser": true,
-        "es2021": true,
-        "jest": true
+        "es2021": true
     },
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
         "plugin:@next/next/recommended"
     ],
@@ -24,23 +22,20 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": [
-            "off",
-            "tab"
-        ],
         "linebreak-style": [
-            "off",
+            "error",
             "unix"
         ],
         "quotes": [
-            "off",
+            "error",
             "double"
         ],
         "semi": [
-            "off",
-            "never"
+            "error",
+            "always"
         ],
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "no-unused-vars": "warn"
     },
     "settings": {
         "react": {

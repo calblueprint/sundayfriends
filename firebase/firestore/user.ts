@@ -1,9 +1,9 @@
-import firebaseApp from '../firebase';
+import firebaseApp from '../firebaseApp';
 import 'firebase/firestore';
 import { User } from '../../types/schema';
 
 const db = firebaseApp.firestore();
-const userCollection = db.collection('users');
+const userCollection = db.collection("users");
 
 /**
  * Returns the user data from firestore with the given userId
@@ -16,7 +16,7 @@ export const getUser = async (userId: string): Promise<User> => {
         console.error(e);
         throw e;
     }
-}
+};
 
 /**
  * Adds the given user data to firestore

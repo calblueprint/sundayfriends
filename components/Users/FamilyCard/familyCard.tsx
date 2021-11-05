@@ -1,7 +1,9 @@
-import { Box, Avatar, Grid, Modal } from "@mui/material";
+import * as React from "react";
+import { Box, Avatar, Grid } from "@mui/material";
 import styles from "./FamilyCard.module.css";
-import { Family, User } from "../../types/schema";
+import { Family, User } from "../../../types/schema";
 import { useState } from "react";
+import FamilyModal from "../FamilyModal/familyModal";
 
 type FamilyCardProps = {
   family: Family;
@@ -20,7 +22,7 @@ const FamilyMember: React.FC<FamilyMemberProps> = ({
 }: FamilyMemberProps) => {
   return (
     <Grid item xs={6}>
-      <div className={styles.familyMember}>
+      <div className={styles["familyMember"]}>
         <Avatar alt="smiley pic" src="/smiley.png" />
         <div>{user.full_name}</div>
       </div>
@@ -34,15 +36,13 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
-      <Modal open={isOpen}>
-        <div className={styles.modal}> Hello this is a modal </div>
-      </Modal>
-      <Box className={styles.card} onClick={() => setIsOpen(true)}>
+      <FamilyModal family={family} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Box className={styles["card"]} onClick={() => setIsOpen(true)}>
         <div>
-          <div className={styles.row}>
-            <div className={styles.row}>
-              <h2 className={styles.headText}>{family.familyName} </h2>
-              <div className={styles.smallText}>FID: {family.familyId}</div>
+          <div className={styles["row"]}>
+            <div className={styles["row"]}>
+              <h2 className={styles["headText"]}>{family.familyName} </h2>
+              <div className={styles["smallText"]}>FID: {family.familyId}</div>
             </div>
             <h3>{family.totalPoints}</h3>
           </div>
@@ -61,7 +61,7 @@ const FamilyCards: React.FunctionComponent<FamilyCardsProps> = ({
   families,
 }: FamilyCardsProps) => {
   return (
-    <div className={styles.familyCards}>
+    <div className={styles["familyCards"]}>
       {families.map((family) => (
         <FamilyCard key={family.familyId} family={family}></FamilyCard>
       ))}

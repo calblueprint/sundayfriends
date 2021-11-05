@@ -1,30 +1,27 @@
+import * as React from "react";
 import Layout from "../../components/Layout/Layout";
-import styles from "./UserAccounts.module.css";
-import FamilyCards from "../../components/Users/familyCard";
-import UsersList from "../../components/Users/usersList";
-// import { Family, User } from "../../types/schema";
+import styles from "./UsersPage.module.css";
+import FamilyCards from "../../components/Users/FamilyCard/familyCard";
 import { Tabs, Tab } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+//import { useAuth } from "../../firebase/auth/useAuth";
+import { useRouter } from "next/router";
 // import firstore;
 // import { firestore } from "firebase-admin";
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { GetServerSidePropsContext } from "next";
+import { Admin, User } from "../../types/schema";
+import { getAdmin } from "../../firebase/firestore/admin";
+import nookies from "nookies";
+import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
 
-const UsersPage: React.FunctionComponent = () => {
-  //   const db = getFirestore(firebase);
-  //   const dbQuery = query(collection(db, "families"));
-  //   const getFamilies = async () => {
-  //     const qs = await getDocs(dbQuery);
-  //     console.log(qs);
-  //     return qs;
-  //   };
-  //   const familes = getFamilies();
-  //   const [families, familiesLoading, familiesError] = useCollection(
-  //     firestore().collection("families"),
-  //     {}
-  //   );
+type UserPageProps = {
+  currentAdmin: Admin;
+};
 
-  //   if (!familiesLoading && families) {
-  //     families.docs.map((doc) => console.log(doc.data()));
-  //   }
+const UsersPage: React.FunctionComponent<UserPageProps> = ({
+  currentAdmin,
+}) => {
   const users = [
     {
       address: "2419 Yes Ave",
@@ -125,24 +122,44 @@ const UsersPage: React.FunctionComponent = () => {
   return (
     <Layout title="Users">
       <div className={styles["container"]}>
-        <h1 className={styles.heading}>USER ACCOUNTS</h1>
+        <h1 className={styles["heading"]}>USER ACCOUNTS</h1>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-          className={styles.tabs}
+          className={styles["tabs"]}
         >
-          <Tab label="Families View" />
-          <Tab label="List View" />
+          <Tab className={styles["tabs"]} label="Families View" />
+          <Tab className={styles["tabs"]} label="List View" />
         </Tabs>
         {value == 0 ? (
           <FamilyCards families={families} />
         ) : (
-          <UsersList users={users} />
+          <FullUsersList users={users} />
         )}
       </div>
     </Layout>
   );
+};
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    return {
+      props: { currentAdmin: adminData },
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        permament: false,
+        destination: "/",
+      },
+    };
+  }
 };
 
 export default UsersPage;

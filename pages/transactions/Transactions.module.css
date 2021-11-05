@@ -225,6 +225,35 @@
   height: 20px;
 }
 
+.section-header {
+  display: flex;
+  flex-direction: row;
+  height: 46px;
+  align-items: center;
+  background-color: #e6ecfe;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.list {
+  padding-top: 0%;
+  padding-bottom: 0%;
+  height: fit-content;
+}
+
+#category {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  color: #272929;
+}
+
+#category-text {
+  font-weight: 500;
+  margin-right: 10px;
+  color: #272929;
+}
+
 .children {
   margin: 0px;
   margin-top: 0px;

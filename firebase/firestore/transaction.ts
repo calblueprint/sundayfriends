@@ -1,14 +1,16 @@
-import firebaseApp from '../firebase';
+import firebaseApp from '../firebaseApp';
 import 'firebase/firestore';
 import { Transaction } from '../../types/schema';
 
 const db = firebaseApp.firestore();
-const transactionsCollection = db.collection('transactions');
+const transactionsCollection = db.collection("transactions");
 
 /**
  * Returns the transaction data from firestore with the given transactionId
  */
-export const getTransaction = async (transactionId: string): Promise<Transaction> => {
+export const getTransaction = async (
+    transactionId: string
+): Promise<Transaction> => {
     try {
         const doc = await transactionsCollection.doc(transactionId).get();
         return doc.data() as Transaction;
@@ -16,7 +18,7 @@ export const getTransaction = async (transactionId: string): Promise<Transaction
         console.error(e);
         throw e;
     }
-}
+};
 
 /**
  * Returns all transaction data from firestore
@@ -25,12 +27,12 @@ export const getAllTransactions = async (): Promise<Transaction[]> => {
     try {
         // query everything in the transaction collection
         const allTransactions = await transactionsCollection.get();
-        return allTransactions.docs.map(doc => doc.data() as Transaction);
+        return allTransactions.docs.map((doc) => doc.data() as Transaction);
     } catch (e) {
         console.warn(e);
         throw e;
     }
-}
+};
 
 /**
  * Adds the given transaction data to firestore
