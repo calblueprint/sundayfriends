@@ -26,9 +26,10 @@ import Icon from '../../assets/Icon';
 import { TransactionList } from '../../components/TransactionList/TransactionList';
 import { getAllTransactions, addTransaction } from '../../firebase/firestore/transaction'; 
 import { getAllUsers } from '../../firebase/firestore/user';
-import { Transaction } from '../../types/schema';
+import { User, Transaction } from '../../types/schema';
+import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
  
-const TransactionsPage: React.FunctionComponent = () => {
+const TransactionsPage: NextPage<{users: User[], transactions: Transaction[]}> = (props) => {
     const [addAnchorEl, setAddAnchorEl] = React.useState(null);
     const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
     const [allUsers, setUsers] = React.useState([]);
@@ -42,12 +43,19 @@ const TransactionsPage: React.FunctionComponent = () => {
     const [addMessage, setAddMessage] = useState('');
 
     useEffect(() => {
+        // if (!props.users || !props.transactions) {
+        //     return <ErrorPage statusCode={404} />;
+        //   }
+
         getAllUsers().then(users => {
             setUsers(users);
         })
         getAllTransactions().then(items => {
             setTransactions(items);
         })
+
+        // setTransactions(props.transactions);
+        // setUsers(props.users);
     }, []);
 
     /*
@@ -412,5 +420,25 @@ const TransactionsPage: React.FunctionComponent = () => {
        </Layout>
    );
 }
+
+// export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+//     try {
+//         const userData = await getAllUsers();
+//         const transactionData = await getAllTransactions();
+    
+//         return {
+//             props: {users: userData, transactions: transactionData}, // will be passed to the page component as props
+//         }
+//     } catch (e) {
+//         console.error(e);
+//         return {
+//             redirect: {
+//               permament: false,
+//               destination: '/',
+//             }
+//           }
+//     }
+    
+// }
  
 export default TransactionsPage;
