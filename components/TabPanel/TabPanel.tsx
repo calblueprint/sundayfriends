@@ -1,3 +1,4 @@
+import * as React from "react";
 import styles from "../../pages/Transactions/Transactions.module.css";
 import { Box } from "@mui/material";
 
@@ -21,7 +22,7 @@ export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
     >
       {value === index && (
         <Box sx={{ p: 3 }} className={styles["tab-box"]}>
-          <h3 className={styles['children']}>{children}</h3>
+          <h3 className={styles["children"]}>{children}</h3>
         </Box>
       )}
     </div>
