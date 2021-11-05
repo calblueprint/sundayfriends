@@ -4,6 +4,7 @@
   justify-content: center;
   color: var(--grey-light);
   flex-direction: column;
+  font-size: 12px;
 }
 
 .list {
@@ -33,7 +34,6 @@
 .icon {
   display: flex;
   justify-content: center;
-  margin-top: 25px;
 }
 
 .border {
