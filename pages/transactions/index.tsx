@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Layout from "../../components/Layout/Layout";
 import { Button,
    Tabs,
@@ -26,14 +26,24 @@ import Icon from '../../assets/Icon';
 import { TransactionList } from '../../components/TransactionList/TransactionList';
 import { getAllTransactions, addTransaction } from '../../firebase/firestore/transaction'; 
 import { getAllUsers } from '../../firebase/firestore/user';
-import { User, Transaction } from '../../types/schema';
+import { User, Transaction, Admin } from '../../types/schema';
 import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
+import { createRouteLoader } from "next/dist/client/route-loader";
+import { useRouter } from "next/router";
+
+type TransactionPageProps = {
+    transactions: Transaction[],
+    users: User[],
+};
  
-const TransactionsPage: NextPage<{users: User[], transactions: Transaction[]}> = (props) => {
+const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
+    transactions,
+    users
+}) => {
     const [addAnchorEl, setAddAnchorEl] = React.useState(null);
     const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
-    const [allUsers, setUsers] = React.useState([]);
-    const [allTransactions, setTransactions] = useState([]);
+    const [allUsers, setUsers] = React.useState(users);
+    const [allTransactions, setTransactions] = useState(transactions);
     const [success, setSuccess] = useState(false);
     const [selectedUser, setSelectedUser] = useState('Select User')
     const [expanded, setExpanded] = useState(false);
@@ -42,20 +52,25 @@ const TransactionsPage: NextPage<{users: User[], transactions: Transaction[]}> =
     const [addType, setAddType] = useState('');
     const [addMessage, setAddMessage] = useState('');
 
+    const router = useRouter();
+    const refresh = useCallback(() => {
+        router.replace(router.asPath);
+    }, [router]);
+
     useEffect(() => {
         // if (!props.users || !props.transactions) {
         //     return <ErrorPage statusCode={404} />;
         //   }
 
-        getAllUsers().then(users => {
-            setUsers(users);
-        })
-        getAllTransactions().then(items => {
-            setTransactions(items);
-        })
-
-        // setTransactions(props.transactions);
-        // setUsers(props.users);
+        // getAllUsers().then(users => {
+        //     setUsers(users);
+        // })
+        // getAllTransactions().then(items => {
+        //     setTransactions(items);
+        // })
+        console.log(transactions);
+        setTransactions(transactions);
+        setUsers(users);
     }, []);
 
     /*
@@ -89,7 +104,7 @@ const TransactionsPage: NextPage<{users: User[], transactions: Transaction[]}> =
         setExpanded(false);
     }
 
-    const handleAddConfirm = () => {
+    const handleAddConfirm = async () => {
         //handle post request
         const adding = {
             admin_name: 'current Admin',
@@ -100,11 +115,9 @@ const TransactionsPage: NextPage<{users: User[], transactions: Transaction[]}> =
             user_name: addUser.full_name,
         }
         addTransaction(adding as Transaction);
+        refresh();
 
         setSuccess(true);
-        getAllTransactions().then(items => {
-            setTransactions(items);
-        })
     }
 
     const handleAddMore = () => {
@@ -421,24 +434,23 @@ const TransactionsPage: NextPage<{users: User[], transactions: Transaction[]}> =
    );
 }
 
-// export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-//     try {
-//         const userData = await getAllUsers();
-//         const transactionData = await getAllTransactions();
-    
-//         return {
-//             props: {users: userData, transactions: transactionData}, // will be passed to the page component as props
-//         }
-//     } catch (e) {
-//         console.error(e);
-//         return {
-//             redirect: {
-//               permament: false,
-//               destination: '/',
-//             }
-//           }
-//     }
-    
-// }
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    try {
+        const transactionData = await getAllTransactions();
+        console.log(transactionData);
+        const userData = await getAllUsers();
+        return {
+            props: { transactions: transactionData, users: userData }
+        };
+    } catch (e) {
+        console.error(e);
+        return {
+            redirect: {
+                permament: false,
+                destination: '/',
+            }
+        }
+    }
+}
  
 export default TransactionsPage;
