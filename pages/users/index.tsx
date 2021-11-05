@@ -2,11 +2,10 @@ import Layout from "../../components/Layout/Layout";
 import styles from "./UsersPage.module.css";
 import FamilyCards from "../../components/Users/FamilyCard/familyCard";
 import { Tabs, Tab } from "@mui/material";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { getAllFamilies } from "../../firebase/firestore/family";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
-import { useRouter } from "next/router";
 
 import { Family, User } from "../../types/schema";
 
@@ -19,17 +18,6 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   allUsers,
   allFamilies,
 }: UsersPageProps) => {
-  // const [allUsers, setAllUsers] = useState([]);
-  // const [allFamilies, setAllFamilies] = useState([]);
-
-  // useEffect(() => {
-  //   getAllUsers().then((items) => {
-  //     setAllUsers(items);
-  //   });
-  //   getAllFamilies().then((items) => {
-  //     setAllFamilies(items);
-  //   });
-  // }, []);
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
