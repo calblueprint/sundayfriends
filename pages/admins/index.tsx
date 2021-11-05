@@ -2,22 +2,21 @@ import React from "react";
 import Layout from "../../components/Layout/Layout";
 import styles from "./Admins.module.css";
 import { Button, List, ListItem } from "@mui/material";
-import { AdminItem } from '../../components/AdminItem/AdminItem';
-import itemstyles from '../../components/AdminItem/AdminItem.module.css';
-import firebaseAdmin from '../../firebase/firebaseAdmin';
-import { GetServerSidePropsContext } from 'next';
+import { AdminItem } from "../../components/AdminItem/AdminItem";
+import itemstyles from "../../components/AdminItem/AdminItem.module.css";
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { GetServerSidePropsContext } from "next";
 import { Admin } from "../../types/schema";
-import { getAdmin } from '../../firebase/firestore/admin';
+import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
 
 type AdminPageProps = {
-  currentAdmin: Admin
-}
+  currentAdmin: Admin;
+};
 
 const AdminPage: React.FunctionComponent<AdminPageProps> = ({
-  currentAdmin
+  currentAdmin,
 }) => {
-
   const renderCategoryHeader = () => {
     return (
       <div className={styles["section-header"]}>
@@ -112,17 +111,17 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const adminUid = userToken.uid;
     const adminData = await getAdmin(adminUid);
     return {
-      props: { currentAdmin: adminData }
+      props: { currentAdmin: adminData },
     };
   } catch (e) {
     console.error(e);
     return {
       redirect: {
         permament: false,
-        destination: '/',
-      }
-    }
+        destination: "/",
+      },
+    };
   }
-}
+};
 
 export default AdminPage;
