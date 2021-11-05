@@ -5,9 +5,7 @@ import { useRouter } from "next/router";
 import styles from './Signin.module.css';
 import firebaseAdmin from '../firebase/firebaseAdmin';
 import { GetServerSidePropsContext } from 'next';
-import { Admin } from "../types/schema";
 import nookies from "nookies";
-import { getAdmin } from '../firebase/firestore/admin';
 
 type LoginData = {
 	email: string,
@@ -56,20 +54,21 @@ const SignInScreen: React.FC = () => {
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-	const cookies = nookies.get(ctx);
-	const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
-	const adminUid = userToken.uid;
-	const adminData = await getAdmin(adminUid);
-	if (adminData) {
-		return {
-			redirect: {
-				permament: false,
-				destination: '/users',
+	try {
+		const cookies = nookies.get(ctx);
+		const token = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+		if (token) {
+			return {
+				redirect: {
+					permament: false,
+					destination: '/users',
+				}
 			}
 		}
-	}
-	return {
-		props: {}
+	} catch (e) {
+		return {
+			props: {}
+		}
 	}
 }
 

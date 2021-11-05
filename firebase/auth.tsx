@@ -9,10 +9,6 @@ const auth = firebaseApp.auth();
 /**
  * NOTE: We may need to update types for firebase auth in the future
  */
-export type AuthData = {
-    authUser: User,
-    loading: boolean,
-}
 
 // TODO handle/throw errors accordingly
 export const signInWithEmailAndPassword = async (email: string, password: string): Promise<void> => {
