@@ -4,8 +4,6 @@
   justify-content: center;
   color: var(--grey-light);
   flex-direction: column;
-  padding-top: 10px;
-  padding-bottom: 15px;
 }
 
 .list {
@@ -20,7 +18,7 @@
 }
 
 .sidenav-paper {
-  width: 160px;
+  width: 110px;
   box-sizing: border-box;
   border-radius: 0px 20px 20px 0px;
   background-color: var(--sapphire);
@@ -52,7 +50,8 @@
 }
 
 .pageicons {
-  transform: scale(1.5);
+  width: 33px;
+  height: 33px;
 }
 
 .navbar {
