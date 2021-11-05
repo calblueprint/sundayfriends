@@ -8,19 +8,19 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 // import firstore;
 // import { firestore } from "firebase-admin";
-import firebaseAdmin from '../../firebase/firebaseAdmin';
-import { GetServerSidePropsContext } from 'next';
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { GetServerSidePropsContext } from "next";
 import { Admin, User } from "../../types/schema";
-import { getAdmin } from '../../firebase/firestore/admin';
+import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
 
 type UserPageProps = {
-  currentAdmin: Admin
-}
+  currentAdmin: Admin;
+};
 
 const UsersPage: React.FunctionComponent<UserPageProps> = ({
-  currentAdmin
+  currentAdmin,
 }) => {
   const users = [
     {
@@ -149,17 +149,17 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const adminUid = userToken.uid;
     const adminData = await getAdmin(adminUid);
     return {
-      props: { currentAdmin: adminData }
+      props: { currentAdmin: adminData },
     };
   } catch (e) {
     console.error(e);
     return {
       redirect: {
         permament: false,
-        destination: '/',
-      }
-    }
+        destination: "/",
+      },
+    };
   }
-}
+};
 
 export default UsersPage;
