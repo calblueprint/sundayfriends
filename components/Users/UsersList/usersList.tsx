@@ -51,20 +51,22 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
         {user.points}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["lastActive"]}`}>
-        {new Date(user.last_active.toMillis()).toLocaleDateString()}
+        {user.last_active}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["manage"]}`}>
-        <Button className={styles["button"]}>Delete</Button>
-        <Button className={styles["button"]}>Suspend</Button>
-        <Button
-          className={styles["viewButton"]}
-          onClick={() => {
-            setIsOpen(true);
-            setUser(user);
-          }}
-        >
-          View
-        </Button>
+        <div>
+          <Button className={styles["button"]}>Delete</Button>
+          <Button className={styles["button"]}>Suspend</Button>
+          <Button
+            className={styles["viewButton"]}
+            onClick={() => {
+              setIsOpen(true);
+              setUser(user);
+            }}
+          >
+            View
+          </Button>
+        </div>
       </TableCell>
     </TableRow>
   );

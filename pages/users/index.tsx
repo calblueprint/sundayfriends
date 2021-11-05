@@ -2,28 +2,39 @@ import Layout from "../../components/Layout/Layout";
 import styles from "./UsersPage.module.css";
 import FamilyCards from "../../components/Users/FamilyCard/familyCard";
 import { Tabs, Tab } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { getAllFamilies } from "../../firebase/firestore/family";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
+import { useRouter } from "next/router";
 
-const UsersPage: React.FunctionComponent = () => {
-  const [allUsers, setAllUsers] = useState([]);
-  const [allFamilies, setAllFamilies] = useState([]);
+import { Family, User } from "../../types/schema";
 
-  useEffect(() => {
-    getAllUsers().then((items) => {
-      setAllUsers(items);
-    });
-    getAllFamilies().then((items) => {
-      setAllFamilies(items);
-    });
-  }, []);
+type UsersPageProps = {
+  allUsers: User[];
+  allFamilies: Family[];
+};
 
+const UsersPage: React.FunctionComponent<UsersPageProps> = ({
+  allUsers,
+  allFamilies,
+}: UsersPageProps) => {
+  // const [allUsers, setAllUsers] = useState([]);
+  // const [allFamilies, setAllFamilies] = useState([]);
+
+  // useEffect(() => {
+  //   getAllUsers().then((items) => {
+  //     setAllUsers(items);
+  //   });
+  //   getAllFamilies().then((items) => {
+  //     setAllFamilies(items);
+  //   });
+  // }, []);
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <Layout title="Users">
       <div className={styles["container"]}>
@@ -46,5 +57,24 @@ const UsersPage: React.FunctionComponent = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(): Promise<{
+  props: {
+    allUsers: User[];
+    allFamilies: Family[];
+  };
+}> {
+  try {
+    const users = await getAllUsers().then((items) => {
+      return items;
+    });
+    const families = await getAllFamilies().then((items) => {
+      return items;
+    });
+    return { props: { allUsers: users, allFamilies: families } };
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export default UsersPage;

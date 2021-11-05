@@ -2,7 +2,7 @@ import { Timestamp } from "@firebase/firestore";
 
 export type Transaction = {
   admin_name: string;
-  date: Date | Timestamp;
+  date: Date | Timestamp | string;
   description: string | null;
   family_id: string;
   point_gain: number;
@@ -24,7 +24,7 @@ export type Admin = {
 
 export type User = {
   address: string;
-  created_at: Date | Timestamp;
+  created_at: Date | Timestamp | string;
   email: string;
   family_head: boolean;
   family_id: number;
@@ -35,4 +35,5 @@ export type User = {
   reward_eligible: boolean;
   suspended: boolean;
   phone_number: string;
+  transactions: Transaction[];
 };

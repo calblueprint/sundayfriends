@@ -63,7 +63,7 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
         </div>
         <div className={styles["addTransaction"]}>
           <Icon className={styles["userAdd"]} type={"userAdd"} />
-          <div>Add New Transaction</div>
+          <div>Add New Family Member</div>
         </div>
       </div>
     </Modal>
