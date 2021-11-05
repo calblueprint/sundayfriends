@@ -463,3 +463,69 @@
   justify-content: center;
   align-items: center;
 }
+
+.uploaded-file-box {
+  margin-bottom: 30px;
+}
+
+.uploaded-file-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: flex-end;
+}
+
+.uploaded-file-name {
+  width: 80%;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 20px;
+  color: #525454;
+}
+
+.cancel-file {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+}
+
+.cancel-file:hover {
+  opacity: 50%;
+}
+
+.cancel-file-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.uploaded-message {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12.4855px;
+  color: #526dc2;
+  margin-top: 10px;
+}
+
+.upload-progress-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.upload-progress-bar {
+  width: 90%;
+  height: 30px;
+  border-radius: 24.4509px;
+  margin-right: 10px;
+}
+
+.colorPrimary {
+  background: var(--sapphire-mid);
+}

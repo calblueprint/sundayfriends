@@ -18,7 +18,8 @@ import { Button,
    Accordion,
    AccordionSummary,
    AccordionDetails,
-   Autocomplete,}
+   Autocomplete,
+    LinearProgress,}
 from "@mui/material";
 import styles from './Transactions.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
@@ -42,7 +43,9 @@ const TransactionsPage: React.FunctionComponent = () => {
     const [addType, setAddType] = useState('');
     const [addMessage, setAddMessage] = useState('');
 
-    const [uploadFile, setUploadFile] = useState();
+    const [uploadFile, setUploadFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [uploadSuccess, setUploadSuccess] = useState(false);
 
     useEffect(() => {
         getAllUsers().then(users => {
@@ -115,6 +118,11 @@ const TransactionsPage: React.FunctionComponent = () => {
 
     const handleUploadClose = () => {
         setUploadAnchorEl(null);
+        sleep(1000).then(() => {
+            setUploadSuccess(false);
+            setUploadFile(null);
+            setUploading(false);
+        })
     }
 
     const resetFields = () => {
@@ -125,12 +133,30 @@ const TransactionsPage: React.FunctionComponent = () => {
         setAddMessage('');
     }
 
-    const handleUpload = () => {
+    const handleUpload = (event) => {
+        setUploadFile(event.target.files[0]);
+    }
 
+    const cancelFile = () => {
+        setUploadFile(null);
+    }
+
+    const cancelUploading = () => {
+        setUploading(false);
     }
 
     const handleUploadConfirm = () => {
-        
+        if (uploading) {
+            setUploadSuccess(true);
+        } else {
+            setUploading(true);
+        }
+    }
+
+    const handleUploadMore = () => {
+        setUploading(true);
+        setUploadSuccess(false);
+        setUploadFile(null);
     }
  
    const BasicTabs = () => {
@@ -263,20 +289,6 @@ const TransactionsPage: React.FunctionComponent = () => {
                                     />
                                 )}
                             />
-
-                            {/* <Accordion expanded={expanded} onChange={handleExpand} disableGutters>
-                                <AccordionSummary
-                                expandIcon={<Icon className={styles['drop-triangle']} type={"dropTriangle"}></Icon>}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                                className={expanded ? styles['accordion-open'] : styles['accordion']}
-                                >
-                                <div>{selectedUser}</div>
-                                </AccordionSummary>
-                                <AccordionDetails style={{padding: '0px'}}>
-                                    
-                                </AccordionDetails>
-                            </Accordion> */}
                             
                         </div>
                         <div className={styles['amount-action']}>
@@ -320,15 +332,15 @@ const TransactionsPage: React.FunctionComponent = () => {
    }
 
    const uploadPopoverContent = () => {
-    switch(success) {
+    switch(uploadSuccess) {
         case true:
              return(
                  <div className={styles['success-div']}>
                      <p className={styles['success-title']}>Success!</p>
-                     <p className={styles['success-message']}>Transaction for {addUser.full_name} has been added</p>
+                     <p className={styles['success-message']}>Transactions from {uploadFile.name} have been added</p>
                      <div>
-                         <Button className={styles['success-close-button']} onClick={handleAddClose}>Close</Button>
-                         <Button className={styles['add-more-button']} onClick={handleAddMore}>Add More</Button>
+                         <Button className={styles['success-close-button']} onClick={handleUploadClose}>Close</Button>
+                         <Button className={styles['add-more-button']} onClick={handleUploadMore}>Add More</Button>
                      </div>
                  </div>
              )
@@ -344,7 +356,8 @@ const TransactionsPage: React.FunctionComponent = () => {
                     <p className={styles['upload-message']}>Selected file should be .csv</p>
                     {uploadFile == null ?
                         <label htmlFor="contained-button-file">
-                            <Input style={{display: 'none'}} id="contained-button-file" type="file" onChange={(event) => {}}/>
+                            <input style={{display: 'none'}} id="contained-button-file" type="file" accept=".csv"
+                            onChange={handleUpload}/>
                             <div className={styles['upload-file-box']}>
                                 <div className={styles['upload-add-line']}>
                                     <Icon className={styles['add-file-icon']} type={"addGray"}></Icon>
@@ -352,11 +365,8 @@ const TransactionsPage: React.FunctionComponent = () => {
                                 </div>
                             </div>
                         </label> 
-                        :  
-                        <label htmlFor="contained-button-file">
-                            <Input style={{display: 'none'}} id="contained-button-file" type="file"/>
-                            this is the file!
-                        </label>
+                        : 
+                        renderFileStatus()
                     }
                      
                      <Button className={styles['confirm-button']} onClick={handleUploadConfirm}>
@@ -365,6 +375,49 @@ const TransactionsPage: React.FunctionComponent = () => {
                 </div>
             )
          }
+    }
+
+    const renderFileStatus = () => {
+        switch(uploading) {
+            case true:
+                return(
+                    <div className={styles['uploaded-file-box']}>
+                        <div className={styles['uploaded-file-row']}>
+                            <Icon type={"fileUpload"}></Icon>
+                            <div className={styles['uploaded-file-name']}>
+                                {uploadFile.name}
+                            </div>
+                        </div>
+                        <div className={styles['upload-progress-row']}>
+                            <LinearProgress className={styles['upload-progress-bar']} variant="determinate" value={90}
+                            classes={{barColorPrimary: styles['colorPrimary']}}
+                            sx={{
+                                color: '#526DC2',
+                                backgroundColor: '#EBEBEB'
+                            }}/>
+                            <div className={styles['cancel-file']} onClick={cancelUploading}>
+                                <Icon className={styles['cancel-file-icon']} type={"close"} ></Icon>
+                            </div>
+                        </div>
+                        <p className={styles['uploaded-message']}>Uploading...</p>
+                    </div>
+                )
+            case false:
+                return(
+                    <div className={styles['uploaded-file-box']}>
+                        <div className={styles['uploaded-file-row']}>
+                            <Icon type={"fileUpload"}></Icon>
+                            <div className={styles['uploaded-file-name']}>
+                                {uploadFile.name}
+                            </div>
+                            <div className={styles['cancel-file']} onClick={cancelFile}>
+                                <Icon className={styles['cancel-file-icon']} type={"close"} ></Icon>
+                            </div>
+                        </div>
+                        <p className={styles['uploaded-message']}>Selected. Press upload to continue.</p>
+                    </div>
+                )
+        }
     }
     
    const addOpen = Boolean(addAnchorEl);
