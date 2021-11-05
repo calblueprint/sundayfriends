@@ -64,7 +64,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 		return {
 			redirect: {
 				permament: false,
-				destination: '/transactions',
+				destination: '/users',
 			}
 		}
 	}
