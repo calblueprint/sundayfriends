@@ -29,6 +29,7 @@ import { TransactionList } from '../../components/TransactionList/TransactionLis
 import { getAllTransactions, addTransaction } from '../../firebase/firestore/transaction'; 
 import { getAllUsers } from '../../firebase/firestore/user';
 import { Transaction } from '../../types/schema';
+import Papa from '../../node_modules/papaparse';
  
 const TransactionsPage: React.FunctionComponent = () => {
     const [addAnchorEl, setAddAnchorEl] = React.useState(null);
@@ -44,7 +45,9 @@ const TransactionsPage: React.FunctionComponent = () => {
     const [addMessage, setAddMessage] = useState('');
 
     const [uploadFile, setUploadFile] = useState(null);
+    const [fileData, setFileData] = useState([]);
     const [uploading, setUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadSuccess, setUploadSuccess] = useState(false);
 
     useEffect(() => {
@@ -138,13 +141,43 @@ const TransactionsPage: React.FunctionComponent = () => {
 
     const cancelUploading = () => {
         setUploading(false);
+        setUploadProgress(0);
     }
 
     const handleUploadConfirm = () => {
         if (uploading) {
+            //handle file uploads from fileData
+            for (let i = 1; i < fileData.length; i++) {
+                const data = {
+                    admin_name: fileData[i][3],
+                    date: new Date(fileData[i][0]),
+                    description: fileData[i][5],
+                    family_id: fileData[i][2],
+                    point_gain: parseInt(fileData[i][6]),
+                    user_name: fileData[i][1],
+                }
+                console.log(data);
+                addTransaction(data as Transaction);
+            }
             setUploadSuccess(true);
+
+            
         } else {
             setUploading(true);
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                console.log(evt.target.result);
+                setFileData(Papa.parse(evt.target.result).data);
+              };
+            
+            reader.addEventListener('progress', (event) => {
+                setUploadProgress((event.loaded / event.total)*100);
+                if (event.loaded && event.total) {
+                  const percent = (event.loaded / event.total) * 100;
+                  console.log(`Progress: ${Math.round(percent)}`);
+                }
+              });
+            reader.readAsText(uploadFile);
         }
     }
 
@@ -152,6 +185,7 @@ const TransactionsPage: React.FunctionComponent = () => {
         setUploading(false);
         setUploadSuccess(false);
         setUploadFile(null);
+        setUploadProgress(0);
     }
  
    const BasicTabs = () => {
@@ -351,8 +385,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                     <p className={styles['upload-message']}>Selected file should be .csv</p>
                     {uploadFile == null ?
                         <label htmlFor="contained-button-file">
-                            <input style={{display: 'none'}} id="contained-button-file" type="file" 
-                            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                            <input style={{display: 'none'}} id="contained-button-file" type="file" accept=".csv"
                             onChange={handleUpload}/>
                             <div className={styles['upload-file-box']}>
                                 <div className={styles['upload-add-line']}>
@@ -385,7 +418,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                             </div>
                         </div>
                         <div className={styles['upload-progress-row']}>
-                            <LinearProgress className={styles['upload-progress-bar']} variant="determinate" value={90}
+                            <LinearProgress className={styles['upload-progress-bar']} variant="determinate" value={uploadProgress}
                             classes={{barColorPrimary: styles['colorPrimary']}}
                             sx={{
                                 color: '#526DC2',
@@ -395,7 +428,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                                 <Icon className={styles['cancel-file-icon']} type={"close"} ></Icon>
                             </div>
                         </div>
-                        <p className={styles['uploaded-message']}>Uploading...</p>
+                        <p className={styles['uploaded-message']}>{uploadProgress==100 ? 'Uploaded.' : 'Uploading...'}</p>
                     </div>
                 )
             case false:
