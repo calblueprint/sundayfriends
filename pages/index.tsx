@@ -7,6 +7,7 @@ import styles from "./Signin.module.css";
 import firebaseAdmin from "../firebase/firebaseAdmin";
 import { GetServerSidePropsContext } from "next";
 import nookies from "nookies";
+import Icon from "../assets/Icon";
 
 type LoginData = {
   email: string;
@@ -30,26 +31,57 @@ const SignInScreen: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSignin)}>
-      <div className={styles["container"]}>
-        <div className={styles["signin-container"]}>
-          <label>Email</label>
-          <input
-            id="email"
-            name="email"
-            {...register("email", { required: true })}
-          />
-          <label>Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            {...register("password", { required: true })}
-          />
-          <Button type="submit">Sign In</Button>
+    <div className={styles["page-container"]}>
+      <form onSubmit={handleSubmit(handleSignin)}>
+        <Icon type="sundayfriendslogo" className={styles.SFlogo} />
+        <div className={styles["container"]}>
+          <div className={styles["box-styling"]}>
+            <div className={styles["signin-container"]}>
+              <h1 className={styles["welcome-title"]}>Welcome Back!</h1>
+              <h4 className={styles["title-subtext"]}>Sign in to continue</h4>
+              <div className={styles["input"]}>
+                <label className={styles["email-input-label"]}>EMAIL</label>
+                <div className={styles["input-field"]}>
+                  <input
+                    id="email"
+                    name="email"
+                    className={styles["email-input-field"]}
+                    {...register("email", { required: true })}
+                  />
+                </div>
+              </div>
+              <div className={styles["input"]}>
+                <label className={styles["password-input-label"]}>
+                  PASSWORD
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  className={styles["password-input-field"]}
+                  {...register("password", { required: true })}
+                />
+              </div>
+              <div className={styles["forgot-password"]}>
+                {" "}
+                <a href="/">Forgot password? </a>
+              </div>
+              <div className={styles["bottom-row"]}>
+                <div>
+                  Haven&apos;t activated your account yet?{" "}
+                  <a className={styles["activate-now"]} href="/">
+                    Activate now!
+                  </a>
+                </div>
+                <Button type="submit" className={styles["sign-in-button"]}>
+                  Sign In
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 
