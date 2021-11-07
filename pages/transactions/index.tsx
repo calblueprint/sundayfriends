@@ -19,7 +19,8 @@ import { Button,
    AccordionSummary,
    AccordionDetails,
    Autocomplete,
-    LinearProgress,}
+    LinearProgress,
+    fabClasses,}
 from "@mui/material";
 import styles from './Transactions.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
@@ -37,7 +38,6 @@ const TransactionsPage: React.FunctionComponent = () => {
 
     const [success, setSuccess] = useState(false);
     const [selectedUser, setSelectedUser] = useState('Select User')
-    const [expanded, setExpanded] = useState(false);
     const [addUser, setAddUser] = useState(null);
     const [addPoints, setAddPoints] = useState('10');
     const [addType, setAddType] = useState('');
@@ -73,10 +73,6 @@ const TransactionsPage: React.FunctionComponent = () => {
         setUploadAnchorEl(event.currentTarget);
     }
 
-    const handleExpand = () => {
-        setExpanded(!expanded);
-    }
-
     const selectAutocomplete = (value) => {
         setAddUser(value);
         if (value != null) {
@@ -84,7 +80,6 @@ const TransactionsPage: React.FunctionComponent = () => {
         } else {
             setSelectedUser('Select User');
         }
-        setExpanded(false);
     }
 
     const handleAddConfirm = () => {
@@ -100,7 +95,6 @@ const TransactionsPage: React.FunctionComponent = () => {
         addTransaction(adding as Transaction);
 
         setSuccess(true);
-        
     }
 
     const handleAddMore = () => {
@@ -134,6 +128,7 @@ const TransactionsPage: React.FunctionComponent = () => {
     }
 
     const handleUpload = (event) => {
+        console.log(event.target.files[0]);
         setUploadFile(event.target.files[0]);
     }
 
@@ -154,7 +149,7 @@ const TransactionsPage: React.FunctionComponent = () => {
     }
 
     const handleUploadMore = () => {
-        setUploading(true);
+        setUploading(false);
         setUploadSuccess(false);
         setUploadFile(null);
     }
@@ -256,7 +251,7 @@ const TransactionsPage: React.FunctionComponent = () => {
                        <div className={styles['popover-header']}>
                             <h3 className={styles['add-title']}>Add Transaction</h3>
                             <div className={styles['x-button']} onClick={handleAddClose}>
-                                <Icon  type={"close"}></Icon>
+                                <Icon type={"close"}></Icon>
                             </div>
                         </div>
                         <div>
@@ -356,7 +351,8 @@ const TransactionsPage: React.FunctionComponent = () => {
                     <p className={styles['upload-message']}>Selected file should be .csv</p>
                     {uploadFile == null ?
                         <label htmlFor="contained-button-file">
-                            <input style={{display: 'none'}} id="contained-button-file" type="file" accept=".csv"
+                            <input style={{display: 'none'}} id="contained-button-file" type="file" 
+                            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                             onChange={handleUpload}/>
                             <div className={styles['upload-file-box']}>
                                 <div className={styles['upload-add-line']}>
