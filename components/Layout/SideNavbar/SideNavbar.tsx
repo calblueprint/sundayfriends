@@ -20,12 +20,11 @@ const SideNavbar: React.FunctionComponent = () => {
         <ListItem
           key="logo"
           className={styles.navbar}
-        >
-        <div className={styles.icon}>
-          <div className={styles.border}>
-            <Icon type="sundayfriendslogo" className={styles.SFlogo}/>
+          <div className={styles.icon}>
+            <div className={styles.border}>
+              <Icon type="sundayfriendslogo" className={styles.SFlogo} />
+            </div>
           </div>
-        </div>        
         </ListItem>
         <ListItem
           button
@@ -35,13 +34,14 @@ const SideNavbar: React.FunctionComponent = () => {
           }}
           className={styles.item}
         >
-        <div className={styles.icon}>
-          <Icon type="usersnavicon" className={styles.pageicons}/>
-        </div>
-          <ListItemText 
-          disableTypography
-          className={styles["item"]} 
-          primary={"Users"} />
+          <div className={styles.icon}>
+            <Icon type="usersnavicon" className={styles.pageicons} />
+          </div>
+          <ListItemText
+            disableTypography
+            className={styles["item"]}
+            primary={"Users"}
+          />
         </ListItem>
         <ListItem
           button
@@ -51,13 +51,14 @@ const SideNavbar: React.FunctionComponent = () => {
           }}
           className={styles.item}
         >
-        <div className={styles.icon}>
-          <Icon type="adminnavicon" className={styles.pageicons}/>
-        </div>
-          <ListItemText 
+          <div className={styles.icon}>
+            <Icon type="adminnavicon" className={styles.pageicons} />
+          </div>
+          <ListItemText
             disableTypography
-            className={styles["item"]} 
-            primary={"Admins"} />
+            className={styles["item"]}
+            primary={"Admins"}
+          />
         </ListItem>
         <ListItem
           button
@@ -67,13 +68,14 @@ const SideNavbar: React.FunctionComponent = () => {
           }}
           className={styles.item}
         >
-        <div className={styles.icon}>
-          <Icon type="transactionsnavicon" className={styles.pageicons}/>
-        </div>
-          <ListItemText 
+          <div className={styles.icon}>
+            <Icon type="transactionsnavicon" className={styles.pageicons} />
+          </div>
+          <ListItemText
             disableTypography
-            className={styles["item"]} 
-            primary={"Transactions"} />
+            className={styles["item"]}
+            primary={"Transactions"}
+          />
         </ListItem>
         <ListItem
           button
@@ -83,13 +85,14 @@ const SideNavbar: React.FunctionComponent = () => {
           }}
           className={styles.item}
         >
-        <div className={styles.icon}>
-          <Icon type="inventorynavicon" className={styles.pageicons}/>
-        </div>
-          <ListItemText 
+          <div className={styles.icon}>
+            <Icon type="inventorynavicon" className={styles.pageicons} />
+          </div>
+          <ListItemText
             disableTypography
-            className={styles["item"]} 
-            primary={"Inventory"} />
+            className={styles["item"]}
+            primary={"Inventory"}
+          />
         </ListItem>
       </List>
     </Drawer>

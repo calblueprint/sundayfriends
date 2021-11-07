@@ -60,7 +60,8 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
           <Button
             variant="contained"
             className={styles.button}
-            startIcon={<Icon type="editpencil" className={styles.editicon} />}>
+            startIcon={<Icon type="editpencil" className={styles.editicon} />}
+          >
             Edit
           </Button>
         </div>
