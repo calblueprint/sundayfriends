@@ -1,3 +1,4 @@
+import * as React from "react";
 import Layout from "../../components/Layout/Layout";
 import styles from "./UsersPage.module.css";
 import FamilyCards from "../../components/Users/FamilyCard/familyCard";
@@ -6,15 +7,20 @@ import { useState } from "react";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { getAllFamilies } from "../../firebase/firestore/family";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
-
-import { Family, User } from "../../types/schema";
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { GetServerSidePropsContext } from "next";
+import { getAdmin } from "../../firebase/firestore/admin";
+import nookies from "nookies";
+import { Admin, Family, User } from "../../types/schema";
 
 type UsersPageProps = {
+  currentAdmin: Admin;
   allUsers: User[];
   allFamilies: Family[];
 };
 
 const UsersPage: React.FunctionComponent<UsersPageProps> = ({
+  currentAdmin,
   allUsers,
   allFamilies,
 }: UsersPageProps) => {
@@ -46,23 +52,30 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   );
 };
 
-export async function getServerSideProps(): Promise<{
-  props: {
-    allUsers: User[];
-    allFamilies: Family[];
-  };
-}> {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
-    const users = await getAllUsers().then((items) => {
-      return items;
-    });
-    const families = await getAllFamilies().then((items) => {
-      return items;
-    });
-    return { props: { allUsers: users, allFamilies: families } };
+    const users = await getAllUsers();
+    const families = await getAllFamilies();
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    return {
+      props: {
+        currentAdmin: adminData,
+        allUsers: users,
+        allFamilies: families,
+      },
+    };
   } catch (err) {
     console.log(err);
+    return {
+      redirect: {
+        permament: false,
+        destination: "/",
+      },
+    };
   }
-}
+};
 
 export default UsersPage;

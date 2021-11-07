@@ -7,6 +7,7 @@ import {
   TableHead,
   TableBody,
 } from "@mui/material";
+import React from "react";
 import styles from "./UsersList.module.css";
 import { User } from "../../types/schema";
 

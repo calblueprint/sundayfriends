@@ -1,4 +1,4 @@
-import firebaseApp from "../firebase";
+import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Family, User } from "../../types/schema";
 import { getUser } from "./user";

@@ -60,19 +60,6 @@
     text-transform: none;
 }
 
-.h1 {
-    width: 218px;
-    height: 47px;
-    left: 193px;
-    top: 208px;
-    font-family: DM Sans;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 47px;
-    color: var(--noirish);
-}
-
 .hr {
     height: 2px;
     color: var(--sapphire-light);

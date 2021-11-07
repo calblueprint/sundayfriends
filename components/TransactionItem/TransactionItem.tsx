@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import styles from "../TransactionItem/TransactionItem.module.css";
 import { ListItem } from "@mui/material";
 import Icon from "../../assets/Icon";
