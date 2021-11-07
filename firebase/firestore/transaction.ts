@@ -1,23 +1,24 @@
-import firebaseApp from '../firebase';
-import { getFirestore, collection, query, doc, getDoc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
+import firebaseApp from '../firebaseApp';
+import 'firebase/firestore';
 import { Transaction } from '../../types/schema';
 
-const db = getFirestore(firebaseApp);
-const transactionsCollection = collection(db, "transactions");
+const db = firebaseApp.firestore();
+const transactionsCollection = db.collection("transactions");
 
 /**
  * Returns the transaction data from firestore with the given transactionId
  */
-export const getTransaction = async (transactionId: string): Promise<Transaction> => {
+export const getTransaction = async (
+    transactionId: string
+): Promise<Transaction> => {
     try {
-        const docRef = doc(db, "transactions", transactionId);
-        const docSnap = await getDoc(docRef);
-        return docSnap.data() as Transaction;
+        const doc = await transactionsCollection.doc(transactionId).get();
+        return doc.data() as Transaction;
     } catch (e) {
         console.error(e);
         throw e;
     }
-}
+};
 
 /**
  * Returns all transaction data from firestore
@@ -25,22 +26,20 @@ export const getTransaction = async (transactionId: string): Promise<Transaction
 export const getAllTransactions = async (): Promise<Transaction[]> => {
     try {
         // query everything in the transaction collection
-        const dbQuery = query(transactionsCollection);
-        const querySnapshots = await getDocs(dbQuery);
-        return querySnapshots.docs.map((doc) => doc.data() as Transaction);
+        const allTransactions = await transactionsCollection.get();
+        return allTransactions.docs.map((doc) => doc.data() as Transaction);
     } catch (e) {
         console.warn(e);
         throw e;
     }
-}
+};
 
 /**
  * Adds the given transaction data to firestore
  */
 export const addTransaction = async (transaction: Transaction) => {
     try {
-        const newTransactionRef = doc(transactionsCollection);
-        await setDoc(newTransactionRef, transaction)
+        await transactionsCollection.doc().set(transaction);
     } catch (e) {
         console.warn(e);
         throw e;
@@ -52,8 +51,7 @@ export const addTransaction = async (transaction: Transaction) => {
  */
 export const deleteTransaction = async (transactionId: string) => {
     try {
-        const transactionRef = doc(transactionsCollection, transactionId);
-        await deleteDoc(transactionRef);
+        await transactionsCollection.doc(transactionId).delete();
     } catch (e) {
         console.warn(e);
         throw e;

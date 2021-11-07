@@ -2,25 +2,65 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 5%;
+  color: var(--grey-light);
+  flex-direction: column;
+  font-size: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .list {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  width: 110px;
 }
 
 .sidenav {
-  width: 180px;
+  width: 100px;
   flex-shrink: 0;
   box-sizing: border-box;
 }
 
 .sidenav-paper {
-  width: 180px;
+  width: 110px;
   box-sizing: border-box;
-  border-radius: 0px 35px 35px 0px;
-  background-color: var(--sapphire-muted);
+  border-radius: 0px 20px 20px 0px;
+  background-color: var(--sapphire);
   color: white;
   border: transparent;
+}
+
+.SFlogo {
+  transform: scale(2);
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+}
+
+.border {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 50%;
+  margin: 26px;
+  width: 70px;
+  height: 70px;
+  left: 24px;
+  top: 33px;
+}
+
+.pageicons {
+  width: 33px;
+  height: 33px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

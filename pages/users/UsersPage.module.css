@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  padding-left: 5%;
+  padding-right: 4%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  flex-direction: column;
+}
+.familyCards {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.tabs {
+  margin-bottom: 35px;
+}
+
+.tab {
+  font-weight: bold;
+  color: var(--grey-mid);
+  text-transform: none;
+}
+
+.heading {
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: 1px;
+}

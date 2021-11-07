@@ -1,0 +1,249 @@
+.modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+  width: 80%;
+  height: 90%;
+  background-color: white;
+  border-radius: 20px;
+  top: 5%;
+  left: 10%;
+}
+
+.colSpacing {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  place-items: center;
+}
+
+.withOutNavRoute {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  place-items: center;
+}
+
+.aboutInfo {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20%;
+  vertical-align: middle;
+}
+
+.aboutInfoContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.squareBullet {
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+  padding-top: 1px;
+}
+
+.infoSpacing {
+  margin-bottom: 10px;
+}
+
+.familyName {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20%;
+}
+
+.modalHeading {
+  display: flex;
+  flex-direction: row;
+  color: var(--grey-dark);
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 0%;
+}
+
+.closeIcon {
+  border-radius: 50%;
+  background-color: var(--grey-light);
+  padding-left: 10px;
+  padding-top: 9px;
+  width: 35px;
+  height: 35px;
+}
+
+.chevron {
+  fill: none;
+  cursor: pointer;
+  height: 15px;
+  stroke: var(--sapphire);
+}
+
+.navBar {
+  display: flex;
+  color: var(--grey-mid);
+  flex-direction: row;
+  place-items: center;
+}
+
+.break {
+  width: 100%;
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.addTransaction {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5%;
+  color: var(--grey-mid);
+  justify-content: space-between;
+  width: 19%;
+  place-items: center;
+  cursor: pointer;
+}
+
+.subTitle {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: row;
+  height: 46px;
+  align-items: center;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+#category {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  color: var(--grey-dark);
+}
+
+#categoryText {
+  font-weight: 500;
+  margin-right: 10px;
+  color: var(--grey-dark);
+}
+
+.transactionBox {
+  height: 150px;
+  overflow: scroll;
+}
+
+.editIcon {
+  width: 18px;
+  height: 18px;
+  margin-right: 3px;
+}
+
+.addIcon {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  fill: var(--grey-dark);
+}
+
+.editButton {
+  display: flex;
+  place-items: center;
+  flex-direction: row;
+  font-family: Avenir;
+  font-weight: 600;
+  background-color: var(--grey-light);
+  width: 80px;
+  justify-content: center;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-transform: none;
+  color: var(--grey-dark);
+}
+
+.editButton:hover {
+  background-color: var(--grey-mid);
+}
+
+.modalInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navButton {
+  background-color: transparent;
+  border: 0px;
+}
+
+.date-range {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 25%;
+}
+
+.calendar-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e6ecfe;
+  height: 35px;
+  width: 35px;
+  border-radius: 6px;
+}
+
+.calendar-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.date-display {
+  display: flex;
+  align-items: center;
+  background-color: #e6ecfe;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 7px;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-right: 10px;
+  height: 35px;
+}
+
+.search-bar {
+  border: 1px solid #f0f0f0;
+  border-radius: 19.5px;
+  width: 30%;
+  height: 36px;
+  font-family: Avenir;
+  font-size: 12px;
+  padding-left: 1%;
+}
+
+.search-icon {
+  margin-right: 3%;
+  width: 20px;
+  height: 20px;
+}
+
+.transactionHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
