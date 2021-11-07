@@ -119,6 +119,7 @@ const TransactionsPage: React.FunctionComponent = () => {
             setUploadSuccess(false);
             setUploadFile(null);
             setUploading(false);
+            setUploadProgress(0);
         })
     }
 
