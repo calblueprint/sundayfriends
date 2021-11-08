@@ -21,12 +21,9 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
   message,
   change,
 }: TransactionItemProps) => {
-  const dateFormat = new Date(date.toMillis());
   return (
     <ListItem className={styles["list-item"]}>
-      <div className={fid ? styles["date"] : styles["dateV2"]}>
-        {dateFormat.toLocaleDateString("en-US")}
-      </div>
+      <div className={fid ? styles["date"] : styles["dateV2"]}>{date}</div>
       {userName ? <div className={styles["username"]}>{userName}</div> : null}
       {fid ? <div className={styles["fid"]}>{fid}</div> : null}
       <div className={fid ? styles["admin"] : styles["adminV2"]}>
