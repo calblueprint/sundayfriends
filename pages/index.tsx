@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { signInWithEmailAndPassword } from "../firebase/auth";
@@ -18,6 +18,7 @@ type LoginData = {
 const SignInScreen: React.FC = () => {
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
+  const [inputType, setInputType] = useState("password");
 
   // TODO clear fields after error in submission
   const handleSignin = async (data: LoginData) => {
@@ -28,6 +29,10 @@ const SignInScreen: React.FC = () => {
       reset();
       console.error("Failed to sign in");
     }
+  };
+
+  const toggleVisibility = () => {
+    inputType == "password" ? setInputType("text") : setInputType("password");
   };
 
   return (
@@ -57,10 +62,16 @@ const SignInScreen: React.FC = () => {
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={inputType}
                   className={styles["password-input-field"]}
                   {...register("password", { required: true })}
                 />
+                <button
+                  className={styles["hide-password-button"]}
+                  onClick={toggleVisibility}
+                >
+                  <Icon type="hidepassword" className={styles.hidepassword} />
+                </button>
               </div>
               <div className={styles["forgot-password"]}>
                 {" "}

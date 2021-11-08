@@ -78,6 +78,7 @@
 .input {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .sign-in-button {
@@ -118,4 +119,27 @@
   text-decoration-line: underline;
   color: var(--grey-mid);
   margin-top: 18px;
+}
+
+.hidepassword {
+  width: 20px;
+  height: 10px;
+  background-color: none;
+}
+
+.hide-password-button {
+  background-color: transparent;
+  align-items: flex-end;
+  position: absolute;
+  border: none;
+  margin-left: 450px;
+  cursor: pointer;
+}
+
+.hidepassword-button:hover {
+  width: 20px;
+  height: 10px;
+  margin-left: -100px;
+  position: absolute;
+  background-color: none;
 }
