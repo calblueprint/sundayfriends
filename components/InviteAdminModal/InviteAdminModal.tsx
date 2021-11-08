@@ -23,11 +23,12 @@ export default function InviteAdminModal() {
     setOpen(false);
   };
 
-  const removeRow = () => {
-    unregister("invite." + (count - 1));
-    unregister("invite." + (count - 1));
-    setCount(count - 1);
-  };
+  function removeRow(i) {
+    unregister("invite." + i);
+    unregister("invite." + i);
+
+    setInvites(invites.filter((j) => j != i));
+  }
 
   const theme = createTheme({
     palette: {
@@ -37,10 +38,11 @@ export default function InviteAdminModal() {
     },
   });
 
+  const [invites, setInvites] = useState([0]);
   const [count, setCount] = useState(1);
 
   const validationSchema = Yup.object().shape({
-    invite: Yup.array().of(
+    invites: Yup.array().of(
       Yup.object().shape({
         name: Yup.string().required("Name is required"),
         email: Yup.string()
@@ -61,9 +63,11 @@ export default function InviteAdminModal() {
   });
 
   function onSubmit(data) {
-    // display form data on success
-    alert("hello");
-    // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    // alert to display input data
+    // reset();
+    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    // add user to firebase
+    // (works but commented out because I don't want to spam firebase every time i test
     // data["invite"].map((inv) => {
     //   const invite: AdminInvite = {
     //     email: inv.email,
@@ -72,10 +76,14 @@ export default function InviteAdminModal() {
     //   };
     //   addAdminInvite(invite);
     // });
+    reset();
+    setCount(1);
+    setInvites([0]);
   }
 
-  function inviteNumbers() {
-    return Array.from(Array(count).keys());
+  function addRow() {
+    setCount(count + 1);
+    setInvites([...invites, count]);
   }
 
   return (
@@ -101,7 +109,7 @@ export default function InviteAdminModal() {
           <Icon className={styles["invite-icon"]} type={"invite"}></Icon>
           INVITE ADMINS
         </h2>
-        <form onSubmit={handleSubmit(onSubmit)} onReset={reset}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles["form"]}>
             <div className={styles["row"]}>
               <div className={styles["col"]}>
@@ -112,8 +120,8 @@ export default function InviteAdminModal() {
               </div>
             </div>
 
-            {inviteNumbers().map((i) => (
-              <div className={styles["row"]}>
+            {invites.map((i) => (
+              <div key={i} className={styles["row"]}>
                 <div className={styles["col"]}>
                   <TextField
                     name={"invite." + i + ".name"}
@@ -124,13 +132,11 @@ export default function InviteAdminModal() {
                     type="text"
                     variant="standard"
                     className={styles["font"]}
-                    // {...register("name" + i)}
                     {...register("invite." + i + ".name", {
                       required: true,
                       maxLength: 5,
                     })}
                   />
-                  {/* <p>hello</p> */}
                 </div>
                 <div className={styles["col"]}>
                   <TextField
@@ -142,10 +148,18 @@ export default function InviteAdminModal() {
                     type="text"
                     variant="standard"
                     className={styles["font"]}
-                    // {...register("email" + i)}
                     {...register("invite." + i + ".email")}
                   />
                 </div>
+                {i != 0 && (
+                  <Button
+                    className={styles["font"]}
+                    variant="contained"
+                    onClick={() => removeRow(i)}
+                  >
+                    Remove Row
+                  </Button>
+                )}
               </div>
             ))}
           </div>
@@ -171,16 +185,9 @@ export default function InviteAdminModal() {
                 <Button
                   className={styles["font"]}
                   variant="contained"
-                  onClick={() => setCount(count + 1)}
+                  onClick={addRow}
                 >
                   Add Row
-                </Button>
-                <Button
-                  className={styles["font"]}
-                  variant="contained"
-                  onClick={removeRow}
-                >
-                  Remove Row
                 </Button>
               </ThemeProvider>
             </DialogActions>
