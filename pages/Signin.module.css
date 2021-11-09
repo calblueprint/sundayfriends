@@ -51,6 +51,7 @@
   font-size: 14px;
   line-height: 19px;
   color: #525454;
+  margin-top: 10px;
 }
 
 .password-input-label {
@@ -60,6 +61,7 @@
   font-size: 14px;
   line-height: 19px;
   color: #525454;
+  margin-top: 10px;
 }
 
 .email-input-field {
@@ -67,12 +69,14 @@
   border-bottom: 2px solid var(--grey-mid);
   width: 332px;
   margin-bottom: 35px;
+  line-height: 32px;
 }
 
 .password-input-field {
   border: none;
   border-bottom: 2px solid var(--grey-mid);
   width: 332px;
+  line-height: 32px;
 }
 
 .input {
@@ -101,6 +105,10 @@
   display: flex;
   justify-content: space-between;
   margin-top: 42px;
+}
+
+.bottom-row-text {
+  margin-top: 6px;
 }
 
 .activate-now {

@@ -12,14 +12,11 @@ import {
   MenuItem,
 } from "@mui/material";
 import styles from "./Transactions.module.css";
-import itemstyles from "../../components/TransactionItem/TransactionItem.module.css";
 import { TabPanel } from "../../components/TabPanel/TabPanel";
 import Icon from "../../assets/Icon";
-import { Transaction } from "../../types/schema";
 import { TransactionList } from "../../components/TransactionList/TransactionList";
 import { getAllTransactions } from "../../firebase/firestore/transaction";
 import { getAdmin } from "../../firebase/firestore/admin";
-import { getUser } from "../../firebase/firestore/user";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { GetServerSidePropsContext } from "next";
 import { Admin } from "../../types/schema";
