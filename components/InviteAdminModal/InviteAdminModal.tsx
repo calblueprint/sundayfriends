@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -109,59 +110,62 @@ export default function InviteAdminModal() {
           <Icon className={styles["invite-icon"]} type={"invite"}></Icon>
           INVITE ADMINS
         </h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles["form"]}>
-            <div className={styles["row"]}>
-              <div className={styles["col"]}>
-                <h4 className={styles["text"]}> FULL NAME *</h4>
-              </div>
-              <div className={styles["col"]}>
-                <h4 className={styles["text"]}>EMAIL *</h4>
-              </div>
-            </div>
 
-            {invites.map((i) => (
-              <div key={i} className={styles["row"]}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles["box"]}>
+            <div className={styles["form"]}>
+              <div className={styles["row"]}>
                 <div className={styles["col"]}>
-                  <TextField
-                    name={"invite." + i + ".name"}
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    placeholder="Firstname Lastname"
-                    type="text"
-                    variant="standard"
-                    className={styles["font"]}
-                    {...register("invite." + i + ".name", {
-                      required: true,
-                      maxLength: 5,
-                    })}
-                  />
+                  <h4 className={styles["text"]}> FULL NAME *</h4>
                 </div>
                 <div className={styles["col"]}>
-                  <TextField
-                    name={"invite." + i + ".email"}
-                    fullWidth
-                    autoFocus
-                    margin="dense"
-                    placeholder="thisisanemail@email.com"
-                    type="text"
-                    variant="standard"
-                    className={styles["font"]}
-                    {...register("invite." + i + ".email")}
-                  />
+                  <h4 className={styles["text"]}>EMAIL *</h4>
                 </div>
-                {i != 0 && (
-                  <Button
-                    className={styles["font"]}
-                    variant="contained"
-                    onClick={() => removeRow(i)}
-                  >
-                    Remove Row
-                  </Button>
-                )}
               </div>
-            ))}
+
+              {invites.map((i) => (
+                <div key={i} className={styles["row"]}>
+                  <div className={styles["col"]}>
+                    <TextField
+                      name={"invite." + i + ".name"}
+                      fullWidth
+                      autoFocus
+                      margin="dense"
+                      placeholder="Firstname Lastname"
+                      type="text"
+                      variant="standard"
+                      className={styles["text"]}
+                      {...register("invite." + i + ".name", {
+                        required: true,
+                        maxLength: 5,
+                      })}
+                    />
+                  </div>
+                  <div className={styles["col"]}>
+                    <TextField
+                      name={"invite." + i + ".email"}
+                      fullWidth
+                      autoFocus
+                      margin="dense"
+                      placeholder="thisisanemail@email.com"
+                      type="text"
+                      variant="standard"
+                      className={styles["text"]}
+                      {...register("invite." + i + ".email")}
+                    />
+                  </div>
+
+                  {i != 0 && (
+                    <IconButton
+                      variant="contained"
+                      onClick={() => removeRow(i)}
+                    >
+                      <Icon type={"inviteTrash"} />
+                    </IconButton>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
           <div className={styles["actions"]}>
             <DialogActions>
