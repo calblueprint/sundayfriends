@@ -3,12 +3,17 @@
   display: flex;
   flex-direction: column;
   padding: 3%;
-  width: 80%;
+  width: 74%;
   height: 90%;
   background-color: white;
   border-radius: 20px;
   top: 5%;
-  left: 10%;
+  left: 13%;
+  overflow: scroll;
+}
+
+.transactionContainer {
+  height: 200px;
 }
 
 .colSpacing {
@@ -30,7 +35,7 @@
 .aboutInfo {
   display: flex;
   flex-direction: column;
-  padding-right: 20%;
+  padding-right: 10%;
   vertical-align: middle;
 }
 
@@ -141,7 +146,7 @@
 }
 
 .transactionBox {
-  height: 150px;
+  height: 200px;
   overflow: scroll;
 }
 
