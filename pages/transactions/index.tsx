@@ -24,6 +24,7 @@ import styles from './Transactions.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
 import Icon from '../../assets/Icon';
 import { TransactionList } from '../../components/TransactionList/TransactionList';
+import { AddPopover } from "../../components/AddPopover/AddPopover";
 import { getAllTransactions, addTransaction } from '../../firebase/firestore/transaction'; 
 import { getAllUsers } from '../../firebase/firestore/user';
 import { User, Transaction, Admin } from '../../types/schema';
@@ -31,26 +32,22 @@ import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
 import { createRouteLoader } from "next/dist/client/route-loader";
 import { useRouter } from "next/router";
 
-type TransactionPageProps = {
-    transactions: Transaction[],
-    users: User[],
-};
+// type TransactionPageProps = {
+//     transactions: Transaction[],
+//     users: User[],
+// };
  
-const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
-    transactions,
-    users
-}) => {
+// const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
+//     transactions,
+//     users
+// }) => 
+const TransactionsPage:React.FunctionComponent = () => {
     const [addAnchorEl, setAddAnchorEl] = React.useState(null);
     const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
-    const [allUsers, setUsers] = React.useState(users);
-    const [allTransactions, setTransactions] = useState(transactions);
-    const [success, setSuccess] = useState(false);
-    const [selectedUser, setSelectedUser] = useState('Select User')
-    const [expanded, setExpanded] = useState(false);
-    const [addUser, setAddUser] = useState(null);
-    const [addPoints, setAddPoints] = useState('10');
-    const [addType, setAddType] = useState('');
-    const [addMessage, setAddMessage] = useState('');
+    const [allUsers, setUsers] = React.useState([]);
+    const [allTransactions, setTransactions] = useState([]);
+    
+    const [uploadSuccess, setUploadSuccess] = useState(false);
 
     const router = useRouter();
     const refresh = useCallback(() => {
@@ -62,15 +59,15 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
         //     return <ErrorPage statusCode={404} />;
         //   }
 
-        // getAllUsers().then(users => {
-        //     setUsers(users);
-        // })
-        // getAllTransactions().then(items => {
-        //     setTransactions(items);
-        // })
-        console.log(transactions);
-        setTransactions(transactions);
-        setUsers(users);
+        getAllUsers().then(users => {
+            setUsers(users);
+        })
+        getAllTransactions().then(items => {
+            setTransactions(items);
+        })
+        // console.log(transactions);
+        // setTransactions(transactions);
+        // setUsers(users);
     }, []);
 
     /*
@@ -86,64 +83,16 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
         setAddAnchorEl(event.currentTarget);
     };
 
+    const closeAdd = () => {
+        setAddAnchorEl(null);
+    }
+
     const clickUploadButton = (event) => {
         setUploadAnchorEl(event.currentTarget);
     }
 
-    const handleExpand = () => {
-        setExpanded(!expanded);
-    }
-
-    const selectAutocomplete = (value) => {
-        setAddUser(value);
-        if (value != null) {
-            setSelectedUser(value.full_name);
-        } else {
-            setSelectedUser('Select User');
-        }
-        setExpanded(false);
-    }
-
-    const handleAddConfirm = async () => {
-        //handle post request
-        const adding = {
-            admin_name: 'current Admin',
-            date: new Date(),
-            description: addMessage,
-            family_id: addUser.family_id,
-            point_gain: addType == 'redeem' ? -parseInt(addPoints) : parseInt(addPoints),
-            user_name: addUser.full_name,
-        }
-        addTransaction(adding as Transaction);
-        refresh();
-
-        setSuccess(true);
-    }
-
-    const handleAddMore = () => {
-        resetFields();
-        setSuccess(false);
-    }
-
-    const handleAddClose = () => {
-        setAddAnchorEl(null);
-        sleep(1000).then(() => {
-            setSuccess(false);
-            setAddUser(null);
-        })
-        resetFields();
-    };
-
     const handleUploadClose = () => {
         setUploadAnchorEl(null);
-    }
-
-    const resetFields = () => {
-        setSelectedUser('Select User');
-        
-        setAddPoints('10');
-        setAddType('');
-        setAddMessage('');
     }
 
     const handleUploadConfirm = () => {
@@ -221,123 +170,12 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
        );
    }
 
-   const addPopoverContent = () => {
-       switch(success) {
-           case true:
-                return(
-                    <div className={styles['success-div']}>
-                        <p className={styles['success-title']}>Success!</p>
-                        <p className={styles['success-message']}>Transaction for {addUser.full_name} has been added</p>
-                        <div>
-                            <Button className={styles['success-close-button']} onClick={handleAddClose}>Close</Button>
-                            <Button className={styles['add-more-button']} onClick={handleAddMore}>Add More</Button>
-                        </div>
-                    </div>
-                )
-           case false:
-               return(
-                   <div className={styles['popover-div']}>
-                       <div className={styles['popover-header']}>
-                            <h3 className={styles['add-title']}>Add Transaction</h3>
-                            <div className={styles['x-button']} onClick={handleAddClose}>
-                                <Icon  type={"close"}></Icon>
-                            </div>
-                        </div>
-                        <div>
-                            <p className={styles['select-category']}>USER</p>
-                            <Accordion expanded={expanded} onChange={handleExpand} disableGutters>
-                                <AccordionSummary
-                                expandIcon={<Icon className={styles['drop-triangle']} type={"dropTriangle"}></Icon>}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                                className={expanded ? styles['accordion-open'] : styles['accordion']}
-                                >
-                                <div>{selectedUser}</div>
-                                </AccordionSummary>
-                                <AccordionDetails style={{padding: '0px'}}>
-                                    <Autocomplete
-                                        onChange={(event, value) => selectAutocomplete(value)}
-                                        id="country-select-demo"
-                                        options={allUsers}
-                                        autoHighlight
-                                        getOptionLabel={(option) => option.full_name}
-                                        size='small'
-                                        forcePopupIcon={false}
-                                        renderOption={(props, option) => (
-                                            <Box component='li' sx={{ style:{backgroundColor: 'black' } }} {...props}>
-                                                {option.full_name}
-                                            </Box>
-                                        )}
-                                        renderInput={(params) => (
-                                            <TextField
-                                            className= {styles['autocomplete-text-field']}
-                                            {...params}
-                                            label="Select User"
-                                            InputLabelProps={{
-                                                className: styles['autocomplete-input']
-                                            }}
-                                            inputProps={{
-                                                ...params.inputProps,
-                                                autoComplete: 'new-password', // disable autocomplete and autofill
-                                            }}
-                                            />
-                                        )}
-                                    />
-                                </AccordionDetails>
-                            </Accordion>
-                            
-                        </div>
-                        <div className={styles['amount-action']}>
-                            <div id={styles['amount']}>
-                                <p className={styles['select-category']}>AMOUNT</p>
-                                <TextField
-                                    className={styles['amount-field']}
-                                    rows={1}
-                                    defaultValue="10"
-                                    variant="standard"
-                                    type='number'
-                                    onChange={(e) => setAddPoints(e.target.value)}
-                                />
-                            </div>
-                            <div id={styles['action']}>
-                                <p className={styles['select-category']}>ACTION</p>
-                                <RadioGroup row onChange={(e) => setAddType(e.target.value)}>
-                                    <FormControlLabel value="redeem" control={<Radio />} label={<p className={styles['radio-label']}>Redeem</p>} />
-                                    <FormControlLabel value="earn" control={<Radio />} label={<p className={styles['radio-label']}>Earn</p>} />
-                                </RadioGroup>
-                            </div>
-                        </div>
-                        <div>
-                            <p className={styles['select-category']}>MESSAGE</p>
-                            <TextField
-                                className={styles['message-field']}
-                                multiline
-                                rows={2}
-                                placeholder="Explain how user redeemed or earned credits (max 100 characters)"
-                                variant="standard"
-                                inputProps={{maxLength: 100, className: styles['message-field-input']}}
-                                onChange={(e) => setAddMessage(e.target.value)}
-                                />
-                        </div>
-                        <Button className={styles['confirm-button']} onClick={handleAddConfirm}>
-                            Confirm
-                        </Button>
-                   </div>
-               )
-       }
-   }
-
    const uploadPopoverContent = () => {
-    switch(success) {
+    switch(uploadSuccess) {
         case true:
              return(
                  <div className={styles['success-div']}>
-                     <p className={styles['success-title']}>Success!</p>
-                     <p className={styles['success-message']}>Transaction for {addUser.full_name} has been added</p>
-                     <div>
-                         <Button className={styles['success-close-button']} onClick={handleAddClose}>Close</Button>
-                         <Button className={styles['add-more-button']} onClick={handleAddMore}>Add More</Button>
-                     </div>
+                     
                  </div>
              )
         case false:
@@ -350,18 +188,6 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
                          </div>
                      </div>
                      <p className={styles['upload-message']}>Selected file should be .csv</p>
-                     <div>
-                         <p className={styles['select-category']}>MESSAGE</p>
-                         <TextField
-                             className={styles['message-field']}
-                             multiline
-                             rows={2}
-                             placeholder="Explain how user redeemed or earned credits (max 100 characters)"
-                             variant="standard"
-                             inputProps={{maxLength: 100, className: styles['message-field-input']}}
-                             onChange={(e) => setAddMessage(e.target.value)}
-                             />
-                     </div>
                      <Button className={styles['confirm-button']} onClick={handleUploadConfirm}>
                          Upload
                      </Button>
@@ -370,9 +196,10 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
          }
     }
     
-   const addOpen = Boolean(addAnchorEl);
+   
+    const addOpen = Boolean(addAnchorEl);
+    const popoverid = addOpen ? 'add-popover' : undefined;
    const uploadOpen = Boolean(uploadAnchorEl);
-   const popoverid = addOpen ? 'add-popover' : undefined;
    const uploadpopoverid = uploadOpen ? 'upload-popover' : undefined;
    return(
        <Layout title='Transactions'>
@@ -392,23 +219,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
                            Upload
                        </Button>
                    </div>
-                   <Popover 
-                        PaperProps={{className: styles['popover-container']}}
-                        open={addOpen} 
-                        id={popoverid}
-                        anchorEl={addAnchorEl}
-                        onClose={handleAddClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}>
-                            
-                        {addPopoverContent()}
-                    </Popover>
+                   <AddPopover addAnchor={addAnchorEl} closeAdd={closeAdd} allUsers={allUsers} popoverid={popoverid}/>
                     <Popover 
                         PaperProps={{className: styles['popover-container']}}
                         open={uploadOpen} 
@@ -434,23 +245,23 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
    );
 }
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    try {
-        const transactionData = await getAllTransactions();
-        console.log(transactionData);
-        const userData = await getAllUsers();
-        return {
-            props: { transactions: transactionData, users: userData }
-        };
-    } catch (e) {
-        console.error(e);
-        return {
-            redirect: {
-                permament: false,
-                destination: '/',
-            }
-        }
-    }
-}
+// export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+//     try {
+//         const transactionData = await getAllTransactions();
+//         console.log(transactionData);
+//         const userData = await getAllUsers();
+//         return {
+//             props: { transactions: transactionData, users: userData }
+//         };
+//     } catch (e) {
+//         console.error(e);
+//         return {
+//             redirect: {
+//                 permament: false,
+//                 destination: '/',
+//             }
+//         }
+//     }
+// }
  
 export default TransactionsPage;
