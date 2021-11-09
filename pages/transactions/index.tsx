@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import Layout from "../../components/Layout/Layout";
 import { Button,
    Tabs,
@@ -26,37 +26,51 @@ import styles from './Transactions.module.css';
 import { TabPanel } from '../../components/TabPanel/TabPanel';
 import Icon from '../../assets/Icon';
 import { TransactionList } from '../../components/TransactionList/TransactionList';
+import { AddPopover } from "../../components/AddPopover/AddPopover";
 import { getAllTransactions, addTransaction } from '../../firebase/firestore/transaction'; 
 import { getAllUsers } from '../../firebase/firestore/user';
-import { Transaction } from '../../types/schema';
-import Papa from '../../node_modules/papaparse';
+import { User, Transaction, Admin } from '../../types/schema';
+import { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { getAdmin } from "../../firebase/firestore/admin";
+import nookies from "nookies";
+import { UploadPopover } from "../../components/UploadPopover/UploadPopover";
+
+type TransactionPageProps = {
+    currentAdmin: Admin;
+    transactions: Transaction[],
+    users: User[],
+};
  
-const TransactionsPage: React.FunctionComponent = () => {
+const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
+    transactions,
+    users
+}) => {
     const [addAnchorEl, setAddAnchorEl] = React.useState(null);
     const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
-    const [allUsers, setUsers] = React.useState([]);
-    const [allTransactions, setTransactions] = useState([]);
+    const [allUsers, setUsers] = React.useState(users);
+    const [allTransactions, setTransactions] = React.useState(transactions);
 
-    const [success, setSuccess] = useState(false);
-    const [selectedUser, setSelectedUser] = useState('Select User')
-    const [addUser, setAddUser] = useState(null);
-    const [addPoints, setAddPoints] = useState('10');
-    const [addType, setAddType] = useState('');
-    const [addMessage, setAddMessage] = useState('');
-
-    const [uploadFile, setUploadFile] = useState(null);
-    const [fileData, setFileData] = useState([]);
-    const [uploading, setUploading] = useState(false);
-    const [uploadProgress, setUploadProgress] = useState(0);
-    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const router = useRouter();
+    const refresh = useCallback(() => {
+        router.replace(router.asPath);
+    }, [router]);
 
     useEffect(() => {
-        getAllUsers().then(users => {
-            setUsers(users);
-        })
-        getAllTransactions().then(items => {
-            setTransactions(items);
-        })
+        // if (!props.users || !props.transactions) {
+        //     return <ErrorPage statusCode={404} />;
+        //   }
+
+        // getAllUsers().then(users => {
+        //     setUsers(users);
+        // })
+        // getAllTransactions().then(items => {
+        //     setTransactions(items);
+        // })
+        // console.log(transactions);
+        // setTransactions(transactions);
+        // setUsers(users);
     }, []);
 
     /*
@@ -72,135 +86,23 @@ const TransactionsPage: React.FunctionComponent = () => {
         setAddAnchorEl(event.currentTarget);
     };
 
+    const closeAdd = () => {
+        setAddAnchorEl(null);
+    }
+
+    const closeUpload = () => {
+        setUploadAnchorEl(null);
+    }
+
     const clickUploadButton = (event) => {
         setUploadAnchorEl(event.currentTarget);
-    }
-
-    const selectAutocomplete = (value) => {
-        setAddUser(value);
-        if (value != null) {
-            setSelectedUser(value.full_name);
-        } else {
-            setSelectedUser('Select User');
-        }
-    }
-
-    const handleAddConfirm = () => {
-        //handle post request
-        const adding = {
-            admin_name: 'current Admin',
-            date: new Date(),
-            description: addMessage,
-            family_id: addUser.family_id,
-            point_gain: addType == 'redeem' ? -parseInt(addPoints) : parseInt(addPoints),
-            user_name: addUser.full_name,
-        }
-        addTransaction(adding as Transaction);
-
-        setSuccess(true);
-    }
-
-    const handleAddMore = () => {
-        resetFields();
-        setSuccess(false);
-    }
-
-    const handleAddClose = () => {
-        setAddAnchorEl(null);
-        sleep(1000).then(() => {
-            setSuccess(false);
-        })
-        resetFields();
-    };
-
-    const handleUploadClose = () => {
-        setUploadAnchorEl(null);
-        sleep(1000).then(() => {
-            setUploadSuccess(false);
-            setUploadFile(null);
-            setUploading(false);
-            setUploadProgress(0);
-        })
-    }
-
-    const resetFields = () => {
-        setSelectedUser('Select User')
-        setAddUser('');
-        setAddPoints('10');
-        setAddType('');
-        setAddMessage('');
-    }
-
-    const handleUpload = (event) => {
-        console.log(event.target.files[0]);
-        setUploadFile(event.target.files[0]);
-    }
-
-    const cancelFile = () => {
-        setUploadFile(null);
-    }
-
-    const cancelUploading = () => {
-        setUploading(false);
-        setUploadProgress(0);
-    }
-
-    const handleUploadConfirm = () => {
-        if (uploading) {
-            //handle file uploads from fileData
-            for (let i = 1; i < fileData.length; i++) {
-                const data = {
-                    admin_name: fileData[i][3],
-                    date: new Date(fileData[i][0]),
-                    description: fileData[i][5],
-                    family_id: fileData[i][2],
-                    point_gain: parseInt(fileData[i][6]),
-                    user_name: fileData[i][1],
-                }
-                console.log(data);
-                addTransaction(data as Transaction);
-            }
-            setUploadSuccess(true);
-
-            
-        } else {
-            setUploading(true);
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                console.log(evt.target.result);
-                setFileData(Papa.parse(evt.target.result).data);
-              };
-            
-            reader.addEventListener('progress', (event) => {
-                setUploadProgress((event.loaded / event.total)*100);
-                if (event.loaded && event.total) {
-                  const percent = (event.loaded / event.total) * 100;
-                  console.log(`Progress: ${Math.round(percent)}`);
-                }
-              });
-            reader.readAsText(uploadFile);
-        }
-    }
-
-    const handleUploadMore = () => {
-        setUploading(false);
-        setUploadSuccess(false);
-        setUploadFile(null);
-        setUploadProgress(0);
     }
  
    const BasicTabs = () => {
        const [value, setValue] = useState(0);
-       const [allTransactions, setTransactions] = useState([]);
 
-       useEffect(() => {
-            getAllTransactions().then(items => {
-                setTransactions(items);
-            })
-        }, []);
-      
        const handleChange = (event, newValue) => {
-           setValue(newValue);
+          setValue(newValue);
        };
 
        const renderFilterHeader = () => {
@@ -266,193 +168,11 @@ const TransactionsPage: React.FunctionComponent = () => {
            </Box>
        );
    }
-
-   const addPopoverContent = () => {
-       switch(success) {
-           case true:
-                return(
-                    <div className={styles['success-div']}>
-                        <p className={styles['success-title']}>Success!</p>
-                        <p className={styles['success-message']}>Transaction for {addUser.full_name} has been added</p>
-                        <div>
-                            <Button className={styles['success-close-button']} onClick={handleAddClose}>Close</Button>
-                            <Button className={styles['add-more-button']} onClick={handleAddMore}>Add More</Button>
-                        </div>
-                    </div>
-                )
-           case false:
-               return(
-                   <div className={styles['popover-div']}>
-                       <div className={styles['popover-header']}>
-                            <h3 className={styles['add-title']}>Add Transaction</h3>
-                            <div className={styles['x-button']} onClick={handleAddClose}>
-                                <Icon type={"close"}></Icon>
-                            </div>
-                        </div>
-                        <div>
-                            <p className={styles['select-category']}>USER</p>
-                            <Autocomplete
-                                onChange={(event, value) => selectAutocomplete(value)}
-                                id="country-select-demo"
-                                options={allUsers}
-                                autoHighlight
-                                getOptionLabel={(option) => option.full_name}
-                                size='small'
-                                forcePopupIcon={false}
-                                renderOption={(props, option) => (
-                                    <Box component='li' sx={{ style:{backgroundColor: 'black' } }} {...props}>
-                                        {option.full_name}
-                                    </Box>
-                                )}
-                                renderInput={(params) => (
-                                    <TextField
-                                    className= {styles['autocomplete-text-field']}
-                                    {...params}
-                                    label="Select User"
-                                    InputLabelProps={{
-                                        className: styles['autocomplete-input']
-                                    }}
-                                    inputProps={{
-                                        ...params.inputProps,
-                                        autoComplete: 'new-password', // disable autocomplete and autofill
-                                    }}
-                                    />
-                                )}
-                            />
-                            
-                        </div>
-                        <div className={styles['amount-action']}>
-                            <div id={styles['amount']}>
-                                <p className={styles['select-category']}>AMOUNT</p>
-                                <TextField
-                                    className={styles['amount-field']}
-                                    rows={1}
-                                    defaultValue="10"
-                                    variant="standard"
-                                    type='number'
-                                    onChange={(e) => setAddPoints(e.target.value)}
-                                />
-                            </div>
-                            <div id={styles['action']}>
-                                <p className={styles['select-category']}>ACTION</p>
-                                <RadioGroup row onChange={(e) => setAddType(e.target.value)}>
-                                    <FormControlLabel value="redeem" control={<Radio />} label={<p className={styles['radio-label']}>Redeem</p>} />
-                                    <FormControlLabel value="earn" control={<Radio />} label={<p className={styles['radio-label']}>Earn</p>} />
-                                </RadioGroup>
-                            </div>
-                        </div>
-                        <div>
-                            <p className={styles['select-category']}>MESSAGE</p>
-                            <TextField
-                                className={styles['message-field']}
-                                multiline
-                                rows={2}
-                                placeholder="Explain how user redeemed or earned credits (max 100 characters)"
-                                variant="standard"
-                                inputProps={{maxLength: 100, className: styles['message-field-input']}}
-                                onChange={(e) => setAddMessage(e.target.value)}
-                                />
-                        </div>
-                        <Button className={styles['confirm-button']} onClick={handleAddConfirm}>
-                            Confirm
-                        </Button>
-                   </div>
-               )
-       }
-   }
-
-   const uploadPopoverContent = () => {
-    switch(uploadSuccess) {
-        case true:
-             return(
-                 <div className={styles['success-div']}>
-                     <p className={styles['success-title']}>Success!</p>
-                     <p className={styles['success-message']}>Transactions from {uploadFile.name} have been added</p>
-                     <div>
-                         <Button className={styles['success-close-button']} onClick={handleUploadClose}>Close</Button>
-                         <Button className={styles['add-more-button']} onClick={handleUploadMore}>Add More</Button>
-                     </div>
-                 </div>
-             )
-        case false:
-            return(
-                <div className={styles['popover-div']}>
-                    <div className={styles['popover-header']}>
-                         <h3 className={styles['add-title']}>Upload your file</h3>
-                         <div className={styles['x-button']} onClick={handleUploadClose}>
-                             <Icon  type={"close"}></Icon>
-                         </div>
-                    </div>
-                    <p className={styles['upload-message']}>Selected file should be .csv</p>
-                    {uploadFile == null ?
-                        <label htmlFor="contained-button-file">
-                            <input style={{display: 'none'}} id="contained-button-file" type="file" accept=".csv"
-                            onChange={handleUpload}/>
-                            <div className={styles['upload-file-box']}>
-                                <div className={styles['upload-add-line']}>
-                                    <Icon className={styles['add-file-icon']} type={"addGray"}></Icon>
-                                    <p className={styles['upload-add-file']}>Add file</p>
-                                </div>
-                            </div>
-                        </label> 
-                        : 
-                        renderFileStatus()
-                    }
-                     
-                     <Button className={styles['confirm-button']} onClick={handleUploadConfirm}>
-                         Upload
-                     </Button>
-                </div>
-            )
-         }
-    }
-
-    const renderFileStatus = () => {
-        switch(uploading) {
-            case true:
-                return(
-                    <div className={styles['uploaded-file-box']}>
-                        <div className={styles['uploaded-file-row']}>
-                            <Icon type={"fileUpload"}></Icon>
-                            <div className={styles['uploaded-file-name']}>
-                                {uploadFile.name}
-                            </div>
-                        </div>
-                        <div className={styles['upload-progress-row']}>
-                            <LinearProgress className={styles['upload-progress-bar']} variant="determinate" value={uploadProgress}
-                            classes={{barColorPrimary: styles['colorPrimary']}}
-                            sx={{
-                                color: '#526DC2',
-                                backgroundColor: '#EBEBEB'
-                            }}/>
-                            <div className={styles['cancel-file']} onClick={cancelUploading}>
-                                <Icon className={styles['cancel-file-icon']} type={"close"} ></Icon>
-                            </div>
-                        </div>
-                        <p className={styles['uploaded-message']}>{uploadProgress==100 ? 'Uploaded.' : 'Uploading...'}</p>
-                    </div>
-                )
-            case false:
-                return(
-                    <div className={styles['uploaded-file-box']}>
-                        <div className={styles['uploaded-file-row']}>
-                            <Icon type={"fileUpload"}></Icon>
-                            <div className={styles['uploaded-file-name']}>
-                                {uploadFile.name}
-                            </div>
-                            <div className={styles['cancel-file']} onClick={cancelFile}>
-                                <Icon className={styles['cancel-file-icon']} type={"close"} ></Icon>
-                            </div>
-                        </div>
-                        <p className={styles['uploaded-message']}>Selected. Press upload to continue.</p>
-                    </div>
-                )
-        }
-    }
     
-   const addOpen = Boolean(addAnchorEl);
+   
+    const addOpen = Boolean(addAnchorEl);
+    const popoverid = addOpen ? 'add-popover' : undefined;
    const uploadOpen = Boolean(uploadAnchorEl);
-   const popoverid = addOpen ? 'add-popover' : undefined;
    const uploadpopoverid = uploadOpen ? 'upload-popover' : undefined;
    return(
        <Layout title='Transactions'>
@@ -472,40 +192,8 @@ const TransactionsPage: React.FunctionComponent = () => {
                            Upload
                        </Button>
                    </div>
-                   <Popover 
-                        PaperProps={{className: styles['popover-container']}}
-                        open={addOpen} 
-                        id={popoverid}
-                        anchorEl={addAnchorEl}
-                        onClose={handleAddClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}>
-                            
-                        {addPopoverContent()}
-                    </Popover>
-                    <Popover 
-                        PaperProps={{className: styles['upload-popover-container']}}
-                        open={uploadOpen} 
-                        id={uploadpopoverid}
-                        anchorEl={uploadAnchorEl}
-                        onClose={handleUploadClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}>
-                            
-                        {uploadPopoverContent()} 
-                    </Popover>
+                   <AddPopover addAnchor={addAnchorEl} closeAdd={closeAdd} allUsers={allUsers} popoverid={popoverid}/>
+                    <UploadPopover uploadAnchor={uploadAnchorEl} closeUpload={closeUpload} popoverid={uploadpopoverid}/>
                </div>
                {BasicTabs()}
            </div>
@@ -513,5 +201,28 @@ const TransactionsPage: React.FunctionComponent = () => {
        </Layout>
    );
 }
- 
+
+//Use SSR to load admins!
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const users = await getAllUsers();
+    const transactions = await getAllTransactions();
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    return {
+      props: { currentAdmin: adminData, users: users, transactions: transactions},
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        permament: false,
+        destination: "/",
+      },
+    };
+  }
+};
+
 export default TransactionsPage;
