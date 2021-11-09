@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next build && next start",
-    "lint": "next lint"
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "npm run tsc"
   },
   "dependencies": {
     "@babel/core": "^7.15.8",
