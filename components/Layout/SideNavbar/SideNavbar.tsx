@@ -1,6 +1,8 @@
+import * as React from "react";
 import { Drawer, List, ListItem, ListItemText } from "@mui/material";
 import { useRouter } from "next/router";
 import styles from "./SideNavbar.module.css";
+import Icon from "../../../assets/Icon";
 
 const SideNavbar: React.FunctionComponent = () => {
   const router = useRouter();
@@ -15,50 +17,80 @@ const SideNavbar: React.FunctionComponent = () => {
       }}
     >
       <List className={styles.list}>
-        <ListItem
-          button
-          key="logo"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          <ListItemText className={styles["item"]} primary={"Sunday Friends"} />
+        <ListItem key="logo" className={styles.navbar}>
+          <div className={styles.icon}>
+            <div className={styles.border}>
+              <Icon type="sundayfriendslogo" className={styles.SFlogo} />
+            </div>
+          </div>
         </ListItem>
         <ListItem
           button
           key={"users"}
           onClick={() => {
-            router.push(`/users`);
+            router.push("/users");
           }}
+          className={styles.item}
         >
-          <ListItemText className={styles["item"]} primary={"Users"} />
+          <div className={styles.icon}>
+            <Icon type="usersnavicon" className={styles.pageicons} />
+          </div>
+          <ListItemText
+            disableTypography
+            className={styles["item"]}
+            primary={"Users"}
+          />
         </ListItem>
         <ListItem
           button
           key={"admins"}
           onClick={() => {
-            router.push(`/admins`);
+            router.push("/admins");
           }}
+          className={styles.item}
         >
-          <ListItemText className={styles["item"]} primary={"Admins"} />
+          <div className={styles.icon}>
+            <Icon type="adminnavicon" className={styles.pageicons} />
+          </div>
+          <ListItemText
+            disableTypography
+            className={styles["item"]}
+            primary={"Admins"}
+          />
         </ListItem>
         <ListItem
           button
           key={"transactions"}
           onClick={() => {
-            router.push(`/transactions`);
+            router.push("/transactions");
           }}
+          className={styles.item}
         >
-          <ListItemText className={styles["item"]} primary={"Transactions"} />
+          <div className={styles.icon}>
+            <Icon type="transactionsnavicon" className={styles.pageicons} />
+          </div>
+          <ListItemText
+            disableTypography
+            className={styles["item"]}
+            primary={"Transactions"}
+          />
         </ListItem>
         <ListItem
           button
           key={"inventory"}
           onClick={() => {
-            router.push(`/inventory`);
+            router.push("/inventory");
           }}
+          className={styles.item}
         >
-          <ListItemText className={styles["item"]} primary={"Inventory"} />
+          <div className={styles.icon}>
+            <Icon type="inventorynavicon" className={styles.pageicons} />
+          </div>
+          <ListItemText
+            disableTypography
+            className={styles["item"]}
+            primary={"Inventory"}
+          />
         </ListItem>
       </List>
     </Drawer>

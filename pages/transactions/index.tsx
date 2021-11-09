@@ -31,21 +31,24 @@ import { User, Transaction, Admin } from '../../types/schema';
 import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
 import { createRouteLoader } from "next/dist/client/route-loader";
 import { useRouter } from "next/router";
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { getAdmin } from "../../firebase/firestore/admin";
+import nookies from "nookies";
 
-// type TransactionPageProps = {
-//     transactions: Transaction[],
-//     users: User[],
-// };
+type TransactionPageProps = {
+    currentAdmin: Admin;
+    transactions: Transaction[],
+    users: User[],
+};
  
-// const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
-//     transactions,
-//     users
-// }) => 
-const TransactionsPage:React.FunctionComponent = () => {
+const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
+    transactions,
+    users
+}) => {
     const [addAnchorEl, setAddAnchorEl] = React.useState(null);
     const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
-    const [allUsers, setUsers] = React.useState([]);
-    const [allTransactions, setTransactions] = useState([]);
+    const [allUsers, setUsers] = React.useState(users);
+    const [allTransactions, setTransactions] = React.useState(transactions);
     
     const [uploadSuccess, setUploadSuccess] = useState(false);
 
@@ -59,12 +62,12 @@ const TransactionsPage:React.FunctionComponent = () => {
         //     return <ErrorPage statusCode={404} />;
         //   }
 
-        getAllUsers().then(users => {
-            setUsers(users);
-        })
-        getAllTransactions().then(items => {
-            setTransactions(items);
-        })
+        // getAllUsers().then(users => {
+        //     setUsers(users);
+        // })
+        // getAllTransactions().then(items => {
+        //     setTransactions(items);
+        // })
         // console.log(transactions);
         // setTransactions(transactions);
         // setUsers(users);
@@ -245,23 +248,27 @@ const TransactionsPage:React.FunctionComponent = () => {
    );
 }
 
-// export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-//     try {
-//         const transactionData = await getAllTransactions();
-//         console.log(transactionData);
-//         const userData = await getAllUsers();
-//         return {
-//             props: { transactions: transactionData, users: userData }
-//         };
-//     } catch (e) {
-//         console.error(e);
-//         return {
-//             redirect: {
-//                 permament: false,
-//                 destination: '/',
-//             }
-//         }
-//     }
-// }
- 
+//Use SSR to load admins!
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const users = await getAllUsers();
+    const transactions = await getAllTransactions();
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    return {
+      props: { currentAdmin: adminData, users: users, transactions: transactions},
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        permament: false,
+        destination: "/",
+      },
+    };
+  }
+};
+
 export default TransactionsPage;
