@@ -85,7 +85,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
         <ProfileSettings />
         <div className={styles.pagetitle}>
           <Icon type="settings"></Icon>
-          <h2>PROFILE SETTINGS</h2>
+          <h2 className={styles["h2"]}>PROFILE SETTINGS</h2>
         </div>
         {displayinfo()}
       </div>

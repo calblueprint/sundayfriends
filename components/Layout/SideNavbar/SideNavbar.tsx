@@ -17,9 +17,7 @@ const SideNavbar: React.FunctionComponent = () => {
       }}
     >
       <List className={styles.list}>
-        <ListItem
-          key="logo"
-          className={styles.navbar}
+        <ListItem key="logo" className={styles.navbar}>
           <div className={styles.icon}>
             <div className={styles.border}>
               <Icon type="sundayfriendslogo" className={styles.SFlogo} />

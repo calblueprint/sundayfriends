@@ -399,12 +399,12 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     </SvgIcon>
   ),
   backarrow: (
-    <SvgIcon>
+    <SvgIcon viewBox="0 0 8 13">
       <path d="M6.5 1L1 6.19444L6.5 12" stroke="#B4B4B4" stroke-width="1.57143" stroke-linecap="round" stroke-linejoin="round"/>
     </SvgIcon>
   ),
   forwardarrow: (
-    <SvgIcon>
+    <SvgIcon viewBox="0 0 8 13">
       <path d="M1.5 1L7 6.19444L1.5 12" stroke="#B4B4B4" stroke-width="1.57143" stroke-linecap="round" stroke-linejoin="round"/>
     </SvgIcon>
   )

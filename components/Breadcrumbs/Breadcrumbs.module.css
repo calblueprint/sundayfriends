@@ -1,0 +1,8 @@
+.breadcrumbs {
+  display: flex;
+  flex-direction: row;
+  color: grey;
+}
+.arrows {
+  color: transparent;
+}
