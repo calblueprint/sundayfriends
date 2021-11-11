@@ -11,9 +11,19 @@ const SideNavbar: React.FunctionComponent = () => {
     <Drawer
       anchor="left"
       variant="permanent"
-      className={styles["sidenav"]}
-      classes={{
-        paper: styles["sidenav-paper"],
+      sx={{
+        display: {
+          width: "110px",
+          flexShrink: "0",
+        },
+        "& .MuiDrawer-paper": {
+          boxSizing: "border-box",
+          width: "110px",
+          backgroundColor: "#253c85",
+          border: "transparent",
+          borderRadius: "0px 20px 20px 0px",
+          color: "white",
+        },
       }}
     >
       <List className={styles.list}>
