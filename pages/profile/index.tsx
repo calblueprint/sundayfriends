@@ -9,6 +9,7 @@ import {
 import Icon from "../../assets/Icon";
 import { ProfileSettings } from "../../components/ProfileSettings/ProfileSettings";
 import { Breadcrumbs } from "../../components/Breadcrumbs/Breadcrumbs";
+import { style } from "@mui/system";
 
 const ProfileSettingsPage: React.FunctionComponent = () => {
   const aboutData: FieldInfo[] = [
@@ -81,8 +82,11 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
   return (
     <Layout title="Profile">
       <div className={styles.page}>
-        <Breadcrumbs />
-        <ProfileSettings />
+        <div className={styles.topbar}>
+          <Breadcrumbs title={"Profile"}/>
+          <ProfileSettings />
+        </div>
+        <br/>
         <div className={styles.pagetitle}>
           <Icon type="settings"></Icon>
           <h2 className={styles["h2"]}>PROFILE SETTINGS</h2>
