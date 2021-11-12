@@ -5,7 +5,8 @@ import Icon from "../../../assets/Icon";
 import { TransactionItem } from "../../TransactionItem/TransactionItem";
 import { SortTriangles } from "../../../components/SortTriangles/SortTriangles";
 import itemstyles from "../../../components/TransactionItem/TransactionItem.module.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getUser, updateUser } from "../../../firebase/firestore/user";
 
 type UserModalProps = {
   family?: Family;
@@ -24,6 +25,61 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
   isFamilyPath,
   setIsOpenFam,
 }: UserModalProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [currUser, setCurrUser] = useState(user);
+  const [role, setRole] = useState(user?.family_head ? "Head" : "Member");
+  const [email, setEmail] = useState(user?.email);
+  const [error, setError] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(user?.phone_number);
+
+  useEffect(() => {
+    const callFunc = async () => {
+      if (user != undefined) {
+        const data = await getUser(user?.user_id);
+        setCurrUser(data);
+      }
+    };
+    callFunc();
+  }, []);
+
+  const getRole = (head: boolean): string => {
+    if (head) {
+      return "Head";
+    }
+    return "Member";
+  };
+
+  async function onSubmit(event?: React.BaseSyntheticEvent): Promise<void> {
+    event?.preventDefault();
+    const newData = {};
+    try {
+      if (role) {
+        if (role !== "Head" && role !== "Member") {
+          throw new Error("Input for role must be 'Head' or 'Member'");
+        }
+        if (role == "Head") {
+          newData["family_head"] = true;
+        } else {
+          newData["family_head"] = false;
+        }
+      } else {
+        newData["family_head"] = user?.family_head;
+      }
+      if (email != user?.email && email != undefined) {
+        newData["email"] = email;
+      }
+      if (phoneNumber != user?.phone_number && phoneNumber != undefined) {
+        newData["phone_number"] = phoneNumber;
+      }
+      await updateUser(user.user_id, newData);
+      const updatedUser = await getUser(user.user_id);
+      setCurrUser(updatedUser);
+      setError("");
+      setIsEditing(false);
+    } catch (err) {
+      setError(err.message);
+    }
+  }
   return (
     <Modal open={isOpen}>
       <div className={styles["modal"]}>
@@ -43,7 +99,8 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
               <button className={styles["navButton"]}>
                 <Icon className={styles["chevron"]} type={"chevronRight"} />
               </button>
-              {family.family_name} Family / {user?.full_name}
+              {family.family_name} Family /{" "}
+              {currUser ? currUser.full_name : user?.full_name}
             </div>
           ) : null}
           <button
@@ -58,65 +115,156 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
         </div>
         <div className={styles["modalHeading"]}>
           <div className={styles["familyName"]}>
-            <h1 className={styles["header"]}>{user?.full_name}</h1>
+            <h1 className={styles["header"]}>
+              {currUser ? currUser.full_name : user?.full_name}
+            </h1>
             <div className={styles["colSpacing"]}>
-              <h4>{user?.full_name.split(" ")[1]} Family</h4>
+              <h4>
+                {currUser
+                  ? currUser.full_name.split(" ")[1]
+                  : user?.full_name.split(" ")[1]}{" "}
+                Family
+              </h4>
               <h4>*</h4>
-              <h4>FID: {user?.family_id}</h4>
+              <h4>FID: {currUser ? currUser.family_id : user?.family_id}</h4>
             </div>
           </div>
           <div>
-            <h1 className={styles["header"]}>{user?.points}</h1>
+            <h1 className={styles["header"]}>
+              {currUser ? currUser.points : user?.points}
+            </h1>
             <h4>Individual Balance</h4>
           </div>
         </div>
         <hr className={styles["break"]} />
         <div>
-          <div className={styles["modalInfo"]}>
-            <div>
-              <h3>About Information</h3>
-              <div className={styles["aboutInfoContainer"]}>
-                <div className={styles["squareBullet"]}>
-                  <Icon
-                    className={styles["infoSpacing"]}
-                    type={"squareBullet"}
-                  />
-                  <Icon
-                    className={styles["infoSpacing"]}
-                    type={"squareBullet"}
-                  />
-                  <Icon
-                    className={styles["infoSpacing"]}
-                    type={"squareBullet"}
-                  />
-                  <Icon
-                    className={styles["infoSpacing"]}
-                    type={"squareBullet"}
-                  />
-                </div>
-                <div className={styles["aboutInfo"]}>
-                  <div className={styles["subTitle"]}>Role</div>
-                  <div className={styles["subTitle"]}>Email</div>
-                  <div className={styles["subTitle"]}>Phone</div>
-                  <div className={styles["subTitle"]}>Password</div>
-                </div>
-                <div className={styles["aboutInfo"]}>
-                  <div className={styles["infoSpacing"]}>
-                    {user?.family_head ? "Head" : "Member"}
+          <form onSubmit={onSubmit}>
+            <div className={styles["modalInfo"]}>
+              <div>
+                <h3>About Information</h3>
+                <div className={styles["aboutInfoContainer"]}>
+                  <div className={styles["squareBullet"]}>
+                    <Icon
+                      className={styles["iconSpacing"]}
+                      type={"squareBullet"}
+                    />
+                    <Icon
+                      className={styles["iconSpacing"]}
+                      type={"squareBullet"}
+                    />
+                    <Icon
+                      className={styles["iconSpacing"]}
+                      type={"squareBullet"}
+                    />
+                    <Icon
+                      className={styles["iconSpacing"]}
+                      type={"squareBullet"}
+                    />
                   </div>
-                  <div className={styles["infoSpacing"]}>{user?.email}</div>
-                  <div className={styles["infoSpacing"]}>
-                    {user?.phone_number}
+                  <div className={styles["aboutInfo"]}>
+                    <div className={styles["subTitle"]}>Role</div>
+                    <div className={styles["subTitle"]}>Email</div>
+                    <div className={styles["subTitle"]}>Phone</div>
+                    <div className={styles["subTitle"]}>Password</div>
                   </div>
-                  <div className={styles["infoSpacing"]}>password</div>
+                  {isEditing ? (
+                    <div className={styles["aboutInfo"]}>
+                      <div className={styles["editSection"]}>
+                        <input
+                          className={styles["editTitle"]}
+                          defaultValue={
+                            currUser
+                              ? getRole(currUser.family_head)
+                              : getRole(user?.family_head)
+                          }
+                          onChange={(e) => setRole(e.target.value)}
+                        />
+                        <Icon
+                          className={styles["inLineEditIcon"]}
+                          type={"edit"}
+                        />
+                      </div>
+                      <div className={styles["editSection"]}>
+                        <input
+                          className={styles["editTitle"]}
+                          defaultValue={currUser ? currUser.email : user?.email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <Icon
+                          className={styles["inLineEditIcon"]}
+                          type={"edit"}
+                        />
+                      </div>
+                      <div className={styles["editSection"]}>
+                        <input
+                          className={styles["editTitle"]}
+                          defaultValue={
+                            currUser
+                              ? currUser.phone_number
+                              : user?.phone_number
+                          }
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                        <Icon
+                          className={styles["inLineEditIcon"]}
+                          type={"edit"}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          className={styles["editTitle"]}
+                          type="password"
+                          defaultValue="password"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={styles["aboutInfo"]}>
+                      <div className={styles["infoSpacing"]}>
+                        {currUser
+                          ? getRole(currUser.family_head)
+                          : getRole(user?.family_head)}
+                      </div>
+                      <div className={styles["infoSpacing"]}>
+                        {currUser ? currUser.email : user?.email}
+                      </div>
+                      <div className={styles["infoSpacing"]}>
+                        {currUser ? currUser.phone_number : user?.phone_number}
+                      </div>
+                      <div className={styles["infoSpacing"]}>password</div>
+                    </div>
+                  )}
+                </div>
+                <div className={styles["errorTitle"]}>
+                  {error != "" ? error : ""}
                 </div>
               </div>
+              {isEditing ? (
+                <div className={styles["buttonSection"]}>
+                  <Button
+                    className={styles["editButton"]}
+                    onClick={() => {
+                      setError("");
+                      setIsEditing(false);
+                    }}
+                  >
+                    <p>Cancel</p>
+                  </Button>
+                  <Button className={styles["submitButton"]} type="submit">
+                    <p>Save Changes</p>
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  className={styles["editButton"]}
+                  onClick={() => setIsEditing(true)}
+                >
+                  <Icon className={styles["editIcon"]} type={"edit"} />
+                  <p>Edit</p>
+                </Button>
+              )}
             </div>
-            <Button className={styles["editButton"]}>
-              <Icon className={styles["editIcon"]} type={"edit"} />
-              <p>Edit</p>
-            </Button>
-          </div>
+          </form>
         </div>
         <hr className={styles["break"]} />
         <div className={styles["transactionHeader"]}>

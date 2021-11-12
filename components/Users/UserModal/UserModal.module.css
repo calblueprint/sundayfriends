@@ -35,7 +35,7 @@
 .aboutInfo {
   display: flex;
   flex-direction: column;
-  padding-right: 10%;
+  margin-right: 10%;
   vertical-align: middle;
 }
 
@@ -52,7 +52,16 @@
 }
 
 .infoSpacing {
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+}
+
+.iconSpacing {
+  margin-top: 2px;
+  margin-bottom: 6px;
+  padding-top: 2px;
+  padding-bottom: 3px;
 }
 
 .familyName {
@@ -123,6 +132,25 @@
   padding-bottom: 10px;
 }
 
+.editTitle {
+  font-family: Avenir;
+  font-size: medium;
+  margin-bottom: 4px;
+  border: 0px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+  width: 600%;
+}
+
+.errorTitle {
+  font-family: Avenir;
+  font-size: medium;
+  margin-bottom: 4px;
+  color: red;
+  padding-top: 2px;
+  padding-bottom: 3px;
+}
+
 .sectionHeader {
   display: flex;
   flex-direction: row;
@@ -156,11 +184,31 @@
   margin-right: 3px;
 }
 
+.inLineEditIcon {
+  width: 20px;
+  height: 20px;
+  fill: var(--grey-mid);
+}
+
+.editSection {
+  width: 630%;
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  justify-content: space-between;
+}
+
+.buttonSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .addIcon {
   width: 18px;
   height: 18px;
   margin-right: 5px;
-  fill: var(--grey-dark);
+  fill: var(--white);
 }
 
 .editButton {
@@ -169,18 +217,39 @@
   flex-direction: row;
   font-family: Avenir;
   font-weight: 600;
-  background-color: var(--grey-light);
+  background-color: var(--sapphire);
   width: 80px;
   justify-content: center;
-  height: 40px;
+  height: 30px;
   border-radius: 10px;
   margin-top: 20px;
   text-transform: none;
-  color: var(--grey-dark);
+  color: var(--white);
+  margin-right: 10px;
+}
+
+.submitButton {
+  display: flex;
+  place-items: center;
+  flex-direction: row;
+  font-family: Avenir;
+  font-weight: 600;
+  background-color: var(--sapphire);
+  width: 120px;
+  justify-content: center;
+  height: 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-transform: none;
+  color: var(--white);
 }
 
 .editButton:hover {
-  background-color: var(--grey-mid);
+  background-color: var(--sapphire-mid);
+}
+
+.submitButton:hover {
+  background-color: var(--sapphire-mid);
 }
 
 .modalInfo {

@@ -21,6 +21,19 @@ export const getUser = async (userId: string): Promise<User> => {
 };
 
 /**
+ * Updates the user data from firestore with the given userId
+ */
+export const updateUser = async (userId: string, newData): Promise<void> => {
+  try {
+    const trimedId = userId.toString().replace(/\s/g, "");
+    await userCollection.doc(trimedId).update(newData);
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+/**
  * Returns all the users from firestore
  */
 export const getAllUsers = async (): Promise<User[]> => {
@@ -29,6 +42,27 @@ export const getAllUsers = async (): Promise<User[]> => {
     const promises: Promise<User>[] = allFamilies.docs.map((doc) =>
       parseUser(doc)
     );
+    const users = await Promise.all(promises);
+    return users;
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
+/**
+ * Returns all the users from firestore on conditional
+ */
+export const getUsersSearch = async (searchQ: string): Promise<User[]> => {
+  try {
+    const promises: Promise<User>[] = [];
+    await userCollection
+      .where("full_name", ">=", searchQ)
+      .where("full_name", "<=", searchQ + "~")
+      .get()
+      .then((doc) => {
+        doc.forEach((item) => promises.push(parseUser(item)));
+      });
     const users = await Promise.all(promises);
     return users;
   } catch (e) {
@@ -67,6 +101,7 @@ const parseUser = async (doc) => {
   const promise: Promise<Transaction[]> = getTransactionByUser(user_id);
   const transactions = await promise;
   const user = {
+    user_id: user_id,
     address: data.address,
     created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
     email: data.email,
