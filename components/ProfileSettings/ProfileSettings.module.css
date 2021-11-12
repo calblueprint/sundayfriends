@@ -1,9 +1,6 @@
 .button {
-  background-color: red;
   width: 100px;
   height: 31px;
-  left: 1246px;
-  top: 46px;
   background-color: var(--settingsbutton);
   border-radius: 20px;
 }

@@ -9,4 +9,3 @@ export const ProfileSettings: React.FunctionComponent = () => {
     </Button>
   );
 };
-

@@ -83,10 +83,10 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
     <Layout title="Profile">
       <div className={styles.page}>
         <div className={styles.topbar}>
-          <Breadcrumbs title={"Profile"}/>
+          <Breadcrumbs title={"Profile"} />
           <ProfileSettings />
         </div>
-        <br/>
+        <br />
         <div className={styles.pagetitle}>
           <Icon type="settings"></Icon>
           <h2 className={styles["h2"]}>PROFILE SETTINGS</h2>
