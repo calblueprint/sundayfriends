@@ -19,6 +19,7 @@ const SignInScreen: React.FC = () => {
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
   const [inputType, setInputType] = useState("password");
+  const [errMessage, setErrMessage] = useState(null);
 
   // TODO clear fields after error in submission
   const handleSignin = async (data: LoginData) => {
@@ -27,7 +28,8 @@ const SignInScreen: React.FC = () => {
       router.push("/transactions");
     } catch (e) {
       reset();
-      console.error("Failed to sign in");
+      console.error(e);
+      setErrMessage(e.message);
     }
   };
 
@@ -76,6 +78,7 @@ const SignInScreen: React.FC = () => {
               <div className={styles["forgot-password"]}>
                 <a href="/">Forgot password? </a>
               </div>
+              {errMessage ? <div>{errMessage}</div> : null}
               <div className={styles["bottom-row"]}>
                 <div className={styles["bottom-row-text"]}>
                   {"Haven't activated your account yet? "}
