@@ -42,6 +42,7 @@ type TransactionPageProps = {
 };
  
 const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
+    currentAdmin,
     transactions,
     users
 }) => {
@@ -222,7 +223,8 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
                            Upload
                        </Button>
                    </div>
-                   <AddPopover addAnchor={addAnchorEl} closeAdd={closeAdd} allUsers={allUsers} popoverid={popoverid}/>
+                   <AddPopover addAnchor={addAnchorEl} closeAdd={closeAdd} allUsers={allUsers} 
+                   popoverid={popoverid} currentAdmin={currentAdmin}/>
                     <Popover 
                         PaperProps={{className: styles['popover-container']}}
                         open={uploadOpen} 
