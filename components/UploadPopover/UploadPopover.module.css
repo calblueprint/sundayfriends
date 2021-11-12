@@ -6,23 +6,10 @@
   border: 2px solid rgba(234, 234, 234, 0.4);
   border-radius: 8px;
   width: 330px;
+  height: 250px;
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 20px;
-  overflow: hidden;
-}
-
-.popover-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  margin-top: 1%;
-  border: 2px solid rgba(234, 234, 234, 0.4);
-  border-radius: 8px;
-  width: 370px;
-  padding-left: 30px;
-  padding-right: 30px;
-  padding-bottom: 30px;
   overflow: hidden;
 }
 
@@ -56,15 +43,16 @@
 }
 
 .confirm-button {
+  position: absolute;
+  bottom: 30px;
   align-self: flex-end;
+  width: 89px;
+  height: 33px;
+  font-size: 14px;
   background-color: var(--sapphire);
   color: white;
   border-radius: 7px;
-  height: 33px;
-  font-size: 14px;
   text-transform: none;
-  margin-top: 20px;
-  width: 89px;
 }
 
 .confirm-button:hover {
