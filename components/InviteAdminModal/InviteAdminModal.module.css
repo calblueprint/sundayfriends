@@ -4,7 +4,6 @@
   border-radius: 7px;
   height: 33px;
   font-size: 14px;
-  font-family: Avenir;
   font-weight: 800;
   align-self: center;
   margin-left: auto;
@@ -41,7 +40,7 @@
   /* width: 100%;
   display: flex; */
   border-radius: 20px;
-  height: 470px;
+  height: 510px;
   width: 750px;
   padding-bottom: 2%;
   padding-right: 2%;
@@ -59,7 +58,6 @@
   background-color: var(--off-white);
   margin-right: 10px;
   font-size: 14px;
-  font-family: Avenir;
   /* font-weight: 800; */
   color: var(--grey-darker);
 }
@@ -76,31 +74,49 @@
   margin-left: 30px;
 }
 
-.text {
-  font-family: Avenir;
-  font-style: normal;
-}
-
 .invite-icon {
   margin-right: 3%;
 }
 
 .font {
-  font-family: Avenir;
   text-transform: none;
 }
 
 .text {
-  font-family: Avenir;
-  text-transform: none;
   padding-right: 26px;
+  /* font-size: 14px; */
 }
 
-.h4 {
-  font-family: Avenir;
+.label {
+  font-size: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
 }
+
+.buttons {
+  text-transform: none;
+}
+
 
 .remove {
   height: 25px;
   width: 25px;
+}
+
+.add {
+  color: var(--grey-dark);
+  font-size: 14px;
+  font-weight: 550;
+  text-decoration-line: underline;
+  /* border-radius: 30px 30px 30px 30px;
+  border-width: 200px; */
+  align-self: baseline;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.addIcon {
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 600;
 }

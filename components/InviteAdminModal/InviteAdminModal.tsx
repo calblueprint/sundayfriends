@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
@@ -12,6 +12,7 @@ import { AdminInvite } from "../../types/schema";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import emailjs from "emailjs-com";
 
 export default function InviteAdminModal() {
   const [open, setOpen] = React.useState(false);
@@ -24,6 +25,13 @@ export default function InviteAdminModal() {
     setOpen(false);
   };
 
+  // const useStyles = makeStyles({
+  //   iconStyle: {
+  //     fontSize: 14,
+  //     fontWeight: 800,
+  //   },
+  // });
+
   function removeRow(i) {
     unregister("invite." + i);
     unregister("invite." + i);
@@ -32,12 +40,35 @@ export default function InviteAdminModal() {
   }
 
   const theme = createTheme({
+    typography: {
+      fontFamily: "Avenir",
+    },
     palette: {
       primary: {
         main: "#253C85",
       },
     },
   });
+
+  const f = useRef();
+
+  const sendEmail = (templateParams) => {
+    emailjs
+      .send(
+        "service_o683bxk",
+        "template_2db4zzm",
+        templateParams,
+        "user_jlv6FzwqKDExG2SkcZmga"
+      )
+      .then(
+        (result) => {
+          console.log("SUCCESS!", result.status, result.text);
+        }
+        // (error) => {
+        //   console.log(error.text);
+        // }
+      );
+  };
 
   const [invites, setInvites] = useState([0]);
   const [count, setCount] = useState(1);
@@ -65,18 +96,19 @@ export default function InviteAdminModal() {
 
   function onSubmit(data) {
     // alert to display input data
-    // reset();
-    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
     // add user to firebase
     // (works but commented out because I don't want to spam firebase every time i test
-    // data["invite"].map((inv) => {
-    //   const invite: AdminInvite = {
-    //     email: inv.email,
-    //     full_name: inv.name,
-    //     valid: true,
-    //   };
-    //   addAdminInvite(invite);
-    // });
+    data["invite"].map((inv) => {
+      const invite: AdminInvite = {
+        email: inv.email,
+        full_name: inv.name,
+        valid: true,
+      };
+      addAdminInvite(invite);
+      const templateParams = { email: inv.email, name: inv.name };
+      sendEmail(templateParams);
+    });
     reset();
     setCount(1);
     setInvites([0]);
@@ -91,113 +123,124 @@ export default function InviteAdminModal() {
     <div>
       <ThemeProvider theme={theme}>
         <Button
-          className={styles["text"]}
           variant="contained"
           style={{ textTransform: "none" }}
           onClick={handleClickOpen}
         >
           Invite Admin
         </Button>
-      </ThemeProvider>
-      <Dialog
-        classes={{ paper: styles["modal"] }}
-        maxWidth="md"
-        fullWidth={true}
-        open={open}
-        onClose={handleClose}
-      >
-        <h2 className={styles["title"]}>
-          <Icon className={styles["invite-icon"]} type={"invite"}></Icon>
-          INVITE ADMINS
-        </h2>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles["box"]}>
-            <div className={styles["form"]}>
-              <div className={styles["row"]}>
-                <div className={styles["col"]}>
-                  <h4 className={styles["text"]}> FULL NAME *</h4>
-                </div>
-                <div className={styles["col"]}>
-                  <h4 className={styles["text"]}>EMAIL *</h4>
-                </div>
-              </div>
+        <Dialog
+          classes={{ paper: styles["modal"] }}
+          maxWidth="md"
+          fullWidth={true}
+          open={open}
+          onClose={handleClose}
+        >
+          <h2 className={styles["title"]}>
+            <Icon className={styles["invite-icon"]} type={"invite"}></Icon>
+            INVITE ADMINS
+          </h2>
 
-              {invites.map((i) => (
-                <div key={i} className={styles["row"]}>
+          <form id="inviteForm" onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles["box"]}>
+              <div className={styles["form"]}>
+                <div className={styles["row"]}>
                   <div className={styles["col"]}>
-                    <TextField
-                      name={"invite." + i + ".name"}
-                      fullWidth
-                      autoFocus
-                      margin="dense"
-                      placeholder="Firstname Lastname"
-                      type="text"
-                      variant="standard"
-                      className={styles["text"]}
-                      {...register("invite." + i + ".name", {
-                        required: true,
-                        maxLength: 5,
-                      })}
-                    />
+                    <p className={styles["label"]}> Full Name *</p>
                   </div>
                   <div className={styles["col"]}>
-                    <TextField
-                      name={"invite." + i + ".email"}
-                      fullWidth
-                      autoFocus
-                      margin="dense"
-                      placeholder="thisisanemail@email.com"
-                      type="text"
-                      variant="standard"
-                      className={styles["text"]}
-                      {...register("invite." + i + ".email")}
-                    />
+                    <p className={styles["label"]}>Email *</p>
                   </div>
-
-                  {i != 0 && (
-                    <IconButton
-                      variant="contained"
-                      onClick={() => removeRow(i)}
-                    >
-                      <Icon type={"inviteTrash"} />
-                    </IconButton>
-                  )}
                 </div>
-              ))}
-            </div>
-          </div>
-          <div className={styles["actions"]}>
-            <DialogActions>
-              <ThemeProvider theme={theme}>
-                <Button
-                  style={{ textTransform: "none" }}
-                  className={styles["font"]}
-                  variant="outlined"
-                  onClick={handleClose}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className={styles["font"]}
-                  variant="contained"
-                  onClick={handleClose}
-                >
-                  Send Invites
-                </Button>
-                <Button
-                  className={styles["font"]}
+
+                {invites.map((i) => (
+                  <div key={i} className={styles["row"]}>
+                    <div className={styles["col"]}>
+                      <TextField
+                        inputProps={{ style: { fontSize: 14 } }}
+                        name={"invite." + i + ".name"}
+                        fullWidth
+                        autoFocus
+                        margin="dense"
+                        placeholder="Firstname Lastname"
+                        type="text"
+                        variant="standard"
+                        className={styles["text"]}
+                        {...register("invite." + i + ".name", {
+                          required: true,
+                          maxLength: 5,
+                        })}
+                      />
+                    </div>
+                    <div className={styles["col"]}>
+                      <TextField
+                        name={"invite." + i + ".email"}
+                        inputProps={{ style: { fontSize: 14 } }}
+                        fullWidth
+                        autoFocus
+                        margin="dense"
+                        placeholder="thisisanemail@email.com"
+                        type="text"
+                        variant="standard"
+                        className={styles["text"]}
+                        {...register("invite." + i + ".email")}
+                      />
+                    </div>
+
+                    {i != 0 && (
+                      <IconButton
+                        variant="contained"
+                        onClick={() => removeRow(i)}
+                      >
+                        <Icon type={"inviteTrash"} />
+                      </IconButton>
+                    )}
+                  </div>
+                ))}
+                <div className={styles["row"]} />
+                <IconButton
                   variant="contained"
                   onClick={addRow}
+                  className={styles["add"]}
                 >
-                  Add Row
-                </Button>
-              </ThemeProvider>
-            </DialogActions>
-          </div>
-        </form>
-      </Dialog>
+                  <Icon type={"inviteAdd"} className={styles["addIcon"]} />
+                  New Invitation
+                </IconButton>
+              </div>
+            </div>
+            <div className={styles["actions"]}>
+              <DialogActions>
+                <ThemeProvider theme={theme}>
+                  <Button
+                    style={{ textTransform: "none" }}
+                    className={styles["buttons"]}
+                    variant="outlined"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    className={styles["buttons"]}
+                    variant="contained"
+                    onClick={handleClose}
+                  >
+                    Send Invites
+                  </Button>
+                  <Button
+                    className={styles["buttons"]}
+                    variant="contained"
+                    onClick={addRow}
+                  >
+                    Add Row
+                  </Button>
+                </ThemeProvider>
+              </DialogActions>
+            </div>
+          </form>
+        </Dialog>
+      </ThemeProvider>
     </div>
   );
 }
