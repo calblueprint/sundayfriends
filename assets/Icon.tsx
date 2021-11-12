@@ -13,7 +13,7 @@ export type IconType =
   | "close"
   | "userAdd"
   | "settings"
-  | "editpencil"
+  | "editbuttonpencil"
   | "nameicon"
   | "usersicon"
   | "singleperson"
@@ -28,7 +28,8 @@ export type IconType =
   | "inventorynavicon"
   | "sundayfriendslogo"
   | "smallX"
-  | "smallCheck";
+  | "smallCheck"
+  | "editingpencil";
 
 const IconSvgs: Record<IconType, React.ReactElement> = {
   calendar: (
@@ -170,7 +171,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
       />
     </SvgIcon>
   ),
-  editpencil: (
+  editbuttonpencil: (
     <SvgIcon viewBox="0,0,15,13">
       <path
         d="M1.44666 12.2193C1.25965 12.219 1.08137 12.1401 0.955329 12.002C0.826959 11.865 0.763172 11.6797 0.779996 11.4926L0.943329 9.69664L8.48866 2.15398L10.8467 
@@ -399,7 +400,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     </SvgIcon>
   ),
   smallX: (
-    <SvgIcon viewbox="0 0 10 9">
+    <SvgIcon viewBox="0 0 10 9">
       <path
         d="M8.49375 0.125L5 3.61875L1.50625 0.125L0.625 1.00625L4.11875 4.5L0.625 7.99375L1.50625 8.875L5 5.38125L8.49375 8.875L9.375 7.99375L5.88125 4.5L9.375 1.00625L8.49375 0.125Z"
         fill="#525454"
@@ -407,9 +408,16 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     </SvgIcon>
   ),
   smallCheck: (
-    <SvgIcon viewbox="0 0 14 11">
+    <SvgIcon viewBox="0 0 14 11">
       <path d="M4.93793 10.2142L0.812927 6.08922L1.99126 4.91089L4.93918 7.85547L4.93793 7.85672L12.0088 0.785889L13.1871 1.96422L6.11626 9.03589L4.93876 10.2134L4.93793 10.2142Z" 
             fill="#E6ECFE"/>
+    </SvgIcon>
+  ),
+  editingpencil: (
+    <SvgIcon height="14" width="14" viewBox="0 0 14 15">
+      <path d="M0.771262 14.5C0.555767 14.4996 0.350338 14.4087 0.205094 14.2495C0.0571725 14.0916 -0.0163304 13.878 0.00305578 13.6624L0.191266 11.5923L8.88583 2.89845L11.603 5.61557L2.91072 14.3087L0.841169 
+      14.4969C0.817355 14.4992 0.79354 14.5 0.771262 14.5ZM12.1453 5.0723L9.42895 2.35518L11.0583 0.725366C11.2024 0.581075 11.3979 0.5 11.6018 0.5C11.8057 0.5 12.0012 0.581075 12.1453 0.725366L13.7747 2.35518C13.9189 
+      2.49931 14 2.69489 14 2.89883C14 3.10278 13.9189 3.29836 13.7747 3.44249L12.1453 5.0723Z" fill="#A9A9A9"/>
     </SvgIcon>
   )
 };

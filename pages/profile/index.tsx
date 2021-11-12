@@ -91,6 +91,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
             variant="contained"
             className={styles.saveButton}
             startIcon={<Icon type="smallCheck" />}
+            onClick={() => setIsEditing(false)}
             //onclick, save state and changes
           >
             Save
@@ -102,7 +103,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
       <Button
         variant="contained"
         className={styles.button}
-        startIcon={<Icon type="editpencil" />}
+        startIcon={<Icon type="editbuttonpencil" />}
         onClick={() => setIsEditing(true)}
       >
         Edit

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../ProfileInfo/ProfileInfo.module.css";
-import { TextField, Typography, IconButton } from "@mui/material";
+import { Typography, IconButton } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { IconType } from "../../assets/Icon";
 
@@ -27,7 +27,33 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
   //   setEditValue(editValue + e);
   // }
 
+  const [isSelected, setIsSelected] = useState(false);
+  const [isEdit, setisEdit] = useState(false);
+
   function fieldValues(field) {
+    if (
+      isSelected &&
+      isEditing &&
+      (field.fieldName == "NAME" ||
+        field.fieldName == "ROLE" ||
+        field.fieldName == "EMAIL" ||
+        field.fieldName == "PHONE #")
+    ) {
+      return (
+        <div className={isEdit ? styles.editing : styles.editState2}>
+          <Typography
+            variant="subtitle2"
+            color="#131313"
+            className={styles.text}
+          >
+            {field.fieldValue}
+          </Typography>
+          <IconButton onClick={() => setisEdit(!isEdit)}>
+            <Icon type="editingpencil" />
+          </IconButton>
+        </div>
+      );
+    }
     if (
       isEditing &&
       (field.fieldName == "NAME" ||
@@ -36,24 +62,26 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
         field.fieldName == "PHONE #")
     ) {
       return (
-        <div className={styles.editState}>
-          <form>
+        <div className={styles.editState1}>
+          {/* <form>
             <input type="text" value={field.fieldValue} />
-          </form>
-          <IconButton>
-            <Icon type="editpencil" />
+          </form> */}
+          <Typography
+            variant="subtitle2"
+            color="#131313"
+            className={styles.text}
+          >
+            {field.fieldValue}
+          </Typography>
+          <IconButton onClick={() => setIsSelected(!isSelected)}>
+            <Icon type="editingpencil" />
           </IconButton>
         </div>
-        // <div className={styles.editing}>
-        //   <Typography variant="subtitle2" color="#131313">
-        //     {field.fieldName}
-        //   </Typography>
-        // </div>
       );
     }
     return (
       <div className={styles.values}>
-        <Typography variant="subtitle2" color="#131313">
+        <Typography variant="subtitle2" color="#131313" className={styles.text}>
           {field.fieldValue}
         </Typography>
       </div>
