@@ -28,8 +28,8 @@ const SignInScreen: React.FC = () => {
       router.push("/transactions");
     } catch (e) {
       reset();
-      console.error(e);
-      setErrMessage(e.message);
+      console.error(e.message);
+      setErrMessage("Invalid email/password.");
     }
   };
 
@@ -78,7 +78,9 @@ const SignInScreen: React.FC = () => {
               <div className={styles["forgot-password"]}>
                 <a href="/">Forgot password? </a>
               </div>
-              {errMessage ? <div>{errMessage}</div> : null}
+              <div className={styles["login-error-message"]}>
+                {errMessage ? <div>{errMessage}</div> : null}
+              </div>
               <div className={styles["bottom-row"]}>
                 <div className={styles["bottom-row-text"]}>
                   {"Haven't activated your account yet? "}

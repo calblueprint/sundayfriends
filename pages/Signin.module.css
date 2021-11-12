@@ -128,6 +128,14 @@
   color: var(--grey-mid);
   margin-top: 18px;
 }
+.login-error-message {
+  display: flex;
+  justify-content: end;
+  font-size: 12px;
+  line-height: 16px;
+  color: red;
+  margin-top: 18px;
+}
 
 .hidepassword {
   width: 20px;
