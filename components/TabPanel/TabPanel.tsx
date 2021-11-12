@@ -21,7 +21,7 @@ export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
     >
       {value === index && (
         <Box sx={{ p: 3 }} className={styles["tab-box"]}>
-          <h3 className={styles['children']}>{children}</h3>
+          <h3 className={styles["children"]}>{children}</h3>
         </Box>
       )}
     </div>
