@@ -121,7 +121,7 @@
 
 .forgot-password {
   display: flex;
-  justify-content: end;
+  justify-content: flex-start;
   font-size: 12px;
   line-height: 16px;
   text-decoration-line: underline;
