@@ -61,26 +61,26 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   const refresh = useCallback(() => {
     router.replace(router.asPath);
   }, [router]);
-  
-  useEffect(() => {
-      console.log(allTransactions)
-      refresh();
-  }, [allTransactions])
 
-//   useEffect(() => {
-//     // if (!props.users || !props.transactions) {
-//     //     return <ErrorPage statusCode={404} />;
-//     //   }
-//     // getAllUsers().then(users => {
-//     //     setUsers(users);
-//     // })
-//     // getAllTransactions().then(items => {
-//     //     setTransactions(items);
-//     // })
-//     // console.log(transactions);
-//     // setTransactions(transactions);
-//     // setUsers(users);
-//   }, []);
+  useEffect(() => {
+    console.log(allTransactions);
+    refresh();
+  }, [allTransactions]);
+
+  //   useEffect(() => {
+  //     // if (!props.users || !props.transactions) {
+  //     //     return <ErrorPage statusCode={404} />;
+  //     //   }
+  //     // getAllUsers().then(users => {
+  //     //     setUsers(users);
+  //     // })
+  //     // getAllTransactions().then(items => {
+  //     //     setTransactions(items);
+  //     // })
+  //     // console.log(transactions);
+  //     // setTransactions(transactions);
+  //     // setUsers(users);
+  //   }, []);
 
   /*
     added this sleep function because handleClose function set success back to false before the anchor was set to null
@@ -162,13 +162,15 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
       );
     };
 
-    const redemptions = (allTransactions!=null ? 
-        allTransactions.filter((transaction) => transaction.point_gain < 0) :
-        transactions.filter((transaction) => transaction.point_gain < 0));
+    const redemptions =
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+        : transactions.filter((transaction) => transaction.point_gain < 0);
 
-    const earnings = (allTransactions!=null ? 
-        allTransactions.filter((transaction) => transaction.point_gain >= 0) :
-        transactions.filter((transaction) => transaction.point_gain >= 0));
+    const earnings =
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+        : transactions.filter((transaction) => transaction.point_gain >= 0);
 
     return (
       <Box className={styles["transaction-container"]}>
@@ -196,7 +198,11 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
         <TabPanel value={value} index={0}>
           <div>
             {renderFilterHeader()}
-            <TransactionList transactions={allTransactions==null ? transactions : allTransactions} />
+            <TransactionList
+              transactions={
+                allTransactions == null ? transactions : allTransactions
+              }
+            />
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>

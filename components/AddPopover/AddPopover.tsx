@@ -12,7 +12,10 @@ import {
 } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Transaction, User, Admin } from "../../types/schema";
-import { addTransaction, getAllTransactions } from "../../firebase/firestore/transaction";
+import {
+  addTransaction,
+  getAllTransactions,
+} from "../../firebase/firestore/transaction";
 
 type AddPopoverProps = {
   allUsers: User[];
@@ -29,7 +32,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   closeAdd,
   popoverid,
   currentAdmin,
-  setTransactions
+  setTransactions,
 }: AddPopoverProps) => {
   const [selectedUser, setSelectedUser] = useState("Select User");
   const [addUser, setAddUser] = useState(null);
@@ -52,9 +55,9 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
     };
     await addTransaction(adding as Transaction);
 
-    getAllTransactions().then(items => {
-        setTransactions(items);
-    })
+    getAllTransactions().then((items) => {
+      setTransactions(items);
+    });
 
     setSuccess(true);
   };
@@ -78,14 +81,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   };
 
   const handleAddClose = () => {
-    closeAdd(setSuccess);
-    sleep(1000).then(() => {
-        setSuccess(false);
-    })
-    setAddUser(null);
-    resetFields();
-    
-    
+    closeAdd();
   };
 
   const resetFields = () => {
@@ -94,6 +90,14 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
     setAddType("");
     setAddMessage("");
   };
+
+  useEffect(() => {
+    if (addAnchor) {
+      setSuccess(false);
+      setAddUser(null);
+      resetFields();
+    }
+  }, [addAnchor]);
 
   const addPopoverContent = () => {
     if (success) {
