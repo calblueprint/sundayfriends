@@ -28,32 +28,59 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
   // }
 
   const [isSelected, setIsSelected] = useState(false);
-  const [isEdit, setisEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
-  function fieldValues(field) {
-    if (
-      isSelected &&
-      isEditing &&
-      (field.fieldName == "NAME" ||
-        field.fieldName == "ROLE" ||
-        field.fieldName == "EMAIL" ||
-        field.fieldName == "PHONE #")
-    ) {
+  function inLineEdit(field) {
+    if (isEdit) {
       return (
-        <div className={isEdit ? styles.editing : styles.editState2}>
-          <Typography
-            variant="subtitle2"
-            color="#131313"
-            className={styles.text}
-          >
-            {field.fieldValue}
-          </Typography>
-          <IconButton onClick={() => setisEdit(!isEdit)}>
-            <Icon type="editingpencil" />
-          </IconButton>
+        <div className={styles["selected"]}>
+          <form>
+            <input type="text" value={field.fieldValue} />
+          </form>
         </div>
       );
     }
+    return (
+      <div
+        className={styles.editState2}
+        // onClick={() => setIsEdit(true)}
+      >
+        <Typography
+          variant="subtitle2"
+          color="#131313"
+          className={styles.text}
+          onClick={() => setIsEdit(true)}
+        >
+          {field.fieldValue}
+        </Typography>
+        <IconButton onClick={() => setIsSelected(!isSelected)}>
+          <Icon type="editingpencil" />
+        </IconButton>
+      </div>
+    );
+  }
+
+  function fieldValues(field) {
+    // if (
+    //   isSelected &&
+    //   isEditing &&
+    //   (field.fieldName == "NAME" ||
+    //     field.fieldName == "ROLE" ||
+    //     field.fieldName == "EMAIL" ||
+    //     field.fieldName == "PHONE #")
+    // ) {
+    //   return (
+    //     <div className={isEdit ? styles["editing"] : styles["editState2"]}>
+    //       <form>
+    //         <input type="text" value={field.fieldValue} />
+    //       </form>
+    //       <IconButton onClick={() => setisEdit(!isEdit)}>
+    //         <Icon type="editingpencil" />
+    //       </IconButton>
+    //     </div>
+    //   );
+    // }
+
     if (
       isEditing &&
       (field.fieldName == "NAME" ||
@@ -61,11 +88,11 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
         field.fieldName == "EMAIL" ||
         field.fieldName == "PHONE #")
     ) {
+      if (isEdit) {
+        return <div>{inLineEdit(field)}</div>;
+      }
       return (
-        <div className={styles.editState1}>
-          {/* <form>
-            <input type="text" value={field.fieldValue} />
-          </form> */}
+        <div className={styles["editState1"]}>
           <Typography
             variant="subtitle2"
             color="#131313"

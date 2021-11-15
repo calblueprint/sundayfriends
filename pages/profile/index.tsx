@@ -116,7 +116,7 @@ const ProfileSettingsPage: React.FunctionComponent = () => {
       <div className={styles.page}>
         <div className={styles.pagetitle}>
           <Icon type="settings"></Icon>
-          <h2>PROFILE SETTINGS</h2>
+          <h2>MY PROFILE SETTINGS</h2>
         </div>
         <div className={styles.namebar}>
           <h1> Cindo Zhang </h1>

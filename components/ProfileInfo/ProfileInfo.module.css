@@ -40,7 +40,7 @@
   justify-content: space-between;
   width: 60%;
   height: 37px;
-  background-color: var(--grey);
+  background-color: red;
   border-radius: 5px;
 }
 
