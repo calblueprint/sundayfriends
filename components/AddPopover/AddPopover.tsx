@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Transaction, User, Admin } from "../../types/schema";
-import { addTransaction } from "../../firebase/firestore/transaction";
+import { addTransaction, getAllTransactions } from "../../firebase/firestore/transaction";
 
 type AddPopoverProps = {
   allUsers: User[];
@@ -20,6 +20,7 @@ type AddPopoverProps = {
   closeAdd: Function;
   popoverid: string;
   currentAdmin: Admin;
+  setTransactions: Function;
 };
 
 export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
@@ -28,6 +29,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   closeAdd,
   popoverid,
   currentAdmin,
+  setTransactions
 }: AddPopoverProps) => {
   const [selectedUser, setSelectedUser] = useState("Select User");
   const [addUser, setAddUser] = useState(null);
@@ -48,7 +50,11 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
         addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
       user_name: addUser.full_name,
     };
-    addTransaction(adding as Transaction);
+    await addTransaction(adding as Transaction);
+
+    getAllTransactions().then(items => {
+        setTransactions(items);
+    })
 
     setSuccess(true);
   };
@@ -72,17 +78,18 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   };
 
   const handleAddClose = () => {
-    closeAdd();
+    closeAdd(setSuccess);
     sleep(1000).then(() => {
-      setSuccess(false);
-      setAddUser(null);
-    });
+        setSuccess(false);
+    })
+    setAddUser(null);
     resetFields();
+    
+    
   };
 
   const resetFields = () => {
     setSelectedUser("Select User");
-
     setAddPoints("10");
     setAddType("");
     setAddMessage("");
@@ -94,7 +101,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
         <div className={styles["success-div"]}>
           <p className={styles["success-title"]}>Success!</p>
           <p className={styles["success-message"]}>
-            Transaction for {addUser.full_name} has been added
+            Transaction for {addUser?.full_name} has been added
           </p>
           <div>
             <Button
