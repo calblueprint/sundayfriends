@@ -5,21 +5,12 @@ import {
   Tabs,
   Tab,
   Box,
-  List,
   Input,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
   Popover,
-  TextField,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Autocomplete,
 } from "@mui/material";
 import styles from "./Transactions.module.css";
 import { TabPanel } from "../../components/TabPanel/TabPanel";
@@ -28,12 +19,10 @@ import { TransactionList } from "../../components/TransactionList/TransactionLis
 import { AddPopover } from "../../components/AddPopover/AddPopover";
 import {
   getAllTransactions,
-  addTransaction,
 } from "../../firebase/firestore/transaction";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { User, Transaction, Admin } from "../../types/schema";
-import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
-import { createRouteLoader } from "next/dist/client/route-loader";
+import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { getAdmin } from "../../firebase/firestore/admin";
@@ -66,30 +55,6 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     console.log(allTransactions);
     refresh();
   }, [allTransactions]);
-
-  //   useEffect(() => {
-  //     // if (!props.users || !props.transactions) {
-  //     //     return <ErrorPage statusCode={404} />;
-  //     //   }
-  //     // getAllUsers().then(users => {
-  //     //     setUsers(users);
-  //     // })
-  //     // getAllTransactions().then(items => {
-  //     //     setTransactions(items);
-  //     // })
-  //     // console.log(transactions);
-  //     // setTransactions(transactions);
-  //     // setUsers(users);
-  //   }, []);
-
-  /*
-    added this sleep function because handleClose function set success back to false before the anchor was set to null
-    (meaning that the) popover would switch back to the first page before closing.
-    The sleep makes this look cleaner, but let me know if there is a less hacky fix.
-    */
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
 
   const clickAddButton = (event) => {
     setAddAnchorEl(event.currentTarget);

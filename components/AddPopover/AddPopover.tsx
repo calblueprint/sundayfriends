@@ -42,6 +42,14 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   const [addType, setAddType] = useState("");
   const [addMessage, setAddMessage] = useState("");
 
+  useEffect(() => {
+    if (addAnchor) {
+      setSuccess(false);
+      setAddUser(null);
+      resetFields();
+    }
+  }, [addAnchor]);
+
   const handleAddConfirm = async () => {
     //handle post request
     const adding = {
@@ -60,10 +68,6 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
     });
 
     setSuccess(true);
-  };
-
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   const selectAutocomplete = (value) => {
@@ -90,14 +94,6 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
     setAddType("");
     setAddMessage("");
   };
-
-  useEffect(() => {
-    if (addAnchor) {
-      setSuccess(false);
-      setAddUser(null);
-      resetFields();
-    }
-  }, [addAnchor]);
 
   const addPopoverContent = () => {
     if (success) {
