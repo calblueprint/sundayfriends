@@ -43,7 +43,7 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
         </TableCell>
       )}
       <TableCell className={`${styles["tableRow"]} ${styles["role"]}`}>
-        {user.family_head ? "Head" : "Member"}
+        {user.role}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["email"]}`}>
         {user.email}

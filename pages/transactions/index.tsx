@@ -17,9 +17,7 @@ import { TabPanel } from "../../components/TabPanel/TabPanel";
 import Icon from "../../assets/Icon";
 import { TransactionList } from "../../components/TransactionList/TransactionList";
 import { AddPopover } from "../../components/AddPopover/AddPopover";
-import {
-  getAllTransactions,
-} from "../../firebase/firestore/transaction";
+import { getAllTransactions } from "../../firebase/firestore/transaction";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { User, Transaction, Admin } from "../../types/schema";
 import { GetServerSidePropsContext } from "next";
