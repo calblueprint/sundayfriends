@@ -21,6 +21,7 @@ export const getUser = async (userId: string): Promise<User> => {
 };
 
 /**
+<<<<<<< HEAD
  * Updates the user data from firestore with the given userId
  */
 export const updateUser = async (userId: string, newData): Promise<void> => {
@@ -34,6 +35,8 @@ export const updateUser = async (userId: string, newData): Promise<void> => {
 };
 
 /**
+=======
+>>>>>>> bd1b6da30601222d83d4abb493036c1815b4597c
  * Returns all the users from firestore
  */
 export const getAllUsers = async (): Promise<User[]> => {
