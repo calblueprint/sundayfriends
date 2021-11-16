@@ -7,6 +7,7 @@
   border-radius: 8px;
   width: 330px;
   height: 250px;
+  padding-top: 10px;
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 20px;
@@ -159,7 +160,6 @@
 }
 
 .success-div {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;

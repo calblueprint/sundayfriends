@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import Icon from '../../assets/Icon';
-import { Box } from '@mui/system';
-import { TransactionItem } from '../TransactionItem/TransactionItem';
-import { SortTriangles } from '../SortTriangles/SortTriangles';
-import { List } from '@mui/material';
-import styles from '../TransactionList/TransactionList.module.css';
-import itemstyles from '../TransactionItem/TransactionItem.module.css';
-import { Transaction } from '../../types/schema';
+import React, { useEffect, useState } from "react";
+import Icon from "../../assets/Icon";
+import { Box } from "@mui/system";
+import { TransactionItem } from "../TransactionItem/TransactionItem";
+import { SortTriangles } from "../SortTriangles/SortTriangles";
+import { List } from "@mui/material";
+import styles from "../TransactionList/TransactionList.module.css";
+import itemstyles from "../TransactionItem/TransactionItem.module.css";
+import { Transaction } from "../../types/schema";
 
 type TransactionListProps = {
   transactions: Transaction[];

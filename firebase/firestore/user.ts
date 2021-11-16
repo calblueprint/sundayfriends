@@ -70,7 +70,7 @@ const parseUser = async (doc) => {
     address: data.address,
     created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
     email: data.email,
-    family_head: data.family_head,
+    role: data.role,
     family_id: data.family_id,
     full_name: data.full_name,
     last_active: new Date(data.last_active.toMillis()).toLocaleDateString(),
