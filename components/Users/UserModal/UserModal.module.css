@@ -35,13 +35,22 @@
 .aboutInfo {
   display: flex;
   flex-direction: column;
-  margin-right: 10%;
+  margin-right: 45px;
   vertical-align: middle;
+}
+
+.aboutInfoEditing {
+  display: flex;
+  flex-direction: column;
+  margin-right: 45px;
+  vertical-align: middle;
+  width: 100%;
 }
 
 .aboutInfoContainer {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .squareBullet {
@@ -137,9 +146,13 @@
   font-size: medium;
   margin-bottom: 4px;
   border: 0px;
-  padding-top: 2px;
+  padding-top: 3px;
   padding-bottom: 3px;
-  width: 600%;
+  width: 100%;
+  background-color: var(--grey-light);
+  padding-left: 10px;
+  border-radius: 10px;
+  margin-right: 10px;
 }
 
 .errorTitle {
@@ -191,11 +204,9 @@
 }
 
 .editSection {
-  width: 630%;
   display: flex;
-  flex-direction: row;
-  place-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .buttonSection {
@@ -320,4 +331,15 @@
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 20px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.modalAbout {
+  width: 100%;
 }

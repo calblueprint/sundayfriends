@@ -27,7 +27,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
 }: UserModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currUser, setCurrUser] = useState(user);
-  const [role, setRole] = useState(user?.family_head ? "Head" : "Member");
+  const [role, setRole] = useState(user?.role);
   const [email, setEmail] = useState(user?.email);
   const [error, setError] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(user?.phone_number);
@@ -42,28 +42,17 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
     callFunc();
   }, []);
 
-  const getRole = (head: boolean): string => {
-    if (head) {
-      return "Head";
-    }
-    return "Member";
-  };
-
   async function onSubmit(event?: React.BaseSyntheticEvent): Promise<void> {
     event?.preventDefault();
     const newData = {};
     try {
-      if (role) {
-        if (role !== "Head" && role !== "Member") {
-          throw new Error("Input for role must be 'Head' or 'Member'");
+      if (role && role != user?.role) {
+        if (role !== "Head" && role !== "Parent" && role !== "Child") {
+          throw new Error(
+            "Input for role must be 'Head' or 'Parent' or 'Child'"
+          );
         }
-        if (role == "Head") {
-          newData["family_head"] = true;
-        } else {
-          newData["family_head"] = false;
-        }
-      } else {
-        newData["family_head"] = user?.family_head;
+        newData["role"] = role;
       }
       if (email != user?.email && email != undefined) {
         newData["email"] = email;
@@ -140,8 +129,34 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
         <div>
           <form onSubmit={onSubmit}>
             <div className={styles["modalInfo"]}>
-              <div>
-                <h3>About Information</h3>
+              <div className={styles["modalAbout"]}>
+                <div className={styles["heading"]}>
+                  <h3>About Information</h3>
+                  {isEditing ? (
+                    <div className={styles["buttonSection"]}>
+                      <Button
+                        className={styles["editButton"]}
+                        onClick={() => {
+                          setError("");
+                          setIsEditing(false);
+                        }}
+                      >
+                        <p>Cancel</p>
+                      </Button>
+                      <Button className={styles["submitButton"]} type="submit">
+                        <p>Save Changes</p>
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button
+                      className={styles["editButton"]}
+                      onClick={() => setIsEditing(true)}
+                    >
+                      <Icon className={styles["editIcon"]} type={"edit"} />
+                      <p>Edit</p>
+                    </Button>
+                  )}
+                </div>
                 <div className={styles["aboutInfoContainer"]}>
                   <div className={styles["squareBullet"]}>
                     <Icon
@@ -168,15 +183,11 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                     <div className={styles["subTitle"]}>Password</div>
                   </div>
                   {isEditing ? (
-                    <div className={styles["aboutInfo"]}>
+                    <div className={styles["aboutInfoEditing"]}>
                       <div className={styles["editSection"]}>
                         <input
                           className={styles["editTitle"]}
-                          defaultValue={
-                            currUser
-                              ? getRole(currUser.family_head)
-                              : getRole(user?.family_head)
-                          }
+                          defaultValue={currUser ? currUser.role : user?.role}
                           onChange={(e) => setRole(e.target.value)}
                         />
                         <Icon
@@ -210,7 +221,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                           type={"edit"}
                         />
                       </div>
-                      <div>
+                      <div className={styles["editSection"]}>
                         <input
                           className={styles["editTitle"]}
                           type="password"
@@ -221,9 +232,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                   ) : (
                     <div className={styles["aboutInfo"]}>
                       <div className={styles["infoSpacing"]}>
-                        {currUser
-                          ? getRole(currUser.family_head)
-                          : getRole(user?.family_head)}
+                        {currUser ? currUser.role : user?.role}
                       </div>
                       <div className={styles["infoSpacing"]}>
                         {currUser ? currUser.email : user?.email}
@@ -239,30 +248,6 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                   {error != "" ? error : ""}
                 </div>
               </div>
-              {isEditing ? (
-                <div className={styles["buttonSection"]}>
-                  <Button
-                    className={styles["editButton"]}
-                    onClick={() => {
-                      setError("");
-                      setIsEditing(false);
-                    }}
-                  >
-                    <p>Cancel</p>
-                  </Button>
-                  <Button className={styles["submitButton"]} type="submit">
-                    <p>Save Changes</p>
-                  </Button>
-                </div>
-              ) : (
-                <Button
-                  className={styles["editButton"]}
-                  onClick={() => setIsEditing(true)}
-                >
-                  <Icon className={styles["editIcon"]} type={"edit"} />
-                  <p>Edit</p>
-                </Button>
-              )}
             </div>
           </form>
         </div>

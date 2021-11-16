@@ -55,15 +55,40 @@ export const getAllUsers = async (): Promise<User[]> => {
  */
 export const getUsersSearch = async (searchQ: string): Promise<User[]> => {
   try {
+    const end = "b".replace(/.$/, (c) =>
+      String.fromCharCode(c.charCodeAt(0) + 1)
+    );
     const promises: Promise<User>[] = [];
     await userCollection
-      .where("full_name", ">=", searchQ)
-      .where("full_name", "<=", searchQ + "~")
+      .where("full_name", ">=", "b")
+      .where("full_name", "<=", end)
       .get()
       .then((doc) => {
         doc.forEach((item) => promises.push(parseUser(item)));
       });
     const users = await Promise.all(promises);
+    console.log("backend", users, searchQ);
+    return users;
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
+/**
+ * Returns the users from firestore by role
+ */
+export const getUsersByRole = async (role: string): Promise<User[]> => {
+  try {
+    const promises: Promise<User>[] = [];
+    await userCollection
+      .where("role", "==", role)
+      .get()
+      .then((doc) => {
+        doc.forEach((item) => promises.push(parseUser(item)));
+      });
+    const users = await Promise.all(promises);
+    console.log("backend", users);
     return users;
   } catch (e) {
     console.warn(e);
@@ -105,7 +130,7 @@ const parseUser = async (doc) => {
     address: data.address,
     created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
     email: data.email,
-    family_head: data.family_head,
+    role: data.role,
     family_id: data.family_id,
     full_name: data.full_name,
     last_active: new Date(data.last_active.toMillis()).toLocaleDateString(),
