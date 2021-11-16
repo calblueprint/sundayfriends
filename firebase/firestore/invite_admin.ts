@@ -1,6 +1,6 @@
-import firebaseApp from '../firebase';
-import 'firebase/firestore';
-import { AdminInvite } from '../../types/schema';
+import firebaseApp from "../firebaseApp";
+import "firebase/firestore";
+import { AdminInvite } from "../../types/schema";
 
 const db = firebaseApp.firestore();
 const adminInvitesCollection = db.collection('admin_invites');

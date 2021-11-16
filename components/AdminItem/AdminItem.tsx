@@ -1,5 +1,6 @@
+import * as React from "react";
 import styles from "../AdminItem/AdminItem.module.css";
-import { ListItem, SvgIcon, Button } from "@mui/material";
+import { ListItem, Button } from "@mui/material";
 
 type AdminItemProps = {
   name: string;
@@ -13,7 +14,7 @@ export const AdminItem: React.FunctionComponent<AdminItemProps> = ({
   role,
   email,
   phone,
-}) => {
+}: AdminItemProps) => {
   return (
     <ListItem className={styles["list-item"]}>
       <div className={styles["name"]}>{name}</div>

@@ -14,7 +14,9 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import emailjs from "emailjs-com";
 
-export default function InviteAdminModal() {
+// export const SortTriangles: React.FunctionComponent = () => {
+export const InviteAdminModal: React.FunctionComponent = () => {
+  // export default function InviteAdminModal() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -32,12 +34,13 @@ export default function InviteAdminModal() {
   //   },
   // });
 
-  function removeRow(i) {
+  const removeRow = (i) => {
     unregister("invite." + i);
     unregister("invite." + i);
+    setCount(count - 1);
 
     setInvites(invites.filter((j) => j != i));
-  }
+  };
 
   const theme = createTheme({
     typography: {
@@ -49,8 +52,6 @@ export default function InviteAdminModal() {
       },
     },
   });
-
-  const f = useRef();
 
   const sendEmail = (templateParams) => {
     emailjs
@@ -94,7 +95,8 @@ export default function InviteAdminModal() {
     resolver: yupResolver(validationSchema),
   });
 
-  function onSubmit(data) {
+  // const onSubmit = (data) => {}
+  const onSubmit = (data) => {
     // alert to display input data
     // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
     // add user to firebase
@@ -112,12 +114,12 @@ export default function InviteAdminModal() {
     reset();
     setCount(1);
     setInvites([0]);
-  }
+  };
 
-  function addRow() {
+  const addRow = () => {
     setCount(count + 1);
     setInvites([...invites, count]);
-  }
+  };
 
   return (
     <div>
@@ -131,7 +133,7 @@ export default function InviteAdminModal() {
         </Button>
 
         <Dialog
-          classes={{ paper: styles["modal"] }}
+          classes={{ paper: count < 3 ? styles["modal"] : styles["modal2"] }}
           maxWidth="md"
           fullWidth={true}
           open={open}
@@ -228,13 +230,6 @@ export default function InviteAdminModal() {
                   >
                     Send Invites
                   </Button>
-                  <Button
-                    className={styles["buttons"]}
-                    variant="contained"
-                    onClick={addRow}
-                  >
-                    Add Row
-                  </Button>
                 </ThemeProvider>
               </DialogActions>
             </div>
@@ -243,4 +238,4 @@ export default function InviteAdminModal() {
       </ThemeProvider>
     </div>
   );
-}
+};

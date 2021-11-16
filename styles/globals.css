@@ -14,6 +14,14 @@ h2 {
   letter-spacing: 1px;
 }
 
+h4 {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 23px;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -55,7 +63,7 @@ h1 {
   --grey-dark: #525454;
   --grey-mid: #a9a9a9;
   --grey-light: #eaeaea;
-  --while: #ffffff;
+  --white: #ffffff;
   --alert-text: #e94444;
   --alert: #fce3e3;
   --grey-darker: #646464;

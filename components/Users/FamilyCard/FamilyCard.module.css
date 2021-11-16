@@ -9,6 +9,7 @@
   padding-right: 10%;
   padding-top: 1%;
   padding-bottom: 2%;
+  margin-top: 35px;
   overflow: auto;
   cursor: pointer;
 }
@@ -46,15 +47,4 @@
   display: inline-flex;
   flex-wrap: wrap;
   gap: 15px;
-}
-
-.modal {
-  position: absolute;
-  display: flex;
-  padding: 3%;
-  width: 80%;
-  height: 80%;
-  background-color: white;
-  top: 10%;
-  left: 10%;
 }

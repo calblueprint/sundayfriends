@@ -5,7 +5,6 @@ import {
   Tabs,
   Tab,
   Box,
-  List,
   Input,
   FormControl,
   InputLabel,
@@ -13,16 +12,23 @@ import {
   MenuItem,
 } from "@mui/material";
 import styles from "./Transactions.module.css";
-import itemstyles from "../../components/TransactionItem/TransactionItem.module.css";
 import { TabPanel } from "../../components/TabPanel/TabPanel";
 import Icon from "../../assets/Icon";
-import { Transaction } from "../../types/schema";
 import { TransactionList } from "../../components/TransactionList/TransactionList";
 import { getAllTransactions } from "../../firebase/firestore/transaction";
 import { getAdmin } from "../../firebase/firestore/admin";
-import { getUser } from "../../firebase/firestore/user";
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { GetServerSidePropsContext } from "next";
+import { Admin } from "../../types/schema";
+import nookies from "nookies";
 
-const TransactionsPage: React.FunctionComponent = () => {
+type TransactionPageProps = {
+  currentAdmin: Admin;
+};
+
+const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
+  currentAdmin,
+}) => {
   const BasicTabs = () => {
     const [value, setValue] = useState(0);
     const [allTransactions, setTransactions] = useState([]);
@@ -160,6 +166,27 @@ const TransactionsPage: React.FunctionComponent = () => {
       </div>
     </Layout>
   );
+};
+
+// Use SSR to load admins!
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    return {
+      props: { currentAdmin: adminData },
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        permament: false,
+        destination: "/",
+      },
+    };
+  }
 };
 
 export default TransactionsPage;

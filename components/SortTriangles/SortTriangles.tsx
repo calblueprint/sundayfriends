@@ -1,3 +1,4 @@
+import * as React from "react";
 import styles from "../SortTriangles/SortTriangles.module.css";
 
 export const SortTriangles: React.FunctionComponent = () => {

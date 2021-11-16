@@ -1,22 +1,30 @@
 import React from "react";
 import Layout from "../../components/Layout/Layout";
 import styles from "./Admins.module.css";
-import { Button, List, ListItem, Input } from "@mui/material";
-import Icon from "../../assets/Icon";
+import { List, ListItem } from "@mui/material";
 import { AdminItem } from "../../components/AdminItem/AdminItem";
+import { InviteAdminModal } from "../../components/InviteAdminModal/InviteAdminModal";
 import itemstyles from "../../components/AdminItem/AdminItem.module.css";
-import firebase from "../../firebase/firebase";
-import { getDocs } from "@firebase/firestore";
-import InviteAdminModal from "../../components/InviteAdminModal/InviteAdminModal";
-import { SortTriangles } from "../../components/SortTriangles/SortTriangles";
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { GetServerSidePropsContext } from "next";
+import { Admin } from "../../types/schema";
+import { getAdmin } from "../../firebase/firestore/admin";
+import nookies from "nookies";
+import Icon from "../../assets/Icon";
+import Input from "@mui/material/Input";
 
-const AdminPage: React.FunctionComponent = () => {
+type AdminPageProps = {
+  currentAdmin: Admin;
+};
+
+const AdminPage: React.FunctionComponent<AdminPageProps> = ({
+  currentAdmin,
+}) => {
   const renderCategoryHeader = () => {
     return (
       <div className={styles["section-header"]}>
         <div className={itemstyles["name"]} id={styles["category"]}>
-          <body id={styles["category-text"]}>Admin</body>
-          {/* <SortTriangles /> */}
+          <body id={styles["category-text"]}>Name</body>
         </div>
         <div className={itemstyles["role"]} id={styles["category"]}>
           <body id={styles["category-text"]}>Role</body>
@@ -25,7 +33,7 @@ const AdminPage: React.FunctionComponent = () => {
           <body id={styles["category-text"]}>Email</body>
         </div>
         <div className={itemstyles["phone"]} id={styles["category"]}>
-          <body id={styles["category-text"]}>Phone #</body>
+          <body id={styles["category-text"]}>Phone</body>
         </div>
         <div className={itemstyles["buttons"]} id={styles["category-text"]}>
           Manage
@@ -76,9 +84,10 @@ const AdminPage: React.FunctionComponent = () => {
   const renderAdminList = () => {
     return (
       <List className={styles["list"]}>
-        {temp.map((admin) => {
+        {temp.map((admin, index) => {
           return (
             <AdminItem
+              key={index}
               name={admin.name}
               email={admin.email}
               role={admin.role}
@@ -128,5 +137,26 @@ const AdminPage: React.FunctionComponent = () => {
     </Layout>
   );
 };
+
+// Use SSR to load admins!
+// export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+//   try {
+//     const cookies = nookies.get(ctx);
+//     const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+//     const adminUid = userToken.uid;
+//     const adminData = await getAdmin(adminUid);
+//     return {
+//       props: { currentAdmin: adminData },
+//     };
+//   } catch (e) {
+//     console.error(e);
+//     return {
+//       redirect: {
+//         permament: false,
+//         destination: "/",
+//       },
+//     };
+//   }
+// };
 
 export default AdminPage;
