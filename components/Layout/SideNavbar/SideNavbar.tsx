@@ -11,16 +11,26 @@ const SideNavbar: React.FunctionComponent = () => {
     <Drawer
       anchor="left"
       variant="permanent"
-      className={styles["sidenav"]}
-      classes={{
-        paper: styles["sidenav-paper"],
+      sx={{
+        display: {
+          width: "110px",
+          flexShrink: "0",
+        },
+        "& .MuiDrawer-paper": {
+          boxSizing: "border-box",
+          width: "110px",
+          backgroundColor: "#253c85",
+          border: "transparent",
+          borderRadius: "0px 20px 20px 0px",
+          color: "white",
+        },
       }}
     >
-      <List className={styles.list}>
-        <ListItem key="logo" className={styles.navbar}>
-          <div className={styles.icon}>
-            <div className={styles.border}>
-              <Icon type="sundayfriendslogo" className={styles.SFlogo} />
+      <List className={styles["list"]}>
+        <ListItem key="logo" className={styles["navbar"]}>
+          <div className={styles["icon"]}>
+            <div className={styles["border"]}>
+              <Icon type="sundayfriendslogo" className={styles["SFlogo"]} />
             </div>
           </div>
         </ListItem>
@@ -30,10 +40,10 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push("/users");
           }}
-          className={styles.item}
+          className={styles["item"]}
         >
-          <div className={styles.icon}>
-            <Icon type="usersnavicon" className={styles.pageicons} />
+          <div className={styles["icon"]}>
+            <Icon type="usersnavicon" className={styles["pageicons"]} />
           </div>
           <ListItemText
             disableTypography
@@ -47,10 +57,10 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push("/admins");
           }}
-          className={styles.item}
+          className={styles["item"]}
         >
-          <div className={styles.icon}>
-            <Icon type="adminnavicon" className={styles.pageicons} />
+          <div className={styles["icon"]}>
+            <Icon type="adminnavicon" className={styles["pageicons"]} />
           </div>
           <ListItemText
             disableTypography
@@ -64,10 +74,10 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push("/transactions");
           }}
-          className={styles.item}
+          className={styles["item"]}
         >
-          <div className={styles.icon}>
-            <Icon type="transactionsnavicon" className={styles.pageicons} />
+          <div className={styles["icon"]}>
+            <Icon type="transactionsnavicon" className={styles["pageicons"]} />
           </div>
           <ListItemText
             disableTypography
@@ -81,10 +91,10 @@ const SideNavbar: React.FunctionComponent = () => {
           onClick={() => {
             router.push("/inventory");
           }}
-          className={styles.item}
+          className={styles["item"]}
         >
-          <div className={styles.icon}>
-            <Icon type="inventorynavicon" className={styles.pageicons} />
+          <div className={styles["icon"]}>
+            <Icon type="inventorynavicon" className={styles["pageicons"]} />
           </div>
           <ListItemText
             disableTypography
