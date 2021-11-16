@@ -29,22 +29,25 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
 
   const [isSelected, setIsSelected] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [oneEdit, setOneEdit] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   function inLineEdit(field) {
     if (isEdit) {
       return (
-        <div className={styles["selected"]}>
+        <div onClick={() => setIsEdit(false)}>
           <form>
-            <input type="text" value={field.fieldValue} />
+            <input
+              type="text"
+              value={field.fieldValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
           </form>
         </div>
       );
     }
     return (
-      <div
-        className={styles.editState2}
-        // onClick={() => setIsEdit(true)}
-      >
+      <div className={styles["editState2"]}>
         <Typography
           variant="subtitle2"
           color="#131313"
@@ -80,7 +83,9 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
     //     </div>
     //   );
     // }
-
+    // if (isEdit) {
+    //   return {inLineEdit(field)}
+    // }
     if (
       isEditing &&
       (field.fieldName == "NAME" ||
@@ -88,8 +93,8 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
         field.fieldName == "EMAIL" ||
         field.fieldName == "PHONE #")
     ) {
-      if (isEdit) {
-        return <div>{inLineEdit(field)}</div>;
+      if (isSelected) {
+        return inLineEdit(field);
       }
       return (
         <div className={styles["editState1"]}>
@@ -100,7 +105,7 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
           >
             {field.fieldValue}
           </Typography>
-          <IconButton onClick={() => setIsSelected(!isSelected)}>
+          <IconButton onClick={() => setIsSelected(true)}>
             <Icon type="editingpencil" />
           </IconButton>
         </div>
