@@ -3,20 +3,7 @@ import "firebase/firestore";
 import { AdminInvite } from "../../types/schema";
 
 const db = firebaseApp.firestore();
-const adminInvitesCollection = db.collection('admin_invites');
-
-/**
- * Returns the admin data from firestore with the given adminId
- */
-// export const getAdmin = async (adminId: string): Promise<Admin> => {
-//     try {
-//         const doc = await adminInvitesCollection.doc(adminId).get();
-//         return doc.data() as Admin;
-//     } catch (e) {
-//         console.error(e);
-//         throw e;
-//     }
-// }
+const adminInvitesCollection = db.collection("admin_invites");
 
 /**
  * Adds the given admin data to firestore
