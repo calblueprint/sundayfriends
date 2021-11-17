@@ -101,9 +101,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                   <div className={styles["subTitle"]}>Password</div>
                 </div>
                 <div className={styles["aboutInfo"]}>
-                  <div className={styles["infoSpacing"]}>
-                    {user?.family_head ? "Head" : "Member"}
-                  </div>
+                  <div className={styles["infoSpacing"]}>{user?.role}</div>
                   <div className={styles["infoSpacing"]}>{user?.email}</div>
                   <div className={styles["infoSpacing"]}>
                     {user?.phone_number}

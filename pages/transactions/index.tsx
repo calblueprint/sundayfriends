@@ -12,28 +12,16 @@ import {
   Select,
   MenuItem,
   Popover,
-  TextField,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Autocomplete,
 } from "@mui/material";
 import styles from "./Transactions.module.css";
 import { TabPanel } from "../../components/TabPanel/TabPanel";
 import Icon from "../../assets/Icon";
 import { TransactionList } from "../../components/TransactionList/TransactionList";
 import { AddPopover } from "../../components/AddPopover/AddPopover";
-import {
-  getAllTransactions,
-  addTransaction,
-} from "../../firebase/firestore/transaction";
+import { getAllTransactions } from "../../firebase/firestore/transaction";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { User, Transaction, Admin } from "../../types/schema";
-import { NextPage, GetServerSideProps, GetServerSidePropsContext } from "next";
-import { createRouteLoader } from "next/dist/client/route-loader";
+import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { getAdmin } from "../../firebase/firestore/admin";
@@ -62,35 +50,11 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   const refresh = useCallback(() => {
     router.replace(router.asPath);
   }, [router]);
-  
+
   useEffect(() => {
-      console.log(allTransactions)
-      refresh();
-  }, [allTransactions])
-
-//   useEffect(() => {
-//     // if (!props.users || !props.transactions) {
-//     //     return <ErrorPage statusCode={404} />;
-//     //   }
-//     // getAllUsers().then(users => {
-//     //     setUsers(users);
-//     // })
-//     // getAllTransactions().then(items => {
-//     //     setTransactions(items);
-//     // })
-//     // console.log(transactions);
-//     // setTransactions(transactions);
-//     // setUsers(users);
-//   }, []);
-
-  /*
-    added this sleep function because handleClose function set success back to false before the anchor was set to null
-    (meaning that the) popover would switch back to the first page before closing.
-    The sleep makes this look cleaner, but let me know if there is a less hacky fix.
-    */
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
+    console.log(allTransactions);
+    refresh();
+  }, [allTransactions]);
 
   const clickAddButton = (event) => {
     setAddAnchorEl(event.currentTarget);
@@ -100,13 +64,13 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     setAddAnchorEl(null);
   };
 
-    const closeUpload = () => {
-        setUploadAnchorEl(null);
-    };
+  const closeUpload = () => {
+    setUploadAnchorEl(null);
+  };
 
-    const clickUploadButton = (event) => {
-        setUploadAnchorEl(event.currentTarget);
-    };
+  const clickUploadButton = (event) => {
+    setUploadAnchorEl(event.currentTarget);
+  };
  
 const BasicTabs = () => {
        const [value, setValue] = useState(0);
@@ -161,13 +125,15 @@ const BasicTabs = () => {
       );
     };
 
-    const redemptions = (allTransactions!=null ? 
-        allTransactions.filter((transaction) => transaction.point_gain < 0) :
-        transactions.filter((transaction) => transaction.point_gain < 0));
+    const redemptions =
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+        : transactions.filter((transaction) => transaction.point_gain < 0);
 
-    const earnings = (allTransactions!=null ? 
-        allTransactions.filter((transaction) => transaction.point_gain >= 0) :
-        transactions.filter((transaction) => transaction.point_gain >= 0));
+    const earnings =
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+        : transactions.filter((transaction) => transaction.point_gain >= 0);
 
     return (
       <Box className={styles["transaction-container"]}>
@@ -195,7 +161,11 @@ const BasicTabs = () => {
         <TabPanel value={value} index={0}>
           <div>
             {renderFilterHeader()}
-            <TransactionList transactions={allTransactions==null ? transactions : allTransactions} />
+            <TransactionList
+              transactions={
+                allTransactions == null ? transactions : allTransactions
+              }
+            />
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -213,34 +183,7 @@ const BasicTabs = () => {
       </Box>
     );
   };
-
-  const uploadPopoverContent = () => {
-    switch (uploadSuccess) {
-      case true:
-        return <div className={styles["success-div"]}></div>;
-      case false:
-        return (
-          <div className={styles["popover-div"]}>
-            <div className={styles["popover-header"]}>
-              <h3 className={styles["add-title"]}>Upload your file</h3>
-              <div className={styles["x-button"]} onClick={handleUploadClose}>
-                <Icon type={"close"}></Icon>
-              </div>
-            </div>
-            <p className={styles["upload-message"]}>
-              Selected file should be .csv
-            </p>
-            <Button
-              className={styles["confirm-button"]}
-              onClick={handleUploadConfirm}
-            >
-              Upload
-            </Button>
-          </div>
-        );
-    }
-  };
-
+  
   const addOpen = Boolean(addAnchorEl);
   const popoverid = addOpen ? "add-popover" : undefined;
   const uploadOpen = Boolean(uploadAnchorEl);

@@ -294,3 +294,9 @@
 .children {
   margin: 0px;
 }
+
+.upload-message {
+  font-size: 12px;
+  margin: 10px;
+  color: #525454;
+}

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next build && next start",
+    "build:scripts": "tsc --project tsconfig.scripts.json",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -13,6 +14,7 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.1.0",
     "firebase": "^8.2.3",
     "firebase-admin": "^10.0.0",
     "next": "11.1.2",

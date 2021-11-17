@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import styles from "./AddPopover.module.css";
 import {
   Button,
@@ -12,7 +12,10 @@ import {
 } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Transaction, User, Admin } from "../../types/schema";
-import { addTransaction, getAllTransactions } from "../../firebase/firestore/transaction";
+import {
+  addTransaction,
+  getAllTransactions,
+} from "../../firebase/firestore/transaction";
 
 type AddPopoverProps = {
   allUsers: User[];
@@ -29,7 +32,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   closeAdd,
   popoverid,
   currentAdmin,
-  setTransactions
+  setTransactions,
 }: AddPopoverProps) => {
   const [selectedUser, setSelectedUser] = useState("Select User");
   const [addUser, setAddUser] = useState(null);
@@ -38,6 +41,14 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   const [addPoints, setAddPoints] = useState("10");
   const [addType, setAddType] = useState("");
   const [addMessage, setAddMessage] = useState("");
+
+  useEffect(() => {
+    if (addAnchor) {
+      setSuccess(false);
+      setAddUser(null);
+      resetFields();
+    }
+  }, [addAnchor]);
 
   const handleAddConfirm = async () => {
     //handle post request
@@ -52,15 +63,11 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
     };
     await addTransaction(adding as Transaction);
 
-    getAllTransactions().then(items => {
-        setTransactions(items);
-    })
+    getAllTransactions().then((items) => {
+      setTransactions(items);
+    });
 
     setSuccess(true);
-  };
-
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   const selectAutocomplete = (value) => {
@@ -78,14 +85,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   };
 
   const handleAddClose = () => {
-    closeAdd(setSuccess);
-    sleep(1000).then(() => {
-        setSuccess(false);
-    })
-    setAddUser(null);
-    resetFields();
-    
-    
+    closeAdd();
   };
 
   const resetFields = () => {
