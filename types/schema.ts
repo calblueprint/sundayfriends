@@ -26,7 +26,7 @@ export type AdminInvite = {
   email: string;
   full_name: string;
   valid: boolean;
-}
+};
 
 export type User = {
   address: string;
