@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Layout from "../../components/Layout/Layout";
 import {
   Button,
@@ -10,34 +10,70 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Popover,
 } from "@mui/material";
 import styles from "./Transactions.module.css";
 import { TabPanel } from "../../components/TabPanel/TabPanel";
 import Icon from "../../assets/Icon";
 import { TransactionList } from "../../components/TransactionList/TransactionList";
+import { AddPopover } from "../../components/AddPopover/AddPopover";
 import { getAllTransactions } from "../../firebase/firestore/transaction";
-import { getAdmin } from "../../firebase/firestore/admin";
-import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { getAllUsers } from "../../firebase/firestore/user";
+import { User, Transaction, Admin } from "../../types/schema";
 import { GetServerSidePropsContext } from "next";
-import { Admin } from "../../types/schema";
+import { useRouter } from "next/router";
+import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
 
 type TransactionPageProps = {
   currentAdmin: Admin;
+  transactions: Transaction[];
+  users: User[];
 };
 
 const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   currentAdmin,
+  transactions,
+  users,
 }) => {
+  const [addAnchorEl, setAddAnchorEl] = React.useState(null);
+  const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
+  const [allUsers, setUsers] = React.useState(users);
+  const [allTransactions, setTransactions] = React.useState(null);
+
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+
+  const router = useRouter();
+  const refresh = useCallback(() => {
+    router.replace(router.asPath);
+  }, [router]);
+
+  useEffect(() => {
+    console.log(allTransactions);
+    refresh();
+  }, [allTransactions]);
+
+  const clickAddButton = (event) => {
+    setAddAnchorEl(event.currentTarget);
+  };
+
+  const closeAdd = () => {
+    setAddAnchorEl(null);
+  };
+
+  const clickUploadButton = (event) => {
+    setUploadAnchorEl(event.currentTarget);
+  };
+
+  const handleUploadClose = () => {
+    setUploadAnchorEl(null);
+  };
+
+  const handleUploadConfirm = () => {};
+
   const BasicTabs = () => {
     const [value, setValue] = useState(0);
-    const [allTransactions, setTransactions] = useState([]);
-
-    useEffect(() => {
-      getAllTransactions().then((items) => {
-        setTransactions(items);
-      });
-    }, []);
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -89,12 +125,16 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
       );
     };
 
-    const redemptions = allTransactions.filter(
-      (transaction) => transaction.point_gain < 0
-    );
-    const earnings = allTransactions.filter(
-      (transaction) => transaction.point_gain >= 0
-    );
+    const redemptions =
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+        : transactions.filter((transaction) => transaction.point_gain < 0);
+
+    const earnings =
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+        : transactions.filter((transaction) => transaction.point_gain >= 0);
+
     return (
       <Box className={styles["transaction-container"]}>
         <Tabs
@@ -121,7 +161,11 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
         <TabPanel value={value} index={0}>
           <div>
             {renderFilterHeader()}
-            <TransactionList transactions={allTransactions} />
+            <TransactionList
+              transactions={
+                allTransactions == null ? transactions : allTransactions
+              }
+            />
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -140,6 +184,37 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     );
   };
 
+  const uploadPopoverContent = () => {
+    switch (uploadSuccess) {
+      case true:
+        return <div className={styles["success-div"]}></div>;
+      case false:
+        return (
+          <div className={styles["popover-div"]}>
+            <div className={styles["popover-header"]}>
+              <h3 className={styles["add-title"]}>Upload your file</h3>
+              <div className={styles["x-button"]} onClick={handleUploadClose}>
+                <Icon type={"close"}></Icon>
+              </div>
+            </div>
+            <p className={styles["upload-message"]}>
+              Selected file should be .csv
+            </p>
+            <Button
+              className={styles["confirm-button"]}
+              onClick={handleUploadConfirm}
+            >
+              Upload
+            </Button>
+          </div>
+        );
+    }
+  };
+
+  const addOpen = Boolean(addAnchorEl);
+  const popoverid = addOpen ? "add-popover" : undefined;
+  const uploadOpen = Boolean(uploadAnchorEl);
+  const uploadpopoverid = uploadOpen ? "upload-popover" : undefined;
   return (
     <Layout title="Transactions">
       <div className={styles["screen"]}>
@@ -152,15 +227,48 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
             <h2 className={styles["h2"]}>TRANSACTIONS</h2>
           </div>
           <div className={styles["button-container"]}>
-            <Button className={styles["add-button"]}>
+            <Button
+              aria-describedby={popoverid}
+              className={styles["add-button"]}
+              onClick={clickAddButton}
+            >
               <Icon className={styles["add-icon"]} type={"add"}></Icon>
               Add
             </Button>
-            <Button className={styles["upload-button"]}>
+            <Button
+              aria-describedby={uploadpopoverid}
+              className={styles["upload-button"]}
+              onClick={clickUploadButton}
+            >
               <Icon className={styles["add-icon"]} type={"upload"}></Icon>
               Upload
             </Button>
           </div>
+          <AddPopover
+            addAnchor={addAnchorEl}
+            closeAdd={closeAdd}
+            allUsers={allUsers}
+            popoverid={popoverid}
+            currentAdmin={currentAdmin}
+            setTransactions={setTransactions}
+          />
+          <Popover
+            PaperProps={{ className: styles["popover-container"] }}
+            open={uploadOpen}
+            id={uploadpopoverid}
+            anchorEl={uploadAnchorEl}
+            onClose={handleUploadClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            {uploadPopoverContent()}
+          </Popover>
         </div>
         {BasicTabs()}
       </div>
@@ -168,15 +276,21 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   );
 };
 
-// Use SSR to load admins!
+//Use SSR to load admins!
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
+    const users = await getAllUsers();
+    const transactions = await getAllTransactions();
     const cookies = nookies.get(ctx);
     const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
     const adminUid = userToken.uid;
     const adminData = await getAdmin(adminUid);
     return {
-      props: { currentAdmin: adminData },
+      props: {
+        currentAdmin: adminData,
+        users: users,
+        transactions: transactions,
+      },
     };
   } catch (e) {
     console.error(e);

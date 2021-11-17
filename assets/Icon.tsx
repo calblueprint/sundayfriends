@@ -2,32 +2,35 @@ import React from "react";
 import { SvgIcon } from "@mui/material";
 
 export type IconType =
-  | "calendar"
-  | "chevronLeft"
-  | "chevronRight"
-  | "search"
-  | "add"
-  | "upload"
-  | "transaction"
-  | "trash"
-  | "close"
-  | "userAdd"
-  | "settings"
-  | "editpencil"
-  | "nameicon"
-  | "usersicon"
-  | "singleperson"
-  | "lastactive"
-  | "datejoined"
-  | "email"
-  | "phone"
-  | "password"
+   | "calendar"
+   | "chevronLeft"
+   | "chevronRight"
+   | "search"
+   | "add"
+   | "upload"
+   | "transaction"
+   | "trash"
+   | "popoverclose"
+   | "dropTriangle"
+   | "close"
+   | "userAdd"
+   | "settings"
+   | "editpencil"
+   | "nameicon"
+   | "usersicon"
+   | "singleperson"
+   | "lastactive"
+   | "datejoined"
+   | "email"
+   | "phone"
+   | "password"
   | "squareBullet"
   | "edit"
   | "usersnavicon"
   | "adminnavicon"
   | "transactionsnavicon"
   | "inventorynavicon"
+  | "hidepassword"
   | "sundayfriendslogo";
 
 const IconSvgs: Record<IconType, React.ReactElement> = {
@@ -133,12 +136,24 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
       />
     </SvgIcon>
   ),
-  close: (
+  popoverclose: (
     <SvgIcon viewBox="0 0 40 40">
       <path
         d="M17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41L17.59 5Z"
         fill="#2E3A59"
       />
+    </SvgIcon>
+   ),
+   close: (
+    <SvgIcon width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11.5" cy="11.5" r="11.5" fill="#EBEBEB"/>
+        <path d="M9.2002 9.19983L13.8002 13.7998" stroke="#646464" stroke-width="1.15" stroke-linecap="round"/>
+        <path d="M9.2002 13.8003L13.8002 9.20029" stroke="#646464" stroke-width="1.15" stroke-linecap="round"/>
+    </SvgIcon>
+   ),
+   dropTriangle: (
+    <SvgIcon width="9" height="4" viewBox="0 0 9 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 4H9L4.5 0L0 4Z" fill="#646464"/>
     </SvgIcon>
   ),
   userAdd: (
@@ -359,6 +374,14 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
             2.875H2.875V7H11.125V2.875ZM22.125 0.125C23.6438 0.125 24.875 1.35622 24.875 2.875V22.125C24.875 23.6438 23.6438 24.875 22.125 24.875H2.875C1.35622 24.875 0.125 23.6438 0.125 22.125V2.875C0.125 1.35622 1.35622 
             0.125 2.875 0.125H22.125Z"
         fill="white"
+      />
+    </SvgIcon>
+  ),
+  hidepassword: (
+    <SvgIcon viewBox="0 0 12 9">
+      <path
+        d="M5.92 8.28849C4.94905 8.30058 3.98813 8.09103 3.11037 7.67577C2.42998 7.34379 1.81901 6.88532 1.3101 6.32483C0.771039 5.74533 0.346597 5.069 0.0592 4.33157L0 4.14449L0.06216 3.95742C0.349763 3.22064 0.773292 2.54448 1.31069 1.96416C1.81942 1.40372 2.43018 0.945244 3.11037 0.613213C3.98813 0.197978 4.94905 -0.0115769 5.92 0.000493356C6.89095 -0.0115561 7.85186 0.197998 8.72963 0.613213C9.41004 0.945168 10.021 1.40365 10.5299 1.96416C11.07 2.54287 11.4946 3.21941 11.7808 3.95742L11.84 4.14449L11.7778 4.33157C10.8491 6.74917 8.50953 8.32955 5.92 8.28849ZM5.92 1.18449C3.90476 1.12134 2.05508 2.29455 1.25326 4.14449C2.05495 5.99455 3.90471 7.16781 5.92 7.10449C7.9352 7.16748 9.78479 5.99433 10.5867 4.14449C9.78597 2.29365 7.93561 1.12001 5.92 1.18449ZM5.92 5.92049C5.06594 5.92615 4.32715 5.32693 4.15641 4.49009C3.98568 3.65324 4.43069 2.81251 5.21871 2.48314C6.00673 2.15378 6.91766 2.42777 7.39322 3.13721C7.86878 3.84665 7.77614 4.79337 7.17208 5.39717C6.84134 5.7318 6.3905 5.92024 5.92 5.92049Z"
+        fill="#A9A9A9"
       />
     </SvgIcon>
   ),
