@@ -1,5 +1,6 @@
 import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
+import Query from 'firebase/firestore';
 import { Transaction } from "../../types/schema";
 
 const db = firebaseApp.firestore();
@@ -26,7 +27,7 @@ export const getTransaction = async (
 export const getAllTransactions = async (): Promise<Transaction[]> => {
   try {
     // query everything in the transaction collection
-    const allTransactions = await transactionsCollection.get();
+    const allTransactions = await transactionsCollection.orderBy("date", "desc").get();
     const promises: Promise<Transaction>[] = allTransactions.docs.map((doc) =>
       parseTransaction(doc)
     );
