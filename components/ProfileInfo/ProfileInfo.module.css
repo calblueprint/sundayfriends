@@ -4,6 +4,91 @@
   gap: 50px;
 }
 
+.namebar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1%;
+}
+.boxes {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 3%;
+  gap: 5%;
+}
+
+.box {
+  padding: 3%;
+  align-content: space-between;
+  align-items: center;
+  border: 2px solid var(--sapphire-light);
+  border-radius: 25px;
+  width: 100%;
+  background-color: white;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--sapphire);
+  color: white;
+  border-radius: 7px;
+  width: 84px;
+  height: 37px;
+  font-size: 14px;
+  margin-right: 20px;
+  text-transform: none;
+}
+
+.editingButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+}
+
+.cancelButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 11px;
+  width: 93px;
+  height: 37px;
+  background-color: white;
+  color: var(--grey-dark);
+  border: 1.3px solid #525454;
+  box-sizing: border-box;
+  border-radius: 7px;
+  text-transform: none;
+}
+
+.saveButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 11px;
+  position: static;
+  width: 88px;
+  height: 37px;
+  color: var(--sapphire-light);
+  background-color: #a9a9a9;
+  border-radius: 7px;
+  text-transform: none;
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .values {
   display: flex;
   flex-direction: column;
@@ -32,18 +117,6 @@
   width: 40%;
 }
 
-.editing {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  justify-content: space-between;
-  width: 60%;
-  height: 37px;
-  background-color: red;
-  border-radius: 5px;
-}
-
 .editState1 {
   display: flex;
   flex-direction: row;
@@ -67,6 +140,7 @@
 }
 
 .edit {
+  width: 100px;
   border-radius: 5px;
 }
 
