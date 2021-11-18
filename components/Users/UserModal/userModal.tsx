@@ -65,7 +65,17 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
       if (phoneNumber != user?.phone_number && phoneNumber != undefined) {
         newData["phone_number"] = phoneNumber;
       }
-      await updateUser(user.user_id, newData);
+      const userUid = user.user_id;
+      const res = await fetch("api/auth/updateUser", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          userUid,
+          newData
+        })
+      });
+      //await updateUser(user.user_id, newData);
       const updatedUser = await getUser(user.user_id);
       setCurrUser(updatedUser);
       setError("");

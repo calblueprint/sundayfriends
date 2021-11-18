@@ -2,6 +2,8 @@ import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Transaction, User } from "../../types/schema";
 import { getTransactionByUser } from "./transaction";
+import firebaseAdmin from "../firebaseAdmin";
+import { UserRecord } from "firebase-admin/lib/auth/user-record";
 
 const db = firebaseApp.firestore();
 const userCollection = db.collection("users");
@@ -23,11 +25,12 @@ export const getUser = async (userId: string): Promise<User> => {
 /**
  * Updates the user data from firestore with the given userId
  */
-export const updateUser = async (userId: string, newData): Promise<void> => {
+export const updateUser = async (userId: string, newData): Promise<UserRecord> => {
   try {
     const trimedId = userId.toString().replace(/\s/g, "");
     await userCollection.doc(trimedId).update(newData);
-    // const userToken = await firebaseAdmin.auth().updateUser(trimedId, newData);
+    const userRecord = await firebaseAdmin.auth().updateUser(trimedId, newData);
+    return userRecord;
   } catch (e) {
     console.error(e);
     throw e;
