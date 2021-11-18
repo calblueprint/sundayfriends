@@ -23,6 +23,20 @@ export const getAllFamilies = async (): Promise<Family[]> => {
   }
 };
 
+/**
+ * Returns a family from firestore by ID
+ */
+export const getFamilyById = async (FID: string): Promise<Family> => {
+  try {
+    const family = await familyCollection.doc(FID).get();
+    console.log("backend", await parseFamily(family));
+    return await parseFamily(family);
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
 const parseFamily = async (doc) => {
   const family_id = doc.id as string;
   const data = doc.data();

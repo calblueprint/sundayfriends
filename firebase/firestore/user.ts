@@ -21,13 +21,13 @@ export const getUser = async (userId: string): Promise<User> => {
 };
 
 /**
-<<<<<<< HEAD
  * Updates the user data from firestore with the given userId
  */
 export const updateUser = async (userId: string, newData): Promise<void> => {
   try {
     const trimedId = userId.toString().replace(/\s/g, "");
     await userCollection.doc(trimedId).update(newData);
+    // const userToken = await firebaseAdmin.auth().updateUser(trimedId, newData);
   } catch (e) {
     console.error(e);
     throw e;
@@ -35,14 +35,12 @@ export const updateUser = async (userId: string, newData): Promise<void> => {
 };
 
 /**
-=======
->>>>>>> bd1b6da30601222d83d4abb493036c1815b4597c
  * Returns all the users from firestore
  */
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const allFamilies = await userCollection.get();
-    const promises: Promise<User>[] = allFamilies.docs.map((doc) =>
+    const allUsers = await userCollection.get();
+    const promises: Promise<User>[] = allUsers.docs.map((doc) =>
       parseUser(doc)
     );
     const users = await Promise.all(promises);
@@ -58,13 +56,10 @@ export const getAllUsers = async (): Promise<User[]> => {
  */
 export const getUsersSearch = async (searchQ: string): Promise<User[]> => {
   try {
-    const end = "b".replace(/.$/, (c) =>
-      String.fromCharCode(c.charCodeAt(0) + 1)
-    );
     const promises: Promise<User>[] = [];
     await userCollection
-      .where("full_name", ">=", "b")
-      .where("full_name", "<=", end)
+      .where("name", ">=", searchQ)
+      .where("name", "<=", searchQ + "\uf8ff")
       .get()
       .then((doc) => {
         doc.forEach((item) => promises.push(parseUser(item)));
@@ -81,15 +76,16 @@ export const getUsersSearch = async (searchQ: string): Promise<User[]> => {
 /**
  * Returns the users from firestore by role
  */
-export const getUsersByRole = async (role: string): Promise<User[]> => {
+export const getFilteredUsers = async (role: string): Promise<User[]> => {
   try {
     const promises: Promise<User>[] = [];
-    await userCollection
-      .where("role", "==", role)
-      .get()
-      .then((doc) => {
-        doc.forEach((item) => promises.push(parseUser(item)));
-      });
+    var query: any = userCollection;
+    if (role && role !== "All Roles") {
+      query = query.where("role", "==", role);
+    }
+    await query.get().then((doc) => {
+      doc.forEach((item) => promises.push(parseUser(item)));
+    });
     const users = await Promise.all(promises);
     console.log("backend", users);
     return users;

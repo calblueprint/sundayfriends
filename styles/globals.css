@@ -12,6 +12,7 @@ h2 {
   font-size: 24px;
   line-height: 29.72px;
   letter-spacing: 1px;
+  color: var(--sapphire);
 }
 
 h4 {

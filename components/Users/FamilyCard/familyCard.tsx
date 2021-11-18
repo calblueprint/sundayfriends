@@ -7,10 +7,12 @@ import FamilyModal from "../FamilyModal/familyModal";
 
 type FamilyCardProps = {
   family: Family;
+  refresh: () => void;
 };
 
 type FamilyCardsProps = {
   families: Family[];
+  refresh: () => void;
 };
 
 type FamilyMemberProps = {
@@ -32,11 +34,17 @@ const FamilyMember: React.FC<FamilyMemberProps> = ({
 
 const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
   family,
+  refresh,
 }: FamilyCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
-      <FamilyModal family={family} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <FamilyModal
+        family={family}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        refresh={refresh}
+      />
       <Box className={styles["card"]} onClick={() => setIsOpen(true)}>
         <div>
           <div className={styles["row"]}>
@@ -59,11 +67,16 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
 
 const FamilyCards: React.FunctionComponent<FamilyCardsProps> = ({
   families,
+  refresh,
 }: FamilyCardsProps) => {
   return (
     <div className={styles["familyCards"]}>
       {families.map((family) => (
-        <FamilyCard key={family.family_id} family={family}></FamilyCard>
+        <FamilyCard
+          key={family.family_id}
+          family={family}
+          refresh={refresh}
+        ></FamilyCard>
       ))}
     </div>
   );

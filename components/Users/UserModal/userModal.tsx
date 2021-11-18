@@ -7,6 +7,7 @@ import { SortTriangles } from "../../../components/SortTriangles/SortTriangles";
 import itemstyles from "../../../components/TransactionItem/TransactionItem.module.css";
 import React, { useState, useEffect } from "react";
 import { getUser, updateUser } from "../../../firebase/firestore/user";
+import firebaseAdmin from "../../../firebase/firebaseAdmin";
 
 type UserModalProps = {
   family?: Family;
@@ -15,6 +16,8 @@ type UserModalProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isFamilyPath: boolean;
   setIsOpenFam: React.Dispatch<React.SetStateAction<boolean>>;
+  setEdited?: React.Dispatch<React.SetStateAction<boolean>>;
+  refresh?: () => void;
 };
 
 const UserModal: React.FunctionComponent<UserModalProps> = ({
@@ -24,6 +27,8 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
   setIsOpen,
   isFamilyPath,
   setIsOpenFam,
+  setEdited,
+  refresh,
 }: UserModalProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currUser, setCurrUser] = useState(user);
@@ -67,10 +72,15 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
       setIsEditing(false);
     } catch (err) {
       setError(err.message);
+    } finally {
+      if (setEdited) {
+        setEdited(true);
+      }
+      refresh();
     }
   }
   return (
-    <Modal open={isOpen}>
+    <Modal open={isOpen} hideBackdrop={isFamilyPath ? true : false}>
       <div className={styles["modal"]}>
         <div
           className={
@@ -158,23 +168,14 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                   )}
                 </div>
                 <div className={styles["aboutInfoContainer"]}>
-                  <div className={styles["squareBullet"]}>
+                  <div className={styles["icons"]}>
                     <Icon
-                      className={styles["iconSpacing"]}
-                      type={"squareBullet"}
+                      className={styles["nameIconSpacing"]}
+                      type={"nameicon"}
                     />
-                    <Icon
-                      className={styles["iconSpacing"]}
-                      type={"squareBullet"}
-                    />
-                    <Icon
-                      className={styles["iconSpacing"]}
-                      type={"squareBullet"}
-                    />
-                    <Icon
-                      className={styles["iconSpacing"]}
-                      type={"squareBullet"}
-                    />
+                    <Icon className={styles["iconSpacing"]} type={"email"} />
+                    <Icon className={styles["iconSpacing"]} type={"phone"} />
+                    <Icon className={styles["iconSpacing"]} type={"password"} />
                   </div>
                   <div className={styles["aboutInfo"]}>
                     <div className={styles["subTitle"]}>Role</div>
@@ -182,67 +183,88 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                     <div className={styles["subTitle"]}>Phone</div>
                     <div className={styles["subTitle"]}>Password</div>
                   </div>
-                  {isEditing ? (
-                    <div className={styles["aboutInfoEditing"]}>
-                      <div className={styles["editSection"]}>
-                        <input
-                          className={styles["editTitle"]}
-                          defaultValue={currUser ? currUser.role : user?.role}
-                          onChange={(e) => setRole(e.target.value)}
-                        />
-                        <Icon
-                          className={styles["inLineEditIcon"]}
-                          type={"edit"}
-                        />
+                  <div className={styles["aboutInfoEditing"]}>
+                    {isEditing ? (
+                      <div>
+                        <div className={styles["editSection"]}>
+                          <input
+                            className={styles["editTitle"]}
+                            defaultValue={currUser ? currUser.role : user?.role}
+                            onChange={(e) => setRole(e.target.value)}
+                          />
+                          <Icon
+                            className={styles["inLineEditIcon"]}
+                            type={"edit"}
+                          />
+                        </div>
+                        <div className={styles["editSection"]}>
+                          <input
+                            className={styles["editTitle"]}
+                            defaultValue={
+                              currUser ? currUser.email : user?.email
+                            }
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                          <Icon
+                            className={styles["inLineEditIcon"]}
+                            type={"edit"}
+                          />
+                        </div>
+                        <div className={styles["editSection"]}>
+                          <input
+                            className={styles["editTitle"]}
+                            defaultValue={
+                              currUser
+                                ? currUser.phone_number
+                                : user?.phone_number
+                            }
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                          />
+                          <Icon
+                            className={styles["inLineEditIcon"]}
+                            type={"edit"}
+                          />
+                        </div>
+                        <div className={styles["infoSpacing"]}>
+                          <input
+                            className={styles["password"]}
+                            value="password"
+                            type="text"
+                          />
+                          <div className={styles["passwordButton"]}>
+                            <Icon
+                              className={styles["resetIcon"]}
+                              type={"hidepassword"}
+                            />
+                            <a className={styles["resetText"]}>
+                              Reset Password
+                            </a>
+                          </div>
+                        </div>
                       </div>
-                      <div className={styles["editSection"]}>
-                        <input
-                          className={styles["editTitle"]}
-                          defaultValue={currUser ? currUser.email : user?.email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <Icon
-                          className={styles["inLineEditIcon"]}
-                          type={"edit"}
-                        />
+                    ) : (
+                      <div>
+                        <div className={styles["infoSpacing"]}>
+                          {currUser ? currUser.role : user?.role}
+                        </div>
+                        <div className={styles["infoSpacing"]}>
+                          {currUser ? currUser.email : user?.email}
+                        </div>
+                        <div className={styles["infoSpacing"]}>
+                          {currUser
+                            ? currUser.phone_number
+                            : user?.phone_number}
+                        </div>
+                        <div className={styles["infoSpacing"]}>
+                          <input
+                            className={styles["password"]}
+                            value="password"
+                            type="password"
+                          />
+                        </div>
                       </div>
-                      <div className={styles["editSection"]}>
-                        <input
-                          className={styles["editTitle"]}
-                          defaultValue={
-                            currUser
-                              ? currUser.phone_number
-                              : user?.phone_number
-                          }
-                          onChange={(e) => setPhoneNumber(e.target.value)}
-                        />
-                        <Icon
-                          className={styles["inLineEditIcon"]}
-                          type={"edit"}
-                        />
-                      </div>
-                      <div className={styles["editSection"]}>
-                        <input
-                          className={styles["editTitle"]}
-                          type="password"
-                          defaultValue="password"
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className={styles["aboutInfo"]}>
-                      <div className={styles["infoSpacing"]}>
-                        {currUser ? currUser.role : user?.role}
-                      </div>
-                      <div className={styles["infoSpacing"]}>
-                        {currUser ? currUser.email : user?.email}
-                      </div>
-                      <div className={styles["infoSpacing"]}>
-                        {currUser ? currUser.phone_number : user?.phone_number}
-                      </div>
-                      <div className={styles["infoSpacing"]}>password</div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
                 <div className={styles["errorTitle"]}>
                   {error != "" ? error : ""}

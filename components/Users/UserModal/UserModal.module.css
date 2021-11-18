@@ -53,24 +53,33 @@
   width: 100%;
 }
 
-.squareBullet {
+.icons {
   display: flex;
   flex-direction: column;
   padding-right: 10px;
   padding-top: 1px;
+  margin-right: 7px;
 }
 
 .infoSpacing {
   margin-bottom: 4px;
   padding-top: 2px;
   padding-bottom: 3px;
+  display: flex;
+  place-items: center;
 }
 
 .iconSpacing {
-  margin-top: 2px;
+  width: 17px;
+  height: 17px;
+  margin-top: 5px;
+  margin-bottom: 11px;
+}
+
+.nameIconSpacing {
+  width: 22px;
+  height: 22px;
   margin-bottom: 6px;
-  padding-top: 2px;
-  padding-bottom: 3px;
 }
 
 .familyName {
@@ -150,7 +159,7 @@
   padding-bottom: 3px;
   width: 100%;
   background-color: var(--grey-light);
-  padding-left: 10px;
+  padding-left: 5px;
   border-radius: 10px;
   margin-right: 10px;
 }
@@ -187,7 +196,7 @@
 }
 
 .transactionBox {
-  height: 200px;
+  height: 175px;
   overflow: scroll;
 }
 
@@ -201,6 +210,7 @@
   width: 20px;
   height: 20px;
   fill: var(--grey-mid);
+  margin-top: 5px;
 }
 
 .editSection {
@@ -342,4 +352,36 @@
 
 .modalAbout {
   width: 100%;
+}
+
+.password {
+  font-family: Avenir;
+  font-size: medium;
+  border: 0px;
+  width: 15%;
+}
+
+.hideIcon {
+  height: 20px;
+  width: 20px;
+  fill: var(--grey-mid);
+}
+
+.resetIcon {
+  height: 15px;
+  width: 15px;
+  fill: var(--grey-mid);
+}
+
+.passwordButton {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--grey-mid);
+}
+
+.resetText {
+  font-size: small;
 }

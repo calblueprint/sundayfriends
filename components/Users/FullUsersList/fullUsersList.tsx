@@ -11,19 +11,20 @@ import styles from "./FullUsersList.module.css";
 import { User } from "../../../types/schema";
 import UsersList from "../UsersList/usersList";
 import Icon from "../../../assets/Icon";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-  getAllUsers,
-  getUsersByRole,
+  getFilteredUsers,
   getUsersSearch,
 } from "../../../firebase/firestore/user";
 
 type FullUsersListProps = {
   users: User[];
+  refresh: () => void;
 };
 
 const FullUsersList: React.FC<FullUsersListProps> = ({
   users,
+  refresh,
 }: FullUsersListProps) => {
   const [searchQ, setSearchQ] = useState("");
   const [filterRole, setFilterRole] = useState();
@@ -33,29 +34,19 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
     setFilterRole(event.target.value);
   };
 
-  useEffect(() => {
-    console.log(searchQ);
-    console.log(filterRole);
-    const getUsersQ = async () => {
-      if (filterRole) {
-        if (filterRole == "All Roles") {
-          const data = await getAllUsers();
-          setNewUsers(data);
-        } else {
-          const data = await getUsersByRole(filterRole);
-          setNewUsers(data);
-          console.log(data);
-        }
-      }
-      if (searchQ != "") {
-        const data = await getUsersSearch(searchQ);
-        console.log(data);
-      }
-    };
-    getUsersQ();
-  }, [searchQ, filterRole]);
+  const applyFilters = async () => {
+    if (filterRole) {
+      const data = await getFilteredUsers(filterRole);
+      setNewUsers(data);
+      console.log(data);
+    }
+    if (searchQ != "") {
+      const data = await getUsersSearch(searchQ);
+      console.log(data);
+    }
+  };
   return (
-    <div>
+    <div className={styles["pageContainer"]}>
       <div className={styles["filters"]}>
         <div>
           <FormControl className={styles["filter-select"]} size="small">
@@ -76,30 +67,9 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
               <MenuItem value={"Child"}>Child</MenuItem>
             </Select>
           </FormControl>
-          <FormControl className={styles["filter-select"]} size="small">
-            <InputLabel className={styles["filter-label"]}>
-              All Users
-            </InputLabel>
-            <Select
-              variant="outlined"
-              className={styles["select"]}
-              label="All Roles"
-            >
-              <MenuItem>Some Users</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={styles["filter-select"]} size="small">
-            <InputLabel className={styles["filter-label"]}>Sort By</InputLabel>
-            <Select
-              variant="outlined"
-              className={styles["select"]}
-              label="All Roles"
-            >
-              <MenuItem>A-Z</MenuItem>
-              <MenuItem>Z-A</MenuItem>
-            </Select>
-          </FormControl>
-          <Button className={styles["applyButton"]}>Apply</Button>
+          <Button className={styles["applyButton"]} onClick={applyFilters}>
+            Apply
+          </Button>
         </div>
         <div className={styles["searchNav"]}>
           <Input
@@ -121,7 +91,11 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
         </div>
       </div>
       <div className={styles["container"]}>
-        <UsersList users={newUsers ? newUsers : users} isFamilyPath={false} />
+        <UsersList
+          users={newUsers ? newUsers : users}
+          isFamilyPath={false}
+          refresh={refresh}
+        />
       </div>
     </div>
   );
