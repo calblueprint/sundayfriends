@@ -20,7 +20,6 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
   loginInfo,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-
   function editbuttons() {
     if (isEditing) {
       return (
@@ -39,6 +38,7 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
             className={styles["saveButton"]}
             startIcon={<Icon type="smallCheck" />}
             onClick={() => setIsEditing(false)}
+
             //onclick, save state and changes
           >
             Save
@@ -74,11 +74,12 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
             variant="filled"
             size="small"
           /> */}
-          <form className={styles["edit"]}>
+          <form>
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
+              className={styles["edit"]}
             />
           </form>
         </div>

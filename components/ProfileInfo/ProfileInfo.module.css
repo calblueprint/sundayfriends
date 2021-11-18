@@ -140,12 +140,16 @@
 }
 
 .edit {
-  width: 100px;
+  padding: 9px 10px;
+  width: 282px;
+  height: 37px;
   border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-color: white;
 }
 
 .text {
-  margin: 15px;
+  padding: 9px 10px;
 }
 
 .h2 {
