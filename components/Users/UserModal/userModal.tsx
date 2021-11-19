@@ -65,14 +65,14 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
         newData["phone_number"] = phoneNumber;
       }
       const userUid = user.user_id;
-      const res = await fetch(`/api/auth/updateUser`, {
+      const res = await fetch("/api/auth/updateUser", {
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           userUID: userUid,
-          userData: newData
-        })
+          userData: newData,
+        }),
       });
       const updatedUser = await getUser(user.user_id);
       setCurrUser(updatedUser);
