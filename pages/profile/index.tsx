@@ -6,7 +6,7 @@ import { GetServerSidePropsContext } from "next";
 import { Admin } from "../../types/schema";
 import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
-import Button from "@mui/material/Button";
+
 import {
   ProfileInfo,
   FieldInfo,
@@ -23,7 +23,7 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
       {
         iconName: "nameicon",
         fieldName: "NAME",
-        fieldValue: "Cindy Zhang",
+        fieldValue: "Cindo Zhang",
       },
       {
         iconName: "singleperson",
