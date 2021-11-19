@@ -79,21 +79,22 @@ export const InviteAdminModal: React.FunctionComponent = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
+  } = useForm();
+  // useForm({
+  //   resolver: yupResolver(validationSchema),
+  // });
 
   const onSubmit = (data) => {
-    // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
+    alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
     data["invite"].map((inv) => {
       const invite: AdminInvite = {
         email: inv.email,
         full_name: inv.name,
         valid: true,
       };
-      addAdminInvite(invite);
+      // addAdminInvite(invite);
       const templateParams = { email: inv.email, name: inv.name };
-      sendEmail(templateParams);
+      // sendEmail(templateParams);
     });
     reset();
     setCount(1);
@@ -147,9 +148,12 @@ export const InviteAdminModal: React.FunctionComponent = () => {
                       className={styles["text"]}
                       {...register("invite." + i + ".name", {
                         required: true,
-                        maxLength: 5,
                       })}
                     />
+                    {errors.invite?.[i]?.name &&
+                      errors.invite?.[i]?.name.type === "required" && (
+                        <p>hello</p>
+                      )}
                   </div>
                   <div className={styles["col"]}>
                     <TextField
@@ -162,8 +166,14 @@ export const InviteAdminModal: React.FunctionComponent = () => {
                       type="text"
                       variant="standard"
                       className={styles["text"]}
-                      {...register("invite." + i + ".email")}
+                      {...register("invite." + i + ".email", {
+                        required: true,
+                      })}
                     />
+                    {errors.invite?.[i]?.email &&
+                      errors.invite?.[i]?.email.type === "required" && (
+                        <p>hello</p>
+                      )}
                   </div>
 
                   {i != 0 && (
@@ -267,8 +277,8 @@ export const InviteAdminModal: React.FunctionComponent = () => {
               count > 3
                 ? styles["biggestModal"]
                 : count < 3
-                ? styles["modal"]
-                : styles["biggerModal"],
+                  ? styles["modal"]
+                  : styles["biggerModal"],
           }}
           maxWidth="md"
           fullWidth={true}
