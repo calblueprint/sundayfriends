@@ -6,8 +6,7 @@ import { TransactionItem } from "../../TransactionItem/TransactionItem";
 import { SortTriangles } from "../../../components/SortTriangles/SortTriangles";
 import itemstyles from "../../../components/TransactionItem/TransactionItem.module.css";
 import React, { useState, useEffect } from "react";
-import { getUser, updateUser } from "../../../firebase/firestore/user";
-import firebaseAdmin from "../../../firebase/firebaseAdmin";
+import { getUser } from "../../../firebase/firestore/user";
 
 type UserModalProps = {
   family?: Family;
@@ -66,16 +65,15 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
         newData["phone_number"] = phoneNumber;
       }
       const userUid = user.user_id;
-      const res = await fetch("api/auth/updateUser", {
+      const res = await fetch(`/api/auth/updateUser`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
-          userUid,
-          newData
+          userUID: userUid,
+          userData: newData
         })
       });
-      //await updateUser(user.user_id, newData);
       const updatedUser = await getUser(user.user_id);
       setCurrUser(updatedUser);
       setError("");

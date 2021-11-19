@@ -29,7 +29,7 @@ export const getAllFamilies = async (): Promise<Family[]> => {
 export const getFamilyById = async (FID: string): Promise<Family> => {
   try {
     const family = await familyCollection.doc(FID).get();
-    console.log("backend", await parseFamily(family));
+    //console.log("backend", await parseFamily(family));
     return await parseFamily(family);
   } catch (e) {
     console.warn(e);

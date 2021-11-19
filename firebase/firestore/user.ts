@@ -2,8 +2,6 @@ import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Transaction, User } from "../../types/schema";
 import { getTransactionByUser } from "./transaction";
-import firebaseAdmin from "../firebaseAdmin";
-import { UserRecord } from "firebase-admin/lib/auth/user-record";
 
 const db = firebaseApp.firestore();
 const userCollection = db.collection("users");
@@ -16,21 +14,6 @@ export const getUser = async (userId: string): Promise<User> => {
     const trimedId = userId.toString().replace(/\s/g, "");
     const doc = await userCollection.doc(trimedId).get();
     return parseUser(doc);
-  } catch (e) {
-    console.error(e);
-    throw e;
-  }
-};
-
-/**
- * Updates the user data from firestore with the given userId
- */
-export const updateUser = async (userId: string, newData): Promise<UserRecord> => {
-  try {
-    const trimedId = userId.toString().replace(/\s/g, "");
-    await userCollection.doc(trimedId).update(newData);
-    const userRecord = await firebaseAdmin.auth().updateUser(trimedId, newData);
-    return userRecord;
   } catch (e) {
     console.error(e);
     throw e;
@@ -68,7 +51,7 @@ export const getUsersSearch = async (searchQ: string): Promise<User[]> => {
         doc.forEach((item) => promises.push(parseUser(item)));
       });
     const users = await Promise.all(promises);
-    console.log("backend", users, searchQ);
+    //console.log("backend", users, searchQ);
     return users;
   } catch (e) {
     console.warn(e);
@@ -90,7 +73,7 @@ export const getFilteredUsers = async (role: string): Promise<User[]> => {
       doc.forEach((item) => promises.push(parseUser(item)));
     });
     const users = await Promise.all(promises);
-    console.log("backend", users);
+    //console.log("backend", users);
     return users;
   } catch (e) {
     console.warn(e);
