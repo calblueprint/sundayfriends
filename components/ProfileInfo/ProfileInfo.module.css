@@ -83,6 +83,21 @@
   text-transform: none;
 }
 
+.saveChanges {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 11px;
+  position: static;
+  width: 88px;
+  height: 37px;
+  color: var(--sapphire-light);
+  background-color: #a9a9a9;
+  border-radius: 7px;
+  text-transform: none;
+}
+
 .icon {
   display: flex;
   justify-content: center;
