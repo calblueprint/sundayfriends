@@ -43,7 +43,7 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
         </TableCell>
       )}
       <TableCell className={`${styles["tableRow"]} ${styles["role"]}`}>
-        {user.family_head ? "Head" : "Member"}
+        {user.role}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["email"]}`}>
         {user.email}
@@ -52,20 +52,22 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
         {user.points}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["lastActive"]}`}>
-        {user.last_active.toLocaleString().split(",")[0]}
+        {user.last_active}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["manage"]}`}>
-        <Button className={styles["button"]}>Delete</Button>
-        <Button className={styles["button"]}>Suspend</Button>
-        <Button
-          className={styles["viewButton"]}
-          onClick={() => {
-            setIsOpen(true);
-            setUser(user);
-          }}
-        >
-          View
-        </Button>
+        <div>
+          <Button className={styles["button"]}>Delete</Button>
+          <Button className={styles["button"]}>Suspend</Button>
+          <Button
+            className={styles["viewButton"]}
+            onClick={() => {
+              setIsOpen(true);
+              setUser(user);
+            }}
+          >
+            View
+          </Button>
+        </div>
       </TableCell>
     </TableRow>
   );

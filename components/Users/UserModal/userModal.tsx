@@ -5,8 +5,7 @@ import Icon from "../../../assets/Icon";
 import { TransactionItem } from "../../TransactionItem/TransactionItem";
 import { SortTriangles } from "../../../components/SortTriangles/SortTriangles";
 import itemstyles from "../../../components/TransactionItem/TransactionItem.module.css";
-import { getAllTransactions } from "../../../firebase/firestore/transaction";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 type UserModalProps = {
   family?: Family;
@@ -25,13 +24,6 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
   isFamilyPath,
   setIsOpenFam,
 }: UserModalProps) => {
-  const [allTransactions, setTransactions] = useState([]);
-
-  useEffect(() => {
-    getAllTransactions().then((items) => {
-      setTransactions(items);
-    });
-  }, []);
   return (
     <Modal open={isOpen}>
       <div className={styles["modal"]}>
@@ -51,7 +43,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
               <button className={styles["navButton"]}>
                 <Icon className={styles["chevron"]} type={"chevronRight"} />
               </button>
-              {family.familyName} Family / {user?.full_name}
+              {family.family_name} Family / {user?.full_name}
             </div>
           ) : null}
           <button
@@ -109,11 +101,11 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                   <div className={styles["subTitle"]}>Password</div>
                 </div>
                 <div className={styles["aboutInfo"]}>
-                  <div className={styles["infoSpacing"]}>
-                    {user?.family_head ? "Head" : "Member"}
-                  </div>
+                  <div className={styles["infoSpacing"]}>{user?.role}</div>
                   <div className={styles["infoSpacing"]}>{user?.email}</div>
-                  <div className={styles["infoSpacing"]}>{user?.address}</div>
+                  <div className={styles["infoSpacing"]}>
+                    {user?.phone_number}
+                  </div>
                   <div className={styles["infoSpacing"]}>password</div>
                 </div>
               </div>
@@ -153,38 +145,43 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
             }
           />
         </div>
-        <div className={styles["sectionHeader"]}>
-          <div className={itemstyles["dateV2"]} id={styles["category"]}>
-            <body id={styles["categoryText"]}>Date</body>
-            <SortTriangles />
+        <div className={styles["transactionConatiner"]}>
+          <div className={styles["sectionHeader"]}>
+            <div className={itemstyles["dateV2"]} id={styles["category"]}>
+              <body id={styles["categoryText"]}>Date</body>
+              <SortTriangles />
+            </div>
+            <div className={itemstyles["adminV2"]} id={styles["category"]}>
+              <body id={styles["categoryText"]}>Admin</body>
+              <SortTriangles />
+            </div>
+            <div className={itemstyles["actionV2"]} id={styles["category"]}>
+              <body id={styles["categoryText"]}>Action</body>
+              <SortTriangles />
+            </div>
+            <div
+              className={itemstyles["messageV2"]}
+              id={styles["categoryText"]}
+            >
+              Message
+            </div>
+            <div id={styles["categoryText"]}>Change</div>
           </div>
-          <div className={itemstyles["adminV2"]} id={styles["category"]}>
-            <body id={styles["categoryText"]}>Admin</body>
-            <SortTriangles />
+          <div className={styles["transactionBox"]}>
+            <List className={styles["list"]}>
+              {user?.transactions.map((transaction) => {
+                return (
+                  <TransactionItem
+                    key={transaction.user_name}
+                    date={transaction.date}
+                    adminName={transaction.admin_name}
+                    message={transaction.description}
+                    change={transaction.point_gain}
+                  />
+                );
+              })}
+            </List>
           </div>
-          <div className={itemstyles["actionV2"]} id={styles["category"]}>
-            <body id={styles["categoryText"]}>Action</body>
-            <SortTriangles />
-          </div>
-          <div className={itemstyles["messageV2"]} id={styles["categoryText"]}>
-            Message
-          </div>
-          <div id={styles["categoryText"]}>Change</div>
-        </div>
-        <div className={styles["transactionBox"]}>
-          <List className={styles["list"]}>
-            {allTransactions.map((transaction) => {
-              return (
-                <TransactionItem
-                  key={transaction.user_name}
-                  date={transaction.date}
-                  adminName={transaction.admin_name}
-                  message={transaction.description}
-                  change={transaction.point_gain}
-                />
-              );
-            })}
-          </List>
         </div>
       </div>
     </Modal>

@@ -5,19 +5,25 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next build && next start",
+    "build:scripts": "tsc --project tsconfig.scripts.json",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/core": "^7.15.8",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.1.0",
     "firebase": "^8.2.3",
+    "firebase-admin": "^10.0.0",
     "next": "11.1.2",
+    "nookies": "^2.5.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-firebase-hooks": "^3.0.4",
-    "react-firebaseui": "^5.0.2"
+    "react-firebaseui": "^5.0.2",
+    "react-hook-form": "^7.18.0"
   },
   "devDependencies": {
     "@types/node": "^16.9.1",

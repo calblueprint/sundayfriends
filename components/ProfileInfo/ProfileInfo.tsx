@@ -20,6 +20,15 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
   loginInfo,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [validSave, setValidSave] = useState(false);
+
+  function canSave(field) {
+    if (field.fieldValue != inputValue) {
+      setValidSave(true);
+      return;
+    }
+  }
+
   function editbuttons() {
     if (isEditing) {
       return (
@@ -35,7 +44,7 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
           </Button>
           <Button
             variant="contained"
-            className={styles["saveButton"]}
+            className={canSave() ? styles["saveChanges"] : styles["saveButton"]}
             startIcon={<Icon type="smallCheck" />}
             onClick={() => setIsEditing(false)}
 
@@ -80,6 +89,7 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className={styles["edit"]}
+              onSubmit
             />
           </form>
         </div>
