@@ -1,0 +1,111 @@
+.signin-container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 25%;
+  margin: 62px 60px 74px 60px;
+  width: 481px;
+}
+
+.box-styling {
+  border: 3px solid var(--sapphire-light);
+  border-radius: 20px;
+  background-color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5%;
+}
+
+.SFlogo {
+  height: 60px;
+  width: 60px;
+  margin-top: 34px;
+  margin-left: 34px;
+}
+
+.page-container {
+  background-color: var(--background);
+  height: 100vh;
+}
+
+.welcome-title {
+  color: var(--sapphire);
+  margin-bottom: 5px;
+  margin-top: 0px;
+}
+
+.title-subtext {
+  color: var(--grey-dark);
+  margin-top: 0px;
+  margin-bottom: 45px;
+}
+
+.email-input-label {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 19px;
+  color: #525454;
+  margin-top: 10px;
+}
+
+.email-input-field {
+  border: none;
+  border-bottom: 2px solid var(--grey-mid);
+  width: 332px;
+  margin-bottom: 10px;
+  line-height: 32px;
+}
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sign-in-button {
+  background: #253c85;
+  border-radius: 7px;
+  color: white;
+  width: 86px;
+  height: 36px;
+}
+
+.sign-in-button:hover {
+  background: #253c85;
+  border-radius: 7px;
+  color: white;
+  width: 86px;
+  height: 36px;
+}
+
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.bottom-row-text {
+  margin-top: 6px;
+}
+
+.activate-now {
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 19px;
+  text-decoration-line: underline;
+  color: var(--sapphire);
+}
+.login-error-message {
+  display: flex;
+  justify-content: end;
+  font-size: 12px;
+  line-height: 16px;
+  color: red;
+  margin-top: 18px;
+}
