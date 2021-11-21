@@ -2,26 +2,28 @@ import React from "react";
 import { SvgIcon } from "@mui/material";
 
 export type IconType =
-  | "calendar"
-  | "chevronLeft"
-  | "chevronRight"
-  | "search"
-  | "add"
-  | "upload"
-  | "transaction"
-  | "trash"
-  | "close"
-  | "userAdd"
-  | "settings"
-  | "editpencil"
-  | "nameicon"
-  | "usersicon"
-  | "singleperson"
-  | "lastactive"
-  | "datejoined"
-  | "email"
-  | "phone"
-  | "password"
+   | "calendar"
+   | "chevronLeft"
+   | "chevronRight"
+   | "search"
+   | "add"
+   | "upload"
+   | "transaction"
+   | "trash"
+   | "popoverclose"
+   | "dropTriangle"
+   | "close"
+   | "userAdd"
+   | "settings"
+   | "editpencil"
+   | "nameicon"
+   | "usersicon"
+   | "singleperson"
+   | "lastactive"
+   | "datejoined"
+   | "email"
+   | "phone"
+   | "password"
   | "squareBullet"
   | "edit"
   | "usersnavicon"
@@ -139,12 +141,24 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
       />
     </SvgIcon>
   ),
-  close: (
+  popoverclose: (
     <SvgIcon viewBox="0 0 40 40">
       <path
         d="M17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41L17.59 5Z"
         fill="#2E3A59"
       />
+    </SvgIcon>
+   ),
+   close: (
+    <SvgIcon width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11.5" cy="11.5" r="11.5" fill="#EBEBEB"/>
+        <path d="M9.2002 9.19983L13.8002 13.7998" stroke="#646464" stroke-width="1.15" stroke-linecap="round"/>
+        <path d="M9.2002 13.8003L13.8002 9.20029" stroke="#646464" stroke-width="1.15" stroke-linecap="round"/>
+    </SvgIcon>
+   ),
+   dropTriangle: (
+    <SvgIcon width="9" height="4" viewBox="0 0 9 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 4H9L4.5 0L0 4Z" fill="#646464"/>
     </SvgIcon>
   ),
   userAdd: (

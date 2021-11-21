@@ -32,7 +32,7 @@ export type User = {
   address: string;
   created_at: Date | Timestamp | string;
   email: string;
-  family_head: boolean;
+  role: string;
   family_id: number;
   full_name: string;
   last_active: Date | Timestamp;

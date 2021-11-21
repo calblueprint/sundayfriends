@@ -121,11 +121,19 @@
 
 .forgot-password {
   display: flex;
-  justify-content: end;
+  justify-content: flex-start;
   font-size: 12px;
   line-height: 16px;
   text-decoration-line: underline;
   color: var(--grey-mid);
+  margin-top: 18px;
+}
+.login-error-message {
+  display: flex;
+  justify-content: end;
+  font-size: 12px;
+  line-height: 16px;
+  color: red;
   margin-top: 18px;
 }
 
