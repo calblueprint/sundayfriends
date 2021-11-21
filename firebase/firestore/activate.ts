@@ -8,9 +8,10 @@ export const checkAdminActivationStatus = async (
   email: string
 ): Promise<boolean> => {
   try {
-    const doc = await adminInvitesCollection.doc(email).get();
+    const doc = await adminInvitesCollection.where("email", "==", [email]);
     console.log(doc);
-    return doc.exists;
+
+    return doc ? true : false;
   } catch (e) {
     console.error(e);
     throw e;

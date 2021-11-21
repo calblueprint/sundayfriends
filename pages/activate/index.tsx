@@ -22,8 +22,6 @@ const ActivateScreen: React.FC = () => {
     try {
       setValid(await checkAdminActivationStatus(data.email));
       console.log(await checkAdminActivationStatus(data.email));
-      console.log(data.email);
-      console.log(valid);
       if (valid) {
         router.push("/register");
       } else if (!valid) {
