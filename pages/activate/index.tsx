@@ -14,17 +14,16 @@ type AdminActivateData = {
 const ActivateScreen: React.FC = () => {
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
-  const [valid, setValid] = useState(false);
   const [errMessage, setErrMessage] = useState(null);
 
   // TODO clear fields after error in submission
   const handleCheckAdminInvite = async (data: AdminActivateData) => {
     try {
-      setValid(await checkAdminActivationStatus(data.email));
-      console.log(await checkAdminActivationStatus(data.email));
-      if (valid) {
+      const validEmail = await checkAdminActivationStatus(data.email);
+      console.log(validEmail);
+      if (validEmail) {
         router.push("/register");
-      } else if (!valid) {
+      } else {
         setErrMessage("Invalid email/password.");
       }
     } catch (e) {
