@@ -35,11 +35,7 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
     };
 
     const sendEmail = async (templateParams) => {
-      await emailjs
-        .send(service_id, template_id, templateParams, user_id)
-        .then((result) => {
-          console.log("SUCCESS!", result.status, result.text);
-        });
+      await emailjs.send(service_id, template_id, templateParams, user_id);
     };
 
     const [invites, setInvites] = useState([0]);
@@ -208,12 +204,7 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
       <div>
         <Dialog
           classes={{
-            paper:
-              count > 3
-                ? styles["biggestModal"]
-                : count < 3
-                ? styles["modal"]
-                : styles["biggerModal"],
+            paper: sent ? styles["successModal"] : styles["modal"],
           }}
           maxWidth="md"
           fullWidth={true}

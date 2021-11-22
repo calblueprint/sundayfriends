@@ -18,7 +18,7 @@
 }
 
 .col {
-  width: 300px;
+  width: 317px;
 }
 
 .box {
@@ -33,27 +33,20 @@
 }
 
 .modal {
+  display: flex;
   border-radius: 20px;
-  height: 435px;
-  width: 750px;
+  max-height: 490px;
+  width: 780px;
   padding-bottom: 2%;
   padding-right: 2%;
   padding-left: 1%;
 }
 
-.biggerModal {
+.successModal {
+  display: flex;
   border-radius: 20px;
-  height: 500px;
-  width: 750px;
-  padding-bottom: 2%;
-  padding-right: 2%;
-  padding-left: 1%;
-}
-
-.biggestModal {
-  border-radius: 20px;
-  height: 560px;
-  width: 750px;
+  height: 490px;
+  width: 780px;
   padding-bottom: 2%;
   padding-right: 2%;
   padding-left: 1%;
@@ -96,6 +89,7 @@
 .text {
   padding-right: 26px;
   margin-right: 26px;
+  width: 300px;
 }
 
 .label {

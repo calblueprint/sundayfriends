@@ -180,25 +180,25 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
 };
 
 // Use SSR to load admins!
-// export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-//   try {
-//     const cookies = nookies.get(ctx);
-//     const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
-//     const adminUid = userToken.uid;
-//     const adminData = await getAdmin(adminUid);
-//     console.log(adminData);
-//     return {
-//       props: { currentAdmin: adminData },
-//     };
-//   } catch (e) {
-//     console.error(e);
-//     return {
-//       redirect: {
-//         permament: false,
-//         destination: "/",
-//       },
-//     };
-//   }
-// };
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  try {
+    const cookies = nookies.get(ctx);
+    const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
+    const adminUid = userToken.uid;
+    const adminData = await getAdmin(adminUid);
+    console.log(adminData);
+    return {
+      props: { currentAdmin: adminData },
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      redirect: {
+        permament: false,
+        destination: "/",
+      },
+    };
+  }
+};
 
 export default AdminPage;
