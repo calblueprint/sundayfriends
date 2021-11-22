@@ -21,7 +21,7 @@ import { AddPopover } from "../../components/AddPopover/AddPopover";
 import { getAllTransactions } from "../../firebase/firestore/transaction";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { User, Transaction, Admin } from "../../types/schema";
-import { GetServerSidePropsContext } from "next";
+import next, { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { getAdmin } from "../../firebase/firestore/admin";
@@ -44,17 +44,95 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   const [allUsers, setUsers] = React.useState(users);
   const [allTransactions, setTransactions] = React.useState(null);
 
-  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const getNextSunday = (date) => {
+    var resultDate = new Date(date);
+    resultDate.setDate(date.getDate() + ((7 - date.getDay()) % 7));
+    return resultDate;
+  };
+
+  const getLastSunday = (date) => {
+    var resultDate = new Date(date);
+    var yesterday = new Date(date - 1);
+    resultDate.setDate(date.getDate() + ((7 - date.getDay()) % 7) - 7);
+    return resultDate;
+  };
+
+  const [prevSunday, setPrevSunday] = useState(getLastSunday(new Date()));
+  const [nextSunday, setNextSunday] = useState(getNextSunday(new Date()));
+  const [weekTransactions, setWeekTransactions] = useState(
+    transactions.filter((item) => {
+      let date = new Date(item.date).getTime();
+      return date >= prevSunday.getTime() && date <= nextSunday.getTime();
+    })
+  );
+  const [value, setValue] = useState(0); // integer state
 
   const router = useRouter();
   const refresh = useCallback(() => {
     router.replace(router.asPath);
   }, [router]);
 
+  const useForceUpdate = () => {
+    return () => setValue((value) => value + 1); // update the state to force render
+  };
+
+  // useEffect(() => {
+  //   filterWeek();
+  // }, [prevSunday, nextSunday]);
+
   useEffect(() => {
-    console.log(allTransactions);
+    console.log(weekTransactions);
     refresh();
-  }, [allTransactions]);
+    useForceUpdate();
+  }, [weekTransactions]);
+
+  const filterWeek = (prev: Date, next: Date) => {
+    console.log(prev);
+    console.log(next);
+    var week =
+      allTransactions != null
+        ? allTransactions.filter((item) => {
+            let date = new Date(item.date).getTime();
+            return date >= prev.getTime() && date <= next.getTime();
+          })
+        : transactions.filter((item) => {
+            let date = new Date(item.date).getTime();
+            return date >= prev.getTime() && date <= next.getTime();
+          });
+    setWeekTransactions(week);
+  };
+
+  const prevWeek = () => {
+    var prev = new Date(
+      prevSunday.getFullYear(),
+      prevSunday.getMonth(),
+      prevSunday.getDate() - 7
+    );
+    var next = new Date(
+      nextSunday.getFullYear(),
+      nextSunday.getMonth(),
+      nextSunday.getDate() - 7
+    );
+    setPrevSunday(prev);
+    setNextSunday(next);
+    filterWeek(prev, next);
+  };
+
+  const nextWeek = () => {
+    var prev = new Date(
+      prevSunday.getFullYear(),
+      prevSunday.getMonth(),
+      prevSunday.getDate() + 7
+    );
+    var next = new Date(
+      nextSunday.getFullYear(),
+      nextSunday.getMonth(),
+      nextSunday.getDate() + 7
+    );
+    setPrevSunday(prev);
+    setNextSunday(next);
+    filterWeek(prev, next);
+  };
 
   const clickAddButton = (event) => {
     setAddAnchorEl(event.currentTarget);
@@ -71,9 +149,9 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   const clickUploadButton = (event) => {
     setUploadAnchorEl(event.currentTarget);
   };
- 
-const BasicTabs = () => {
-       const [value, setValue] = useState(0);
+
+  const BasicTabs = () => {
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -89,29 +167,29 @@ const BasicTabs = () => {
                 type={"calendar"}
               ></Icon>
             </Box>
-            <Box className={styles["date-display"]}>Sep 5 - Sep 12</Box>
-            <Icon
-              className={styles["chevron-left"]}
-              type={"chevronLeft"}
-            ></Icon>
-            <Icon
-              className={styles["chevron-right"]}
-              type={"chevronRight"}
-            ></Icon>
-          </div>
-          <div className={styles["filters"]}>
-            <FormControl className={styles["filter-select"]} size="small">
-              <InputLabel className={styles["filter-label"]}>
-                Filters
-              </InputLabel>
-              <Select
-                variant="outlined"
-                className={styles["select"]}
-                label="Filters"
-              >
-                <MenuItem>Keep it PG</MenuItem>
-              </Select>
-            </FormControl>
+            <Box className={styles["date-display"]}>
+              {prevSunday.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })}{" "}
+              -{" "}
+              {nextSunday.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })}
+            </Box>
+            <div className={styles["chevron-wrapper"]} onClick={prevWeek}>
+              <Icon
+                className={styles["chevron-left"]}
+                type={"chevronLeft"}
+              ></Icon>
+            </div>
+            <div className={styles["chevron-wrapper"]} onClick={nextWeek}>
+              <Icon
+                className={styles["chevron-right"]}
+                type={"chevronRight"}
+              ></Icon>
+            </div>
           </div>
           <Input
             disableUnderline={true}
@@ -126,13 +204,13 @@ const BasicTabs = () => {
     };
 
     const redemptions =
-      allTransactions != null
-        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+      weekTransactions != null
+        ? weekTransactions.filter((transaction) => transaction.point_gain < 0)
         : transactions.filter((transaction) => transaction.point_gain < 0);
 
     const earnings =
-      allTransactions != null
-        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+      weekTransactions != null
+        ? weekTransactions.filter((transaction) => transaction.point_gain >= 0)
         : transactions.filter((transaction) => transaction.point_gain >= 0);
 
     return (
@@ -161,11 +239,7 @@ const BasicTabs = () => {
         <TabPanel value={value} index={0}>
           <div>
             {renderFilterHeader()}
-            <TransactionList
-              transactions={
-                allTransactions == null ? transactions : allTransactions
-              }
-            />
+            <TransactionList transactions={weekTransactions} />
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
@@ -183,7 +257,7 @@ const BasicTabs = () => {
       </Box>
     );
   };
-  
+
   const addOpen = Boolean(addAnchorEl);
   const popoverid = addOpen ? "add-popover" : undefined;
   const uploadOpen = Boolean(uploadAnchorEl);
@@ -225,7 +299,11 @@ const BasicTabs = () => {
             currentAdmin={currentAdmin}
             setTransactions={setTransactions}
           />
-          <UploadPopover uploadAnchor={uploadAnchorEl} closeUpload={closeUpload} popoverid={uploadpopoverid}/>
+          <UploadPopover
+            uploadAnchor={uploadAnchorEl}
+            closeUpload={closeUpload}
+            popoverid={uploadpopoverid}
+          />
         </div>
         {BasicTabs()}
       </div>

@@ -126,6 +126,7 @@
 .filter-row {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   height: 70px;
   margin-left: 2%;
@@ -168,6 +169,12 @@
   margin-left: 5px;
   margin-right: 10px;
   height: 35px;
+}
+
+.chevron-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .chevron-left {

@@ -27,7 +27,7 @@ export const getAdmin = async (adminId: string): Promise<Admin> => {
     const adminData = doc.data() as Admin;
     // enables date objects to be serializable during SSR
     adminData.created_at = adminData.created_at.toDate().toString();
-    return adminData;
+    return parseAdmin(doc);
   } catch (e) {
     console.error(e);
     throw e;
@@ -56,4 +56,14 @@ export const deleteAdmin = async (adminId: string): Promise<void> => {
     console.warn(e);
     throw e;
   }
+};
+
+const parseAdmin = async (doc) => {
+  const data = doc.data();
+  const admin = {
+    created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
+    email: data.email,
+    full_name: data.full_name,
+  };
+  return admin as Admin;
 };

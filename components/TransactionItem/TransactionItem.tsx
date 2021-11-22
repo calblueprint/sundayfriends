@@ -41,11 +41,11 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
       </div>
       {change > 0 ? (
         <div className={fid ? styles["pos-change"] : styles["pos-changeV2"]}>
-          {"+ " + change.toFixed(2)}
+          {"+ " + change}
         </div>
       ) : (
         <div className={fid ? styles["neg-change"] : styles["neg-changeV2"]}>
-          {"- " + Math.abs(change).toFixed(2)}
+          {"- " + Math.abs(change)}
         </div>
       )}
       <div className={styles["trash"]}>
