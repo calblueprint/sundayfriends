@@ -95,6 +95,7 @@
 
 .text {
   padding-right: 26px;
+  margin-right: 26px;
 }
 
 .label {
@@ -151,11 +152,6 @@
 .invite-more {
   text-transform: none;
   margin-left: 15px;
-}
-
-.placeholder {
-  width: 41px;
-  height: 42px;
 }
 
 .close {

@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../../components/Layout/Layout";
 import styles from "./Admins.module.css";
-import { List, ListItem } from "@mui/material";
+import { List, ListItem, Button } from "@mui/material";
 import { AdminItem } from "../../components/AdminItem/AdminItem";
 import { InviteAdminModal } from "../../components/InviteAdminModal/InviteAdminModal";
 import itemstyles from "../../components/AdminItem/AdminItem.module.css";
@@ -12,6 +12,7 @@ import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
 import Icon from "../../assets/Icon";
 import Input from "@mui/material/Input";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 type AdminPageProps = {
   currentAdmin: Admin;
@@ -41,6 +42,19 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
       </div>
     );
   };
+
+  const [open, setOpen] = React.useState(false);
+  const [sent, setSent] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setSent(false);
+    setOpen(true);
+  };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   // setSent(false);
+  // };
 
   const temp = [
     {
@@ -117,6 +131,24 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
     );
   };
 
+  const inviteModalProps = {
+    open: open,
+    setOpen: setOpen,
+    sent: sent,
+    setSent,
+  };
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Avenir",
+    },
+    palette: {
+      primary: {
+        main: "#253C85",
+      },
+    },
+  });
+
   return (
     <Layout title="Admins">
       <main className={styles["main"]}>
@@ -124,7 +156,16 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
           <Icon className={styles["admin-icon"]} type={"admin"}></Icon>
           <h2 className={styles["title"]}>ADMIN ACCOUNTS</h2>
           <div className={styles["button"]}>
-            <InviteAdminModal />
+            <ThemeProvider theme={theme}>
+              <Button
+                variant="contained"
+                style={{ textTransform: "none" }}
+                onClick={handleClickOpen}
+              >
+                Invite Admin
+              </Button>
+              <InviteAdminModal {...inviteModalProps} />
+            </ThemeProvider>
           </div>
           {/* <Button className={styles['button']}>INVITE ADMIN</Button> */}
         </div>
@@ -145,6 +186,7 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
 //     const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
 //     const adminUid = userToken.uid;
 //     const adminData = await getAdmin(adminUid);
+//     console.log(adminData);
 //     return {
 //       props: { currentAdmin: adminData },
 //     };
