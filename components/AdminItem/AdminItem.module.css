@@ -16,7 +16,7 @@
 }
 
 .role {
-  width: 15%;
+  width: 12%;
   /* min-width: 150px; */
   min-width: 100px;
 }
@@ -34,10 +34,8 @@
 }
 
 .buttons {
-  /* width: 30%; */
   display: flex;
-  /* justify-content: space-evenly; */
-  min-width: 310px;
+  min-width: 320px;
 }
 
 .buttons-header {
@@ -50,14 +48,13 @@
   align-items: center;
   min-width: 80px;
   height: 30px;
-  background-color: var(--off-white);
   border: 1px solid #C8C8C8;
   border-radius: 16.5px;
   margin-right: 10px;
   font-size: 14px;
   font-family: Avenir;
-  /* font-weight: 800; */
   color: var(--grey-darker);
+  text-transform: none;
 }
 
 .reset {
@@ -68,12 +65,12 @@
   height: 30px;
   border: 1px solid #C8C8C8;
   border-radius: 16.5px;
-  background-color: var(--off-white);
+  background-color: var(--sapphire-light);
   margin-right: 10px;
   font-size: 14px;
   font-family: Avenir;
-  /* font-weight: 800; */
   color: var(--grey-darker);
+  text-transform: none;
 }
 
 .edit {
@@ -84,24 +81,24 @@
   height: 30px;
   border: 1px solid #C8C8C8;
   border-radius: 16.5px;
-  background-color: var(--off-white);
+  background-color: var(--sapphire-light);
   margin-right: 10px;
   font-size: 14px;
   font-family: Avenir;
-  /* font-weight: 800; */
   color: var(--grey-darker);
+  text-transform: none;
 }
 
 .delete:hover {
-  background-color: var(--grey-alt);
+  background-color: var(--white);
 }
 
 .reset:hover {
-  background-color: var(--grey-alt);
+  background-color: var(--white);
 }
 
 .edit:hover {
-  background-color: var(--grey-alt);
+  background-color: var(--white);
 }
 
 .trash {
