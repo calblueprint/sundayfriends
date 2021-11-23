@@ -14,7 +14,6 @@ type LoginData = {
   password: string;
 };
 
-// TODO improve UI for sigin in screen
 const SignInScreen: React.FC = () => {
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
