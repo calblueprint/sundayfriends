@@ -12,9 +12,9 @@
 .table {
   width: 90%;
   align-items: center;
-  border-radius: 30px;
+  border-radius: 20px;
   background-color: #FFFFFF;
-  height: 90%;
+  height: 82%;
   border: 2px solid #ebebeb;
   position: relative;
   overflow: hidden;
@@ -49,10 +49,25 @@
   font-size: 13px;
 }
 
+.topRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 2%;
+  padding-right: 2%;
+  height: 12%;
+  border-bottom: 1px solid #ebebeb;
+  color: #646464;
+  font-size: 13px;
+  padding-bottom: 15px;
+}
+
 .header {
   width: 90%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2%;
 }
 
 .manageButton {
@@ -101,3 +116,34 @@
   padding-bottom: 0%;
   height: fit-content;
 }
+
+.search-bar {
+  border: 1px solid #F0F0F0;
+  border-radius: 19.5px;
+  width: 30%;
+  height: 36px;
+  font-family: Avenir;
+  font-size: 12px;
+  padding-left: 1%;
+ }
+
+.search-icon {
+  margin-right: 3%;
+  width: 20px;
+  height: 20px;
+ }
+ 
+ .admin-icon {
+  width: 35px;
+  height: 35px;
+ }
+ 
+ .title {
+  margin-left: 3%;
+  margin-right: 3%;
+ }
+
+ .label {
+   margin-left: auto;
+   margin-right: 2%;
+ }
