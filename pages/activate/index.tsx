@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import styles from "./Activate.module.css";
-import { checkAdminActivationStatus } from "../../firebase/firestore/activate";
+import { checkAdminActivationStatus } from "../../firebase/firestore/invite_admin";
 import Icon from "../../assets/Icon";
 import { ClassNames } from "@emotion/react";
 
