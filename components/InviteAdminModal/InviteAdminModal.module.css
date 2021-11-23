@@ -153,3 +153,17 @@
   margin-top: 20px;
   margin-right: 10px;
 }
+
+.error {
+  color: var(--alert-text);
+  font-size: 12px;
+  font-weight: normal;
+  text-align: right;
+  margin-right: 25px;
+  padding-top: 0px;
+}
+
+.errorMessage {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

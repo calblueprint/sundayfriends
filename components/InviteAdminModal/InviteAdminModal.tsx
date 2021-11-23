@@ -95,7 +95,17 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                 </div>
 
                 {invites.map((i) => (
-                  <div key={i} className={styles["row"]}>
+                  <div
+                    key={i}
+                    className={
+                      errors.invite?.[i]?.email &&
+                      errors.invite?.[i]?.email.type === "required" &&
+                      errors.invite?.[i]?.name &&
+                      errors.invite?.[i]?.name.type === "required"
+                        ? styles["errorRow"]
+                        : styles["row"]
+                    }
+                  >
                     <div className={styles["col"]}>
                       <TextField
                         inputProps={{ style: { fontSize: 14 } }}
@@ -110,6 +120,14 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                         {...register("invite." + i + ".name", {
                           required: true,
                         })}
+                        {...errors.invite?.[i]?.name &&
+                          errors.invite?.[i]?.name.type === "required" && (
+                            <div className={styles["error"]}>
+                              <p className={styles["errorMessage"]}>
+                                Field required
+                              </p>
+                            </div>
+                          )}
                       />
                     </div>
                     <div className={styles["col"]}>
@@ -127,6 +145,14 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                           required: true,
                         })}
                       />
+                      {errors.invite?.[i]?.email &&
+                        errors.invite?.[i]?.email.type === "required" && (
+                          <div className={styles["error"]}>
+                            <p className={styles["errorMessage"]}>
+                              Field required
+                            </p>
+                          </div>
+                        )}
                     </div>
 
                     {i != 0 && (
