@@ -1,14 +1,18 @@
 import React from "react";
 import Layout from "../../components/Layout/Layout";
 import styles from "./Admins.module.css";
-import { Button, List, ListItem } from "@mui/material";
+import { List, ListItem, Button } from "@mui/material";
 import { AdminItem } from "../../components/AdminItem/AdminItem";
+import { InviteAdminModal } from "../../components/InviteAdminModal/InviteAdminModal";
 import itemstyles from "../../components/AdminItem/AdminItem.module.css";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { GetServerSidePropsContext } from "next";
 import { Admin } from "../../types/schema";
 import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
+import Icon from "../../assets/Icon";
+import Input from "@mui/material/Input";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 type AdminPageProps = {
   currentAdmin: Admin;
@@ -39,7 +43,44 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
     );
   };
 
+  const [open, setOpen] = React.useState(false);
+  const [sent, setSent] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setSent(false);
+    setOpen(true);
+  };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   // setSent(false);
+  // };
+
   const temp = [
+    {
+      name: "Firstname Lastname",
+      role: "admin",
+      email: "pres@google.com",
+      phone: "8575009958",
+    },
+    {
+      name: "Firstname Lastname",
+      role: "admin",
+      email: "pres@google.com",
+      phone: "8575009958",
+    },
+    {
+      name: "Firstname Lastname",
+      role: "admin",
+      email: "pres@google.com",
+      phone: "8575009958",
+    },
+    {
+      name: "Firstname Lastname",
+      role: "admin",
+      email: "pres@google.com",
+      phone: "8575009958",
+    },
     {
       name: "Firstname Lastname",
       role: "admin",
@@ -73,25 +114,60 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
   };
 
   const renderFilters = () => {
-    return <ListItem className={styles["row"]} />;
+    return (
+      <ListItem className={styles["topRow"]}>
+        <Input
+          disableUnderline={true}
+          placeholder="Search for an admin"
+          className={styles["search-bar"]}
+          endAdornment={
+            <Icon className={styles["search-icon"]} type={"search"}></Icon>
+          }
+        />
+        <p className={styles["label"]}>
+          <b>6</b> Total Admin
+        </p>
+      </ListItem>
+    );
   };
 
-  // Query Firebase
-  // const db = getFirestore(firebase);
-  // const dbQuery = query(collection(db, "admins"));
-  // const getAdmins = async () => {
-  //   const qs = await getDocs(dbQuery);
-  //   return qs;
-  // }
-  // const admins = getAdmins();
+  const inviteModalProps = {
+    open: open,
+    setOpen: setOpen,
+    sent: sent,
+    setSent,
+  };
+
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Avenir",
+    },
+    palette: {
+      primary: {
+        main: "#253C85",
+      },
+    },
+  });
 
   return (
     <Layout title="Admins">
       <main className={styles["main"]}>
         <div className={styles["header"]}>
-          <h2 className={styles["h2"]}>ADMIN ACCOUNTS</h2>
-
-          <Button className={styles["button"]}>INVITE ADMIN</Button>
+          <Icon className={styles["admin-icon"]} type={"admin"}></Icon>
+          <h2 className={styles["title"]}>ADMIN ACCOUNTS</h2>
+          <div className={styles["button"]}>
+            <ThemeProvider theme={theme}>
+              <Button
+                variant="contained"
+                style={{ textTransform: "none" }}
+                onClick={handleClickOpen}
+              >
+                Invite Admin
+              </Button>
+              <InviteAdminModal {...inviteModalProps} />
+            </ThemeProvider>
+          </div>
+          {/* <Button className={styles['button']}>INVITE ADMIN</Button> */}
         </div>
         <List className={styles["table"]}>
           {renderFilters()}
@@ -110,6 +186,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
     const adminUid = userToken.uid;
     const adminData = await getAdmin(adminUid);
+    console.log(adminData);
     return {
       props: { currentAdmin: adminData },
     };

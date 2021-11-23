@@ -10,6 +10,13 @@ const adminInvitesCollection = db.collection("admin_invites");
  */
 export const addAdminInvite = async (admin: AdminInvite) => {
   try {
+    const query = await adminInvitesCollection
+      .where("email", "==", admin.email)
+      .get();
+    const docs = query.docs;
+    if (docs.length != 0) {
+      throw "email already registered!";
+    }
     await adminInvitesCollection.doc().set(admin);
   } catch (e) {
     console.warn(e);
