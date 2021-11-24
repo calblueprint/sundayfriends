@@ -12,6 +12,21 @@
   overflow: scroll;
 }
 
+.modalLoading {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+  width: 74%;
+  height: 90%;
+  background-color: white;
+  border-radius: 20px;
+  top: 5%;
+  left: 13%;
+  overflow: scroll;
+  cursor: wait;
+}
+
 .transactionContainer {
   height: 200px;
 }

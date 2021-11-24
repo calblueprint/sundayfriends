@@ -35,6 +35,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
   const [email, setEmail] = useState(user?.email);
   const [error, setError] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(user?.phone_number);
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     const callFunc = async () => {
@@ -50,6 +51,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
     event?.preventDefault();
     const newData = {};
     try {
+      setError("");
       if (role && role != user?.role) {
         if (role !== "Head" && role !== "Parent" && role !== "Child") {
           throw new Error(
@@ -64,6 +66,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
       if (phoneNumber != user?.phone_number && phoneNumber != undefined) {
         newData["phone_number"] = phoneNumber;
       }
+      setLoad(true);
       const userUid = user.user_id;
       const res = await fetch("/api/auth/updateUser", {
         method: "POST",
@@ -84,12 +87,13 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
       if (setEdited) {
         setEdited(true);
       }
+      setLoad(false);
       refresh();
     }
   }
   return (
     <Modal open={isOpen} hideBackdrop={isFamilyPath ? true : false}>
-      <div className={styles["modal"]}>
+      <div className={load ? styles["modalLoading"] : styles["modal"]}>
         <div
           className={
             isFamilyPath ? styles["colSpacing"] : styles["withOutNavRoute"]
@@ -157,13 +161,26 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                         onClick={() => {
                           setError("");
                           setIsEditing(false);
+                          setLoad(false);
                         }}
                       >
                         <p>Cancel</p>
                       </Button>
-                      <Button className={styles["submitButton"]} type="submit">
-                        <p>Save Changes</p>
-                      </Button>
+                      {load ? (
+                        <Button
+                          className={styles["submitButton"]}
+                          type="submit"
+                        >
+                          <p>Loading...</p>
+                        </Button>
+                      ) : (
+                        <Button
+                          className={styles["submitButton"]}
+                          type="submit"
+                        >
+                          <p>Save Changes</p>
+                        </Button>
+                      )}
                     </div>
                   ) : (
                     <Button
