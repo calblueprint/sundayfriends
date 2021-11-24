@@ -85,22 +85,6 @@
   width: 100%;
 }
 
-.sign-in-button {
-  background: #253c85;
-  border-radius: 7px;
-  color: white;
-  width: 86px;
-  height: 36px;
-}
-
-.sign-in-button:hover {
-  background: #253c85;
-  border-radius: 7px;
-  color: white;
-  width: 86px;
-  height: 36px;
-}
-
 .bottom-row {
   display: flex;
   justify-content: space-between;
@@ -130,7 +114,7 @@
 }
 .login-error-message {
   display: flex;
-  justify-content: end;
+  justify-content: flex-start;
   font-size: 12px;
   line-height: 16px;
   color: red;

@@ -229,7 +229,21 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
           <div className={styles["button-container"]}>
             <Button
               aria-describedby={popoverid}
-              className={styles["add-button"]}
+              sx={{
+                display: {
+                  backgroundColor: "#253c85",
+                  color: "white",
+                  borderRadius: "7px",
+                  height: "33px",
+                  fontSize: "14px",
+                  marginRight: "20px",
+                  textTransform: "none",
+                },
+                "&:hover": {
+                  backgroundColor: "#253c85",
+                  color: "#686868",
+                },
+              }}
               onClick={clickAddButton}
             >
               <Icon className={styles["add-icon"]} type={"add"}></Icon>
@@ -237,7 +251,21 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
             </Button>
             <Button
               aria-describedby={uploadpopoverid}
-              className={styles["upload-button"]}
+              sx={{
+                display: {
+                  backgroundColor: "#253c85",
+                  color: "white",
+                  borderRadius: "7px",
+                  height: "33px",
+                  fontSize: "14px",
+                  marginRight: "20px",
+                  textTransform: "none",
+                },
+                "&:hover": {
+                  backgroundColor: "#253c85",
+                  color: "#686868",
+                },
+              }}
               onClick={clickUploadButton}
             >
               <Icon className={styles["add-icon"]} type={"upload"}></Icon>

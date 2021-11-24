@@ -87,7 +87,21 @@ const SignInScreen: React.FC = () => {
                     Activate now!
                   </a>
                 </div>
-                <Button type="submit" className={styles["sign-in-button"]}>
+                <Button
+                  type="submit"
+                  sx={{
+                    display: {
+                      backgroundColor: "#253c85",
+                      borderRadius: "7px",
+                      color: "white",
+                      width: "86px",
+                      height: "36px",
+                    },
+                    "&:hover": {
+                      backgroundColor: "#253c85",
+                    },
+                  }}
+                >
                   Sign In
                 </Button>
               </div>
