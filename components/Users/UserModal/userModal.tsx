@@ -171,7 +171,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                           className={styles["submitButton"]}
                           type="submit"
                         >
-                          <p>Loading...</p>
+                          <p>Saving...</p>
                         </Button>
                       ) : (
                         <Button
@@ -254,7 +254,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                           <input
                             className={styles["password"]}
                             value="password"
-                            type="text"
+                            type="password"
                           />
                           <div className={styles["passwordButton"]}>
                             <Icon
