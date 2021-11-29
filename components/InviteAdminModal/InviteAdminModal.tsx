@@ -98,12 +98,13 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                   <div
                     key={i}
                     className={
-                      errors.invite?.[i]?.email &&
-                      errors.invite?.[i]?.email.type === "required" &&
-                      errors.invite?.[i]?.name &&
-                      errors.invite?.[i]?.name.type === "required"
-                        ? styles["errorRow"]
-                        : styles["row"]
+                      // errors.invite?.[i]?.email &&
+                      // errors.invite?.[i]?.email.type === "required" &&
+                      // errors.invite?.[i]?.name &&
+                      // errors.invite?.[i]?.name.type === "required"
+                      //   ? styles["errorRow"]
+                      //   : styles["row"]
+                      styles["row"]
                     }
                   >
                     <div className={styles["col"]}>
@@ -120,15 +121,15 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                         {...register("invite." + i + ".name", {
                           required: true,
                         })}
-                        {...errors.invite?.[i]?.name &&
-                          errors.invite?.[i]?.name.type === "required" && (
-                            <div className={styles["error"]}>
-                              <p className={styles["errorMessage"]}>
-                                Field required
-                              </p>
-                            </div>
-                          )}
                       />
+                      {errors.invite?.[i]?.name &&
+                        errors.invite?.[i]?.name.type === "required" && (
+                          <div className={styles["error"]}>
+                            <p className={styles["errorMessage"]}>
+                              Field required
+                            </p>
+                          </div>
+                        )}
                     </div>
                     <div className={styles["col"]}>
                       <TextField

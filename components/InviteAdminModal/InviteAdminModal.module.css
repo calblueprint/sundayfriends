@@ -14,7 +14,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-bottom: 15px;
+  /* padding-bottom: 16px; */
+}
+
+.errorRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* padding-bottom: 14px; */
 }
 
 .col {
@@ -159,7 +167,7 @@
   font-size: 12px;
   font-weight: normal;
   text-align: right;
-  margin-right: 25px;
+  margin-right: 42px;
   padding-top: 0px;
 }
 
