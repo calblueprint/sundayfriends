@@ -107,7 +107,12 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                       styles["row"]
                     }
                   >
-                    <div className={styles["col"]}>
+                    <div className={
+                      errors.invite?.[i]?.name &&
+                      errors.invite?.[i]?.name.type === "required"
+                        ? styles["errorCol"]
+                        : styles["col"]
+                    }>
                       <TextField
                         inputProps={{ style: { fontSize: 14 } }}
                         name={"invite." + i + ".name"}
@@ -131,7 +136,12 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                           </div>
                         )}
                     </div>
-                    <div className={styles["col"]}>
+                    <div className={
+                      errors.invite?.[i]?.email &&
+                      errors.invite?.[i]?.email.type === "required"
+                          ? styles["errorCol"]
+                          : styles["col"]
+                    }>
                       <TextField
                         name={"invite." + i + ".email"}
                         inputProps={{ style: { fontSize: 14 } }}

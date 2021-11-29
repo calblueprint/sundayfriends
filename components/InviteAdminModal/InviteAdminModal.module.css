@@ -27,6 +27,11 @@
 
 .col {
   width: 317px;
+  padding-bottom: 16px;
+}
+
+.errorCol {
+  width: 317px;
 }
 
 .box {
@@ -123,6 +128,7 @@
   border-radius: 50px 50px 50px 50px;
   align-self: baseline;
   text-transform: uppercase;
+  padding-top: 20px;
 }
 
 .addIcon {
