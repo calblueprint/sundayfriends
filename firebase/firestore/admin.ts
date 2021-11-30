@@ -26,8 +26,8 @@ export const getAdmin = async (adminId: string): Promise<Admin> => {
     const doc = await adminCollection.doc(adminId).get();
     const adminData = doc.data() as Admin;
     // enables date objects to be serializable during SSR
-    adminData.created_at = adminData.created_at.toDate().toString();
-    adminData.last_active = adminData.last_active.toDate().toString();
+    // adminData.created_at = adminData.created_at.toDate().toString();
+    // adminData.last_active = adminData.last_active.toDate().toString();
     return adminData;
   } catch (e) {
     console.error(e);

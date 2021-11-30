@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 type AdminPageProps = {
   currentAdmin: Admin;
+  admins: Admin[];
 };
 
 const AdminPage: React.FunctionComponent<AdminPageProps> = ({
@@ -100,7 +101,7 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
   const renderAdminList = () => {
     return (
       <List className={styles["list"]}>
-        {temp.map((admin, index) => {
+        {admins.map((admin, index) => {
           return (
             <AdminItem
               key={index}
