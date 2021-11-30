@@ -53,7 +53,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   const handleAddConfirm = async () => {
     //handle post request
     const adding = {
-      admin_name: currentAdmin.full_name,
+      admin_name: currentAdmin.name,
       date: new Date(),
       description: addMessage,
       family_id: addUser.family_id,
