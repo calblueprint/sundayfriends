@@ -20,9 +20,8 @@ export type Admin = {
   // created_at: Date | Timestamp | string;
   // last_active: Date | Timestamp | string;
   email: string;
-  full_name: string;
-  password: string;
-  phone_number: string;
+  name: string;
+  phone: string;
   role: string;
 };
 

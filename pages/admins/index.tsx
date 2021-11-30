@@ -54,50 +54,6 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
     setOpen(true);
   };
 
-  // const handleClose = () => {
-  //   setOpen(false);
-  //   // setSent(false);
-  // };
-
-  const temp = [
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-  ];
-
   const renderAdminList = () => {
     return (
       <List className={styles["list"]}>
@@ -128,7 +84,7 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
           }
         />
         <p className={styles["label"]}>
-          <b>6</b> Total Admin
+          <b>{admins.length}</b> Total Admin
         </p>
       </ListItem>
     );
@@ -170,7 +126,6 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
               <InviteAdminModal {...inviteModalProps} />
             </ThemeProvider>
           </div>
-          {/* <Button className={styles['button']}>INVITE ADMIN</Button> */}
         </div>
         <List className={styles["table"]}>
           {renderFilters()}
