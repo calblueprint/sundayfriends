@@ -6,6 +6,7 @@ import { AdminItem } from "../../components/AdminItem/AdminItem";
 import { InviteAdminModal } from "../../components/InviteAdminModal/InviteAdminModal";
 import itemstyles from "../../components/AdminItem/AdminItem.module.css";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { getAllAdmins } from "../../firebase/firestore/admin";
 import { GetServerSidePropsContext } from "next";
 import { Admin } from "../../types/schema";
 import { getAdmin } from "../../firebase/firestore/admin";
@@ -20,6 +21,7 @@ type AdminPageProps = {
 
 const AdminPage: React.FunctionComponent<AdminPageProps> = ({
   currentAdmin,
+  admins,
 }) => {
   const renderCategoryHeader = () => {
     return (
@@ -182,13 +184,14 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
 // Use SSR to load admins!
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
+    const admins = await getAllAdmins();
     const cookies = nookies.get(ctx);
     const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
     const adminUid = userToken.uid;
     const adminData = await getAdmin(adminUid);
     console.log(adminData);
     return {
-      props: { currentAdmin: adminData },
+      props: { currentAdmin: adminData, admins: admins },
     };
   } catch (e) {
     console.error(e);

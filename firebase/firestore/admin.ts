@@ -36,6 +36,24 @@ export const getAdmin = async (adminId: string): Promise<Admin> => {
 };
 
 /**
+ * Returns all admin data from firestore
+ */
+export const getAllAdmins = async (): Promise<Admin[]> => {
+  try {
+    // query everything in the transaction collection
+    const allAdmins = await adminCollection.get();
+    const promises: Promise<Admin>[] = allAdmins.docs.map((doc) =>
+      parseAdmin(doc)
+    );
+    const admins = await Promise.all(promises);
+    return admins;
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
+/**
  * Adds the given admin data to firestore
  */
 export const addAdmin = async (admin: Admin): Promise<void> => {
@@ -57,4 +75,16 @@ export const deleteAdmin = async (adminId: string): Promise<void> => {
     console.warn(e);
     throw e;
   }
+};
+
+const parseAdmin = async (doc) => {
+  const data = doc.data();
+  const admin = {
+    created_at: data.created_at,
+    email: data.email,
+    full_name: data.full_name,
+    phone_number: data.phone_number,
+    role: data.role,
+  };
+  return admin as Admin;
 };

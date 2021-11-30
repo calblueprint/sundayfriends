@@ -21,6 +21,9 @@ export type Admin = {
   last_active: Date | Timestamp | string;
   email: string;
   full_name: string;
+  password: string;
+  phone_number: string;
+  role: string;
 };
 
 export type AdminInvite = {
