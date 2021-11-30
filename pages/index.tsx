@@ -83,7 +83,7 @@ const SignInScreen: React.FC = () => {
               <div className={styles["bottom-row"]}>
                 <div className={styles["bottom-row-text"]}>
                   {"Haven't activated your account yet? "}
-                  <a className={styles["activate-now"]} href="/">
+                  <a className={styles["activate-now"]} href="/activate">
                     Activate now!
                   </a>
                 </div>

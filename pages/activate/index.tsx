@@ -15,6 +15,7 @@ const ActivateScreen: React.FC = () => {
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
   const [errMessage, setErrMessage] = useState(null);
+  const [validEmail, setValidEmail] = useState(true);
 
   // TODO clear fields after error in submission
   const handleCheckAdminInvite = async (data: AdminActivateData) => {
@@ -24,15 +25,19 @@ const ActivateScreen: React.FC = () => {
       if (validEmail) {
         router.push("/register");
       } else {
-        setErrMessage("Invalid email/password.");
+        setErrMessage("Invalid email address format.");
+        setValidEmail(false);
+        console.log(validEmail);
       }
     } catch (e) {
       reset();
+      setValidEmail(false);
       console.error(e.message);
+      console.log(validEmail);
     }
   };
 
-  return (
+  return validEmail ? (
     <div className={styles["page-container"]}>
       <form onSubmit={handleSubmit(handleCheckAdminInvite)}>
         <Icon type="sundayfriendslogo" className={styles.SFlogo} />
@@ -72,6 +77,39 @@ const ActivateScreen: React.FC = () => {
           </div>
         </div>
       </form>
+    </div>
+  ) : (
+    <div className={styles["page-container"]}>
+      <Icon type="sundayfriendslogo" className={styles.SFlogo} />
+      <div className={styles["container"]}>
+        <div className={styles["box-styling"]}>
+          <div className={styles["oops-container"]}>
+            <h1 className={styles["oops-title"]}>Oops!</h1>
+            <h4 className={styles["oops-subtext"]}>
+              Your email address does not exist in our records. <br />
+              Contact an admin if you think this is a mistake.
+            </h4>
+            <div className={styles["bottom-row"]}>
+              <Button
+                onClick={() => {
+                  setValidEmail(true);
+                }}
+                className={styles["try-again-button"]}
+              >
+                Try a different email
+              </Button>
+              <Button
+                onClick={() => {
+                  router.push("/");
+                }}
+                className={styles["exit-button"]}
+              >
+                Exit
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

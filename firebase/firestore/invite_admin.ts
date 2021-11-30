@@ -43,8 +43,11 @@ export const checkAdminActivationStatus = async (
   email: string
 ): Promise<boolean> => {
   try {
-    const qs = await adminInvitesCollection.where("email", "==", email).where("valid", "==", true).get();
-    console.log(qs.docs)
+    const qs = await adminInvitesCollection
+      .where("email", "==", email)
+      .where("valid", "==", true)
+      .get();
+    console.log(qs.docs);
     return qs.docs.length > 0;
   } catch (e) {
     console.error(e);
