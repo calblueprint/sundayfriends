@@ -65,6 +65,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
       return date >= prevSunday.getTime() && date <= nextSunday.getTime();
     })
   );
+  const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(0); // integer state
 
   const router = useRouter();
@@ -82,8 +83,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
 
   useEffect(() => {
     console.log(weekTransactions);
-    refresh();
-    useForceUpdate();
+    return () => setIsLoading(false);
   }, [weekTransactions]);
 
   const filterWeek = (prev: Date, next: Date) => {
@@ -115,6 +115,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     );
     setPrevSunday(prev);
     setNextSunday(next);
+    setIsLoading(true);
     filterWeek(prev, next);
   };
 
@@ -131,6 +132,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     );
     setPrevSunday(prev);
     setNextSunday(next);
+    setIsLoading(true);
     filterWeek(prev, next);
   };
 
@@ -239,7 +241,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
         <TabPanel value={value} index={0}>
           <div>
             {renderFilterHeader()}
-            <TransactionList transactions={weekTransactions} />
+            {!isLoading && <TransactionList transactions={weekTransactions} />}
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
