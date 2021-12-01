@@ -3,6 +3,7 @@ import styles from "../ProfileInfo/ProfileInfo.module.css";
 import { Typography, IconButton, Button } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { IconType } from "../../assets/Icon";
+import { Admin } from "../../types/schema";
 
 export type FieldInfo = {
   iconName: IconType;
@@ -13,21 +14,16 @@ export type FieldInfo = {
 type ProfileInfoProps = {
   aboutData: FieldInfo[];
   loginInfo: FieldInfo[];
+  admin: Admin;
 };
 
 export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
   aboutData,
   loginInfo,
+  admin,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [validSave, setValidSave] = useState(false);
-
-  function canSave(field) {
-    if (field.fieldValue != inputValue) {
-      setValidSave(true);
-      return;
-    }
-  }
 
   function editbuttons() {
     if (isEditing) {
@@ -44,10 +40,9 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
           </Button>
           <Button
             variant="contained"
-            className={canSave() ? styles["saveChanges"] : styles["saveButton"]}
+            className={validSave ? styles["saveChanges"] : styles["saveButton"]}
             startIcon={<Icon type="smallCheck" />}
             onClick={() => setIsEditing(false)}
-
             //onclick, save state and changes
           >
             Save
@@ -89,7 +84,6 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className={styles["edit"]}
-              onSubmit
             />
           </form>
         </div>
@@ -118,7 +112,11 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
     }
     return (
       <div className={styles["values"]}>
-        <Typography variant="subtitle2" color="#131313" className={styles.text}>
+        <Typography
+          variant="subtitle2"
+          color="#131313"
+          className={styles["text"]}
+        >
           {field.fieldValue}
         </Typography>
       </div>

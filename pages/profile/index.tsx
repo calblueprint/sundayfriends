@@ -23,22 +23,22 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
       {
         iconName: "nameicon",
         fieldName: "NAME",
-        fieldValue: "Cindo Zhang",
+        fieldValue: currentAdmin.full_name,
       },
       {
         iconName: "singleperson",
         fieldName: "ROLE",
-        fieldValue: "Executive Director",
+        fieldValue: currentAdmin.role,
       },
       {
         iconName: "lastactive",
         fieldName: "LAST ACTIVE",
-        fieldValue: "October 20, 2021",
+        fieldValue: "sdsd",
       },
       {
         iconName: "datejoined",
         fieldName: "DATE JOINED",
-        fieldValue: "January 20, 2021",
+        fieldValue: currentAdmin.created_at,
       },
     ];
 
@@ -46,17 +46,17 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
       {
         iconName: "email",
         fieldName: "EMAIL",
-        fieldValue: "chloeisnotarealdog@gmail.com",
+        fieldValue: currentAdmin.email,
       },
       {
         iconName: "phone",
         fieldName: "PHONE #",
-        fieldValue: "(123) 456 - 7890",
+        fieldValue: currentAdmin.phone_number,
       },
       {
         iconName: "password",
         fieldName: "PASSWORD",
-        fieldValue: "*******",
+        fieldValue: currentAdmin.password,
       },
     ];
 
@@ -67,7 +67,11 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
             <Icon type="settings"></Icon>
             <h2>MY PROFILE SETTINGS</h2>
           </div>
-          <ProfileInfo aboutData={aboutData} loginInfo={loginInfo} />
+          <ProfileInfo
+            aboutData={aboutData}
+            loginInfo={loginInfo}
+            admin={currentAdmin}
+          />
         </div>
       </Layout>
     );

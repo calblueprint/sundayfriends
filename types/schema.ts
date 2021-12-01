@@ -20,6 +20,10 @@ export type Admin = {
   created_at: Date | Timestamp | string;
   email: string;
   full_name: string;
+  role: string;
+  last_active: Date | Timestamp | string;
+  password: string;
+  phone_number: string;
 };
 
 export type AdminInvite = {
