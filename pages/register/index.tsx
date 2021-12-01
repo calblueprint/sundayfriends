@@ -27,7 +27,48 @@ const RegisterScreen: React.FC = () => {
     }
   };
 
-  return <div className={styles["page-container"]}>success!</div>;
+  return (
+    <div className={styles["page-container"]}>
+      <form onSubmit={handleSubmit(handleCheckAdminInvite)}>
+        <Icon type="sundayfriendslogo" className={styles.SFlogo} />
+        <div className={styles["container"]}>
+          <div className={styles["box-styling"]}>
+            <div className={styles["signin-container"]}>
+              <h1 className={styles["welcome-title"]}>Welcome, name!</h1>
+              <h4 className={styles["title-subtext"]}>
+                Enter the email address you received an invite from to continue.
+              </h4>
+              <div className={styles["input"]}>
+                <label className={styles["email-input-label"]}>EMAIL</label>
+                <div className={styles["input-field"]}>
+                  <input
+                    id="email"
+                    name="email"
+                    className={styles["email-input-field"]}
+                    {...register("email", { required: true })}
+                  />
+                </div>
+              </div>
+              <div className={styles["login-error-message"]}>
+                {errMessage ? <div>{errMessage}</div> : null}
+              </div>
+              <div className={styles["bottom-row"]}>
+                <div className={styles["bottom-row-text"]}>
+                  {"Already have an account? "}
+                  <a className={styles["activate-now"]} href="/">
+                    Log in!
+                  </a>
+                </div>
+                <Button type="submit" className={styles["sign-in-button"]}>
+                  Next
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default RegisterScreen;

@@ -25,7 +25,6 @@ const ActivateScreen: React.FC = () => {
       if (validEmail) {
         router.push("/register");
       } else {
-        setErrMessage("Invalid email address format.");
         setValidEmail(false);
         console.log(validEmail);
       }
