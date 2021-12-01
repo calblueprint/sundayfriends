@@ -24,7 +24,7 @@ const ActivateScreen: React.FC = () => {
       if (validEmail) {
         router.push("/register");
       } else {
-        setErrMessage("Invalid email/password.");
+        setErrMessage("Invalid email.");
       }
     } catch (e) {
       reset();
