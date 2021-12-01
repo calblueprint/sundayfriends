@@ -19,6 +19,7 @@ type ProfileSettingsPageProps = {
 
 const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
   ({ currentAdmin }) => {
+
     const aboutData: FieldInfo[] = [
       {
         iconName: "nameicon",
@@ -33,7 +34,7 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
       {
         iconName: "lastactive",
         fieldName: "LAST ACTIVE",
-        fieldValue: "sdsd",
+        fieldValue: currentAdmin.last_active,
       },
       {
         iconName: "datejoined",
