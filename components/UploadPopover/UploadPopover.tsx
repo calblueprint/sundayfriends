@@ -185,7 +185,7 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
             className={styles["confirm-button"]}
             onClick={handleUploadConfirm}
           >
-            Upload
+            {uploadProgress==100?"Submit": "Upload"}
           </Button>
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -235,7 +235,7 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
             </div>
           </div>
           <p className={styles["uploaded-message"]}>
-            {uploadProgress == 100 ? "Uploaded." : "Uploading..."}
+            {uploadProgress == 100 ? "Uploaded. Press submit to reflect changes." : "Uploading..."}
           </p>
         </div>
       );

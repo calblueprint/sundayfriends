@@ -27,6 +27,7 @@ import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
 import { UploadPopover } from "../../components/UploadPopover/UploadPopover";
+import { TransactionTable } from "../../components/TransactionTable/TransactionTable";
 
 type TransactionPageProps = {
   currentAdmin: Admin;
@@ -65,76 +66,6 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
       return date >= prevSunday.getTime() && date <= nextSunday.getTime();
     })
   );
-  const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState(0); // integer state
-
-  const router = useRouter();
-  const refresh = useCallback(() => {
-    router.replace(router.asPath);
-  }, [router]);
-
-  const useForceUpdate = () => {
-    return () => setValue((value) => value + 1); // update the state to force render
-  };
-
-  // useEffect(() => {
-  //   filterWeek();
-  // }, [prevSunday, nextSunday]);
-
-  useEffect(() => {
-    console.log(weekTransactions);
-    return () => setIsLoading(false);
-  }, [weekTransactions]);
-
-  const filterWeek = (prev: Date, next: Date) => {
-    console.log(prev);
-    console.log(next);
-    var week =
-      allTransactions != null
-        ? allTransactions.filter((item) => {
-            let date = new Date(item.date).getTime();
-            return date >= prev.getTime() && date <= next.getTime();
-          })
-        : transactions.filter((item) => {
-            let date = new Date(item.date).getTime();
-            return date >= prev.getTime() && date <= next.getTime();
-          });
-    setWeekTransactions(week);
-  };
-
-  const prevWeek = () => {
-    var prev = new Date(
-      prevSunday.getFullYear(),
-      prevSunday.getMonth(),
-      prevSunday.getDate() - 7
-    );
-    var next = new Date(
-      nextSunday.getFullYear(),
-      nextSunday.getMonth(),
-      nextSunday.getDate() - 7
-    );
-    setPrevSunday(prev);
-    setNextSunday(next);
-    setIsLoading(true);
-    filterWeek(prev, next);
-  };
-
-  const nextWeek = () => {
-    var prev = new Date(
-      prevSunday.getFullYear(),
-      prevSunday.getMonth(),
-      prevSunday.getDate() + 7
-    );
-    var next = new Date(
-      nextSunday.getFullYear(),
-      nextSunday.getMonth(),
-      nextSunday.getDate() + 7
-    );
-    setPrevSunday(prev);
-    setNextSunday(next);
-    setIsLoading(true);
-    filterWeek(prev, next);
-  };
 
   const clickAddButton = (event) => {
     setAddAnchorEl(event.currentTarget);
@@ -159,60 +90,14 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
       setValue(newValue);
     };
 
-    const renderFilterHeader = () => {
-      return (
-        <div className={styles["filter-row"]}>
-          <div className={styles["date-range"]}>
-            <Box className={styles["calendar-box"]}>
-              <Icon
-                className={styles["calendar-icon"]}
-                type={"calendar"}
-              ></Icon>
-            </Box>
-            <Box className={styles["date-display"]}>
-              {prevSunday.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })}{" "}
-              -{" "}
-              {nextSunday.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })}
-            </Box>
-            <div className={styles["chevron-wrapper"]} onClick={prevWeek}>
-              <Icon
-                className={styles["chevron-left"]}
-                type={"chevronLeft"}
-              ></Icon>
-            </div>
-            <div className={styles["chevron-wrapper"]} onClick={nextWeek}>
-              <Icon
-                className={styles["chevron-right"]}
-                type={"chevronRight"}
-              ></Icon>
-            </div>
-          </div>
-          <Input
-            disableUnderline={true}
-            placeholder="Search for a transaction"
-            className={styles["search-bar"]}
-            endAdornment={
-              <Icon className={styles["search-icon"]} type={"search"}></Icon>
-            }
-          />
-        </div>
-      );
-    };
-
     const redemptions =
-      weekTransactions != null
-        ? weekTransactions.filter((transaction) => transaction.point_gain < 0)
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
         : transactions.filter((transaction) => transaction.point_gain < 0);
 
     const earnings =
-      weekTransactions != null
-        ? weekTransactions.filter((transaction) => transaction.point_gain >= 0)
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
         : transactions.filter((transaction) => transaction.point_gain >= 0);
 
     return (
@@ -239,22 +124,21 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
           />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <div>
-            {renderFilterHeader()}
-            {!isLoading && <TransactionList transactions={weekTransactions} />}
-          </div>
+          <TransactionTable transactions={transactions}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <div>
+          <TransactionTable transactions={redemptions}/>
+          {/* <div>
             {renderFilterHeader()}
             <TransactionList transactions={redemptions} />
-          </div>
+          </div> */}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <div>
+          <TransactionTable transactions={earnings}/>
+          {/* <div>
             {renderFilterHeader()}
             <TransactionList transactions={earnings} />
-          </div>
+          </div> */}
         </TabPanel>
       </Box>
     );

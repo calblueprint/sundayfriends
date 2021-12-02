@@ -9,6 +9,7 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
+  Snackbar,
 } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Transaction, User, Admin } from "../../types/schema";
@@ -42,6 +43,10 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   const [addType, setAddType] = useState("");
   const [addMessage, setAddMessage] = useState("");
 
+  const [noUserSnackbar, setUserSnackbar] = useState(false);
+  const [amountSnackbar, setAmountSnackbar] = useState(false);
+  const [noAction, setNoAction] = useState(false);
+
   useEffect(() => {
     if (addAnchor) {
       setSuccess(false);
@@ -51,23 +56,29 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   }, [addAnchor]);
 
   const handleAddConfirm = async () => {
-    //handle post request
-    const adding = {
-      admin_name: currentAdmin.name,
-      date: new Date(),
-      description: addMessage,
-      family_id: addUser.family_id,
-      point_gain:
-        addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
-      user_name: addUser.full_name,
-    };
-    await addTransaction(adding as Transaction);
-
-    getAllTransactions().then((items) => {
-      setTransactions(items);
-    });
-
-    setSuccess(true);
+    if (selectedUser=="Select User") {
+      setUserSnackbar(true);
+    } else if (addType=="") {
+      setNoAction(true);
+    } else {
+      //handle post request
+      const adding = {
+        admin_name: currentAdmin.name,
+        date: new Date(),
+        description: addMessage,
+        family_id: addUser.family_id,
+        point_gain:
+          addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
+        user_name: addUser.full_name,
+      };
+      await addTransaction(adding as Transaction);
+  
+      getAllTransactions().then((items) => {
+        setTransactions(items);
+      });
+  
+      setSuccess(true);
+    }
   };
 
   const selectAutocomplete = (value) => {
@@ -172,6 +183,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
                 defaultValue="10"
                 variant="standard"
                 type="number"
+                inputProps={{ inputmode: 'numeric', pattern: '[0-9]*' }}
                 onChange={(e) => setAddPoints(e.target.value)}
               />
             </div>
@@ -212,6 +224,27 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
           >
             Confirm
           </Button>
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={noUserSnackbar}
+            autoHideDuration={3000}
+            onClose={() => setUserSnackbar(false)}
+            message="No User Selected"
+          />
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={amountSnackbar}
+            autoHideDuration={3000}
+            onClose={() => setAmountSnackbar(false)}
+            message="Amount chosen too large. Please reduce to below 10000"
+          />
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={noAction}
+            autoHideDuration={3000}
+            onClose={() => setNoAction(false)}
+            message="Select Redeem or Earn"
+          />
         </div>
       );
     }
