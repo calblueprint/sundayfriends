@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  width: 120%;
+  width: 100%;
   border-style: solid;
   border-radius: 15px;
   border-color: var(--sapphire-light);
@@ -14,7 +14,7 @@
   flex-direction: row;
   padding-bottom: 35px;
   justify-content: space-between;
-  width: 125%;
+  width: 100%;
 }
 
 .filter-select {
@@ -25,12 +25,16 @@
 .filter-label {
   font-size: 12px;
   font-weight: 800;
+  color: var(--grey-dark);
 }
 
 .select {
+  color: var(--grey-dark);
   height: 35px;
   align-items: center;
   border-radius: 20px;
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .applyButton {
@@ -85,6 +89,13 @@
 .searchNav {
   display: flex;
   flex-direction: row;
-  width: 50%;
+  width: 60%;
   place-items: center;
+  justify-content: flex-end;
+}
+
+.pageContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }

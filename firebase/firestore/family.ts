@@ -37,23 +37,13 @@ export const getAllFamilies = async (): Promise<Family[]> => {
 };
 
 /**
- * Adds the given family data to firestore
+ * Returns a family from firestore by ID
  */
-export const addFamily = async (family: Family) => {
+export const getFamilyById = async (FID: string): Promise<Family> => {
   try {
-    await familyCollection.doc().set(family);
-  } catch (e) {
-    console.warn(e);
-    throw e;
-  }
-};
-
-/**
- * Deletes the family from firestore with the given familyId
- */
-export const deleteFamily = async (familyId: string) => {
-  try {
-    await familyCollection.doc(familyId).delete();
+    const family = await familyCollection.doc(FID).get();
+    //console.log("backend", await parseFamily(family));
+    return await parseFamily(family);
   } catch (e) {
     console.warn(e);
     throw e;
