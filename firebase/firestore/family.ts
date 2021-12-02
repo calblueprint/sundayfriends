@@ -7,6 +7,19 @@ const db = firebaseApp.firestore();
 const familyCollection = db.collection("families");
 
 /**
+ * Returns the family data from firestore with the given userId
+ */
+export const getFamily = async (familyId: string): Promise<Family> => {
+  try {
+    const doc = await familyCollection.doc(familyId).get();
+    return doc.data() as Family;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+/**
  * Returns all the families from firestore
  */
 export const getAllFamilies = async (): Promise<Family[]> => {

@@ -119,8 +119,6 @@
 .closeIcon {
   border-radius: 50%;
   background-color: var(--grey-light);
-  padding-left: 10px;
-  padding-top: 9px;
   width: 35px;
   height: 35px;
 }
