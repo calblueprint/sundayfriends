@@ -19,7 +19,6 @@ type ProfileSettingsPageProps = {
 
 const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
   ({ currentAdmin }) => {
-
     const aboutData: FieldInfo[] = [
       {
         iconName: "nameicon",
