@@ -46,7 +46,25 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   const [allTransactions, setTransactions] = React.useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [redemptions, setRedemptions] = useState(
+    allTransactions != null
+      ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+      : transactions.filter((transaction) => transaction.point_gain < 0)
+  );
+
+  const [earnings, setEarnings] = useState(
+    allTransactions != null
+      ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+      : transactions.filter((transaction) => transaction.point_gain >= 0)
+  );
+
   useEffect(() => {
+    setRedemptions(allTransactions != null
+      ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+      : transactions.filter((transaction) => transaction.point_gain < 0));
+    setEarnings(allTransactions != null
+      ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+      : transactions.filter((transaction) => transaction.point_gain >= 0));
     return () => setIsLoading(false);
   }, [allTransactions])
 
@@ -78,15 +96,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
       setValue(newValue);
     };
 
-    const redemptions =
-      allTransactions != null
-        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
-        : transactions.filter((transaction) => transaction.point_gain < 0);
-
-    const earnings =
-      allTransactions != null
-        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
-        : transactions.filter((transaction) => transaction.point_gain >= 0);
+    
 
     return (
       <Box className={styles["transaction-container"]}>
@@ -115,10 +125,10 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
           {!isLoading && <TransactionTable transactions={allTransactions != null ? allTransactions: transactions}/>}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <TransactionTable transactions={redemptions}/>
+          {!isLoading && <TransactionTable transactions={redemptions}/>}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <TransactionTable transactions={earnings}/>
+          {!isLoading && <TransactionTable transactions={earnings}/>}
         </TabPanel>
       </Box>
     );
@@ -197,6 +207,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
             uploadAnchor={uploadAnchorEl}
             closeUpload={closeUpload}
             popoverid={uploadpopoverid}
+            setTransactions={changeTransactions}
           />
         </div>
         {BasicTabs()}

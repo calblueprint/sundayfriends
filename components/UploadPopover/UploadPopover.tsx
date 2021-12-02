@@ -3,19 +3,21 @@ import styles from "./UploadPopover.module.css";
 import { Button, Popover, LinearProgress, Snackbar } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Transaction, User } from "../../types/schema";
-import { addTransaction } from "../../firebase/firestore/transaction";
+import { getAllTransactions, addTransaction } from "../../firebase/firestore/transaction";
 import Papa from "papaparse";
 
 type UploadPopoverProps = {
   uploadAnchor: Element;
   closeUpload: Function;
   popoverid: string;
+  setTransactions: Function;
 };
 
 export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
   uploadAnchor,
   closeUpload,
   popoverid,
+  setTransactions,
 }: UploadPopoverProps) => {
   const [uploadFile, setUploadFile] = useState(null);
   const [fileData, setFileData] = useState([]);
@@ -90,6 +92,11 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
           console.log(data);
           addTransaction(data as Transaction);
         }
+
+        getAllTransactions().then((items) => {
+          setTransactions(items);
+        });
+
         setUploadSuccess(true);
       }
     } else {
