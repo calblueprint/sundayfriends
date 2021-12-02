@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import Icon from "../../assets/Icon";
 import { Box } from "@mui/system";
 import styles from "../TransactionTable/TransactionTable.module.css";
-import { TransactionItem } from "../TransactionItem/TransactionItem";
-import { SortTriangles } from "../SortTriangles/SortTriangles";
-import { List, Input } from "@mui/material";
-import itemstyles from "../TransactionItem/TransactionItem.module.css";
+import { Input } from "@mui/material";
 import { Transaction } from "../../types/schema";
 import { TransactionList } from "../TransactionList/TransactionList";
 
@@ -26,7 +23,6 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> = 
     
       const getLastSunday = (date) => {
         var resultDate = new Date(date);
-        var yesterday = new Date(date - 1);
         resultDate.setDate(date.getDate() + ((7 - date.getDay()) % 7) - 7);
         return resultDate;
       };
@@ -39,6 +35,16 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> = 
           return date >= prevSunday.getTime() && date <= nextSunday.getTime();
         })
       );
+
+    useEffect(() => {
+      setWeekTransactions(
+        transactions.filter((item) => {
+          let date = new Date(item.date).getTime();
+          return date >= prevSunday.getTime() && date <= nextSunday.getTime();
+        })
+      )
+      
+    }, [transactions])
 
     useEffect(() => {
         console.log(weekTransactions);

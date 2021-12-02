@@ -53,6 +53,7 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
     return (
       <List className={styles["list"]}>
         {transactions.map((transaction) => {
+          console.log(transaction);
           return (
             <TransactionItem
               key={transaction.description}

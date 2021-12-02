@@ -17,6 +17,7 @@ import {
   addTransaction,
   getAllTransactions,
 } from "../../firebase/firestore/transaction";
+import { integerPropType } from "@mui/utils";
 
 type AddPopoverProps = {
   allUsers: User[];
@@ -45,6 +46,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
 
   const [noUserSnackbar, setUserSnackbar] = useState(false);
   const [amountSnackbar, setAmountSnackbar] = useState(false);
+  const [validAmountSnackbar, setValidAmountSnackbar] = useState(false);
   const [noAction, setNoAction] = useState(false);
 
   useEffect(() => {
@@ -60,6 +62,10 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
       setUserSnackbar(true);
     } else if (addType=="") {
       setNoAction(true);
+    } else if (parseInt(addPoints) >= 10000) {
+      setAmountSnackbar(true);
+    } else if (parseInt(addPoints) == 0) {
+      setValidAmountSnackbar(true);
     } else {
       //handle post request
       const adding = {
@@ -237,6 +243,13 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
             autoHideDuration={3000}
             onClose={() => setAmountSnackbar(false)}
             message="Amount chosen too large. Please reduce to below 10000"
+          />
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={validAmountSnackbar}
+            autoHideDuration={3000}
+            onClose={() => setValidAmountSnackbar(false)}
+            message="Please choose a valid amount number."
           />
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}

@@ -44,28 +44,16 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
   const [allUsers, setUsers] = React.useState(users);
   const [allTransactions, setTransactions] = React.useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const getNextSunday = (date) => {
-    var resultDate = new Date(date);
-    resultDate.setDate(date.getDate() + ((7 - date.getDay()) % 7));
-    return resultDate;
-  };
+  useEffect(() => {
+    return () => setIsLoading(false);
+  }, [allTransactions])
 
-  const getLastSunday = (date) => {
-    var resultDate = new Date(date);
-    var yesterday = new Date(date - 1);
-    resultDate.setDate(date.getDate() + ((7 - date.getDay()) % 7) - 7);
-    return resultDate;
-  };
-
-  const [prevSunday, setPrevSunday] = useState(getLastSunday(new Date()));
-  const [nextSunday, setNextSunday] = useState(getNextSunday(new Date()));
-  const [weekTransactions, setWeekTransactions] = useState(
-    transactions.filter((item) => {
-      let date = new Date(item.date).getTime();
-      return date >= prevSunday.getTime() && date <= nextSunday.getTime();
-    })
-  );
+  const changeTransactions = (trans) => {
+    setTransactions(trans);
+    setIsLoading(true);
+  }
 
   const clickAddButton = (event) => {
     setAddAnchorEl(event.currentTarget);
@@ -124,21 +112,13 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
           />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <TransactionTable transactions={transactions}/>
+          {!isLoading && <TransactionTable transactions={allTransactions != null ? allTransactions: transactions}/>}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <TransactionTable transactions={redemptions}/>
-          {/* <div>
-            {renderFilterHeader()}
-            <TransactionList transactions={redemptions} />
-          </div> */}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <TransactionTable transactions={earnings}/>
-          {/* <div>
-            {renderFilterHeader()}
-            <TransactionList transactions={earnings} />
-          </div> */}
         </TabPanel>
       </Box>
     );
@@ -211,7 +191,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
             allUsers={allUsers}
             popoverid={popoverid}
             currentAdmin={currentAdmin}
-            setTransactions={setTransactions}
+            setTransactions={changeTransactions}
           />
           <UploadPopover
             uploadAnchor={uploadAnchorEl}
