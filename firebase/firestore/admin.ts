@@ -63,7 +63,7 @@ const parseAdmin = async (doc) => {
   const admin = {
     created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
     email: data.email,
-    full_name: data.full_name,
+    name: data.name,
   };
   return admin as Admin;
 };

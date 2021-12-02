@@ -23,6 +23,7 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [noFileSnackbar, setNoFileSnackbar] = useState(false);
+  const [CSVSnackbar, setCSVSnackbar] = useState(false);
 
   useEffect(() => {
     if (uploadAnchor) {
@@ -51,22 +52,46 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
     setUploadProgress(0);
   };
 
+  const checkCSV = () => {
+    console.log(fileData[0]);
+    if (fileData[0][0] != "Date") {
+      return false;
+    } else if (fileData[0][1] != "User") {
+      return false;
+    } else if (fileData[0][2] != "FID") {
+      return false;
+    } else if (fileData[0][3] != "Admin") {
+      return false;
+    } else if (fileData[0][4] != "Action") {
+      return false;
+    } else if (fileData[0][5] != "Message") {
+      return false;
+    } else if (fileData[0][6] != "Change") {
+      return false;
+    }
+    return true;
+  };
+
   const handleUploadConfirm = () => {
     if (uploading) {
       //handle file uploads from fileData
-      for (let i = 1; i < fileData.length; i++) {
-        const data = {
-          admin_name: fileData[i][3],
-          date: new Date(fileData[i][0]),
-          description: fileData[i][5],
-          family_id: fileData[i][2],
-          point_gain: parseInt(fileData[i][6]),
-          user_name: fileData[i][1],
-        };
-        console.log(data);
-        addTransaction(data as Transaction);
+      if (!checkCSV()) {
+        setCSVSnackbar(true);
+      } else {
+        for (let i = 1; i < fileData.length; i++) {
+          const data = {
+            admin_name: fileData[i][3],
+            date: new Date(fileData[i][0]),
+            description: fileData[i][5],
+            family_id: fileData[i][2],
+            point_gain: parseInt(fileData[i][6]),
+            user_name: fileData[i][1],
+          };
+          console.log(data);
+          addTransaction(data as Transaction);
+        }
+        setUploadSuccess(true);
       }
-      setUploadSuccess(true);
     } else {
       if (uploadFile) {
         setUploading(true);
@@ -168,6 +193,13 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
             autoHideDuration={3000}
             onClose={() => setNoFileSnackbar(false)}
             message="No File Added"
+          />
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={CSVSnackbar}
+            autoHideDuration={3000}
+            onClose={() => setCSVSnackbar(false)}
+            message="Invalid CSV Format"
           />
         </div>
       );

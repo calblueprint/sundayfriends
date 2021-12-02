@@ -6,7 +6,7 @@
   border: 2px solid rgba(234, 234, 234, 0.4);
   border-radius: 8px;
   width: 330px;
-  height: 250px;
+  height: 280px;
   padding-top: 10px;
   padding-left: 30px;
   padding-right: 30px;
@@ -99,6 +99,10 @@
 
 .uploaded-file-box {
   margin-bottom: 30px;
+  background-color: #f8f8f8;
+  border-radius: 7px;
+  padding: 10px;
+  padding-bottom: 0px;
 }
 
 .uploaded-file-row {
@@ -154,7 +158,7 @@
 
 .upload-progress-bar {
   width: 90%;
-  height: 30px;
+  height: 20px;
   border-radius: 24.4509px;
   margin-right: 10px;
 }

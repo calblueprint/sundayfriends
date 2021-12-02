@@ -19,7 +19,7 @@ export type Family = {
 export type Admin = {
   created_at: Date | Timestamp | string;
   email: string;
-  full_name: string;
+  name: string;
 };
 
 export type User = {
