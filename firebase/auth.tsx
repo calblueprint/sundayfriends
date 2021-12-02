@@ -11,62 +11,72 @@ const auth = firebaseApp.auth();
  */
 
 // TODO handle/throw errors accordingly
-export const signInWithEmailAndPassword = async (email: string, password: string): Promise<void> => {
-    try {
-        await auth.signInWithEmailAndPassword(email, password);
-        const userUid = auth.currentUser.uid;
-        // ensure that user signing in is an admin
-        const isAdmin = await checkAdminId(userUid);
-        if (!isAdmin) {
-            await signOut();
-            throw new Error(`${email} is not an admin user`);
-        }
-    } catch (e) {
-        console.error(e.message);
-        throw e;
+export const signInWithEmailAndPassword = async (
+  email: string,
+  password: string
+): Promise<void> => {
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    const userUid = auth.currentUser.uid;
+    // ensure that user signing in is an admin
+    const isAdmin = await checkAdminId(userUid);
+    if (!isAdmin) {
+      await signOut();
+      throw new Error(`${email} is not an admin user`);
     }
-}
+  } catch (e) {
+    console.error(e.message);
+    throw e;
+  }
+};
 
-export const registerWithEmailAndPassword = async (email: string, password: string): Promise<void> => {
-    try {
-        await auth.createUserWithEmailAndPassword(email, password);
-    } catch (e) {
-        console.error(e);
-        throw e;
-    }
-    // TODO make sure an entry with corresponding info is created in the admins table
-}
+export const registerWithEmailAndPassword = async (
+  email: string,
+  password: string
+): Promise<void> => {
+  try {
+    await auth.createUserWithEmailAndPassword(email, password);
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+  // TODO make sure an entry with corresponding info is created in the admins table
+};
 
 export const signOut = async (): Promise<void> => {
-    try {
-        await auth.signOut();
-    } catch (e) {
-        console.error(e);
-        throw e;
-    };
-}
+  try {
+    await auth.signOut();
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
 
 const AuthContext = createContext<User>(null);
 
-export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }): JSX.Element => {
-    const [authUser, setAuthUser] = useState<User>(null);
+export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
+  children,
+}): JSX.Element => {
+  const [authUser, setAuthUser] = useState<User>(null);
 
-    useEffect(() => {
-        return auth.onIdTokenChanged(async (user: User): Promise<void> => {
-            if (!user) {
-                setAuthUser(null);
-                nookies.set(undefined, 'token', '', { path: '/' });
-            } else {
-                const userToken = await user.getIdToken();
-                setAuthUser(user);
-                nookies.set(undefined, 'token', userToken, { path: '/' });
-            }
-        });
-    }, []);
+  useEffect(() => {
+    return auth.onIdTokenChanged(async (user: User): Promise<void> => {
+      if (!user) {
+        setAuthUser(null);
+        nookies.set(undefined, "token", "", { path: "/" });
+      } else {
+        const userToken = await user.getIdToken();
+        setAuthUser(user);
+        nookies.set(undefined, "token", userToken, { path: "/" });
+      }
+    });
+  }, []);
 
-    return <AuthContext.Provider value={authUser}>{children}</AuthContext.Provider>;
-}
+  return (
+    <AuthContext.Provider value={authUser}>{children}</AuthContext.Provider>
+  );
+};
 
 export const useAuth = (): User => {
-    return useContext(AuthContext);
-}
+  return useContext(AuthContext);
+};
