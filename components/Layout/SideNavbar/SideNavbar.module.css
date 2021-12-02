@@ -16,21 +16,6 @@
   width: 110px;
 }
 
-.sidenav {
-  width: 100px;
-  flex-shrink: 0;
-  box-sizing: border-box;
-}
-
-.sidenav-paper {
-  width: 110px;
-  box-sizing: border-box;
-  border-radius: 0px 20px 20px 0px;
-  background-color: var(--sapphire);
-  color: white;
-  border: transparent;
-}
-
 .SFlogo {
   transform: scale(2);
 }

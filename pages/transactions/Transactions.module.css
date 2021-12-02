@@ -41,37 +41,6 @@
   flex-direction: row;
 }
 
-.add-button {
-  background-color: var(--sapphire);
-  color: white;
-  border-radius: 7px;
-  height: 33px;
-  width: 70px;
-  font-size: 14px;
-  margin-right: 20px;
-  text-transform: none;
-}
-
-.upload-button {
-  background-color: var(--sapphire);
-  color: white;
-  border-radius: 7px;
-  height: 33px;
-  font-size: 14px;
-  margin-right: 20px;
-  text-transform: none;
-}
-
-.add-button:hover {
-  background-color: var(--sapphire);
-  color: #686868;
-}
-
-.upload-button:hover {
-  background-color: var(--sapphire);
-  color: #686868;
-}
-
 .add-icon {
   width: 20px;
   height: 20px;
@@ -256,5 +225,10 @@
 
 .children {
   margin: 0px;
-  margin-top: 0px;
+}
+
+.upload-message {
+  font-size: 12px;
+  margin: 10px;
+  color: #525454;
 }

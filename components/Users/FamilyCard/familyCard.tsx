@@ -7,10 +7,12 @@ import FamilyModal from "../FamilyModal/familyModal";
 
 type FamilyCardProps = {
   family: Family;
+  refresh: () => void;
 };
 
 type FamilyCardsProps = {
   families: Family[];
+  refresh: () => void;
 };
 
 type FamilyMemberProps = {
@@ -32,23 +34,29 @@ const FamilyMember: React.FC<FamilyMemberProps> = ({
 
 const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
   family,
+  refresh,
 }: FamilyCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
-      <FamilyModal family={family} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <FamilyModal
+        family={family}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        refresh={refresh}
+      />
       <Box className={styles["card"]} onClick={() => setIsOpen(true)}>
         <div>
           <div className={styles["row"]}>
             <div className={styles["row"]}>
-              <h2 className={styles["headText"]}>{family.familyName} </h2>
-              <div className={styles["smallText"]}>FID: {family.familyId}</div>
+              <h2 className={styles["headText"]}>{family.family_name} </h2>
+              <div className={styles["smallText"]}>FID: {family.family_id}</div>
             </div>
-            <h3>{family.totalPoints}</h3>
+            <h3>{family.total_points}</h3>
           </div>
           <Grid container spacing={2}>
-            {family.userIds.map((user) => (
-              <FamilyMember key={user.email} user={user} />
+            {family.user_ids.map((user) => (
+              <FamilyMember key={user.full_name} user={user} />
             ))}
           </Grid>
         </div>
@@ -59,11 +67,16 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
 
 const FamilyCards: React.FunctionComponent<FamilyCardsProps> = ({
   families,
+  refresh,
 }: FamilyCardsProps) => {
   return (
     <div className={styles["familyCards"]}>
       {families.map((family) => (
-        <FamilyCard key={family.familyId} family={family}></FamilyCard>
+        <FamilyCard
+          key={family.family_id}
+          family={family}
+          refresh={refresh}
+        ></FamilyCard>
       ))}
     </div>
   );
