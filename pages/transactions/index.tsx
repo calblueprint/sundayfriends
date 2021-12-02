@@ -122,13 +122,14 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
           />
         </Tabs>
         <TabPanel value={value} index={0}>
-          {!isLoading && <TransactionTable transactions={allTransactions != null ? allTransactions: transactions}/>}
+          {!isLoading && <TransactionTable transactions={allTransactions != null ? allTransactions: transactions}
+          setTransactions={changeTransactions}/>}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {!isLoading && <TransactionTable transactions={redemptions}/>}
+          {!isLoading && <TransactionTable transactions={redemptions} setTransactions={changeTransactions}/>}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {!isLoading && <TransactionTable transactions={earnings}/>}
+          {!isLoading && <TransactionTable transactions={earnings} setTransactions={changeTransactions}/>}
         </TabPanel>
       </Box>
     );

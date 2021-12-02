@@ -3,6 +3,7 @@ import styles from "../TransactionItem/TransactionItem.module.css";
 import { ListItem } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Timestamp } from "@firebase/firestore";
+import {getAllTransactions, deleteTransaction} from "../../firebase/firestore/transaction";
 
 type TransactionItemProps = {
   id: string;
@@ -12,7 +13,7 @@ type TransactionItemProps = {
   adminName: string;
   message: string;
   change: number;
-  deleteTransaction: Function;
+  setTransactions: Function;
 };
 
 export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
@@ -23,8 +24,16 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
   adminName,
   message,
   change,
-  deleteTransaction,
+  setTransactions,
 }: TransactionItemProps) => {
+
+  const handleDelete = () => {
+    deleteTransaction(id).then(() => {
+      getAllTransactions().then((items) => {
+        setTransactions(items);
+      });
+    });
+  }
 
   return (
     <ListItem className={styles["list-item"]}>
@@ -53,7 +62,7 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
           {"- " + Math.abs(change)}
         </div>
       )}
-      <div className={styles["trash"]} onClick={() => deleteTransaction(id)}>
+      <div className={styles["trash"]} onClick={handleDelete}>
         <Icon className={styles["trash-icon"]} type={"trash"}></Icon>
       </div>
     </ListItem>
