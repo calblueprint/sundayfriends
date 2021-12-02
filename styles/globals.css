@@ -13,6 +13,7 @@ h2 {
   font-size: 24px;
   line-height: 29.72px;
   letter-spacing: 1px;
+  color: var(--sapphire);
 }
 
 h4 {
@@ -26,6 +27,17 @@ h4 {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h2 {
+  color: #253C85;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.72px;
+  letter-spacing: 1px;
+  margin-left: 60px;
 }
 
 h1 {

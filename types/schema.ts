@@ -18,11 +18,19 @@ export type Family = {
 
 export type Admin = {
   created_at: Date | Timestamp | string;
+  last_active: Date | Timestamp | string;
   email: string;
   full_name: string;
 };
 
+export type AdminInvite = {
+  email: string;
+  full_name: string;
+  valid: boolean;
+};
+
 export type User = {
+  user_id: string;
   address: string;
   created_at: Date | Timestamp | string;
   email: string;

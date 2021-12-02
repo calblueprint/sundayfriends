@@ -18,6 +18,8 @@ type UsersListProps = {
   isFamilyPath: boolean;
   family?: Family;
   setIsOpenFam?: React.Dispatch<React.SetStateAction<boolean>>;
+  setEdited?: React.Dispatch<React.SetStateAction<boolean>>;
+  refresh?: () => void;
 };
 type UsersListItemProps = {
   user: User;
@@ -51,13 +53,11 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
       <TableCell className={`${styles["tableRow"]} ${styles["balance"]}`}>
         {user.points}
       </TableCell>
-      <TableCell className={`${styles["tableRow"]} ${styles["lastActive"]}`}>
-        {user.last_active}
+      <TableCell className={`${styles["tableRow"]} ${styles["transactions"]}`}>
+        {user.transactions.length.toString()}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["manage"]}`}>
-        <div>
-          <Button className={styles["button"]}>Delete</Button>
-          <Button className={styles["button"]}>Suspend</Button>
+        <div className={styles["manageButtons"]}>
           <Button
             className={styles["viewButton"]}
             onClick={() => {
@@ -67,6 +67,8 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
           >
             View
           </Button>
+          <Button className={styles["button"]}>Suspend</Button>
+          <Button className={styles["button"]}>Delete</Button>
         </div>
       </TableCell>
     </TableRow>
@@ -78,6 +80,8 @@ const UsersList: React.FC<UsersListProps> = ({
   isFamilyPath,
   family,
   setIsOpenFam,
+  setEdited,
+  refresh,
 }: UsersListProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState();
@@ -90,6 +94,8 @@ const UsersList: React.FC<UsersListProps> = ({
         setIsOpen={setIsOpen}
         isFamilyPath={isFamilyPath}
         setIsOpenFam={setIsOpenFam}
+        setEdited={setEdited}
+        refresh={refresh}
       />
 
       <Table stickyHeader aria-label="user table">
@@ -115,9 +121,9 @@ const UsersList: React.FC<UsersListProps> = ({
               Balance
             </TableCell>
             <TableCell
-              className={`${styles["headingRow"]} ${styles["lastActive"]}`}
+              className={`${styles["headingRow"]} ${styles["transactions"]}`}
             >
-              Last Active
+              # Transactions
             </TableCell>
             <TableCell
               className={`${styles["headingRow"]} ${styles["manage"]}`}

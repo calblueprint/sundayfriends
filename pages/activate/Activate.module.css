@@ -54,28 +54,11 @@
   margin-top: 10px;
 }
 
-.password-input-label {
-  font-family: Avenir;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 14px;
-  line-height: 19px;
-  color: #525454;
-  margin-top: 10px;
-}
-
 .email-input-field {
   border: none;
   border-bottom: 2px solid var(--grey-mid);
   width: 332px;
-  margin-bottom: 35px;
-  line-height: 32px;
-}
-
-.password-input-field {
-  border: none;
-  border-bottom: 2px solid var(--grey-mid);
-  width: 332px;
+  margin-bottom: 10px;
   line-height: 32px;
 }
 
@@ -85,10 +68,26 @@
   width: 100%;
 }
 
+.sign-in-button {
+  background: #253c85;
+  border-radius: 7px;
+  color: white;
+  width: 86px;
+  height: 36px;
+}
+
+.sign-in-button:hover {
+  background: #253c85;
+  border-radius: 7px;
+  color: white;
+  width: 86px;
+  height: 36px;
+}
+
 .bottom-row {
   display: flex;
   justify-content: space-between;
-  margin-top: 42px;
+  margin-top: 50px;
 }
 
 .bottom-row-text {
@@ -102,16 +101,6 @@
   text-decoration-line: underline;
   color: var(--sapphire);
 }
-
-.forgot-password {
-  display: flex;
-  justify-content: flex-start;
-  font-size: 12px;
-  line-height: 16px;
-  text-decoration-line: underline;
-  color: var(--grey-mid);
-  margin-top: 18px;
-}
 .login-error-message {
   display: flex;
   justify-content: flex-start;
@@ -119,27 +108,4 @@
   line-height: 16px;
   color: red;
   margin-top: 18px;
-}
-
-.hidepassword {
-  width: 20px;
-  height: 10px;
-  background-color: none;
-}
-
-.hide-password-button {
-  background-color: transparent;
-  align-items: flex-end;
-  position: absolute;
-  border: none;
-  margin-left: 450px;
-  cursor: pointer;
-}
-
-.hidepassword-button:hover {
-  width: 20px;
-  height: 10px;
-  margin-left: -100px;
-  position: absolute;
-  background-color: none;
 }
