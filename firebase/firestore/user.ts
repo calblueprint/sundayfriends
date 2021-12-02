@@ -25,11 +25,55 @@ export const getUser = async (userId: string): Promise<User> => {
  */
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const allFamilies = await userCollection.get();
-    const promises: Promise<User>[] = allFamilies.docs.map((doc) =>
+    const allUsers = await userCollection.get();
+    const promises: Promise<User>[] = allUsers.docs.map((doc) =>
       parseUser(doc)
     );
     const users = await Promise.all(promises);
+    return users;
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
+/**
+ * Returns all the users from firestore on conditional
+ */
+export const getUsersSearch = async (searchQ: string): Promise<User[]> => {
+  try {
+    const promises: Promise<User>[] = [];
+    await userCollection
+      .where("name", ">=", searchQ)
+      .where("name", "<=", searchQ + "\uf8ff")
+      .get()
+      .then((doc) => {
+        doc.forEach((item) => promises.push(parseUser(item)));
+      });
+    const users = await Promise.all(promises);
+    //console.log("backend", users, searchQ);
+    return users;
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
+/**
+ * Returns the users from firestore by role
+ */
+export const getFilteredUsers = async (role: string): Promise<User[]> => {
+  try {
+    const promises: Promise<User>[] = [];
+    var query: any = userCollection;
+    if (role && role !== "All Roles") {
+      query = query.where("role", "==", role);
+    }
+    await query.get().then((doc) => {
+      doc.forEach((item) => promises.push(parseUser(item)));
+    });
+    const users = await Promise.all(promises);
+    //console.log("backend", users);
     return users;
   } catch (e) {
     console.warn(e);
@@ -67,6 +111,7 @@ const parseUser = async (doc) => {
   const promise: Promise<Transaction[]> = getTransactionByUser(user_id);
   const transactions = await promise;
   const user = {
+    user_id: user_id,
     address: data.address,
     created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
     email: data.email,

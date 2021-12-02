@@ -30,6 +30,7 @@ export type AdminInvite = {
 };
 
 export type User = {
+  user_id: string;
   address: string;
   created_at: Date | Timestamp | string;
   email: string;

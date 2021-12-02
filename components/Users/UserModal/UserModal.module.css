@@ -12,6 +12,21 @@
   overflow: scroll;
 }
 
+.modalLoading {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+  width: 74%;
+  height: 90%;
+  background-color: white;
+  border-radius: 20px;
+  top: 5%;
+  left: 13%;
+  overflow: scroll;
+  cursor: wait;
+}
+
 .transactionContainer {
   height: 200px;
 }
@@ -35,24 +50,51 @@
 .aboutInfo {
   display: flex;
   flex-direction: column;
-  padding-right: 10%;
+  margin-right: 45px;
   vertical-align: middle;
+}
+
+.aboutInfoEditing {
+  display: flex;
+  flex-direction: column;
+  margin-right: 45px;
+  vertical-align: middle;
+  width: 100%;
 }
 
 .aboutInfoContainer {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
-.squareBullet {
+.icons {
   display: flex;
   flex-direction: column;
   padding-right: 10px;
   padding-top: 1px;
+  margin-right: 7px;
 }
 
 .infoSpacing {
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+  display: flex;
+  place-items: center;
+}
+
+.iconSpacing {
+  width: 17px;
+  height: 17px;
+  margin-top: 5px;
+  margin-bottom: 11px;
+}
+
+.nameIconSpacing {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 6px;
 }
 
 .familyName {
@@ -77,8 +119,6 @@
 .closeIcon {
   border-radius: 50%;
   background-color: var(--grey-light);
-  padding-left: 10px;
-  padding-top: 9px;
   width: 35px;
   height: 35px;
 }
@@ -123,6 +163,29 @@
   padding-bottom: 10px;
 }
 
+.editTitle {
+  font-family: Avenir;
+  font-size: medium;
+  margin-bottom: 4px;
+  border: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  width: 100%;
+  background-color: var(--grey-light);
+  padding-left: 5px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.errorTitle {
+  font-family: Avenir;
+  font-size: medium;
+  margin-bottom: 4px;
+  color: red;
+  padding-top: 2px;
+  padding-bottom: 3px;
+}
+
 .sectionHeader {
   display: flex;
   flex-direction: row;
@@ -146,7 +209,7 @@
 }
 
 .transactionBox {
-  height: 200px;
+  height: 175px;
   overflow: scroll;
 }
 
@@ -156,11 +219,30 @@
   margin-right: 3px;
 }
 
+.inLineEditIcon {
+  width: 20px;
+  height: 20px;
+  fill: var(--grey-mid);
+  margin-top: 5px;
+}
+
+.editSection {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.buttonSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .addIcon {
   width: 18px;
   height: 18px;
   margin-right: 5px;
-  fill: var(--grey-dark);
+  fill: var(--white);
 }
 
 .editButton {
@@ -169,18 +251,39 @@
   flex-direction: row;
   font-family: Avenir;
   font-weight: 600;
-  background-color: var(--grey-light);
+  background-color: var(--sapphire);
   width: 80px;
   justify-content: center;
-  height: 40px;
+  height: 30px;
   border-radius: 10px;
   margin-top: 20px;
   text-transform: none;
-  color: var(--grey-dark);
+  color: var(--white);
+  margin-right: 10px;
+}
+
+.submitButton {
+  display: flex;
+  place-items: center;
+  flex-direction: row;
+  font-family: Avenir;
+  font-weight: 600;
+  background-color: var(--sapphire);
+  width: 120px;
+  justify-content: center;
+  height: 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-transform: none;
+  color: var(--white);
 }
 
 .editButton:hover {
-  background-color: var(--grey-mid);
+  background-color: var(--sapphire-mid);
+}
+
+.submitButton:hover {
+  background-color: var(--sapphire-mid);
 }
 
 .modalInfo {
@@ -251,4 +354,47 @@
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 20px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.modalAbout {
+  width: 100%;
+}
+
+.password {
+  font-family: Avenir;
+  font-size: medium;
+  border: 0px;
+  width: 15%;
+}
+
+.hideIcon {
+  height: 20px;
+  width: 20px;
+  fill: var(--grey-mid);
+}
+
+.resetIcon {
+  height: 15px;
+  width: 15px;
+  fill: var(--grey-mid);
+}
+
+.passwordButton {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--grey-mid);
+}
+
+.resetText {
+  font-size: small;
 }
