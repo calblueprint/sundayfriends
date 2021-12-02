@@ -24,7 +24,7 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
       {
         iconName: "nameicon",
         fieldName: "NAME",
-        fieldValue: currentAdmin.full_name,
+        fieldValue: currentAdmin.name,
       },
       {
         iconName: "singleperson",
@@ -52,7 +52,7 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
       {
         iconName: "phone",
         fieldName: "PHONE #",
-        fieldValue: currentAdmin.phone_number,
+        fieldValue: currentAdmin.phone,
       },
       {
         iconName: "password",
