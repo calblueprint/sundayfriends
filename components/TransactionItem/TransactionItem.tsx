@@ -5,22 +5,27 @@ import Icon from "../../assets/Icon";
 import { Timestamp } from "@firebase/firestore";
 
 type TransactionItemProps = {
+  id: string;
   date: Date | Timestamp;
   userName?: string;
   fid?: string;
   adminName: string;
   message: string;
   change: number;
+  deleteTransaction: Function;
 };
 
 export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
+  id,
   date,
   userName,
   fid,
   adminName,
   message,
   change,
+  deleteTransaction,
 }: TransactionItemProps) => {
+
   return (
     <ListItem className={styles["list-item"]}>
       <div className={fid ? styles["date"] : styles["dateV2"]}>{date}</div>
@@ -48,7 +53,7 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
           {"- " + Math.abs(change)}
         </div>
       )}
-      <div className={styles["trash"]}>
+      <div className={styles["trash"]} onClick={() => deleteTransaction(id)}>
         <Icon className={styles["trash-icon"]} type={"trash"}></Icon>
       </div>
     </ListItem>

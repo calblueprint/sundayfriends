@@ -179,3 +179,7 @@
   margin-top: 20px;
   width: 89px;
 }
+
+.confirm-button:hover {
+  background-color: var(--sapphire-mid);
+}

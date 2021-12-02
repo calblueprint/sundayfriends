@@ -11,10 +11,12 @@ import { DataGrid, GridRowModel } from "@mui/x-data-grid";
 
 type TransactionListProps = {
   transactions: Transaction[];
+  deleteTransaction: Function;
 };
 
 export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
   transactions,
+  deleteTransaction
 }) => {
   const renderCategoryHeader = () => {
     return (
@@ -28,7 +30,7 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
           <SortTriangles />
         </div>
         <div className={itemstyles["fid"]} id={styles["category"]}>
-          <body id={styles["category-text"]}>Fid</body>
+          <body id={styles["category-text"]}>FID</body>
           <SortTriangles />
         </div>
         <div className={itemstyles["admin"]} id={styles["category"]}>
@@ -56,6 +58,7 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
           console.log(transaction);
           return (
             <TransactionItem
+              id={transaction.transaction_id}
               key={transaction.description}
               date={transaction.date}
               userName={transaction.user_name}
@@ -63,6 +66,7 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
               adminName={transaction.admin_name}
               message={transaction.description}
               change={transaction.point_gain}
+              deleteTransaction={deleteTransaction}
             />
           );
         })}

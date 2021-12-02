@@ -5,6 +5,7 @@ import styles from "../TransactionTable/TransactionTable.module.css";
 import { Input } from "@mui/material";
 import { Transaction } from "../../types/schema";
 import { TransactionList } from "../TransactionList/TransactionList";
+import { getAllTransactions, deleteTransaction } from "../../firebase/firestore/transaction";
 
 type TransactionTableProps = {
   transactions: Transaction[];
@@ -50,6 +51,21 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> = 
         console.log(weekTransactions);
         return () => setIsLoading(false);
     }, [weekTransactions]);
+
+    const removeTransaction = (id) => {
+      setIsLoading(true);
+      console.log(id);
+      deleteTransaction(id).then(() => {
+        let temp = [...weekTransactions];
+        for (let i = 0; i < temp.length; i++) {
+          if (temp[i].transaction_id == id) {
+            temp.splice(i, 1);
+          }
+        }
+        console.log(temp);
+        setWeekTransactions(temp);
+      });
+    }
     
     const filterWeek = (prev: Date, next: Date) => {
     console.log(prev);
@@ -150,7 +166,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> = 
     return (
         <div>
             {renderFilterHeader()}
-            {!isLoading && <TransactionList transactions={weekTransactions} />}
+            {!isLoading && <TransactionList transactions={weekTransactions} deleteTransaction={removeTransaction}/>}
         </div>
     )
 }
