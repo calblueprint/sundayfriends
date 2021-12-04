@@ -43,11 +43,8 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   const [addPoints, setAddPoints] = useState("10");
   const [addType, setAddType] = useState("");
   const [addMessage, setAddMessage] = useState("");
-
-  const [noUserSnackbar, setUserSnackbar] = useState(false);
-  const [amountSnackbar, setAmountSnackbar] = useState(false);
-  const [validAmountSnackbar, setValidAmountSnackbar] = useState(false);
-  const [noAction, setNoAction] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   useEffect(() => {
     if (addAnchor) {
@@ -59,13 +56,20 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
 
   const handleAddConfirm = async () => {
     if (selectedUser=="Select User") {
-      setUserSnackbar(true);
+      setSnackbarMessage("No User Selected.");
+      setSnackbarOpen(true);
     } else if (addType=="") {
-      setNoAction(true);
+      setSnackbarMessage("Select Redeem or Earn.")
+      setSnackbarOpen(true);
     } else if (parseInt(addPoints) >= 10000) {
-      setAmountSnackbar(true);
+      setSnackbarMessage("Amount chosen too large. Please reduce to below 10000.");
+      setSnackbarOpen(true);
     } else if (parseInt(addPoints) == 0) {
-      setValidAmountSnackbar(true);
+      setSnackbarMessage("Please choose a valid amount number.");
+      setSnackbarOpen(true);
+    } else if (addMessage=="") {
+      setSnackbarMessage("Please type a description.");
+      setSnackbarOpen(true);
     } else {
       //handle post request
       const adding = {
@@ -79,9 +83,8 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
       };
       await addTransaction(adding as Transaction);
   
-      getAllTransactions().then((items) => {
-        setTransactions(items);
-      });
+      let trans = await getAllTransactions();
+      setTransactions(trans);
   
       setSuccess(true);
     }
@@ -210,7 +213,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
             </div>
           </div>
           <div>
-            <p className={styles["select-category"]}>MESSAGE</p>
+            <p className={styles["select-category"]}>DESCRIPTION</p>
             <TextField
               className={styles["message-field"]}
               multiline
@@ -232,31 +235,10 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
           </Button>
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={noUserSnackbar}
+            open={snackbarOpen}
             autoHideDuration={3000}
-            onClose={() => setUserSnackbar(false)}
-            message="No User Selected"
-          />
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={amountSnackbar}
-            autoHideDuration={3000}
-            onClose={() => setAmountSnackbar(false)}
-            message="Amount chosen too large. Please reduce to below 10000"
-          />
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={validAmountSnackbar}
-            autoHideDuration={3000}
-            onClose={() => setValidAmountSnackbar(false)}
-            message="Please choose a valid amount number."
-          />
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={noAction}
-            autoHideDuration={3000}
-            onClose={() => setNoAction(false)}
-            message="Select Redeem or Earn"
+            onClose={() => setSnackbarOpen(false)}
+            message={snackbarMessage}
           />
         </div>
       );

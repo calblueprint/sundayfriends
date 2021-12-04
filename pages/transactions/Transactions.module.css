@@ -47,6 +47,12 @@
   margin-right: 4px;
 }
 
+.add-text {
+  font-family: Avenir;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 .transaction-container {
   width: 100%;
   border-radius: 15px 15px 30px 30px;
@@ -62,7 +68,7 @@
 }
 
 .sel-tab {
-  /* border: 2px solid #e6ecfe; */
+  font-family: Avenir;
   background-color: white;
   border-radius: 15px 15px 0px 0px;
   min-width: 110px;
@@ -75,6 +81,8 @@
   text-decoration-color: var(--sapphire);
   text-underline-offset: 6px;
   text-transform: none;
+  font-size: 14px;
+  font-weight: 700;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
   margin-top: 10px;
 }
@@ -88,6 +96,9 @@
   border-radius: 15px 15px 0px 0px;
   color: white;
   text-transform: none;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: Avenir;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
   margin-top: 10px;
 }
@@ -166,4 +177,10 @@
   font-size: 12px;
   margin: 10px;
   color: #525454;
+}
+
+.circular-progress {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }

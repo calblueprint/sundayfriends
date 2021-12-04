@@ -27,12 +27,10 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
   setTransactions,
 }: TransactionItemProps) => {
 
-  const handleDelete = () => {
-    deleteTransaction(id).then(() => {
-      getAllTransactions().then((items) => {
-        setTransactions(items);
-      });
-    });
+  const handleDelete = async () => {
+    await deleteTransaction(id);
+    let trans = await getAllTransactions();
+    setTransactions(trans);
   }
 
   return (

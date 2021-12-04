@@ -60,6 +60,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     <SvgIcon viewBox="0, 0, 8, 13">
       <path
         d="M6.5 1L1 6.19444L6.5 12"
+        stroke="#253C85"
         strokeWidth="1.57143"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -70,6 +71,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     <SvgIcon viewBox="0, 0, 8, 13">
       <path
         d="M1 1L6.5 6.19444L1 12"
+        stroke="#253C85"
         strokeWidth="1.57143"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -100,7 +102,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
            11.5488 5.09423 13.9063 8.02852 13.8906C10.9628 13.8748 13.3332 11.4916 13.3332 8.55731C13.3332
            5.62298 10.9628 3.23983 8.02852 3.22398C5.09423 3.20828 2.69837 5.56582 2.66683 8.49998V8.61465ZM8.66683
            11.8333H7.3335V9.16665H4.66683V7.83331H7.3335V5.16665H8.66683V7.83331H11.3335V9.16665H8.66683V11.8333Z"
-           fill="white"/>
+           fill="#e6ecfe"/>
        </SvgIcon>
    ),
    addGray: (
@@ -127,7 +129,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
            14.5697 12.7365 15.1667 12.0001 15.1667ZM4.00008 3.16668V13.8333H12.0001V7.16668H8.66675C8.29856
            7.16668 8.00008 6.8682 8.00008 6.50001V3.16668H4.00008ZM9.33341 4.10934V5.83334H11.0574L9.33341 4.10934ZM8.66675
            12.5H7.33341V11.1667H6.00008V9.83335H7.33341V8.50001H8.66675V9.83335H10.0001V11.1667H8.66675V12.5Z"
-        fill="white"
+        fill="#e6ecfe"
       />
     </SvgIcon>
   ),

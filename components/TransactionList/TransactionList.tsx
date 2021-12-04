@@ -59,7 +59,7 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
           return (
             <TransactionItem
               id={transaction.transaction_id}
-              key={transaction.description}
+              key={transaction.transaction_id}
               date={transaction.date}
               userName={transaction.user_name}
               fid={transaction.family_id}

@@ -24,8 +24,8 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [noFileSnackbar, setNoFileSnackbar] = useState(false);
-  const [CSVSnackbar, setCSVSnackbar] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   useEffect(() => {
     if (uploadAnchor) {
@@ -74,11 +74,12 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
     return true;
   };
 
-  const handleUploadConfirm = () => {
+  const handleUploadConfirm = async () => {
     if (uploading) {
       //handle file uploads from fileData
       if (!checkCSV()) {
-        setCSVSnackbar(true);
+        setSnackbarMessage("Invalid CSV Format");
+        setSnackbarOpen(true);
       } else {
         for (let i = 1; i < fileData.length; i++) {
           const data = {
@@ -93,9 +94,8 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
           addTransaction(data as Transaction);
         }
 
-        getAllTransactions().then((items) => {
-          setTransactions(items);
-        });
+        let trans = await getAllTransactions();
+        setTransactions(trans);
 
         setUploadSuccess(true);
       }
@@ -117,7 +117,8 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
         });
         reader.readAsText(uploadFile);
       } else {
-        setNoFileSnackbar(true);
+        setSnackbarMessage("No File Added");
+        setSnackbarOpen(true);
       }
     }
   };
@@ -196,17 +197,10 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
           </Button>
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={noFileSnackbar}
+            open={snackbarOpen}
             autoHideDuration={3000}
-            onClose={() => setNoFileSnackbar(false)}
-            message="No File Added"
-          />
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={CSVSnackbar}
-            autoHideDuration={3000}
-            onClose={() => setCSVSnackbar(false)}
-            message="Invalid CSV Format"
+            onClose={() => setSnackbarOpen(false)}
+            message={snackbarMessage}
           />
         </div>
       );

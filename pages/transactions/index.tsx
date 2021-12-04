@@ -12,6 +12,7 @@ import {
   Select,
   MenuItem,
   Popover,
+  CircularProgress,
 } from "@mui/material";
 import styles from "./Transactions.module.css";
 import { TabPanel } from "../../components/TabPanel/TabPanel";
@@ -96,8 +97,6 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
       setValue(newValue);
     };
 
-    
-
     return (
       <Box className={styles["transaction-container"]}>
         <Tabs
@@ -155,45 +154,47 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
               aria-describedby={popoverid}
               sx={{
                 display: {
+                  fontFamily: "Avenir",
                   backgroundColor: "#253c85",
-                  color: "white",
+                  color: "#e6ecfe",
                   borderRadius: "7px",
-                  height: "33px",
+                  height: "38px",
                   fontSize: "14px",
                   marginRight: "20px",
+                  padding: "7px 11px",
                   textTransform: "none",
                 },
                 "&:hover": {
-                  backgroundColor: "#253c85",
-                  color: "#686868",
+                  backgroundColor: "#526dc2",
+                  color: "#e6ecfe",
                 },
               }}
               onClick={clickAddButton}
             >
               <Icon className={styles["add-icon"]} type={"add"}></Icon>
-              Add
+              <p className={styles["add-text"]}>Add</p>
             </Button>
             <Button
               aria-describedby={uploadpopoverid}
               sx={{
                 display: {
                   backgroundColor: "#253c85",
-                  color: "white",
+                  color: "#e6ecfe",
                   borderRadius: "7px",
-                  height: "33px",
-                  fontSize: "14px",
+                  height: "38px",
                   marginRight: "20px",
+                  padding: "7px 11px",
                   textTransform: "none",
                 },
                 "&:hover": {
-                  backgroundColor: "#253c85",
-                  color: "#686868",
+                  backgroundColor: "#526dc2",
+                  color: "#e6ecfe",
                 },
               }}
               onClick={clickUploadButton}
             >
               <Icon className={styles["add-icon"]} type={"upload"}></Icon>
-              Upload
+              <p className={styles["add-text"]}>Upload</p>
             </Button>
           </div>
           <AddPopover
@@ -213,6 +214,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
         </div>
         {BasicTabs()}
       </div>
+      {isLoading && <CircularProgress className={styles['circular-progress']}/>}
     </Layout>
   );
 };
