@@ -81,7 +81,7 @@ export const deleteAdmin = async (adminId: string): Promise<void> => {
 const parseAdmin = async (doc) => {
   const data = doc.data();
   const admin = {
-    // created_at: data.created_at,
+    // created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
     email: data.email,
     name: data.name,
     phone: data.phone,

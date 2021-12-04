@@ -43,26 +43,28 @@
   width: 10%;
 }
 
-.lastActive {
-  width: 12%;
+.transactions {
+  width: 13%;
 }
 
 .manage {
-  width: 28%;
+  width: 27%;
 }
 
 .button {
-  font-size: x-small;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
   color: var(--grey-dark);
   border: 1px solid;
   border-radius: 15px;
   border-color: var(--grey-mid);
-  height: 30px;
+  height: 26px;
   font-size: 14px;
   margin-right: 10px;
   text-transform: none;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 17px;
+  padding-right: 17px;
 }
 
 .button:hover {
@@ -70,19 +72,28 @@
 }
 
 .viewButton {
-  font-size: x-small;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
   background-color: var(--sapphire-light);
   color: var(--grey-dark);
   border-radius: 15px;
-  height: 30px;
+  height: 26px;
   font-size: 14px;
   margin-right: 10px;
   text-transform: none;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 17px;
+  padding-right: 17px;
 }
 
 .viewButton:hover {
   background-color: var(--sapphire);
   color: var(--white);
+}
+
+.manageButtons {
+  display: flex;
+  flex-direction: row;
+  width: 250px;
+  justify-content: space-between;
 }

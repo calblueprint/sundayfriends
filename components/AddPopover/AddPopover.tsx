@@ -9,6 +9,7 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
+  Snackbar,
 } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Transaction, User, Admin } from "../../types/schema";
@@ -16,6 +17,7 @@ import {
   addTransaction,
   getAllTransactions,
 } from "../../firebase/firestore/transaction";
+import { integerPropType } from "@mui/utils";
 
 type AddPopoverProps = {
   allUsers: User[];
@@ -41,6 +43,8 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   const [addPoints, setAddPoints] = useState("10");
   const [addType, setAddType] = useState("");
   const [addMessage, setAddMessage] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   useEffect(() => {
     if (addAnchor) {
@@ -51,23 +55,41 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   }, [addAnchor]);
 
   const handleAddConfirm = async () => {
-    //handle post request
-    const adding = {
-      admin_name: currentAdmin.name,
-      date: new Date(),
-      description: addMessage,
-      family_id: addUser.family_id,
-      point_gain:
-        addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
-      user_name: addUser.full_name,
-    };
-    await addTransaction(adding as Transaction);
+    if (selectedUser == "Select User") {
+      setSnackbarMessage("No User Selected.");
+      setSnackbarOpen(true);
+    } else if (addType == "") {
+      setSnackbarMessage("Select Redeem or Earn.");
+      setSnackbarOpen(true);
+    } else if (parseInt(addPoints) >= 10000) {
+      setSnackbarMessage(
+        "Amount chosen too large. Please reduce to below 10000."
+      );
+      setSnackbarOpen(true);
+    } else if (parseInt(addPoints) == 0) {
+      setSnackbarMessage("Please choose a valid amount number.");
+      setSnackbarOpen(true);
+    } else if (addMessage == "") {
+      setSnackbarMessage("Please type a description.");
+      setSnackbarOpen(true);
+    } else {
+      //handle post request
+      const adding = {
+        admin_name: currentAdmin.name,
+        date: new Date(),
+        description: addMessage,
+        family_id: addUser.family_id,
+        point_gain:
+          addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
+        user_name: addUser.full_name,
+      };
+      await addTransaction(adding as Transaction);
 
-    getAllTransactions().then((items) => {
-      setTransactions(items);
-    });
+      let trans = await getAllTransactions();
+      setTransactions(trans);
 
-    setSuccess(true);
+      setSuccess(true);
+    }
   };
 
   const selectAutocomplete = (value) => {
@@ -172,6 +194,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
                 defaultValue="10"
                 variant="standard"
                 type="number"
+                inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
                 onChange={(e) => setAddPoints(e.target.value)}
               />
             </div>
@@ -192,7 +215,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
             </div>
           </div>
           <div>
-            <p className={styles["select-category"]}>MESSAGE</p>
+            <p className={styles["select-category"]}>DESCRIPTION</p>
             <TextField
               className={styles["message-field"]}
               multiline
@@ -212,6 +235,13 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
           >
             Confirm
           </Button>
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={snackbarOpen}
+            autoHideDuration={3000}
+            onClose={() => setSnackbarOpen(false)}
+            message={snackbarMessage}
+          />
         </div>
       );
     }
