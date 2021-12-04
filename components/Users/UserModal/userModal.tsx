@@ -329,12 +329,14 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
             <p>Add</p>
           </Button>
         </div>
-        
+
         <div>
-          {transactions !== undefined ? <TransactionTable
-          transactions={transactions}
-          setTransactions={setTransactions}
-          /> : null}
+          {transactions !== undefined ? (
+            <TransactionTable
+              transactions={transactions}
+              setTransactions={setTransactions}
+            />
+          ) : null}
         </div>
 
         {/* // <div className={styles["transactionHeader"]}>
