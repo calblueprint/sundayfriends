@@ -15,11 +15,7 @@ export type IconType =
   | "close"
   | "userAdd"
   | "settings"
-<<<<<<< HEAD
   | "editbuttonpencil"
-=======
-  | "editpencil"
->>>>>>> 8e0f838e16668b735ba87061309092ef5bbc9f7c
   | "nameicon"
   | "usersicon"
   | "singleperson"
@@ -36,11 +32,9 @@ export type IconType =
   | "inventorynavicon"
   | "hidepassword"
   | "sundayfriendslogo"
-<<<<<<< HEAD
   | "smallX"
   | "smallCheck"
-  | "editingpencil";
-=======
+  | "editingpencil"
   | "family"
   | "addCircle"
   | "admin"
@@ -48,7 +42,6 @@ export type IconType =
   | "inviteTrash"
   | "inviteAdd"
   | "ex";
->>>>>>> 8e0f838e16668b735ba87061309092ef5bbc9f7c
 
 const IconSvgs: Record<IconType, React.ReactElement> = {
   calendar: (
@@ -449,7 +442,6 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
       />
     </SvgIcon>
   ),
-<<<<<<< HEAD
   smallX: (
     <SvgIcon viewBox="0 0 10 9">
       <path
@@ -476,7 +468,6 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
       />
     </SvgIcon>
   ),
-=======
   family: (
     <SvgIcon viewBox="0 0 31 27">
       <path d="M11.1244 0.375C7.09727 0.375 3.83268 3.63959 3.83268 7.66667C3.83268 11.6937 7.09727 14.9583 11.1244 14.9583C15.1514 14.9583 18.416 11.6937 18.416 7.66667C18.416 3.63959 15.1514 0.375 11.1244 0.375ZM6.74935 7.66667C6.74935 5.25042 8.7081 3.29167 11.1244 3.29167C13.5406 3.29167 15.4994 5.25042 15.4994 7.66667C15.4994 10.0829 13.5406 12.0417 11.1244 12.0417C8.7081 12.0417 6.74935 10.0829 6.74935 7.66667Z" />
@@ -582,7 +573,6 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
       />
     </svg>
   ),
->>>>>>> 8e0f838e16668b735ba87061309092ef5bbc9f7c
 };
 
 type Props = {

@@ -22,7 +22,6 @@ export type Admin = {
   email: string;
   name: string;
   role: string;
-  last_active: Date | Timestamp | string;
   password: string;
   phone: string;
 };

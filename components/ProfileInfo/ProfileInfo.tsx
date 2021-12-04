@@ -4,6 +4,7 @@ import { Typography, IconButton, Button } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { IconType } from "../../assets/Icon";
 import { Admin } from "../../types/schema";
+import { getAdmin } from "../../firebase/firestore/admin";
 
 export type FieldInfo = {
   iconName: IconType;
@@ -62,10 +63,50 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
     );
   }
 
+  const [currAdmin, setCurrAdmin] = useState(admin);
   const [isSelected, setIsSelected] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [currEdit, setCurrEdit] = useState("");
+
+  const [name, setName] = useState(admin?.name);
+  const [role, setRole] = useState(admin?.role);
+  const [email, setEmail] = useState(admin?.email);
+  const [phone, setPhone] = useState(admin?.phone);
+
+  async function onSubmit(event?: React.BaseSyntheticEvent): Promise<void> {
+    event?.preventDefault();
+    const newData = {};
+    try {
+      if (name && name != admin?.name) {
+        newData["name"] = name;
+      }
+      if (role && role != admin?.role) {
+        newData["role"] = role;
+      }
+      if (phone && phone != admin?.phone) {
+        newData["phone"] = phone;
+      }
+      if (email && email != admin?.email) {
+        newData["email"] = email;
+      }
+      const currAdmin = admin;
+      const res = await fetch("/api/auth/updateAdmin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          adminID: currAdmin,
+          adminData: newData,
+        }),
+      });
+      // const updatedAdmin = await getAdmin()
+    } catch (e) {
+      throw new Error(e);
+    } finally {
+      null;
+    }
+  }
 
   function inLineEdit(field) {
     if (isEdit && field.fieldValue == currEdit) {
