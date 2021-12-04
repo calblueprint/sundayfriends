@@ -61,10 +61,25 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
         newData["role"] = role;
       }
       if (email != user?.email && email != undefined) {
+        const emailRegExp = new RegExp(
+          /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+        );
+        if (!emailRegExp.test(email)) {
+          throw new Error("Invalid Email");
+        }
         newData["email"] = email;
       }
       if (phoneNumber != user?.phone_number && phoneNumber != undefined) {
-        newData["phone_number"] = phoneNumber;
+        const phoneRegExp = new RegExp(
+          "^[(]?([0-9]{3})[)]?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"
+        );
+        if (!phoneRegExp.test(phoneNumber)) {
+          throw new Error("Invalid Phone Number");
+        }
+        newData["phone_number"] = phoneNumber.replace(
+          phoneRegExp,
+          "($1) $2-$3"
+        );
       }
       setLoad(true);
       const userUid = user.user_id;
