@@ -13,10 +13,11 @@ import {
 type TransactionTableProps = {
   transactions: Transaction[];
   setTransactions: Function;
+  userPath?: boolean;
 };
 
 export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
-  ({ transactions, setTransactions }) => {
+  ({ transactions, setTransactions, userPath }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const getNextSunday = (date) => {
@@ -158,6 +159,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
           <TransactionList
             transactions={weekTransactions}
             setTransactions={setTransactions}
+            userPath={userPath ? true : false}
           />
         )}
       </div>
