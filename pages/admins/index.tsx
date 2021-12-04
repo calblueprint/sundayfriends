@@ -145,7 +145,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
     const adminUid = userToken.uid;
     const adminData = await getAdmin(adminUid);
-    console.log(adminData);
     return {
       props: { currentAdmin: adminData, admins: admins },
     };
