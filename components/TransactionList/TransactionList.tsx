@@ -7,13 +7,16 @@ import { List } from "@mui/material";
 import styles from "../TransactionList/TransactionList.module.css";
 import itemstyles from "../TransactionItem/TransactionItem.module.css";
 import { Transaction } from "../../types/schema";
+import { DataGrid, GridRowModel } from "@mui/x-data-grid";
 
 type TransactionListProps = {
   transactions: Transaction[];
+  setTransactions: Function;
 };
 
 export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
   transactions,
+  setTransactions,
 }) => {
   const renderCategoryHeader = () => {
     return (
@@ -27,7 +30,7 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
           <SortTriangles />
         </div>
         <div className={itemstyles["fid"]} id={styles["category"]}>
-          <body id={styles["category-text"]}>Fid</body>
+          <body id={styles["category-text"]}>FID</body>
           <SortTriangles />
         </div>
         <div className={itemstyles["admin"]} id={styles["category"]}>
@@ -52,15 +55,18 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
     return (
       <List className={styles["list"]}>
         {transactions.map((transaction) => {
+          console.log(transaction);
           return (
             <TransactionItem
-              key={transaction.user_name}
+              id={transaction.transaction_id}
+              key={transaction.transaction_id}
               date={transaction.date}
               userName={transaction.user_name}
               fid={transaction.family_id}
               adminName={transaction.admin_name}
               message={transaction.description}
               change={transaction.point_gain}
+              setTransactions={setTransactions}
             />
           );
         })}
@@ -72,6 +78,17 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
     <div>
       {renderCategoryHeader()}
       {renderHistory()}
+      {/* <DataGrid
+        columns={[
+          { field: "Date", headerName: "Date" },
+          { field: "Username", headerName: "User" },
+          { field: "fid", headerName: "FID" },
+          { field: "adminname", headerName: "Admin" },
+          { field: "message", headerName: "Message" },
+          { field: "change", headerName: "Change" },
+        ]}
+        rows={[{ id: 1, Date: new Date(), Username: "user" }] as GridRowModel[]}
+      /> */}
     </div>
   );
 };

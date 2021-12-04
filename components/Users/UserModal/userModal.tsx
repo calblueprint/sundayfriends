@@ -7,6 +7,8 @@ import { SortTriangles } from "../../../components/SortTriangles/SortTriangles";
 import itemstyles from "../../../components/TransactionItem/TransactionItem.module.css";
 import React, { useState, useEffect } from "react";
 import { getUser } from "../../../firebase/firestore/user";
+import { TransactionTable } from "../../TransactionTable/TransactionTable";
+import UsersList from "../UsersList/usersList";
 
 type UserModalProps = {
   family?: Family;
@@ -36,8 +38,10 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
   const [error, setError] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(user?.phone_number);
   const [load, setLoad] = useState(false);
+  const [transactions, setTransactions] = useState(user?.transactions);
 
   useEffect(() => {
+    console.log(user);
     const callFunc = async () => {
       if (user != undefined) {
         const data = await getUser(user?.user_id);
@@ -46,6 +50,10 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
     };
     callFunc();
   }, []);
+
+  useEffect(() => {
+    setTransactions(user?.transactions);
+  }, [user]);
 
   async function onSubmit(event?: React.BaseSyntheticEvent): Promise<void> {
     event?.preventDefault();
@@ -61,10 +69,25 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
         newData["role"] = role;
       }
       if (email != user?.email && email != undefined) {
+        const emailRegExp = new RegExp(
+          /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+        );
+        if (!emailRegExp.test(email)) {
+          throw new Error("Invalid Email");
+        }
         newData["email"] = email;
       }
       if (phoneNumber != user?.phone_number && phoneNumber != undefined) {
-        newData["phone_number"] = phoneNumber;
+        const phoneRegExp = new RegExp(
+          "^[(]?([0-9]{3})[)]?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"
+        );
+        if (!phoneRegExp.test(phoneNumber)) {
+          throw new Error("Invalid Phone Number");
+        }
+        newData["phone_number"] = phoneNumber.replace(
+          phoneRegExp,
+          "($1) $2-$3"
+        );
       }
       setLoad(true);
       const userUid = user.user_id;
@@ -306,65 +329,74 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
             <p>Add</p>
           </Button>
         </div>
-        <div className={styles["transactionHeader"]}>
-          <div className={styles["date-range"]}>
-            <Icon className={styles["chevron"]} type={"chevronLeft"}></Icon>
-            <Icon className={styles["chevron"]} type={"chevronRight"}></Icon>
-            <Box className={styles["calendar-box"]}>
-              <Icon
-                className={styles["calendar-icon"]}
-                type={"calendar"}
-              ></Icon>
-            </Box>
-            <Box className={styles["date-display"]}>Sep 5 - Sep 12</Box>
-          </div>
-          <Input
-            disableUnderline={true}
-            placeholder="Search for a transaction"
-            className={styles["search-bar"]}
-            endAdornment={
-              <Icon className={styles["search-icon"]} type={"search"}></Icon>
-            }
-          />
+        
+        <div>
+          {transactions !== undefined ? <TransactionTable
+          transactions={transactions}
+          setTransactions={setTransactions}
+          /> : null}
         </div>
-        <div className={styles["transactionConatiner"]}>
-          <div className={styles["sectionHeader"]}>
-            <div className={itemstyles["dateV2"]} id={styles["category"]}>
-              <body id={styles["categoryText"]}>Date</body>
-              <SortTriangles />
-            </div>
-            <div className={itemstyles["adminV2"]} id={styles["category"]}>
-              <body id={styles["categoryText"]}>Admin</body>
-              <SortTriangles />
-            </div>
-            <div className={itemstyles["actionV2"]} id={styles["category"]}>
-              <body id={styles["categoryText"]}>Action</body>
-              <SortTriangles />
-            </div>
-            <div
-              className={itemstyles["messageV2"]}
-              id={styles["categoryText"]}
-            >
-              Message
-            </div>
-            <div id={styles["categoryText"]}>Change</div>
-          </div>
-          <div className={styles["transactionBox"]}>
-            <List className={styles["list"]}>
-              {user?.transactions.map((transaction) => {
-                return (
-                  <TransactionItem
-                    key={transaction.user_name}
-                    date={transaction.date}
-                    adminName={transaction.admin_name}
-                    message={transaction.description}
-                    change={transaction.point_gain}
-                  />
-                );
-              })}
-            </List>
-          </div>
-        </div>
+
+        {/* // <div className={styles["transactionHeader"]}>
+        //   <div className={styles["date-range"]}>
+        //     <Icon className={styles["chevron"]} type={"chevronLeft"}></Icon>
+        //     <Icon className={styles["chevron"]} type={"chevronRight"}></Icon>
+        //     <Box className={styles["calendar-box"]}>
+        //       <Icon
+        //         className={styles["calendar-icon"]}
+        //         type={"calendar"}
+        //       ></Icon>
+        //     </Box>
+        //     <Box className={styles["date-display"]}>Sep 5 - Sep 12</Box>
+        //   </div>
+        //   <Input
+        //     disableUnderline={true}
+        //     placeholder="Search for a transaction"
+        //     className={styles["search-bar"]}
+        //     endAdornment={
+        //       <Icon className={styles["search-icon"]} type={"search"}></Icon>
+        //     }
+        //   />
+        // </div>
+        // <div className={styles["transactionConatiner"]}>
+        //   <div className={styles["sectionHeader"]}>
+        //     <div className={itemstyles["dateV2"]} id={styles["category"]}>
+        //       <body id={styles["categoryText"]}>Date</body>
+        //       <SortTriangles />
+        //     </div>
+        //     <div className={itemstyles["adminV2"]} id={styles["category"]}>
+        //       <body id={styles["categoryText"]}>Admin</body>
+        //       <SortTriangles />
+        //     </div>
+        //     <div className={itemstyles["actionV2"]} id={styles["category"]}>
+        //       <body id={styles["categoryText"]}>Action</body>
+        //       <SortTriangles />
+        //     </div>
+        //     <div
+        //       className={itemstyles["messageV2"]}
+        //       id={styles["categoryText"]}
+        //     >
+        //       Message
+        //     </div>
+        //     <div id={styles["categoryText"]}>Change</div>
+        //   </div>
+        //   <div className={styles["transactionBox"]}>
+        //     <List className={styles["list"]}>
+        //       {user?.transactions.map((transaction) => {
+        //         return (
+        //           <TransactionItem
+        //             id={transaction.transaction_id}
+        //             key={transaction.user_name}
+        //             date={transaction.date}
+        //             adminName={transaction.admin_name}
+        //             message={transaction.description}
+        //             change={transaction.point_gain}
+        //           />
+        //         );
+        //       })}
+        //     </List>
+        //   </div>
+        // </div> */}
       </div>
     </Modal>
   );
