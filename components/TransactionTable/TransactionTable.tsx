@@ -39,7 +39,8 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
         return date >= prevSunday.getTime() && date <= nextSunday.getTime();
       })
     );
-    const [filteredTransactions, setFilteredTransactions] = useState(weekTransactions);
+    const [filteredTransactions, setFilteredTransactions] =
+      useState(weekTransactions);
 
     useEffect(() => {
       setWeekTransactions(
@@ -109,12 +110,20 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
     const filterSearch = (event) => {
       setFilteredTransactions(
         weekTransactions.filter((item) => {
-          return (item.user_name.toLowerCase().includes(event.target.value.toLowerCase()) || 
-          item.admin_name.toLowerCase().includes(event.target.value.toLowerCase()) ||
-          item.description.toLowerCase().includes(event.target.value.toLowerCase()));
+          return (
+            item.user_name
+              .toLowerCase()
+              .includes(event.target.value.toLowerCase()) ||
+            item.admin_name
+              .toLowerCase()
+              .includes(event.target.value.toLowerCase()) ||
+            item.description
+              .toLowerCase()
+              .includes(event.target.value.toLowerCase())
+          );
         })
       );
-    }
+    };
 
     const renderFilterHeader = () => {
       return (
