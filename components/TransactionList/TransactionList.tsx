@@ -7,7 +7,6 @@ import { List } from "@mui/material";
 import styles from "../TransactionList/TransactionList.module.css";
 import itemstyles from "../TransactionItem/TransactionItem.module.css";
 import { Transaction } from "../../types/schema";
-import { DataGrid, GridRowModel } from "@mui/x-data-grid";
 
 type TransactionListProps = {
   transactions: Transaction[];
@@ -78,17 +77,6 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
     <div>
       {renderCategoryHeader()}
       {renderHistory()}
-      {/* <DataGrid
-        columns={[
-          { field: "Date", headerName: "Date" },
-          { field: "Username", headerName: "User" },
-          { field: "fid", headerName: "FID" },
-          { field: "adminname", headerName: "Admin" },
-          { field: "message", headerName: "Message" },
-          { field: "change", headerName: "Change" },
-        ]}
-        rows={[{ id: 1, Date: new Date(), Username: "user" }] as GridRowModel[]}
-      /> */}
     </div>
   );
 };
