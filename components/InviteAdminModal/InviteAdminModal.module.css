@@ -14,10 +14,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-bottom: 15px;
 }
 
 .col {
+  width: 317px;
+  padding-bottom: 16px;
+}
+
+.errorCol {
   width: 317px;
 }
 
@@ -35,7 +39,7 @@
 .modal {
   display: flex;
   border-radius: 20px;
-  max-height: 490px;
+  max-height: 500px;
   width: 780px;
   padding-bottom: 2%;
   padding-right: 2%;
@@ -115,6 +119,7 @@
   border-radius: 50px 50px 50px 50px;
   align-self: baseline;
   text-transform: uppercase;
+  margin-top: 20px;
 }
 
 .addIcon {
@@ -152,4 +157,18 @@
   float: right;
   margin-top: 20px;
   margin-right: 10px;
+}
+
+.error {
+  color: var(--alert-text);
+  font-size: 12px;
+  font-weight: normal;
+  text-align: right;
+  margin-right: 42px;
+  padding-top: 0px;
+}
+
+.errorMessage {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }

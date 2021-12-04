@@ -3,13 +3,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  min-height: 68px;
+  min-height: 60px;
   padding-left: 2%;
   padding-right: 2%;
   border-top: 1px solid #ebebeb;
   color: #646464;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .date {

@@ -42,6 +42,31 @@ export const getAllTransactions = async (): Promise<Transaction[]> => {
 };
 
 /**
+ *
+ */
+export const getTransactionByDate = async (
+  startDate: Date,
+  endDate: Date
+): Promise<Transaction[]> => {
+  try {
+    // query everything in the transaction collection
+    const allTransactions = await transactionsCollection
+      .where("date", ">", startDate)
+      .where("date", "<=", endDate)
+      .orderBy("date", "desc")
+      .get();
+    const promises: Promise<Transaction>[] = allTransactions.docs.map((doc) =>
+      parseTransaction(doc)
+    );
+    const transactions = await Promise.all(promises);
+    return transactions;
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
+/**
  * Adds the given transaction data to firestore
  */
 export const addTransaction = async (
@@ -93,8 +118,10 @@ export const getTransactionByUser = async (
 };
 
 const parseTransaction = async (doc) => {
+  const transaction_id = doc.id.toString();
   const data = doc.data();
   const transaction = {
+    transaction_id: transaction_id,
     admin_name: data.admin_name,
     date: new Date(data.date.toMillis()).toLocaleDateString(),
     description: data.description,
