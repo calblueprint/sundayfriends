@@ -16,7 +16,7 @@ type TransactionListProps = {
 
 export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
   transactions,
-  setTransactions
+  setTransactions,
 }) => {
   const renderCategoryHeader = () => {
     return (

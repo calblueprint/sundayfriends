@@ -60,19 +60,23 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   );
 
   useEffect(() => {
-    setRedemptions(allTransactions != null
-      ? allTransactions.filter((transaction) => transaction.point_gain < 0)
-      : transactions.filter((transaction) => transaction.point_gain < 0));
-    setEarnings(allTransactions != null
-      ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
-      : transactions.filter((transaction) => transaction.point_gain >= 0));
+    setRedemptions(
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+        : transactions.filter((transaction) => transaction.point_gain < 0)
+    );
+    setEarnings(
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+        : transactions.filter((transaction) => transaction.point_gain >= 0)
+    );
     return () => setIsLoading(false);
-  }, [allTransactions])
+  }, [allTransactions]);
 
   const changeTransactions = (trans) => {
     setTransactions(trans);
     setIsLoading(true);
-  }
+  };
 
   const clickAddButton = (event) => {
     setAddAnchorEl(event.currentTarget);
@@ -121,14 +125,30 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
           />
         </Tabs>
         <TabPanel value={value} index={0}>
-          {!isLoading && <TransactionTable transactions={allTransactions != null ? allTransactions: transactions}
-          setTransactions={changeTransactions}/>}
+          {!isLoading && (
+            <TransactionTable
+              transactions={
+                allTransactions != null ? allTransactions : transactions
+              }
+              setTransactions={changeTransactions}
+            />
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {!isLoading && <TransactionTable transactions={redemptions} setTransactions={changeTransactions}/>}
+          {!isLoading && (
+            <TransactionTable
+              transactions={redemptions}
+              setTransactions={changeTransactions}
+            />
+          )}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {!isLoading && <TransactionTable transactions={earnings} setTransactions={changeTransactions}/>}
+          {!isLoading && (
+            <TransactionTable
+              transactions={earnings}
+              setTransactions={changeTransactions}
+            />
+          )}
         </TabPanel>
       </Box>
     );
@@ -214,7 +234,9 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
         </div>
         {BasicTabs()}
       </div>
-      {isLoading && <CircularProgress className={styles['circular-progress']}/>}
+      {isLoading && (
+        <CircularProgress className={styles["circular-progress"]} />
+      )}
     </Layout>
   );
 };

@@ -3,7 +3,10 @@ import styles from "./UploadPopover.module.css";
 import { Button, Popover, LinearProgress, Snackbar } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Transaction, User } from "../../types/schema";
-import { getAllTransactions, addTransaction } from "../../firebase/firestore/transaction";
+import {
+  getAllTransactions,
+  addTransaction,
+} from "../../firebase/firestore/transaction";
 import Papa from "papaparse";
 
 type UploadPopoverProps = {
@@ -193,7 +196,7 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
             className={styles["confirm-button"]}
             onClick={handleUploadConfirm}
           >
-            {uploadProgress==100?"Submit": "Upload"}
+            {uploadProgress == 100 ? "Submit" : "Upload"}
           </Button>
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -236,7 +239,9 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
             </div>
           </div>
           <p className={styles["uploaded-message"]}>
-            {uploadProgress == 100 ? "Uploaded. Press submit to reflect changes." : "Uploading..."}
+            {uploadProgress == 100
+              ? "Uploaded. Press submit to reflect changes."
+              : "Uploading..."}
           </p>
         </div>
       );

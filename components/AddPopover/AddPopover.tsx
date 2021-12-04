@@ -55,19 +55,21 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   }, [addAnchor]);
 
   const handleAddConfirm = async () => {
-    if (selectedUser=="Select User") {
+    if (selectedUser == "Select User") {
       setSnackbarMessage("No User Selected.");
       setSnackbarOpen(true);
-    } else if (addType=="") {
-      setSnackbarMessage("Select Redeem or Earn.")
+    } else if (addType == "") {
+      setSnackbarMessage("Select Redeem or Earn.");
       setSnackbarOpen(true);
     } else if (parseInt(addPoints) >= 10000) {
-      setSnackbarMessage("Amount chosen too large. Please reduce to below 10000.");
+      setSnackbarMessage(
+        "Amount chosen too large. Please reduce to below 10000."
+      );
       setSnackbarOpen(true);
     } else if (parseInt(addPoints) == 0) {
       setSnackbarMessage("Please choose a valid amount number.");
       setSnackbarOpen(true);
-    } else if (addMessage=="") {
+    } else if (addMessage == "") {
       setSnackbarMessage("Please type a description.");
       setSnackbarOpen(true);
     } else {
@@ -82,10 +84,10 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
         user_name: addUser.full_name,
       };
       await addTransaction(adding as Transaction);
-  
+
       let trans = await getAllTransactions();
       setTransactions(trans);
-  
+
       setSuccess(true);
     }
   };
@@ -192,7 +194,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
                 defaultValue="10"
                 variant="standard"
                 type="number"
-                inputProps={{ inputmode: 'numeric', pattern: '[0-9]*' }}
+                inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
                 onChange={(e) => setAddPoints(e.target.value)}
               />
             </div>

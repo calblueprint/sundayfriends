@@ -3,7 +3,10 @@ import styles from "../TransactionItem/TransactionItem.module.css";
 import { ListItem } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Timestamp } from "@firebase/firestore";
-import {getAllTransactions, deleteTransaction} from "../../firebase/firestore/transaction";
+import {
+  getAllTransactions,
+  deleteTransaction,
+} from "../../firebase/firestore/transaction";
 
 type TransactionItemProps = {
   id: string;
@@ -26,12 +29,11 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
   change,
   setTransactions,
 }: TransactionItemProps) => {
-
   const handleDelete = async () => {
     await deleteTransaction(id);
     let trans = await getAllTransactions();
     setTransactions(trans);
-  }
+  };
 
   return (
     <ListItem className={styles["list-item"]}>
