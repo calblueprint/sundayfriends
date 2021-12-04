@@ -59,7 +59,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
               className={styles["closeButton"]}
               onClick={() => setIsOpen(false)}
             >
-              <Icon className={styles["closeIcon"]} type={"close"} />
+              <Icon className={styles["closeIcon"]} type={"popoverclose"} />
             </button>
           </div>
           <div className={styles["title"]}>
@@ -108,7 +108,10 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
                     setIsOpen(false);
                   }}
                 >
-                  <Icon className={styles["cancelIcon"]} type={"close"} />
+                  <Icon
+                    className={styles["cancelIcon"]}
+                    type={"popoverclose"}
+                  />
                   Cancel
                 </button>
                 <button

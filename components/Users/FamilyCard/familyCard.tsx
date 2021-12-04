@@ -49,7 +49,7 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
         <div>
           <div className={styles["row"]}>
             <div className={styles["row"]}>
-              <h2 className={styles["headText"]}>{family.family_name} </h2>
+              <div className={styles["headText"]}>{family.family_name} </div>
               <div className={styles["smallText"]}>FID: {family.family_id}</div>
             </div>
             <h3>{family.total_points}</h3>
