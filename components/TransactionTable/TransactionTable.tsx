@@ -39,6 +39,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
         return date >= prevSunday.getTime() && date <= nextSunday.getTime();
       })
     );
+    const [filteredTransactions, setFilteredTransactions] = useState(weekTransactions);
 
     useEffect(() => {
       setWeekTransactions(
@@ -51,6 +52,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
 
     useEffect(() => {
       console.log(weekTransactions);
+      setFilteredTransactions(weekTransactions);
       return () => setIsLoading(false);
     }, [weekTransactions]);
 
@@ -104,6 +106,16 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
       filterWeek(prev, next);
     };
 
+    const filterSearch = (event) => {
+      setFilteredTransactions(
+        weekTransactions.filter((item) => {
+          return (item.user_name.toLowerCase().includes(event.target.value.toLowerCase()) || 
+          item.admin_name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+          item.description.toLowerCase().includes(event.target.value.toLowerCase()));
+        })
+      );
+    }
+
     const renderFilterHeader = () => {
       return (
         <div className={styles["filter-row"]}>
@@ -142,6 +154,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
             disableUnderline={true}
             placeholder="Search for a transaction"
             className={styles["search-bar"]}
+            onChange={filterSearch}
             endAdornment={
               <Icon className={styles["search-icon"]} type={"search"}></Icon>
             }
@@ -156,7 +169,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
         {console.log(transactions)}
         {!isLoading && (
           <TransactionList
-            transactions={weekTransactions}
+            transactions={filteredTransactions}
             setTransactions={setTransactions}
           />
         )}
