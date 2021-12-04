@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import styles from "./Activate.module.css";
 import { checkAdminActivationStatus } from "../../firebase/firestore/invite_admin";
 import Icon from "../../assets/Icon";
-import { ClassNames } from "@emotion/react";
 
 type AdminActivateData = {
   email: string;
@@ -21,19 +20,16 @@ const ActivateScreen: React.FC = () => {
   const handleCheckAdminInvite = async (data: AdminActivateData) => {
     try {
       const validEmail = await checkAdminActivationStatus(data.email);
-      console.log(validEmail);
       if (validEmail) {
         router.push("/register");
       } else {
         setValidEmail(false);
-        console.log(validEmail);
         setErrMessage("Invalid email.");
       }
     } catch (e) {
       reset();
       setValidEmail(false);
       console.error(e.message);
-      console.log(validEmail);
     }
   };
 

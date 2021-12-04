@@ -19,7 +19,6 @@ const ProfileSettings: React.FunctionComponent = () => {
   };
   const handleSignOut = () => {
     signOut();
-    console.log("signout");
     router.push("/");
   };
   return (
