@@ -54,3 +54,19 @@ export const checkAdminActivationStatus = async (
     throw e;
   }
 };
+
+/**
+ * Get admin name by email from invite
+ */
+export const getAdminNamebyEmail = async (
+  email: string
+): Promise<AdminInvite> => {
+  try {
+    const doc = await adminInvitesCollection.doc(email).get();
+    const adminData = doc.data() as AdminInvite;
+    return adminData;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
