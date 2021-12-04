@@ -4,6 +4,7 @@
 }
 
 .profile-settings {
+  position: absolute;
   margin-top: 31px;
-  justify-content: flex-end;
+  margin-left: 89.5%;
 }

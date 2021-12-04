@@ -14,7 +14,6 @@ const RegisterScreen: React.FC = () => {
   const { register, handleSubmit, reset } = useForm();
   const router = useRouter();
   const [errMessage, setErrMessage] = useState(null);
-  const name = await getAdminNamebyEmail
 
   // TODO clear fields after error in submission
   const handleCheckAdminInvite = async (data: AdminActivateData) => {

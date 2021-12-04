@@ -1,6 +1,12 @@
 .button {
   width: 100px;
   height: 31px;
-  background-color: var(--settingsbutton);
+  background-color: #6272aa;
+  border-radius: 20px;
+}
+.button:hover {
+  width: 100px;
+  height: 31px;
+  background-color: #6272aa;
   border-radius: 20px;
 }
