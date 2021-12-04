@@ -27,6 +27,7 @@ const ActivateScreen: React.FC = () => {
       } else {
         setValidEmail(false);
         console.log(validEmail);
+        setErrMessage("Invalid email.");
       }
     } catch (e) {
       reset();

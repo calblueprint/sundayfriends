@@ -6,6 +6,7 @@
   padding-bottom: 5%;
   width: 100%;
   flex-direction: column;
+  width: 100%;
 }
 .familyCards {
   display: inline-flex;
@@ -23,9 +24,251 @@
   text-transform: none;
 }
 
+.title {
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  justify-content: flex-start;
+  width: 50%;
+  margin-top: 13px;
+}
+
 .heading {
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 48px;
-  letter-spacing: 1px;
+  margin-left: 3%;
+  margin-right: 5%;
+  letter-spacing: 3px;
+}
+
+.modalHeading {
+  font-family: Avenir;
+  font-size: 20px;
+  font-weight: 900;
+  margin-left: 3%;
+  margin-right: 5%;
+  letter-spacing: 3px;
+  color: var(--sapphire);
+}
+
+.addFamilyButton {
+  display: flex;
+  font-family: Avenir;
+  background-color: var(--sapphire);
+  border: none;
+  cursor: pointer;
+  color: var(--white);
+  place-items: center;
+  height: 38px;
+  font-size: normal;
+  font-weight: 800;
+  width: 135px;
+  justify-content: center;
+  border-radius: 7px;
+}
+
+.createFamilyButton {
+  display: flex;
+  font-family: Avenir;
+  background-color: var(--sapphire);
+  border: none;
+  cursor: pointer;
+  color: var(--white);
+  place-items: center;
+  height: 37px;
+  font-size: normal;
+  font-weight: 800;
+  padding-right: 16px;
+  padding-left: 16px;
+  justify-content: center;
+  border-radius: 7px;
+}
+.cancelIcon {
+  margin-top: 8px;
+}
+
+.cancelButton {
+  display: flex;
+  font-family: Avenir;
+  background-color: transparent;
+  border: 1px solid var(--grey-dark);
+  color: var(--grey-dark);
+  cursor: pointer;
+  place-items: center;
+  height: 37px;
+  font-size: normal;
+  font-weight: 800;
+  padding-right: 16px;
+  padding-left: 16px;
+  justify-content: center;
+  border-radius: 7px;
+  vertical-align: middle;
+  margin-right: 12px;
+}
+
+.familyButtonIcon {
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+  margin-bottom: 3px;
+}
+
+.headingContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.userIcon {
+  fill: var(--sapphire);
+  width: 35px;
+  height: 35px;
+  margin-top: 12px;
+}
+
+.modalHeadContanier {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+
+.newFamModal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 4%;
+  width: 50%;
+  height: 60%;
+  max-height: 70%;
+  background-color: white;
+  border-radius: 20px;
+  top: 20%;
+  left: 25%;
+}
+
+.familyIcon {
+  width: 30px;
+  height: 25px;
+  fill: var(--sapphire);
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.chevronButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: 11px;
+}
+
+.closeIcon {
+  border-radius: 50%;
+  background-color: var(--grey-light);
+  padding-left: 8px;
+  padding-top: 8px;
+  width: 30px;
+  height: 30px;
+}
+
+.chevron {
+  fill: none;
+  cursor: pointer;
+  height: 11px;
+  width: 6px;
+  stroke: var(--grey-mid);
+}
+
+.breadcrumb {
+  display: flex;
+  flex-direction: row;
+  font-family: Avenir;
+  font-size: small;
+  color: var(--grey-mid);
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.containerLeft {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  border-right: 1px solid var(--grey-mid);
+  margin-top: 25px;
+  padding-right: 8%;
+}
+
+.containerRight {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  height: 100%;
+  margin-left: 34px;
+  margin-top: 25px;
+  justify-content: space-between;
+}
+
+.headingText {
+  font-family: Avenir;
+  font-size: large;
+  font-weight: 800;
+}
+
+.subText {
+  font-family: Avenir;
+  font-size: small;
+}
+
+.addHeadButton {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  background-color: var(--sapphire-light);
+  border: none;
+  border-radius: 10px;
+  place-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.addHead {
+  height: 42px;
+  width: 42px;
+  cursor: pointer;
+}
+
+.addDepButton {
+  display: flex;
+  width: 45px;
+  height: 45px;
+  background-color: var(--sapphire-light);
+  border: none;
+  border-radius: 10px;
+  place-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.addDep {
+  height: 31px;
+  width: 31px;
+  cursor: pointer;
+}
+
+.modalContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.modalButtons {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
 }
