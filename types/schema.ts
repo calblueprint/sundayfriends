@@ -17,6 +17,7 @@ export type Family = {
 };
 
 export type Admin = {
+  admin_id: string;
   created_at: Date | Timestamp | string;
   last_active: Date | Timestamp | string;
   email: string;

@@ -12,6 +12,7 @@ import {
   FieldInfo,
 } from "../../components/ProfileInfo/ProfileInfo";
 import Icon from "../../assets/Icon";
+import { useRouter } from "next/router";
 
 type ProfileSettingsPageProps = {
   currentAdmin: Admin;
@@ -19,6 +20,10 @@ type ProfileSettingsPageProps = {
 
 const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
   ({ currentAdmin }) => {
+    const router = useRouter();
+    const refreshData = (): void => {
+      router.replace(router.asPath);
+    };
     const aboutData: FieldInfo[] = [
       {
         iconName: "nameicon",
@@ -41,7 +46,6 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
         fieldValue: currentAdmin.created_at,
       },
     ];
-
     const loginInfo: FieldInfo[] = [
       {
         iconName: "email",
@@ -59,7 +63,6 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
         fieldValue: currentAdmin.password,
       },
     ];
-
     return (
       <Layout title="Profile">
         <div className={styles["page"]}>

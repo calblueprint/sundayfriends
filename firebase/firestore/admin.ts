@@ -23,12 +23,9 @@ export const checkAdminId = async (adminId: string): Promise<boolean> => {
  */
 export const getAdmin = async (adminId: string): Promise<Admin> => {
   try {
-    const doc = await adminCollection.doc(adminId).get();
-    const adminData = doc.data() as Admin;
-    // enables date objects to be serializable during SSR
-    adminData.created_at = adminData.created_at.toDate().toString();
-    adminData.last_active = adminData.last_active.toDate().toString();
-    return adminData;
+    const trimedID = adminId.toString().replace(/\s/g, "");
+    const doc = await adminCollection.doc(trimedID).get();
+    return parseAdmin(doc);
   } catch (e) {
     console.error(e);
     throw e;
@@ -58,3 +55,19 @@ export const deleteAdmin = async (adminId: string): Promise<void> => {
     throw e;
   }
 };
+
+const parseAdmin = async (doc) => {
+  const admin_uid = doc.id.toString();
+  const data = doc.data();
+  const admin = {
+    admin_id: admin_uid,
+    name: data.name,
+    created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
+    last_active: new Date(data.last_active.toMillis()).toLocaleDateString(),
+    email: data.email,
+    phone: data.phone,
+    role: data.role,
+    password: data.password,
+  };
+  return admin as Admin;
+}

@@ -5,6 +5,7 @@ import Icon from "../../assets/Icon";
 import { IconType } from "../../assets/Icon";
 import { Admin } from "../../types/schema";
 import { getAdmin } from "../../firebase/firestore/admin";
+import { useRouter } from "next/router";
 
 export type FieldInfo = {
   iconName: IconType;
@@ -25,6 +26,10 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [validSave, setValidSave] = useState(false);
+  const router = useRouter();
+  const refresh = (): void => {
+    router.replace(router.asPath);
+  };
 
   function editbuttons() {
     if (isEditing) {
@@ -43,7 +48,7 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
             variant="contained"
             className={validSave ? styles["saveChanges"] : styles["saveButton"]}
             startIcon={<Icon type="smallCheck" />}
-            onClick={() => setIsEditing(false)}
+            onClick={onSubmit}
             //onclick, save state and changes
           >
             Save
@@ -68,6 +73,7 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
   const [isEdit, setIsEdit] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [currEdit, setCurrEdit] = useState("");
+  const [currField, setCurrField] = useState("");
 
   const [name, setName] = useState(admin?.name);
   const [role, setRole] = useState(admin?.role);
@@ -78,33 +84,26 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
     event?.preventDefault();
     const newData = {};
     try {
-      if (name && name != admin?.name) {
-        newData["name"] = name;
+      if (currEdit && currEdit != inputValue) {
+        newData[currField] = inputValue;
       }
-      if (role && role != admin?.role) {
-        newData["role"] = role;
-      }
-      if (phone && phone != admin?.phone) {
-        newData["phone"] = phone;
-      }
-      if (email && email != admin?.email) {
-        newData["email"] = email;
-      }
-      const currAdmin = admin;
+      const currAdminUID = admin.admin_id;
       const res = await fetch("/api/auth/updateAdmin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
-          adminID: currAdmin,
+          adminID: currAdminUID,
           adminData: newData,
         }),
       });
-      // const updatedAdmin = await getAdmin()
+      const updatedAdmin = await getAdmin(admin.admin_id);
+      setCurrAdmin(updatedAdmin);
+      setIsEditing(false);
     } catch (e) {
       throw new Error(e);
     } finally {
-      null;
+      refresh();
     }
   }
 
@@ -158,11 +157,13 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
           color="#131313"
           className={styles["text"]}
         >
-          {field.fieldValue}
+          {/* {currAdmin ? currAdmin.`${currField}` :  field.fieldValue} */}
         </Typography>
       </div>
     );
   }
+
+  const [editState, setEditState] = useState("editState1");
 
   function fieldValues(field) {
     if (
@@ -170,25 +171,31 @@ export const ProfileInfo: React.FunctionComponent<ProfileInfoProps> = ({
       (field.fieldName == "NAME" ||
         field.fieldName == "ROLE" ||
         field.fieldName == "EMAIL" ||
-        field.fieldName == "PHONE #")
+        field.fieldName == "PHONE")
     ) {
       if (isSelected) {
         return inLineEdit(field);
       }
       return (
-        <div className={styles["editState1"]}>
+        <div
+          className={styles[editState]}
+          onMouseEnter={() => setEditState("editState2")}
+          onMouseLeave={() => setEditState("editState1")}
+        >
           <Typography
             variant="subtitle2"
             color="#131313"
             className={styles["text"]}
           >
+            {/* {currAdmin ? currAdmin.fieldValue : admin?.} */}
             {field.fieldValue}
           </Typography>
           <IconButton
             onClick={() => {
               setInputValue(field.fieldValue),
                 setIsSelected(true),
-                setCurrEdit(field.fieldValue);
+                setCurrEdit(field.fieldValue),
+                setCurrField(field.fieldName.toLowerCase());
             }}
           >
             <Icon type="editingpencil" />
