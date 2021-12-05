@@ -8,6 +8,7 @@ import firebaseAdmin from "../firebase/firebaseAdmin";
 import { GetServerSidePropsContext } from "next";
 import nookies from "nookies";
 import Icon from "../assets/Icon";
+import Link from "next/link";
 
 type LoginData = {
   email: string;
@@ -75,7 +76,9 @@ const SignInScreen: React.FC = () => {
                 </button>
               </div>
               <div className={styles["forgot-password"]}>
-                <a href="/">Forgot password? </a>
+                <Link href="/">
+                  <a>Forgot Password?</a>
+                </Link>
               </div>
               <div className={styles["login-error-message"]}>
                 {errMessage ? <div>{errMessage}</div> : null}
@@ -83,9 +86,9 @@ const SignInScreen: React.FC = () => {
               <div className={styles["bottom-row"]}>
                 <div className={styles["bottom-row-text"]}>
                   {"Haven't activated your account yet? "}
-                  <a className={styles["activate-now"]} href="/activate">
-                    Activate now!
-                  </a>
+                  <Link href="/activate">
+                    <a className={styles["activate-now"]}>Activate now!</a>
+                  </Link>
                 </div>
                 <Button
                   type="submit"
