@@ -82,6 +82,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
         point_gain:
           addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
         user_name: addUser.full_name,
+        user_id: addUser.user_id,
       };
       await addTransaction(adding as Transaction);
 

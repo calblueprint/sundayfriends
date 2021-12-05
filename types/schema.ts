@@ -1,6 +1,7 @@
 import { Timestamp } from "@firebase/firestore";
 
 export type Transaction = {
+  user_id: string;
   transaction_id: string;
   admin_name: string;
   date: Date | Timestamp | string;
