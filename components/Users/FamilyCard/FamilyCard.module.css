@@ -2,7 +2,7 @@
   width: 360px;
   height: 270px;
   border-style: solid;
-  border-color: var(--grey-light);
+  border-color: var(--sapphire-light);
   color: var(--grey-dark);
   border-radius: 5px;
   padding-left: 10%;
@@ -30,7 +30,8 @@
 
 .headText {
   padding-right: 8%;
-  text-decoration: underline;
+  text-decoration: none;
+  color: var(--noirish);
 }
 
 .smallText {
@@ -47,4 +48,8 @@
   display: inline-flex;
   flex-wrap: wrap;
   gap: 15px;
+}
+
+.userName {
+  font-size: 13.5px;
 }

@@ -27,7 +27,6 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
           id={styles["category"]}
         >
           <body id={styles["category-text"]}>Date</body>
-          <SortTriangles />
         </Box>
         {userPath ? null : (
           <div className={itemstyles["username"]} id={styles["category"]}>
@@ -46,14 +45,12 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
           id={styles["category"]}
         >
           <body id={styles["category-text"]}>Admin</body>
-          <SortTriangles />
         </div>
         <div
           className={userPath ? styles["actionV2"] : itemstyles["action"]}
           id={styles["category"]}
         >
           <body id={styles["category-text"]}>Action</body>
-          <SortTriangles />
         </div>
         <div
           className={userPath ? styles["messageV2"] : itemstyles["message"]}
