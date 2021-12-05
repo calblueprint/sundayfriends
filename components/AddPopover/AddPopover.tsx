@@ -82,7 +82,6 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
         point_gain:
           addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
         user_name: addUser.full_name,
-        user_id: addUser.user_id,
       };
       await addTransaction(adding as Transaction);
 
@@ -162,15 +161,17 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
               size="small"
               forcePopupIcon={false}
               renderOption={(props, option) => (
-                <Box component="li" {...props}>
-                  <p className={styles["select-label"]}>{option.full_name}</p>
+                <Box
+                  component="li"
+                  sx={{ style: { backgroundColor: "black" } }}
+                  {...props}
+                >
+                  {option.full_name}
                 </Box>
               )}
               renderInput={(params) => (
                 <TextField
-                  sx={{
-                    backgroundColor: "white",
-                  }}
+                  className={styles["autocomplete-text-field"]}
                   {...params}
                   label="Select User"
                   InputLabelProps={{
@@ -179,7 +180,6 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: "new-password", // disable autocomplete and autofill
-                    className: styles["autocomplete-input"],
                   }}
                 />
               )}
@@ -194,11 +194,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
                 defaultValue="10"
                 variant="standard"
                 type="number"
-                inputProps={{
-                  inputmode: "numeric",
-                  pattern: "[0-9]*",
-                  className: styles["amount-text"],
-                }}
+                inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
                 onChange={(e) => setAddPoints(e.target.value)}
               />
             </div>
