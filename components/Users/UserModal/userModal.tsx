@@ -335,70 +335,10 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
             <TransactionTable
               transactions={transactions}
               setTransactions={setTransactions}
+              userPath={true}
             />
           ) : null}
         </div>
-
-        {/* // <div className={styles["transactionHeader"]}>
-        //   <div className={styles["date-range"]}>
-        //     <Icon className={styles["chevron"]} type={"chevronLeft"}></Icon>
-        //     <Icon className={styles["chevron"]} type={"chevronRight"}></Icon>
-        //     <Box className={styles["calendar-box"]}>
-        //       <Icon
-        //         className={styles["calendar-icon"]}
-        //         type={"calendar"}
-        //       ></Icon>
-        //     </Box>
-        //     <Box className={styles["date-display"]}>Sep 5 - Sep 12</Box>
-        //   </div>
-        //   <Input
-        //     disableUnderline={true}
-        //     placeholder="Search for a transaction"
-        //     className={styles["search-bar"]}
-        //     endAdornment={
-        //       <Icon className={styles["search-icon"]} type={"search"}></Icon>
-        //     }
-        //   />
-        // </div>
-        // <div className={styles["transactionConatiner"]}>
-        //   <div className={styles["sectionHeader"]}>
-        //     <div className={itemstyles["dateV2"]} id={styles["category"]}>
-        //       <body id={styles["categoryText"]}>Date</body>
-        //       <SortTriangles />
-        //     </div>
-        //     <div className={itemstyles["adminV2"]} id={styles["category"]}>
-        //       <body id={styles["categoryText"]}>Admin</body>
-        //       <SortTriangles />
-        //     </div>
-        //     <div className={itemstyles["actionV2"]} id={styles["category"]}>
-        //       <body id={styles["categoryText"]}>Action</body>
-        //       <SortTriangles />
-        //     </div>
-        //     <div
-        //       className={itemstyles["messageV2"]}
-        //       id={styles["categoryText"]}
-        //     >
-        //       Message
-        //     </div>
-        //     <div id={styles["categoryText"]}>Change</div>
-        //   </div>
-        //   <div className={styles["transactionBox"]}>
-        //     <List className={styles["list"]}>
-        //       {user?.transactions.map((transaction) => {
-        //         return (
-        //           <TransactionItem
-        //             id={transaction.transaction_id}
-        //             key={transaction.user_name}
-        //             date={transaction.date}
-        //             adminName={transaction.admin_name}
-        //             message={transaction.description}
-        //             change={transaction.point_gain}
-        //           />
-        //         );
-        //       })}
-        //     </List>
-        //   </div>
-        // </div> */}
       </div>
     </Modal>
   );

@@ -11,36 +11,54 @@ import { Transaction } from "../../types/schema";
 type TransactionListProps = {
   transactions: Transaction[];
   setTransactions: Function;
+  userPath?: boolean;
 };
 
 export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
   transactions,
   setTransactions,
+  userPath,
 }) => {
   const renderCategoryHeader = () => {
     return (
       <Box className={styles["section-header"]}>
-        <Box className={itemstyles["date"]} id={styles["category"]}>
+        <Box
+          className={userPath ? styles["dateV2"] : itemstyles["date"]}
+          id={styles["category"]}
+        >
           <body id={styles["category-text"]}>Date</body>
           <SortTriangles />
         </Box>
-        <div className={itemstyles["username"]} id={styles["category"]}>
-          <body id={styles["category-text"]}>User</body>
-          <SortTriangles />
-        </div>
-        <div className={itemstyles["fid"]} id={styles["category"]}>
-          <body id={styles["category-text"]}>FID</body>
-          <SortTriangles />
-        </div>
-        <div className={itemstyles["admin"]} id={styles["category"]}>
+        {userPath ? null : (
+          <div className={itemstyles["username"]} id={styles["category"]}>
+            <body id={styles["category-text"]}>User</body>
+            <SortTriangles />
+          </div>
+        )}
+        {userPath ? null : (
+          <div className={itemstyles["fid"]} id={styles["category"]}>
+            <body id={styles["category-text"]}>FID</body>
+            <SortTriangles />
+          </div>
+        )}
+        <div
+          className={userPath ? styles["adminV2"] : itemstyles["admin"]}
+          id={styles["category"]}
+        >
           <body id={styles["category-text"]}>Admin</body>
           <SortTriangles />
         </div>
-        <div className={itemstyles["action"]} id={styles["category"]}>
+        <div
+          className={userPath ? styles["actionV2"] : itemstyles["action"]}
+          id={styles["category"]}
+        >
           <body id={styles["category-text"]}>Action</body>
           <SortTriangles />
         </div>
-        <div className={itemstyles["message"]} id={styles["category-text"]}>
+        <div
+          className={userPath ? styles["messageV2"] : itemstyles["message"]}
+          id={styles["category-text"]}
+        >
           Message
         </div>
         <div className={itemstyles["change"]} id={styles["category-text"]}>
@@ -60,8 +78,8 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
               id={transaction.transaction_id}
               key={transaction.transaction_id}
               date={transaction.date}
-              userName={transaction.user_name}
-              fid={transaction.family_id}
+              userName={userPath ? null : transaction.user_name}
+              fid={userPath ? null : transaction.family_id}
               adminName={transaction.admin_name}
               message={transaction.description}
               change={transaction.point_gain}
