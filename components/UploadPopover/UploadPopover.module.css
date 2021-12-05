@@ -89,7 +89,7 @@
 
 .upload-file-box {
   height: 80px;
-  border: 1.5px dashed #526dc2;
+  border: 2px dashed #526dc2;
   border-radius: 18px;
   cursor: pointer;
   display: flex;

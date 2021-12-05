@@ -22,11 +22,24 @@ type FamilyMemberProps = {
 const FamilyMember: React.FC<FamilyMemberProps> = ({
   user,
 }: FamilyMemberProps) => {
+
+  const imagePath = (): string => {
+    if (user.role == "Head") {
+      return "/smiley - head.svg"
+    }
+    else if (user.role == "Parent") {
+      return "/smiley - parent.svg"
+    }
+    else if (user.role == "Child") {
+      return "/smiley - child.svg"
+    }
+    return "/smiley - dependent.svg"
+  }
   return (
     <Grid item xs={6}>
       <div className={styles["familyMember"]}>
-        <Avatar alt="smiley pic" src="/smiley.png" />
-        <div>{user.full_name}</div>
+        <img alt="smiley pic" src={imagePath()} />
+        <div className={styles["userName"]}>{user.full_name}</div>
       </div>
     </Grid>
   );
@@ -49,10 +62,10 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
         <div>
           <div className={styles["row"]}>
             <div className={styles["row"]}>
-              <h2 className={styles["headText"]}>{family.family_name} </h2>
+              <h4 className={styles["headText"]}>{family.family_name} </h4>
               <div className={styles["smallText"]}>FID: {family.family_id}</div>
             </div>
-            <h3>{family.total_points}</h3>
+            <h5>{family.total_points}</h5>
           </div>
           <Grid container spacing={2}>
             {family.user_ids.map((user) => (
