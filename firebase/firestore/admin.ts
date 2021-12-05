@@ -24,13 +24,32 @@ export const checkAdminId = async (adminId: string): Promise<boolean> => {
 export const getAdmin = async (adminId: string): Promise<Admin> => {
   try {
     const doc = await adminCollection.doc(adminId).get();
-    const adminData = doc.data() as Admin;
+    const adminData = doc.data();
     // enables date objects to be serializable during SSR
-    adminData.created_at = adminData.created_at.toDate().toString();
-    adminData.last_active = adminData.last_active.toDate().toString();
-    return adminData;
+    // adminData.created_at = adminData.created_at.toDate().toString();
+    // adminData.last_active = adminData.last_active.toDate().toString();
+    // return parseAdmin(doc);
+    return parseAdmin(doc);
   } catch (e) {
     console.error(e);
+    throw e;
+  }
+};
+
+/**
+ * Returns all admin data from firestore
+ */
+export const getAllAdmins = async (): Promise<Admin[]> => {
+  try {
+    // query everything in the admin collection
+    const allAdmins = await adminCollection.get();
+    const promises: Promise<Admin>[] = allAdmins.docs.map((doc) =>
+      parseAdmin(doc)
+    );
+    const admins = await Promise.all(promises);
+    return admins;
+  } catch (e) {
+    console.warn(e);
     throw e;
   }
 };
@@ -62,9 +81,11 @@ export const deleteAdmin = async (adminId: string): Promise<void> => {
 const parseAdmin = async (doc) => {
   const data = doc.data();
   const admin = {
-    created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
+    // created_at: new Date(data.created_at.toMillis()).toLocaleDateString(),
     email: data.email,
     name: data.name,
+    phone: data.phone,
+    role: data.role,
   };
   return admin as Admin;
 };
