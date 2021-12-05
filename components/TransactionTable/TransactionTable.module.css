@@ -93,7 +93,7 @@
 }
 
 .search-bar {
-  border: 2px solid var(--grey-light);
+  border: 2px solid #f0f0f0;
   border-radius: 19.5px;
   width: 30%;
   min-width: 175px;

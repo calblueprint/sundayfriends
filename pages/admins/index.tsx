@@ -6,6 +6,7 @@ import { AdminItem } from "../../components/AdminItem/AdminItem";
 import { InviteAdminModal } from "../../components/InviteAdminModal/InviteAdminModal";
 import itemstyles from "../../components/AdminItem/AdminItem.module.css";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
+import { getAllAdmins } from "../../firebase/firestore/admin";
 import { GetServerSidePropsContext } from "next";
 import { Admin } from "../../types/schema";
 import { getAdmin } from "../../firebase/firestore/admin";
@@ -16,10 +17,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 type AdminPageProps = {
   currentAdmin: Admin;
+  admins: Admin[];
 };
 
 const AdminPage: React.FunctionComponent<AdminPageProps> = ({
   currentAdmin,
+  admins,
 }) => {
   const renderCategoryHeader = () => {
     return (
@@ -51,54 +54,10 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
     setOpen(true);
   };
 
-  // const handleClose = () => {
-  //   setOpen(false);
-  //   // setSent(false);
-  // };
-
-  const temp = [
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-    {
-      name: "Firstname Lastname",
-      role: "admin",
-      email: "pres@google.com",
-      phone: "8575009958",
-    },
-  ];
-
   const renderAdminList = () => {
     return (
       <List className={styles["list"]}>
-        {temp.map((admin, index) => {
+        {admins.map((admin, index) => {
           return (
             <AdminItem
               key={index}
@@ -125,7 +84,7 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
           }
         />
         <p className={styles["label"]}>
-          <b>6</b> Total Admin
+          <b>{admins.length}</b> Total Admin
         </p>
       </ListItem>
     );
@@ -167,7 +126,6 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
               <InviteAdminModal {...inviteModalProps} />
             </ThemeProvider>
           </div>
-          {/* <Button className={styles['button']}>INVITE ADMIN</Button> */}
         </div>
         <List className={styles["table"]}>
           {renderFilters()}
@@ -182,13 +140,13 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
 // Use SSR to load admins!
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   try {
+    const admins = await getAllAdmins();
     const cookies = nookies.get(ctx);
     const userToken = await firebaseAdmin.auth().verifyIdToken(cookies.token);
     const adminUid = userToken.uid;
     const adminData = await getAdmin(adminUid);
-    console.log(adminData);
     return {
-      props: { currentAdmin: adminData },
+      props: { currentAdmin: adminData, admins: admins },
     };
   } catch (e) {
     console.error(e);
