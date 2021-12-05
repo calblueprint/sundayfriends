@@ -202,7 +202,6 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
                   color: "#e6ecfe",
                   borderRadius: "7px",
                   height: "38px",
-                  marginRight: "20px",
                   padding: "7px 11px",
                   textTransform: "none",
                 },

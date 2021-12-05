@@ -5,15 +5,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   height: 800px;
 }
 
 .table {
-  width: 90%;
+  width: 93%;
   align-items: center;
   border-radius: 20px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   height: 85%;
   border: 2px solid #ebebeb;
   position: relative;
@@ -51,7 +51,7 @@
 }
 
 .header {
-  width: 90%;
+  width: 93%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +71,7 @@
 }
 
 .tableHeader {
-  background: #EDEDED;
+  background: #ededed;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -89,7 +89,7 @@
   flex-direction: row;
   height: 46px;
   align-items: center;
-  background-color: #E6ECFE;
+  background-color: #e6ecfe;
   padding-left: 2%;
   padding-right: 2%;
 }
@@ -106,32 +106,32 @@
 }
 
 .search-bar {
-  border: 2px solid #F0F0F0;
+  border: 2px solid #f0f0f0;
   border-radius: 19.5px;
   width: 30%;
   height: 36px;
   font-family: Avenir;
   font-size: 12px;
   padding-left: 1%;
- }
+}
 
 .search-icon {
   margin-right: 3%;
   width: 20px;
   height: 20px;
- }
- 
- .admin-icon {
+}
+
+.admin-icon {
   width: 35px;
   height: 35px;
- }
- 
- .title {
+}
+
+.title {
   margin-left: 3%;
   margin-right: 3%;
- }
+}
 
- .label {
-   margin-left: auto;
-   margin-right: 2%;
- }
+.label {
+  margin-left: auto;
+  margin-right: 2%;
+}

@@ -30,7 +30,7 @@ a {
 }
 
 h2 {
-  color: #253C85;
+  color: #253c85;
   font-family: Avenir;
   font-style: normal;
   font-weight: 900;
@@ -72,4 +72,5 @@ h1 {
   --grey-alt: #cecccc;
   --off-white: #ededed;
   --hover: #f6f6f6;
+  --profile-button: #6272aa;
 }
