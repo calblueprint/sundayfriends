@@ -2,9 +2,20 @@
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  height: 25%;
+  height: 30%;
   margin: 62px 60px 74px 60px;
   width: 481px;
+}
+
+.oops-container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 25%;
+  margin: 62px 60px 74px 60px;
+  width: 450px;
+  display: flex;
+  align-items: center;
 }
 
 .box-styling {
@@ -32,16 +43,21 @@
   height: 100vh;
 }
 
-.welcome-title {
+.welcome-title,
+.oops-title {
   color: var(--sapphire);
   margin-bottom: 5px;
   margin-top: 0px;
 }
 
-.title-subtext {
+.oops-subtext {
   color: var(--grey-dark);
   margin-top: 0px;
-  margin-bottom: 45px;
+}
+
+.oops-subtext {
+  color: var(--grey-dark);
+  margin-top: 10px;
 }
 
 .email-input-label {
@@ -84,10 +100,34 @@
   height: 36px;
 }
 
+.try-again-button {
+  background: #253c85;
+  border-radius: 7px;
+  color: white;
+  width: 220px;
+  margin-right: 20px;
+}
+
+.try-again-button:hover {
+  background: #253c85;
+  border-radius: 7px;
+  color: white;
+  width: 220px;
+}
+
+.exit-button {
+  border: solid;
+  border-radius: 7px;
+  border-width: 2px;
+  border-color: var(--grey-dark);
+  color: var(--grey-dark);
+  width: 83px;
+}
+
 .bottom-row {
   display: flex;
   justify-content: space-between;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .bottom-row-text {
@@ -103,9 +143,8 @@
 }
 .login-error-message {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   font-size: 12px;
   line-height: 16px;
   color: red;
-  margin-top: 18px;
 }
