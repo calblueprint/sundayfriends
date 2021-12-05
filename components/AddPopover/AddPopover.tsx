@@ -161,17 +161,14 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
               size="small"
               forcePopupIcon={false}
               renderOption={(props, option) => (
-                <Box
-                  component="li"
-                  {...props}
-                >
+                <Box component="li" {...props}>
                   <p className={styles["select-label"]}>{option.full_name}</p>
                 </Box>
               )}
               renderInput={(params) => (
                 <TextField
                   sx={{
-                    backgroundColor: "white"
+                    backgroundColor: "white",
                   }}
                   {...params}
                   label="Select User"
@@ -196,10 +193,10 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
                 defaultValue="10"
                 variant="standard"
                 type="number"
-                inputProps={{ 
-                  inputmode: "numeric", 
-                  pattern: "[0-9]*", 
-                  className: styles["amount-text"] 
+                inputProps={{
+                  inputmode: "numeric",
+                  pattern: "[0-9]*",
+                  className: styles["amount-text"],
                 }}
                 onChange={(e) => setAddPoints(e.target.value)}
               />
