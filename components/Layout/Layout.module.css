@@ -6,5 +6,6 @@
 .profile-settings {
   position: absolute;
   margin-top: 31px;
-  margin-left: 90%;
+  width: 100%;
+  padding-left: 90%;
 }

@@ -6,6 +6,7 @@ import styles from "../ProfileSettings/ProfileSettings.module.css";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/router";
 import { signOut } from "../../firebase/auth";
+import Icon from "../../assets/Icon";
 
 const ProfileSettings: React.FunctionComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -27,6 +28,13 @@ const ProfileSettings: React.FunctionComponent = () => {
         variant="contained"
         className={styles.button}
         onClick={handleClick}
+        sx={{
+          display: {
+            fontFamily: "Avenir",
+            height: "31px",
+            textTransform: "capitalize",
+          },
+        }}
       >
         Cindy ▼
       </Button>
@@ -40,7 +48,7 @@ const ProfileSettings: React.FunctionComponent = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleSignOut} disableRipple>
-          Logout
+          Logout{" "}
         </MenuItem>
       </Menu>
     </div>

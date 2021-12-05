@@ -10,3 +10,7 @@
   background-color: var(--profile-button);
   border-radius: 20px;
 }
+
+.drop-triangle {
+  transform: scaleX(-1);
+}
