@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
 html,
 body {
   padding: 0;
@@ -5,12 +8,23 @@ body {
   font-family: Avenir;
 }
 
+h1 {
+  color: var(--noirish);
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 47px;
+  letter-spacing: 1px;
+}
+
 h2 {
   color: #253c85;
-  font-family: Avenir;
+  font-family: 'DM Sans', sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
+  letter-spacing: 5px;
   line-height: 29.72px;
   letter-spacing: 1px;
   color: var(--sapphire);
@@ -68,6 +82,10 @@ h1 {
   --white: #ffffff;
   --alert-text: #e94444;
   --alert: #fce3e3;
+  --redeem-text: #FF6666;
+  --redeem-background: #FDCACA;
+  --earn-text: #65C656;
+  --earn-background: #D0F0CB;
   --grey-darker: #646464;
   --grey-alt: #cecccc;
   --off-white: #ededed;

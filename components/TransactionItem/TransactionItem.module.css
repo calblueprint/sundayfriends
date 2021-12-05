@@ -3,13 +3,13 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  min-height: 60px;
+  min-height: 54px;
   padding-left: 2%;
   padding-right: 2%;
   border-top: 1px solid #ebebeb;
   color: #646464;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 13.5px;
 }
 
 .date {
@@ -31,7 +31,7 @@
 }
 
 .admin {
-  width: 14%;
+  width: 10%;
   min-width: 80px;
 }
 
@@ -43,10 +43,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 30px;
-  background-color: #ffd4c7;
-  border: 1px solid #c8c8c8;
+  width: 88px;
+  height: 28px;
+  background-color: var(--redeem-background);
   border-radius: 16.5px;
 }
 
@@ -54,10 +53,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 30px;
-  background-color: #cbf2c5;
-  border: 1px solid #c8c8c8;
+  width: 88px;
+  height: 28px;
+  background-color: var(--earn-background);
   border-radius: 16.5px;
 }
 
@@ -70,7 +68,7 @@
 }
 
 .message {
-  width: 36%;
+  width: 35%;
   flex-wrap: wrap;
   word-wrap: break-word;
 }
@@ -82,29 +80,37 @@
 }
 
 .pos-changeV2 {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
   width: 11%;
-  color: #74ab67;
+  color: var(--earn-text);
   margin-left: 1%;
 }
 
 .pos-change {
-  width: 7%;
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  width: 12%;
   min-width: 40px;
-  color: #74ab67;
+  color: var(--earn-text);
   margin-left: 1%;
   flex-wrap: nowrap;
 }
 
 .neg-change {
-  width: 7%;
-  color: #ee512f;
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  width: 12%;
+  color: var(--redeem-text);
   margin-left: 1%;
   min-width: 40px;
 }
 
 .neg-changeV2 {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
   width: 11%;
-  color: #ee512f;
+  color: var(--redeem-text);
   margin-left: 1%;
 }
 
@@ -115,6 +121,6 @@
 
 .trash-icon {
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }

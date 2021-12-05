@@ -22,23 +22,18 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
       <Box className={styles["section-header"]}>
         <Box className={itemstyles["date"]} id={styles["category"]}>
           <body id={styles["category-text"]}>Date</body>
-          <SortTriangles />
         </Box>
         <div className={itemstyles["username"]} id={styles["category"]}>
           <body id={styles["category-text"]}>User</body>
-          <SortTriangles />
         </div>
         <div className={itemstyles["fid"]} id={styles["category"]}>
           <body id={styles["category-text"]}>FID</body>
-          <SortTriangles />
         </div>
         <div className={itemstyles["admin"]} id={styles["category"]}>
           <body id={styles["category-text"]}>Admin</body>
-          <SortTriangles />
         </div>
         <div className={itemstyles["action"]} id={styles["category"]}>
           <body id={styles["category-text"]}>Action</body>
-          <SortTriangles />
         </div>
         <div className={itemstyles["message"]} id={styles["category-text"]}>
           Message
