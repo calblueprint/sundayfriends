@@ -6,7 +6,7 @@
   border: 2px solid rgba(234, 234, 234, 0.4);
   border-radius: 8px;
   width: 370px;
-  height: 410px;
+  height: 400px;
   padding-top: 10px;
   padding-left: 30px;
   padding-right: 30px;
@@ -85,14 +85,9 @@
   background-color: var(--sapphire);
   color: white;
   border-radius: 7px;
-  font-family: Avenir;
   font-size: 14px;
   margin-left: 20px;
   text-transform: none;
-}
-
-.add-more-button:hover {
-  background-color: var(--sapphire-mid);
 }
 
 .select-category {
@@ -121,16 +116,13 @@
   background-color: var(--sapphire);
 }
 
-.autocomplete-input {
-  font-family: Avenir;
-  font-size: 13.5px;
-  line-height: 28px;
+.autocomplete-text-field {
+  background-color: white;
 }
 
-.select-label {
-  margin: 0px;
-  font-family: Avenir;
-  font-size: 13.5px;
+.autocomplete-input {
+  font-size: 12px;
+  line-height: 20px;
 }
 
 .amount-action {
@@ -145,11 +137,6 @@
   width: 90%;
 }
 
-.amount-text {
-  font-family: Avenir;
-  font-size: 13.5px;
-}
-
 #amount {
   flex: 2;
 }
@@ -159,10 +146,9 @@
 }
 
 .radio-label {
-  font-family: Avenir;
   font-style: normal;
   font-weight: normal;
-  font-size: 13.5px;
+  font-size: 12px;
   line-height: 16px;
 
   color: #646464;
@@ -174,8 +160,7 @@
 }
 
 .message-field-input {
-  font-family: Avenir;
-  font-size: 13.5px;
+  font-size: 12px;
   line-height: 20px;
   margin-left: 15px;
   margin-right: 15px;
@@ -189,9 +174,7 @@
   color: white;
   border-radius: 7px;
   height: 33px;
-  font-family: Avenir;
   font-size: 14px;
-  line-height: 20px;
   text-transform: none;
   margin-top: 20px;
   width: 89px;

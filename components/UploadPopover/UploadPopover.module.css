@@ -49,9 +49,7 @@
   align-self: flex-end;
   width: 89px;
   height: 33px;
-  font-family: Avenir;
   font-size: 14px;
-  line-height: 20px;
   background-color: var(--sapphire);
   color: white;
   border-radius: 7px;
@@ -198,7 +196,7 @@
   font-style: normal;
   font-weight: 800;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 19px;
   text-transform: none;
 }
 
@@ -206,15 +204,9 @@
   background-color: var(--sapphire);
   color: white;
   border-radius: 7px;
-  font-family: Avenir;
   font-size: 14px;
-  line-height: 20px;
   margin-left: 20px;
   text-transform: none;
-}
-
-.add-more-button:hover {
-  background-color: var(--sapphire-mid);
 }
 
 .colorPrimary {

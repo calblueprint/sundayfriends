@@ -121,7 +121,6 @@ const parseTransaction = async (doc) => {
   const transaction_id = doc.id.toString();
   const data = doc.data();
   const transaction = {
-    user_id: data.user_id,
     transaction_id: transaction_id,
     admin_name: data.admin_name,
     date: new Date(data.date.toMillis()).toLocaleDateString(),
