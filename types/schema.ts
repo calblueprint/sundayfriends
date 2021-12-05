@@ -18,10 +18,12 @@ export type Family = {
 };
 
 export type Admin = {
-  created_at: Date | Timestamp | string;
-  last_active: Date | Timestamp | string;
+  // created_at: Date | Timestamp | string;
+  // last_active: Date | Timestamp | string;
   email: string;
   name: string;
+  phone: string;
+  role: string;
 };
 
 export type AdminInvite = {
