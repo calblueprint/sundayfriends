@@ -96,7 +96,13 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
 
                 {invites.map((i) => (
                   <div key={i} className={styles["row"]}>
-                    <div className={styles["col"]}>
+                    <div
+                      className={
+                        errors.invite?.[i]?.name
+                          ? styles["errorCol"]
+                          : styles["col"]
+                      }
+                    >
                       <TextField
                         inputProps={{ style: { fontSize: 14 } }}
                         name={"invite." + i + ".name"}
@@ -111,8 +117,22 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                           required: true,
                         })}
                       />
+                      {errors.invite?.[i]?.name?.type === "required" && (
+                        <div className={styles["error"]}>
+                          <p className={styles["errorMessage"]}>
+                            Field required
+                          </p>
+                        </div>
+                      )}
                     </div>
-                    <div className={styles["col"]}>
+                    <div
+                      className={
+                        errors.invite?.[i]?.email ||
+                        errors.invite?.[i]?.email?.message
+                          ? styles["errorCol"]
+                          : styles["col"]
+                      }
+                    >
                       <TextField
                         name={"invite." + i + ".email"}
                         inputProps={{ style: { fontSize: 14 } }}
@@ -125,8 +145,26 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
                         className={styles["text"]}
                         {...register("invite." + i + ".email", {
                           required: true,
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "Please enter a valid email",
+                          },
                         })}
                       />
+                      {errors.invite?.[i]?.email?.type === "required" && (
+                        <div className={styles["error"]}>
+                          <p className={styles["errorMessage"]}>
+                            Field required
+                          </p>
+                        </div>
+                      )}
+                      {errors.invite?.[i]?.email?.message && (
+                        <div className={styles["error"]}>
+                          <p className={styles["errorMessage"]}>
+                            Please enter a valid email
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     {i != 0 && (

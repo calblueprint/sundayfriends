@@ -22,7 +22,24 @@
 }
 
 #category-text {
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 14px;
   margin-right: 10px;
   color: var(--noirish);
+}
+.dateV2 {
+  width: 13%;
+}
+.actionV2 {
+  width: 16%;
+}
+
+.adminV2 {
+  width: 19%;
+}
+
+.messageV2 {
+  width: 35%;
+  flex-wrap: wrap;
+  word-wrap: break-word;
 }

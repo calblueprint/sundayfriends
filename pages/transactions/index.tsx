@@ -5,12 +5,14 @@ import {
   Tabs,
   Tab,
   Box,
+  List,
   Input,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
   Popover,
+  CircularProgress,
 } from "@mui/material";
 import styles from "./Transactions.module.css";
 import { TabPanel } from "../../components/TabPanel/TabPanel";
@@ -20,11 +22,13 @@ import { AddPopover } from "../../components/AddPopover/AddPopover";
 import { getAllTransactions } from "../../firebase/firestore/transaction";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { User, Transaction, Admin } from "../../types/schema";
-import { GetServerSidePropsContext } from "next";
+import next, { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
+import { UploadPopover } from "../../components/UploadPopover/UploadPopover";
+import { TransactionTable } from "../../components/TransactionTable/TransactionTable";
 
 type TransactionPageProps = {
   currentAdmin: Admin;
@@ -41,18 +45,38 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   const [uploadAnchorEl, setUploadAnchorEl] = React.useState(null);
   const [allUsers, setUsers] = React.useState(users);
   const [allTransactions, setTransactions] = React.useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [redemptions, setRedemptions] = useState(
+    allTransactions != null
+      ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+      : transactions.filter((transaction) => transaction.point_gain < 0)
+  );
 
-  const router = useRouter();
-  const refresh = useCallback(() => {
-    router.replace(router.asPath);
-  }, [router]);
+  const [earnings, setEarnings] = useState(
+    allTransactions != null
+      ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+      : transactions.filter((transaction) => transaction.point_gain >= 0)
+  );
 
   useEffect(() => {
-    console.log(allTransactions);
-    refresh();
+    setRedemptions(
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
+        : transactions.filter((transaction) => transaction.point_gain < 0)
+    );
+    setEarnings(
+      allTransactions != null
+        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
+        : transactions.filter((transaction) => transaction.point_gain >= 0)
+    );
+    return () => setIsLoading(false);
   }, [allTransactions]);
+
+  const changeTransactions = (trans) => {
+    setTransactions(trans);
+    setIsLoading(true);
+  };
 
   const clickAddButton = (event) => {
     setAddAnchorEl(event.currentTarget);
@@ -62,15 +86,13 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     setAddAnchorEl(null);
   };
 
-  const clickUploadButton = (event) => {
-    setUploadAnchorEl(event.currentTarget);
-  };
-
-  const handleUploadClose = () => {
+  const closeUpload = () => {
     setUploadAnchorEl(null);
   };
 
-  const handleUploadConfirm = () => {};
+  const clickUploadButton = (event) => {
+    setUploadAnchorEl(event.currentTarget);
+  };
 
   const BasicTabs = () => {
     const [value, setValue] = useState(0);
@@ -78,62 +100,6 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
-
-    const renderFilterHeader = () => {
-      return (
-        <div className={styles["filter-row"]}>
-          <div className={styles["date-range"]}>
-            <Box className={styles["calendar-box"]}>
-              <Icon
-                className={styles["calendar-icon"]}
-                type={"calendar"}
-              ></Icon>
-            </Box>
-            <Box className={styles["date-display"]}>Sep 5 - Sep 12</Box>
-            <Icon
-              className={styles["chevron-left"]}
-              type={"chevronLeft"}
-            ></Icon>
-            <Icon
-              className={styles["chevron-right"]}
-              type={"chevronRight"}
-            ></Icon>
-          </div>
-          <div className={styles["filters"]}>
-            <FormControl className={styles["filter-select"]} size="small">
-              <InputLabel className={styles["filter-label"]}>
-                Filters
-              </InputLabel>
-              <Select
-                variant="outlined"
-                className={styles["select"]}
-                label="Filters"
-              >
-                <MenuItem>Keep it PG</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <Input
-            disableUnderline={true}
-            placeholder="Search for a transaction"
-            className={styles["search-bar"]}
-            endAdornment={
-              <Icon className={styles["search-icon"]} type={"search"}></Icon>
-            }
-          />
-        </div>
-      );
-    };
-
-    const redemptions =
-      allTransactions != null
-        ? allTransactions.filter((transaction) => transaction.point_gain < 0)
-        : transactions.filter((transaction) => transaction.point_gain < 0);
-
-    const earnings =
-      allTransactions != null
-        ? allTransactions.filter((transaction) => transaction.point_gain >= 0)
-        : transactions.filter((transaction) => transaction.point_gain >= 0);
 
     return (
       <Box className={styles["transaction-container"]}>
@@ -159,56 +125,33 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
           />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <div>
-            {renderFilterHeader()}
-            <TransactionList
+          {!isLoading && (
+            <TransactionTable
               transactions={
-                allTransactions == null ? transactions : allTransactions
+                allTransactions != null ? allTransactions : transactions
               }
+              setTransactions={changeTransactions}
             />
-          </div>
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <div>
-            {renderFilterHeader()}
-            <TransactionList transactions={redemptions} />
-          </div>
+          {!isLoading && (
+            <TransactionTable
+              transactions={redemptions}
+              setTransactions={changeTransactions}
+            />
+          )}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <div>
-            {renderFilterHeader()}
-            <TransactionList transactions={earnings} />
-          </div>
+          {!isLoading && (
+            <TransactionTable
+              transactions={earnings}
+              setTransactions={changeTransactions}
+            />
+          )}
         </TabPanel>
       </Box>
     );
-  };
-
-  const uploadPopoverContent = () => {
-    switch (uploadSuccess) {
-      case true:
-        return <div className={styles["success-div"]}></div>;
-      case false:
-        return (
-          <div className={styles["popover-div"]}>
-            <div className={styles["popover-header"]}>
-              <h3 className={styles["add-title"]}>Upload your file</h3>
-              <div className={styles["x-button"]} onClick={handleUploadClose}>
-                <Icon type={"close"}></Icon>
-              </div>
-            </div>
-            <p className={styles["upload-message"]}>
-              Selected file should be .csv
-            </p>
-            <Button
-              className={styles["confirm-button"]}
-              onClick={handleUploadConfirm}
-            >
-              Upload
-            </Button>
-          </div>
-        );
-    }
   };
 
   const addOpen = Boolean(addAnchorEl);
@@ -231,45 +174,47 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
               aria-describedby={popoverid}
               sx={{
                 display: {
+                  fontFamily: "Avenir",
                   backgroundColor: "#253c85",
-                  color: "white",
+                  color: "#e6ecfe",
                   borderRadius: "7px",
-                  height: "33px",
+                  height: "38px",
                   fontSize: "14px",
                   marginRight: "20px",
+                  padding: "7px 11px",
                   textTransform: "none",
                 },
                 "&:hover": {
-                  backgroundColor: "#253c85",
-                  color: "#686868",
+                  backgroundColor: "#526dc2",
+                  color: "#e6ecfe",
                 },
               }}
               onClick={clickAddButton}
             >
               <Icon className={styles["add-icon"]} type={"add"}></Icon>
-              Add
+              <p className={styles["add-text"]}>Add</p>
             </Button>
             <Button
               aria-describedby={uploadpopoverid}
               sx={{
                 display: {
                   backgroundColor: "#253c85",
-                  color: "white",
+                  color: "#e6ecfe",
                   borderRadius: "7px",
-                  height: "33px",
-                  fontSize: "14px",
+                  height: "38px",
                   marginRight: "20px",
+                  padding: "7px 11px",
                   textTransform: "none",
                 },
                 "&:hover": {
-                  backgroundColor: "#253c85",
-                  color: "#686868",
+                  backgroundColor: "#526dc2",
+                  color: "#e6ecfe",
                 },
               }}
               onClick={clickUploadButton}
             >
               <Icon className={styles["add-icon"]} type={"upload"}></Icon>
-              Upload
+              <p className={styles["add-text"]}>Upload</p>
             </Button>
           </div>
           <AddPopover
@@ -278,28 +223,20 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
             allUsers={allUsers}
             popoverid={popoverid}
             currentAdmin={currentAdmin}
-            setTransactions={setTransactions}
+            setTransactions={changeTransactions}
           />
-          <Popover
-            PaperProps={{ className: styles["popover-container"] }}
-            open={uploadOpen}
-            id={uploadpopoverid}
-            anchorEl={uploadAnchorEl}
-            onClose={handleUploadClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            {uploadPopoverContent()}
-          </Popover>
+          <UploadPopover
+            uploadAnchor={uploadAnchorEl}
+            closeUpload={closeUpload}
+            popoverid={uploadpopoverid}
+            setTransactions={changeTransactions}
+          />
         </div>
         {BasicTabs()}
       </div>
+      {isLoading && (
+        <CircularProgress className={styles["circular-progress"]} />
+      )}
     </Layout>
   );
 };
