@@ -163,15 +163,16 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
               renderOption={(props, option) => (
                 <Box
                   component="li"
-                  sx={{ style: { backgroundColor: "black" } }}
                   {...props}
                 >
-                  {option.full_name}
+                  <p className={styles["select-label"]}>{option.full_name}</p>
                 </Box>
               )}
               renderInput={(params) => (
                 <TextField
-                  className={styles["autocomplete-text-field"]}
+                  sx={{
+                    backgroundColor: "white"
+                  }}
                   {...params}
                   label="Select User"
                   InputLabelProps={{
@@ -180,6 +181,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
                   inputProps={{
                     ...params.inputProps,
                     autoComplete: "new-password", // disable autocomplete and autofill
+                    className: styles["autocomplete-input"],
                   }}
                 />
               )}
@@ -194,7 +196,11 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
                 defaultValue="10"
                 variant="standard"
                 type="number"
-                inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
+                inputProps={{ 
+                  inputmode: "numeric", 
+                  pattern: "[0-9]*", 
+                  className: styles["amount-text"] 
+                }}
                 onChange={(e) => setAddPoints(e.target.value)}
               />
             </div>
