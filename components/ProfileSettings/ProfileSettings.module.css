@@ -1,12 +1,12 @@
 .button {
   width: 100px;
   height: 31px;
-  background-color: #6272aa;
+  background-color: var(--profile-button);
   border-radius: 20px;
 }
 .button:hover {
   width: 100px;
   height: 31px;
-  background-color: #6272aa;
+  background-color: var(--profile-button);
   border-radius: 20px;
 }
