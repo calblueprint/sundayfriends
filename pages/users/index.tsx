@@ -108,7 +108,10 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
                     setIsOpen(false);
                   }}
                 >
-                  <Icon className={styles["cancelIcon"]} type={"popoverclose"} />
+                  <Icon
+                    className={styles["cancelIcon"]}
+                    type={"popoverclose"}
+                  />
                   Cancel
                 </button>
                 <button

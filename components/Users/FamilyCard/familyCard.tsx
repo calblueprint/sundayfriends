@@ -22,19 +22,16 @@ type FamilyMemberProps = {
 const FamilyMember: React.FC<FamilyMemberProps> = ({
   user,
 }: FamilyMemberProps) => {
-
   const imagePath = (): string => {
     if (user.role == "Head") {
-      return "/smiley - head.svg"
+      return "/smiley - head.svg";
+    } else if (user.role == "Parent") {
+      return "/smiley - parent.svg";
+    } else if (user.role == "Child") {
+      return "/smiley - child.svg";
     }
-    else if (user.role == "Parent") {
-      return "/smiley - parent.svg"
-    }
-    else if (user.role == "Child") {
-      return "/smiley - child.svg"
-    }
-    return "/smiley - dependent.svg"
-  }
+    return "/smiley - dependent.svg";
+  };
   return (
     <Grid item xs={6}>
       <div className={styles["familyMember"]}>
