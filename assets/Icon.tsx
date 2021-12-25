@@ -40,7 +40,9 @@ export type IconType =
   | "invite"
   | "inviteTrash"
   | "inviteAdd"
-  | "ex";
+  | "ex"
+  | "smallX"
+  | "smallCheck";
 
 const IconSvgs: Record<IconType, React.ReactElement> = {
   calendar: (
@@ -626,6 +628,22 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
         strokeLinecap="round"
       />
     </svg>
+  ),
+  smallX: (
+    <SvgIcon viewBox="0 0 10 9">
+      <path
+        d="M8.49375 0.125L5 3.61875L1.50625 0.125L0.625 1.00625L4.11875 4.5L0.625 7.99375L1.50625 8.875L5 5.38125L8.49375 8.875L9.375 7.99375L5.88125 4.5L9.375 1.00625L8.49375 0.125Z"
+        fill="#525454"
+      />
+    </SvgIcon>
+  ),
+  smallCheck: (
+    <SvgIcon viewBox="0 0 14 11">
+      <path
+        d="M4.93793 10.2142L0.812927 6.08922L1.99126 4.91089L4.93918 7.85547L4.93793 7.85672L12.0088 0.785889L13.1871 1.96422L6.11626 9.03589L4.93876 10.2134L4.93793 10.2142Z"
+        fill="#E6ECFE"
+      />
+    </SvgIcon>
   ),
 };
 

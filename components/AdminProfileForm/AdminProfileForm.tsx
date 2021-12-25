@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 import Icon from "../../assets/Icon";
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, TextField } from "@mui/material";
 import { Admin } from "../../types/schema";
 import styles from "./AdminProfileForm.module.css";
 
@@ -22,24 +21,54 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
     const [editingRole, setEditingRole] = useState<boolean>(false);
     const [editingEmail, setEditingEmail] = useState<boolean>(false);
     const [editingPhone, setEditingPhone] = useState<boolean>(false);
+    const [edited, setEdited] = useState<boolean>(false);
 
-    const { register, handleSubmit, reset } = useForm({
-        defaultValues: {
-            name: adminName,
-            role: adminRole,
-            email: adminEmail,
-            phone: adminPhone,
+    // monitor changes in editable fields
+    useEffect(() => {
+        if (editingForm) {
+            setEdited(true);
         }
-    });
+    }, [adminName, adminRole, adminEmail, adminPhone]);
+
+    const renderButtons = () => {
+        if (editingForm) {
+            return (
+                <div className={styles["edit-buttons-container"]}>
+                    <Button
+                        className={styles["cancelButton"]}
+                        onClick={() => setEditingForm(false)}
+                    >
+                        <Icon type="smallX" className={styles["smallX"]} />
+                        Cancel
+                    </Button>
+                    {/* <Button
+                        variant="contained"
+                        className={styles["saveChanges"]}
+                        startIcon={<Icon type="smallCheck" />}
+                    >
+                        Save
+                    </Button> */}
+                </div>
+            )
+        } else {
+            return (
+                <Button
+                    variant="contained"
+                    className={styles["button"]}
+                    onClick={() => setEditingForm(true)}
+                >
+                    <Icon type="editpencil" />
+                    Edit
+                </Button>
+            );
+        }
+    }
 
     return (
         <div>
             <div className={styles["namebar"]}>
                 <h1>{currentAdmin.name}</h1>
-                <Button variant="contained" className={styles["button"]}>
-                    <Icon type="editpencil" />
-                    Edit
-                </Button>
+                {renderButtons()}
             </div>
             <hr className={styles["hr"]}></hr>
             <div className={styles["boxes"]}>
