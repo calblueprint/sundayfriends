@@ -85,9 +85,14 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 NAME
                             </Typography>
                         </div>
-                        <Typography variant="subtitle2" color="#131313">
-                            {adminName}
-                        </Typography>
+                        {
+                            editingForm ?
+                                <TextField
+                                    value={adminName}
+                                    onChange={(event) => setAdminName(event.target.value)}
+                                /> :
+                                <Typography>{adminName}</Typography>
+                        }
                     </div>
                     <br></br>
                     <div className={styles["info"]}>
@@ -97,9 +102,14 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 ROLE
                             </Typography>
                         </div>
-                        <Typography variant="subtitle2" color="#131313">
-                            {adminRole}
-                        </Typography>
+                        {
+                            editingForm ?
+                                <TextField
+                                    value={adminRole}
+                                    onChange={(event) => setAdminRole(event.target.value)}
+                                /> :
+                                <Typography>{adminRole}</Typography>
+                        }
                     </div>
                     <br></br>
                     <div className={styles["info"]}>
@@ -140,9 +150,14 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 EMAIL
                             </Typography>
                         </div>
-                        <Typography variant="subtitle2" color="#131313">
-                            {adminEmail}
-                        </Typography>
+                        {
+                            editingForm ?
+                                <TextField
+                                    value={adminEmail}
+                                    onChange={(event) => setAdminEmail(event.target.value)}
+                                /> :
+                                <Typography>{adminEmail}</Typography>
+                        }
                     </div>
                     <br></br>
                     <div className={styles["info"]}>
@@ -152,9 +167,14 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 PHONE #
                             </Typography>
                         </div>
-                        <Typography variant="subtitle2" color="#131313">
-                            {adminPhone}
-                        </Typography>
+                        {
+                            editingForm ?
+                                <TextField
+                                    value={adminPhone}
+                                    onChange={(event) => setAdminPhone(event.target.value)}
+                                /> :
+                                <Typography>{adminPhone}</Typography>
+                        }
                     </div>
                     <br></br>
                     <div className={styles["info"]}>

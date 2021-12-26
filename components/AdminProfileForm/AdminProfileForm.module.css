@@ -129,3 +129,11 @@
     width: 12px;
     height: 12px;
 }
+
+.editable-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+}

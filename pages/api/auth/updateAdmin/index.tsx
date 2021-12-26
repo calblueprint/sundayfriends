@@ -3,11 +3,11 @@ import createError from "../../../../utils/error";
 import { UserRecord } from "firebase-admin/lib/auth/user-record";
 import firebaseApp from "../../../../firebase/firebaseApp";
 import firebaseAdmin from "../../../../firebase/firebaseAdmin";
-import { Admin } from "../../../../types/schema";
 
 const db = firebaseApp.firestore();
 const adminCollection = db.collection("admins");
 
+// TODO make types for admin data
 type UpdateAdminDTO = {
     adminUID: string;
     adminData: any;
