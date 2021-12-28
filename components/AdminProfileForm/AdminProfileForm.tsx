@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import Icon from "../../assets/Icon";
-import { Typography, Button, TextField } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { Admin } from "../../types/schema";
 import styles from "./AdminProfileForm.module.css";
 
 type AdminProfileFormProps = {
-    currentAdmin: Admin
-}
+    currentAdmin: Admin;
+};
 
 export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
-    currentAdmin
+    currentAdmin,
 }: AdminProfileFormProps) => {
     const [adminName, setAdminName] = useState<string>(currentAdmin.name);
     const [adminRole, setAdminRole] = useState<string>(currentAdmin.role);
@@ -17,10 +18,6 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
     const [adminPhone, setAdminPhone] = useState<string>(currentAdmin.phone);
 
     const [editingForm, setEditingForm] = useState<boolean>(false);
-    const [editingName, setEditingName] = useState<boolean>(false);
-    const [editingRole, setEditingRole] = useState<boolean>(false);
-    const [editingEmail, setEditingEmail] = useState<boolean>(false);
-    const [editingPhone, setEditingPhone] = useState<boolean>(false);
     const [edited, setEdited] = useState<boolean>(false);
 
     // monitor changes in editable fields
@@ -30,26 +27,40 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
         }
     }, [adminName, adminRole, adminEmail, adminPhone]);
 
+    // reset to default values
+    const resetFields = (): void => {
+        setAdminName(currentAdmin.name);
+        setAdminEmail(currentAdmin.email);
+        setAdminPhone(currentAdmin.phone);
+        setAdminRole(currentAdmin.role);
+    };
+
     const renderButtons = () => {
         if (editingForm) {
             return (
                 <div className={styles["edit-buttons-container"]}>
                     <Button
-                        className={styles["cancelButton"]}
-                        onClick={() => setEditingForm(false)}
+                        className={styles["cancel-button"]}
+                        onClick={() => {
+                            setEditingForm(false);
+                            setEdited(false);
+                            resetFields();
+                        }}
                     >
                         <Icon type="smallX" className={styles["smallX"]} />
                         Cancel
                     </Button>
-                    {/* <Button
-                        variant="contained"
-                        className={styles["saveChanges"]}
-                        startIcon={<Icon type="smallCheck" />}
-                    >
-                        Save
-                    </Button> */}
+                    {edited && (
+                        <Button
+                            variant="contained"
+                            className={styles["button"]}
+                            startIcon={<Icon type="smallCheck" />}
+                        >
+                            Save
+                        </Button>
+                    )}
                 </div>
-            )
+            );
         } else {
             return (
                 <Button
@@ -62,7 +73,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                 </Button>
             );
         }
-    }
+    };
 
     return (
         <div>
@@ -85,14 +96,19 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 NAME
                             </Typography>
                         </div>
-                        {
-                            editingForm ?
-                                <TextField
-                                    value={adminName}
-                                    onChange={(event) => setAdminName(event.target.value)}
-                                /> :
-                                <Typography>{adminName}</Typography>
-                        }
+                        {editingForm ? (
+                            <input
+                                className={styles["editable-field"]}
+                                type="text"
+                                defaultValue={adminName}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                    setAdminName(event.target.value);
+                                    setEditingForm(true);
+                                }}
+                            />
+                        ) : (
+                            <div className={styles["info-field"]}>{adminName}</div>
+                        )}
                     </div>
                     <br></br>
                     <div className={styles["info"]}>
@@ -102,14 +118,18 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 ROLE
                             </Typography>
                         </div>
-                        {
-                            editingForm ?
-                                <TextField
-                                    value={adminRole}
-                                    onChange={(event) => setAdminRole(event.target.value)}
-                                /> :
-                                <Typography>{adminRole}</Typography>
-                        }
+                        {editingForm ? (
+                            <input
+                                className={styles["editable-field"]}
+                                defaultValue={adminRole}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                    setAdminRole(event.target.value);
+                                    setEditingForm(true);
+                                }}
+                            />
+                        ) : (
+                            <div className={styles["info-field"]}>{adminRole}</div>
+                        )}
                     </div>
                     <br></br>
                     <div className={styles["info"]}>
@@ -119,9 +139,9 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 LAST ACTIVE
                             </Typography>
                         </div>
-                        <Typography variant="subtitle2" color="#131313">
+                        <div className={styles["info-field"]}>
                             {currentAdmin.last_active}
-                        </Typography>
+                        </div>
                     </div>
                     <br></br>
                     <div className={styles["info"]}>
@@ -131,9 +151,9 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 DATE JOINED
                             </Typography>
                         </div>
-                        <Typography variant="subtitle2" color="#131313">
+                        <div className={styles["info-field"]}>
                             {currentAdmin.created_at}
-                        </Typography>
+                        </div>
                     </div>
                     <br></br>
                 </div>
@@ -150,14 +170,18 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 EMAIL
                             </Typography>
                         </div>
-                        {
-                            editingForm ?
-                                <TextField
-                                    value={adminEmail}
-                                    onChange={(event) => setAdminEmail(event.target.value)}
-                                /> :
-                                <Typography>{adminEmail}</Typography>
-                        }
+                        {editingForm ? (
+                            <input
+                                className={styles["editable-field"]}
+                                defaultValue={adminEmail}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                    setAdminEmail(event.target.value);
+                                    setEditingForm(true);
+                                }}
+                            />
+                        ) : (
+                            <div className={styles["info-field"]}>{adminEmail}</div>
+                        )}
                     </div>
                     <br></br>
                     <div className={styles["info"]}>
@@ -167,14 +191,18 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 PHONE #
                             </Typography>
                         </div>
-                        {
-                            editingForm ?
-                                <TextField
-                                    value={adminPhone}
-                                    onChange={(event) => setAdminPhone(event.target.value)}
-                                /> :
-                                <Typography>{adminPhone}</Typography>
-                        }
+                        {editingForm ? (
+                            <input
+                                className={styles["editable-field"]}
+                                defaultValue={adminPhone}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                    setAdminPhone(event.target.value);
+                                    setEditingForm(true);
+                                }}
+                            />
+                        ) : (
+                            <div className={styles["info-field"]}>{adminPhone}</div>
+                        )}
                     </div>
                     <br></br>
                     <div className={styles["info"]}>
@@ -184,9 +212,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 PASSWORD
                             </Typography>
                         </div>
-                        <Typography variant="subtitle2" color="#131313">
-                            *********
-                        </Typography>
+                        <div className={styles["info-field"]}>************</div>
                     </div>
                     <br></br>
                 </div>

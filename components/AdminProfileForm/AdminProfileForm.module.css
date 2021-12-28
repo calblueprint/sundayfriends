@@ -48,16 +48,21 @@
 .button {
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
     background-color: var(--sapphire);
     color: white;
     border-radius: 7px;
-    width: 84px;
+    padding: 12px;
+    width: 93px;
     height: 37px;
     font-size: 14px;
     margin-right: 20px;
     text-transform: none;
+    justify-content: space-evenly;
+}
+
+.button:hover {
+    background-color: var(--sapphire);
 }
 
 .hr {
@@ -69,9 +74,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-content: space-between;
-    align-items: center;
-    margin-right: 20%;
+    margin-right: 5%;
 }
 
 .fields {
@@ -90,16 +93,16 @@
 .edit-buttons-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 20%;
 }
 
-.cancelButton {
+.cancel-button {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    padding: 7px 11px;
+    padding: 12px;
     width: 93px;
     height: 37px;
     background-color: white;
@@ -107,21 +110,8 @@
     border: 1.3px solid #525454;
     box-sizing: border-box;
     border-radius: 7px;
-    text-transform: none;
-}
-
-.saveButton {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 7px 11px;
-    position: static;
-    width: 88px;
-    height: 37px;
-    color: var(--sapphire-light);
-    background-color: #a9a9a9;
-    border-radius: 7px;
+    font-size: 14px;
+    margin-right: 20px;
     text-transform: none;
 }
 
@@ -136,4 +126,21 @@
     justify-content: space-between;
     align-items: center;
     width: 30%;
+}
+
+.editable-field {
+    font-family: Avenir;
+    font-size: medium;
+    border: 0px;
+    width: 60%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    padding: 7px 0 7px 7px;    
+}
+
+.info-field {
+    text-align: left;
+    width: 60%;
 }
