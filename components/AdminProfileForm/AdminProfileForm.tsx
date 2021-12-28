@@ -3,6 +3,7 @@ import { useState, useEffect, ChangeEvent } from "react";
 import Icon from "../../assets/Icon";
 import { Typography, Button } from "@mui/material";
 import { Admin } from "../../types/schema";
+import router from "next/router";
 import styles from "./AdminProfileForm.module.css";
 
 type AdminProfileFormProps = {
@@ -28,7 +29,6 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
     const [edited, setEdited] = useState<boolean>(false);
     const [newAdminData, setNewAdminData] = useState<AdminUpdateData>({});
     const [saving, setSaving] = useState<boolean>(false);
-    const [currAdmin, setCurrAdmin] = useState<Admin>(null);
 
     // monitor changes in editable fields
     useEffect(() => {
@@ -36,6 +36,10 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
             setEdited(true);
         }
     }, [adminName, adminRole, adminEmail, adminPhone]);
+
+    const refresh = () => {
+        router.replace(router.asPath);
+    }
 
     // reset to default values
     const resetFields = (): void => {
@@ -48,16 +52,24 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
 
     // TODO error handling
     const handleSubmit = async (): Promise<void> => {
-        setSaving(true);
-        await fetch("/api/auth/updateAdmin", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({
-                adminUID: currentAdmin.admin_id,
-                adminData: newAdminData,
-            }),
-        });
+        try {
+            setSaving(true);
+            setEditingForm(false);
+            setEdited(false);
+            await fetch("/api/auth/updateAdmin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    adminUID: currentAdmin.admin_id,
+                    adminData: newAdminData,
+                }),
+            });
+            setSaving(false);
+            refresh();
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 
     const renderButtons = () => {
@@ -88,16 +100,27 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                 </div>
             );
         } else {
-            return (
-                <Button
-                    variant="contained"
-                    className={styles["button"]}
-                    onClick={() => setEditingForm(true)}
-                >
-                    <Icon type="editpencil" />
-                    Edit
-                </Button>
-            );
+            if (saving) {
+                return (
+                    <Button
+                        variant="contained"
+                        className={styles["button"]}
+                    >
+                        Saving...
+                    </Button>
+                )
+            } else {
+                return (
+                    <Button
+                        variant="contained"
+                        className={styles["button"]}
+                        onClick={() => setEditingForm(true)}
+                    >
+                        <Icon type="editpencil" />
+                        Edit
+                    </Button>
+                );
+            }
         }
     };
 
