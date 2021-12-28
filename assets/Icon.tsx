@@ -630,12 +630,12 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     </svg>
   ),
   smallX: (
-    <SvgIcon viewBox="0 0 10 9">
+    <svg width="12" height="12" viewBox="0 0 10 9">
       <path
         d="M8.49375 0.125L5 3.61875L1.50625 0.125L0.625 1.00625L4.11875 4.5L0.625 7.99375L1.50625 8.875L5 5.38125L8.49375 8.875L9.375 7.99375L5.88125 4.5L9.375 1.00625L8.49375 0.125Z"
         fill="#525454"
       />
-    </SvgIcon>
+    </svg>
   ),
   smallCheck: (
     <SvgIcon viewBox="0 0 14 11">

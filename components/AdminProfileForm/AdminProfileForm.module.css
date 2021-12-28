@@ -45,26 +45,6 @@
     background-color: white;
 }
 
-.button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: var(--sapphire);
-    color: white;
-    border-radius: 7px;
-    padding: 12px;
-    width: 93px;
-    height: 37px;
-    font-size: 14px;
-    margin-right: 20px;
-    text-transform: none;
-    justify-content: space-evenly;
-}
-
-.button:hover {
-    background-color: var(--sapphire);
-}
-
 .hr {
     height: 2px;
     color: var(--sapphire-light);
@@ -96,28 +76,6 @@
     justify-content: flex-end;
     align-items: flex-start;
     width: 20%;
-}
-
-.cancel-button {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 12px;
-    width: 93px;
-    height: 37px;
-    background-color: white;
-    color: var(--grey-dark);
-    border: 1.3px solid #525454;
-    box-sizing: border-box;
-    border-radius: 7px;
-    font-size: 14px;
-    margin-right: 20px;
-    text-transform: none;
-}
-
-.smallX {
-    width: 12px;
-    height: 12px;
 }
 
 .editable-container {

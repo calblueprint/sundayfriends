@@ -5,274 +5,300 @@ import { Typography, Button } from "@mui/material";
 import { Admin } from "../../types/schema";
 import router from "next/router";
 import styles from "./AdminProfileForm.module.css";
+import { styled } from "@mui/material/styles";
 
 type AdminProfileFormProps = {
-    currentAdmin: Admin;
+  currentAdmin: Admin;
 };
 
 export type AdminUpdateData = {
-    name?: string;
-    role?: string;
-    email?: string;
-    phone?: string;
-}
+  name?: string;
+  role?: string;
+  email?: string;
+  phone?: string;
+};
+
+const StyledButton = styled(Button)(() => ({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  backgroundColor: "#253c85",
+  color: "white",
+  borderRadius: "7px",
+  padding: "12px",
+  width: "93px",
+  height: "37px",
+  fontSize: "14px",
+  marginRight: "20px",
+  textTransform: "none",
+  justifyContent: "space-evenly",
+  "&:hover": {
+    backgroundColor: "#253c85",
+  },
+}));
+
+const CancelButton = styled(Button)(() => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  padding: "12px",
+  width: "93px",
+  height: "37px",
+  backgroundColor: "white",
+  color: "#525454",
+  border: "1.3px solid #525454",
+  boxSizing: "border-box",
+  borderRadius: "7px",
+  fontSize: "14px",
+  marginRight: "20px",
+  textTransform: "none",
+}));
 
 export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
-    currentAdmin,
+  currentAdmin,
 }: AdminProfileFormProps) => {
-    const [adminName, setAdminName] = useState<string>(currentAdmin.name);
-    const [adminRole, setAdminRole] = useState<string>(currentAdmin.role);
-    const [adminEmail, setAdminEmail] = useState<string>(currentAdmin.email);
-    const [adminPhone, setAdminPhone] = useState<string>(currentAdmin.phone);
+  const [adminName, setAdminName] = useState<string>(currentAdmin.name);
+  const [adminRole, setAdminRole] = useState<string>(currentAdmin.role);
+  const [adminEmail, setAdminEmail] = useState<string>(currentAdmin.email);
+  const [adminPhone, setAdminPhone] = useState<string>(currentAdmin.phone);
 
-    const [editingForm, setEditingForm] = useState<boolean>(false);
-    const [edited, setEdited] = useState<boolean>(false);
-    const [newAdminData, setNewAdminData] = useState<AdminUpdateData>({});
-    const [saving, setSaving] = useState<boolean>(false);
+  const [editingForm, setEditingForm] = useState<boolean>(false);
+  const [edited, setEdited] = useState<boolean>(false);
+  const [newAdminData, setNewAdminData] = useState<AdminUpdateData>({});
+  const [saving, setSaving] = useState<boolean>(false);
 
-    // monitor changes in editable fields
-    useEffect(() => {
-        if (editingForm) {
-            setEdited(true);
-        }
-    }, [adminName, adminRole, adminEmail, adminPhone]);
-
-    const refresh = () => {
-        router.replace(router.asPath);
+  // monitor changes in editable fields
+  useEffect(() => {
+    if (editingForm) {
+      setEdited(true);
     }
+  }, [adminName, adminRole, adminEmail, adminPhone]);
 
-    // reset to default values
-    const resetFields = (): void => {
-        setAdminName(currentAdmin.name);
-        setAdminEmail(currentAdmin.email);
-        setAdminPhone(currentAdmin.phone);
-        setAdminRole(currentAdmin.role);
-        setNewAdminData({});
-    };
+  const refresh = () => {
+    router.replace(router.asPath);
+  };
 
-    // TODO error handling
-    const handleSubmit = async (): Promise<void> => {
-        try {
-            setSaving(true);
-            setEditingForm(false);
-            setEdited(false);
-            await fetch("/api/auth/updateAdmin", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify({
-                    adminUID: currentAdmin.admin_id,
-                    adminData: newAdminData,
-                }),
-            });
-            setSaving(false);
-            refresh();
-        } catch (err) {
-            console.error(err.message);
-        }
+  // reset to default values
+  const resetFields = (): void => {
+    setAdminName(currentAdmin.name);
+    setAdminEmail(currentAdmin.email);
+    setAdminPhone(currentAdmin.phone);
+    setAdminRole(currentAdmin.role);
+    setNewAdminData({});
+  };
+
+  // TODO error handling
+  const handleSubmit = async (): Promise<void> => {
+    try {
+      setSaving(true);
+      setEditingForm(false);
+      setEdited(false);
+      await fetch("/api/auth/updateAdmin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          adminUID: currentAdmin.admin_id,
+          adminData: newAdminData,
+        }),
+      });
+      setSaving(false);
+      refresh();
+    } catch (err) {
+      console.error(err.message);
     }
+  };
 
-    const renderButtons = () => {
-        if (editingForm) {
-            return (
-                <div className={styles["edit-buttons-container"]}>
-                    <Button
-                        className={styles["cancel-button"]}
-                        onClick={() => {
-                            setEditingForm(false);
-                            setEdited(false);
-                            resetFields();
-                        }}
-                    >
-                        <Icon type="smallX" className={styles["smallX"]} />
-                        Cancel
-                    </Button>
-                    {edited && (
-                        <Button
-                            variant="contained"
-                            className={styles["button"]}
-                            startIcon={<Icon type="smallCheck" />}
-                            onClick={handleSubmit}
-                        >
-                            Save
-                        </Button>
-                    )}
-                </div>
-            );
-        } else {
-            if (saving) {
-                return (
-                    <Button
-                        variant="contained"
-                        className={styles["button"]}
-                    >
-                        Saving...
-                    </Button>
-                )
-            } else {
-                return (
-                    <Button
-                        variant="contained"
-                        className={styles["button"]}
-                        onClick={() => setEditingForm(true)}
-                    >
-                        <Icon type="editpencil" />
-                        Edit
-                    </Button>
-                );
-            }
-        }
-    };
-
-    return (
-        <div>
-            <div className={styles["namebar"]}>
-                <h1>{currentAdmin.name}</h1>
-                {renderButtons()}
-            </div>
-            <hr className={styles["hr"]}></hr>
-            <div className={styles["boxes"]}>
-                <div className={styles["box"]}>
-                    <Typography variant="h5" fontWeight="bold">
-                        About
-                    </Typography>
-                    <hr></hr>
-                    <br></br>
-                    <div className={styles["info"]}>
-                        <div className={styles["fields"]}>
-                            <Icon type="nameicon" />
-                            <Typography variant="subtitle1" fontWeight="bold">
-                                NAME
-                            </Typography>
-                        </div>
-                        {editingForm ? (
-                            <input
-                                className={styles["editable-field"]}
-                                type="text"
-                                defaultValue={adminName}
-                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                    setAdminName(event.target.value);
-                                    setEditingForm(true);
-                                    newAdminData.name = event.target.value;
-                                }}
-                            />
-                        ) : (
-                            <div className={styles["info-field"]}>{adminName}</div>
-                        )}
-                    </div>
-                    <br></br>
-                    <div className={styles["info"]}>
-                        <div className={styles["fields"]}>
-                            <Icon type="singleperson" />
-                            <Typography variant="subtitle1" fontWeight="bold">
-                                ROLE
-                            </Typography>
-                        </div>
-                        {editingForm ? (
-                            <input
-                                className={styles["editable-field"]}
-                                defaultValue={adminRole}
-                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                    setAdminRole(event.target.value);
-                                    setEditingForm(true);
-                                    newAdminData.role = event.target.value;
-                                }}
-                            />
-                        ) : (
-                            <div className={styles["info-field"]}>{adminRole}</div>
-                        )}
-                    </div>
-                    <br></br>
-                    <div className={styles["info"]}>
-                        <div className={styles["fields"]}>
-                            <Icon type="lastactive" />
-                            <Typography variant="subtitle1" fontWeight="bold">
-                                LAST ACTIVE
-                            </Typography>
-                        </div>
-                        <div className={styles["info-field"]}>
-                            {currentAdmin.last_active}
-                        </div>
-                    </div>
-                    <br></br>
-                    <div className={styles["info"]}>
-                        <div className={styles["fields"]}>
-                            <Icon type="datejoined" />
-                            <Typography variant="subtitle1" fontWeight="bold">
-                                DATE JOINED
-                            </Typography>
-                        </div>
-                        <div className={styles["info-field"]}>
-                            {currentAdmin.created_at}
-                        </div>
-                    </div>
-                    <br></br>
-                </div>
-                <div className={styles["box"]}>
-                    <Typography variant="h5" fontWeight="bold">
-                        Login Details
-                    </Typography>
-                    <hr></hr>
-                    <br></br>
-                    <div className={styles["info"]}>
-                        <div className={styles["fields"]}>
-                            <Icon type="email" />
-                            <Typography variant="subtitle1" fontWeight="bold">
-                                EMAIL
-                            </Typography>
-                        </div>
-                        {editingForm ? (
-                            <input
-                                className={styles["editable-field"]}
-                                type="email"
-                                defaultValue={adminEmail}
-                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                    setAdminEmail(event.target.value);
-                                    setEditingForm(true);
-                                    newAdminData.email = event.target.value;
-                                }}
-                            />
-                        ) : (
-                            <div className={styles["info-field"]}>{adminEmail}</div>
-                        )}
-                    </div>
-                    <br></br>
-                    <div className={styles["info"]}>
-                        <div className={styles["fields"]}>
-                            <Icon type="phone" />
-                            <Typography variant="subtitle1" fontWeight="bold">
-                                PHONE #
-                            </Typography>
-                        </div>
-                        {editingForm ? (
-                            <input
-                                className={styles["editable-field"]}
-                                type="tel"
-                                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                                defaultValue={adminPhone}
-                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                    setAdminPhone(event.target.value);
-                                    setEditingForm(true);
-                                    newAdminData.phone = event.target.value;
-                                }}
-                            />
-                        ) : (
-                            <div className={styles["info-field"]}>{adminPhone}</div>
-                        )}
-                    </div>
-                    <br></br>
-                    <div className={styles["info"]}>
-                        <div className={styles["fields"]}>
-                            <Icon type="password" />
-                            <Typography variant="subtitle1" fontWeight="bold">
-                                PASSWORD
-                            </Typography>
-                        </div>
-                        <div className={styles["info-field"]}>************</div>
-                    </div>
-                    <br></br>
-                </div>
-            </div>
+  const renderButtons = () => {
+    if (editingForm) {
+      return (
+        <div className={styles["edit-buttons-container"]}>
+          <CancelButton
+            onClick={() => {
+              setEditingForm(false);
+              setEdited(false);
+              resetFields();
+            }}
+          >
+            <Icon type="smallX" />
+            Cancel
+          </CancelButton>
+          {edited && (
+            <StyledButton
+              variant="contained"
+              startIcon={<Icon type="smallCheck" />}
+              onClick={handleSubmit}
+            >
+              Save
+            </StyledButton>
+          )}
         </div>
-    );
+      );
+    } else {
+      if (saving) {
+        return <StyledButton variant="contained">Saving...</StyledButton>;
+      } else {
+        return (
+          <StyledButton
+            variant="contained"
+            onClick={() => setEditingForm(true)}
+          >
+            <Icon type="editpencil" />
+            Edit
+          </StyledButton>
+        );
+      }
+    }
+  };
+
+  return (
+    <div>
+      <div className={styles["namebar"]}>
+        <h1>{currentAdmin.name}</h1>
+        {renderButtons()}
+      </div>
+      <hr className={styles["hr"]}></hr>
+      <div className={styles["boxes"]}>
+        <div className={styles["box"]}>
+          <Typography variant="h5" fontWeight="bold">
+            About
+          </Typography>
+          <hr></hr>
+          <br></br>
+          <div className={styles["info"]}>
+            <div className={styles["fields"]}>
+              <Icon type="nameicon" />
+              <Typography variant="subtitle1" fontWeight="bold">
+                NAME
+              </Typography>
+            </div>
+            {editingForm ? (
+              <input
+                className={styles["editable-field"]}
+                type="text"
+                defaultValue={adminName}
+                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                  setAdminName(event.target.value);
+                  setEditingForm(true);
+                  newAdminData.name = event.target.value;
+                }}
+              />
+            ) : (
+              <div className={styles["info-field"]}>{adminName}</div>
+            )}
+          </div>
+          <br></br>
+          <div className={styles["info"]}>
+            <div className={styles["fields"]}>
+              <Icon type="singleperson" />
+              <Typography variant="subtitle1" fontWeight="bold">
+                ROLE
+              </Typography>
+            </div>
+            {editingForm ? (
+              <input
+                className={styles["editable-field"]}
+                defaultValue={adminRole}
+                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                  setAdminRole(event.target.value);
+                  setEditingForm(true);
+                  newAdminData.role = event.target.value;
+                }}
+              />
+            ) : (
+              <div className={styles["info-field"]}>{adminRole}</div>
+            )}
+          </div>
+          <br></br>
+          <div className={styles["info"]}>
+            <div className={styles["fields"]}>
+              <Icon type="lastactive" />
+              <Typography variant="subtitle1" fontWeight="bold">
+                LAST ACTIVE
+              </Typography>
+            </div>
+            <div className={styles["info-field"]}>
+              {currentAdmin.last_active}
+            </div>
+          </div>
+          <br></br>
+          <div className={styles["info"]}>
+            <div className={styles["fields"]}>
+              <Icon type="datejoined" />
+              <Typography variant="subtitle1" fontWeight="bold">
+                DATE JOINED
+              </Typography>
+            </div>
+            <div className={styles["info-field"]}>
+              {currentAdmin.created_at}
+            </div>
+          </div>
+          <br></br>
+        </div>
+        <div className={styles["box"]}>
+          <Typography variant="h5" fontWeight="bold">
+            Login Details
+          </Typography>
+          <hr></hr>
+          <br></br>
+          <div className={styles["info"]}>
+            <div className={styles["fields"]}>
+              <Icon type="email" />
+              <Typography variant="subtitle1" fontWeight="bold">
+                EMAIL
+              </Typography>
+            </div>
+            {editingForm ? (
+              <input
+                className={styles["editable-field"]}
+                type="email"
+                defaultValue={adminEmail}
+                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                  setAdminEmail(event.target.value);
+                  setEditingForm(true);
+                  newAdminData.email = event.target.value;
+                }}
+              />
+            ) : (
+              <div className={styles["info-field"]}>{adminEmail}</div>
+            )}
+          </div>
+          <br></br>
+          <div className={styles["info"]}>
+            <div className={styles["fields"]}>
+              <Icon type="phone" />
+              <Typography variant="subtitle1" fontWeight="bold">
+                PHONE #
+              </Typography>
+            </div>
+            {editingForm ? (
+              <input
+                className={styles["editable-field"]}
+                type="tel"
+                defaultValue={adminPhone}
+                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                  setAdminPhone(event.target.value);
+                  setEditingForm(true);
+                  newAdminData.phone = event.target.value;
+                }}
+              />
+            ) : (
+              <div className={styles["info-field"]}>{adminPhone}</div>
+            )}
+          </div>
+          <br></br>
+          <div className={styles["info"]}>
+            <div className={styles["fields"]}>
+              <Icon type="password" />
+              <Typography variant="subtitle1" fontWeight="bold">
+                PASSWORD
+              </Typography>
+            </div>
+            <div className={styles["info-field"]}>************</div>
+          </div>
+          <br></br>
+        </div>
+      </div>
+    </div>
+  );
 };
