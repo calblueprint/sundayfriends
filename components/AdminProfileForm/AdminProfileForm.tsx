@@ -9,6 +9,13 @@ type AdminProfileFormProps = {
     currentAdmin: Admin;
 };
 
+export type AdminUpdateData = {
+    name?: string;
+    role?: string;
+    email?: string;
+    phone?: string;
+}
+
 export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
     currentAdmin,
 }: AdminProfileFormProps) => {
@@ -19,6 +26,9 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
 
     const [editingForm, setEditingForm] = useState<boolean>(false);
     const [edited, setEdited] = useState<boolean>(false);
+    const [newAdminData, setNewAdminData] = useState<AdminUpdateData>({});
+    const [saving, setSaving] = useState<boolean>(false);
+    const [currAdmin, setCurrAdmin] = useState<Admin>(null);
 
     // monitor changes in editable fields
     useEffect(() => {
@@ -33,7 +43,22 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
         setAdminEmail(currentAdmin.email);
         setAdminPhone(currentAdmin.phone);
         setAdminRole(currentAdmin.role);
+        setNewAdminData({});
     };
+
+    // TODO error handling
+    const handleSubmit = async (): Promise<void> => {
+        setSaving(true);
+        await fetch("/api/auth/updateAdmin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+                adminUID: currentAdmin.admin_id,
+                adminData: newAdminData,
+            }),
+        });
+    }
 
     const renderButtons = () => {
         if (editingForm) {
@@ -55,6 +80,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                             variant="contained"
                             className={styles["button"]}
                             startIcon={<Icon type="smallCheck" />}
+                            onClick={handleSubmit}
                         >
                             Save
                         </Button>
@@ -104,6 +130,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                     setAdminName(event.target.value);
                                     setEditingForm(true);
+                                    newAdminData.name = event.target.value;
                                 }}
                             />
                         ) : (
@@ -125,6 +152,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                     setAdminRole(event.target.value);
                                     setEditingForm(true);
+                                    newAdminData.role = event.target.value;
                                 }}
                             />
                         ) : (
@@ -173,10 +201,12 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                         {editingForm ? (
                             <input
                                 className={styles["editable-field"]}
+                                type="email"
                                 defaultValue={adminEmail}
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                     setAdminEmail(event.target.value);
                                     setEditingForm(true);
+                                    newAdminData.email = event.target.value;
                                 }}
                             />
                         ) : (
@@ -194,10 +224,13 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                         {editingForm ? (
                             <input
                                 className={styles["editable-field"]}
+                                type="tel"
+                                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                                 defaultValue={adminPhone}
                                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                                     setAdminPhone(event.target.value);
                                     setEditingForm(true);
+                                    newAdminData.phone = event.target.value;
                                 }}
                             />
                         ) : (
