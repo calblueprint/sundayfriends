@@ -31,7 +31,7 @@ const StyledListItem = styled(ListItem)(() => ({
   borderTop: "1px solid #ebebeb",
   color: "#646464",
   fontWeight: "normal",
-  fontsize: "13.5px",
+  fontSize: "13.5px",
 }));
 
 export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
