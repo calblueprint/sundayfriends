@@ -57,7 +57,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     </SvgIcon>
   ),
   chevronLeft: (
-    <SvgIcon viewBox="0, 0, 8, 13">
+    <svg viewBox="0, 0, 8, 13">
       <path
         d="M6.5 1L1 6.19444L6.5 12"
         stroke="#253C85"
@@ -65,10 +65,10 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </SvgIcon>
+    </svg>
   ),
   chevronRight: (
-    <SvgIcon viewBox="0, 0, 8, 13">
+    <svg viewBox="0, 0, 8, 13">
       <path
         d="M1 1L6.5 6.19444L1 12"
         stroke="#253C85"
@@ -76,7 +76,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </SvgIcon>
+    </svg>
   ),
   search: (
     <SvgIcon viewBox="0, 0, 16, 16">
