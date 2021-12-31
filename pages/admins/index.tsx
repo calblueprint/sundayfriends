@@ -58,15 +58,7 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
     return (
       <List className={styles["list"]}>
         {admins.map((admin, index) => {
-          return (
-            <AdminItem
-              key={index}
-              name={admin.name}
-              email={admin.email}
-              role={admin.role}
-              phone={admin.phone}
-            />
-          );
+          return <AdminItem key={index} admin={admin} />;
         })}
       </List>
     );

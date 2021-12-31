@@ -20,6 +20,7 @@ export type Family = {
 export type Admin = {
   // created_at: Date | Timestamp | string;
   // last_active: Date | Timestamp | string;
+  admin_id: string;
   email: string;
   name: string;
   phone: string;

@@ -1,39 +1,81 @@
 import styles from "../AdminItem/AdminItem.module.css";
 import { ListItem, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import { Admin } from "../../types/schema";
 
 type AdminItemProps = {
-  name: string;
-  role: string;
-  email: string;
-  phone: string;
+  admin: Admin;
 };
 
 export const AdminItem: React.FunctionComponent<AdminItemProps> = ({
-  name,
-  role,
-  email,
-  phone,
+  admin,
 }: AdminItemProps) => {
+  const [userName, setUserName] = useState(admin.name);
+  const [userRole, setUserRole] = useState(admin.role);
+  const [userEmail, setUserEmail] = useState(admin.email);
+  const [userPhone, setUserPhone] = useState(admin.phone);
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <ListItem className={styles["list-item"]}>
-      <div className={styles["name"]}>{name}</div>
-      <div className={styles["role"]}>{role}</div>
-      <div className={styles["email"]}>{email}</div>
-      <div className={styles["phone"]}>{phone}</div>
-      <div className={styles["buttons"]}>
-        <Button className={styles["delete"]}>Delete</Button>
-        <Button className={styles["reset"]}>Reset Password</Button>
-        {isEditing ? (
-          <p>hello</p>
-        ) : (
-          <Button className={styles["edit"]}>Edit</Button>
-        )
-        }
-        {/* <Button className={styles["edit"]}>Edit</Button> */}
-      </div>
-    </ListItem >
+    <div>
+      {isEditing ? (
+        <ListItem className={styles["list-item"]}>
+
+          <div className={styles["name"]}>
+            <input
+              className={styles["editTitle"]}
+              defaultValue={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </div>
+          <div className={styles["role"]}>
+            <input
+              className={styles["editTitle"]}
+              defaultValue={userRole}
+              onChange={(e) => setUserRole(e.target.value)}
+            />
+          </div>
+          <div className={styles["email"]}>
+            <input
+              className={styles["editTitle"]}
+              defaultValue={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+            />
+          </div>
+          <div className={styles["phone"]}>
+            <input
+              className={styles["editTitle"]}
+              defaultValue={userPhone}
+              onChange={(e) => setUserPhone(e.target.value)}
+            />
+          </div>
+          <Button
+            className={styles["edit"]}
+            onClick={() => {
+              setIsEditing(false);
+            }}
+          >
+            Save
+          </Button>
+        </ListItem>
+      ) : (
+        <ListItem className={styles["list-item"]}>
+          <div className={styles["name"]}>{admin.name}</div>
+          <div className={styles["role"]}>{admin.role}</div>
+          <div className={styles["email"]}>{admin.email}</div>
+          <div className={styles["phone"]}>{admin.phone}</div>
+          <Button className={styles["delete"]}>Delete</Button>
+          <Button className={styles["reset"]}>Reset Password</Button>
+          <Button
+            className={styles["edit"]}
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Edit
+          </Button>
+        </ListItem>
+      )}
+    </div>
   );
 };
