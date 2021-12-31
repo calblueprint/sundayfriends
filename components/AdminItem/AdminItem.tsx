@@ -29,16 +29,10 @@ export const AdminItem: React.FunctionComponent<AdminItemProps> = ({
         {isEditing ? (
           <p>hello</p>
         ) : (
-          <Button
-            className={styles["editButton"]}
-            onClick={() => setIsEditing(true)}
-          >
-            <Icon className={styles["editIcon"]} type={"edit"} />
-            <p>Edit</p>
-          </Button>
+          <Button className={styles["edit"]}>Edit</Button>
         )
         }
-        <Button className={styles["edit"]}>Edit</Button>
+        {/* <Button className={styles["edit"]}>Edit</Button> */}
       </div>
     </ListItem >
   );
