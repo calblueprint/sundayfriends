@@ -1,6 +1,6 @@
-import * as React from "react";
 import styles from "../AdminItem/AdminItem.module.css";
 import { ListItem, Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
 
 type AdminItemProps = {
   name: string;
@@ -15,6 +15,8 @@ export const AdminItem: React.FunctionComponent<AdminItemProps> = ({
   email,
   phone,
 }: AdminItemProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <ListItem className={styles["list-item"]}>
       <div className={styles["name"]}>{name}</div>
@@ -24,8 +26,20 @@ export const AdminItem: React.FunctionComponent<AdminItemProps> = ({
       <div className={styles["buttons"]}>
         <Button className={styles["delete"]}>Delete</Button>
         <Button className={styles["reset"]}>Reset Password</Button>
+        {isEditing ? (
+          <p>hello</p>
+        ) : (
+          <Button
+            className={styles["editButton"]}
+            onClick={() => setIsEditing(true)}
+          >
+            <Icon className={styles["editIcon"]} type={"edit"} />
+            <p>Edit</p>
+          </Button>
+        )
+        }
         <Button className={styles["edit"]}>Edit</Button>
       </div>
-    </ListItem>
+    </ListItem >
   );
 };
