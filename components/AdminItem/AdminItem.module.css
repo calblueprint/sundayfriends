@@ -54,6 +54,7 @@
   margin-right: 10px;
   font-size: 14px;
   font-family: Avenir;
+  background-color: var(--redeem-background);
   color: var(--grey-darker);
   text-transform: none;
 }
@@ -90,6 +91,22 @@
   text-transform: none;
 }
 
+.cancel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 70px;
+  height: 30px;
+  border: 1px solid #C8C8C8;
+  border-radius: 16.5px;
+  background-color: var(--redeem-background);
+  margin-right: 10px;
+  font-size: 14px;
+  font-family: Avenir;
+  color: var(--grey-darker);
+  text-transform: none;
+}
+
 .delete:hover {
   background-color: var(--white);
 }
@@ -110,4 +127,18 @@
   cursor: pointer;
   width: 20px;
   height: 20px;
+}
+
+.editTitle {
+  font-family: Avenir;
+  font-size: 14px;
+  margin-bottom: 4px;
+  border: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  width: 75%;
+  background-color: var(--grey-light);
+  padding-left: 8px;
+  border-radius: 10px;
+  /* margin-right: 20px; */
 }

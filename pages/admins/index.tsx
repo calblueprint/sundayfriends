@@ -14,6 +14,7 @@ import nookies from "nookies";
 import Icon from "../../assets/Icon";
 import Input from "@mui/material/Input";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useRouter } from "next/router";
 
 type AdminPageProps = {
   currentAdmin: Admin;
@@ -61,10 +62,8 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
           return (
             <AdminItem
               key={index}
-              name={admin.name}
-              email={admin.email}
-              role={admin.role}
-              phone={admin.phone}
+              admin={admin}
+              refresh={() => refreshData()}
             />
           );
         })}
@@ -107,6 +106,11 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
       },
     },
   });
+
+  const router = useRouter();
+  const refreshData = (): void => {
+    router.replace(router.asPath);
+  };
 
   return (
     <Layout title="Admins">
