@@ -1,30 +1,29 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import createError from "../../../../utils/error";
-import { UserRecord } from "firebase-admin/lib/auth/user-record";
+// import { AdminRecord } from "firebase-admin/lib/auth/user-record";
 import firebaseApp from "../../../../firebase/firebaseApp";
 import firebaseAdmin from "../../../../firebase/firebaseAdmin";
+import { getAdmin } from "../../../../firebase/firestore/admin";
+import { Admin } from "../../../../types/schema";
 
 const db = firebaseApp.firestore();
-const userCollection = db.collection("admins");
+const adminCollection = db.collection("admins");
 
-// update user data here
+// update admin data here
 type UpdateAdminDTO = {
-  userUID: string;
-  userData: any;
+  adminUID: string;
+  adminData: any;
 };
 
 /**
- * Updates the user data from firestore with the given userId
+ * Updates the admin data from firestore with the given adminId
  */
-export const updateUser = async (
-  userId: string,
-  newData
-): Promise<UserRecord> => {
+export const updateAdmin = async (adminId: string, newData): Promise<Admin> => {
   try {
-    const trimedId = userId.toString().replace(/\s/g, "");
-    await userCollection.doc(trimedId).update(newData);
-    const userRecord = await firebaseAdmin.auth().updateUser(trimedId, newData);
-    return userRecord;
+    const trimedId = adminId.toString().replace(/\s/g, "");
+    await adminCollection.doc(trimedId).update(newData);
+    const adminRecord = await getAdmin(trimedId);
+    return adminRecord;
   } catch (e) {
     console.error(e);
     throw e;
@@ -36,19 +35,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method != "POST") {
       return createError(
         405,
-        `${req.method} request is not supported on this api end point (auth/updateUser)`,
+        `${req.method} request is not supported on this api end point (auth/updateAdmin)`,
         res
       );
     }
-    const requestBody = req.body as UpdateUserDTO;
-    const updatedUserRecord = await updateUser(
-      requestBody.userUID,
-      requestBody.userData
+    const requestBody = req.body as UpdateAdminDTO;
+    const updatedAdminRecord = await updateAdmin(
+      requestBody.adminUID,
+      requestBody.adminData
     );
-    if (updatedUserRecord) {
-      return res.status(200).json(updatedUserRecord);
+    if (updatedAdminRecord) {
+      return res.status(200).json(updatedAdminRecord);
     }
-    return createError(400, "Could not finish updating user data", res);
+    return createError(400, "Could not finish updating admin data", res);
   } catch (err) {
     return createError(500, err.message, res);
   }
