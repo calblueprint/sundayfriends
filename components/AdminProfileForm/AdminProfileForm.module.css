@@ -36,18 +36,19 @@
 }
 
 .box {
-    padding: 4%;
+    padding: 2% 4% 4% 4%;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid var(--sapphire-light);
+    border: 2px solid #F2F2F2;
     border-radius: 25px;
     width: 100%;
     background-color: white;
+    height: 415px;
 }
 
 .hr {
-    height: 2px;
-    color: var(--sapphire-light);
+    margin-top: 23px;
+    border: 1px solid #F2F2F2;
 }
 
 .info {
@@ -55,6 +56,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin-right: 5%;
+    margin-bottom: 3%;
 }
 
 .fields {
@@ -94,11 +96,24 @@
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    text-align: left;
-    padding: 7px 0 7px 7px;    
+    color: var(--grey-dark);
+    text-align: start;
+    padding: 0px 0px 0px 10px;    
 }
 
 .info-field {
     text-align: left;
     width: 60%;
+    height: 100%;
+    margin-top: 3px;
+    padding-left: 10px;
+    color: var(--grey-dark);
+}
+
+.card-title {
+    font-size: 18px;
+    color: var(--noirish);
+    font-weight: bold;
+    font-style: normal;
+    margin-bottom: 16px;
 }

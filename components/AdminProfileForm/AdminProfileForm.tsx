@@ -119,6 +119,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
               setEdited(false);
               resetFields();
             }}
+            disableElevation={true}
           >
             <Icon type="smallX" />
             Cancel
@@ -126,6 +127,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
           {edited && (
             <StyledButton
               variant="contained"
+              disableElevation={true}
               startIcon={<Icon type="smallCheck" />}
               onClick={handleSubmit}
             >
@@ -136,11 +138,12 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
       );
     } else {
       if (saving) {
-        return <StyledButton variant="contained">Saving...</StyledButton>;
+        return <StyledButton variant="contained" disableElevation={true}>Saving...</StyledButton>;
       } else {
         return (
           <StyledButton
             variant="contained"
+            disableElevation={true}
             onClick={() => setEditingForm(true)}
           >
             <Icon type="editpencil" />
@@ -160,10 +163,8 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
       <hr className={styles["hr"]}></hr>
       <div className={styles["boxes"]}>
         <div className={styles["box"]}>
-          <Typography variant="h5" fontWeight="bold">
-            About
-          </Typography>
-          <hr></hr>
+          <h4>About</h4>
+          <hr className={styles["hr"]} />
           <br></br>
           <div className={styles["info"]}>
             <div className={styles["fields"]}>
@@ -236,10 +237,8 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
           <br></br>
         </div>
         <div className={styles["box"]}>
-          <Typography variant="h5" fontWeight="bold">
-            Login Details
-          </Typography>
-          <hr></hr>
+          <h4>Login Details</h4>
+          <hr className={styles["hr"]}></hr>
           <br></br>
           <div className={styles["info"]}>
             <div className={styles["fields"]}>
