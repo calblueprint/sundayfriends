@@ -152,7 +152,11 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
       );
     } else {
       if (saving) {
-        return <StyledButton variant="contained" disableElevation={true}>Saving...</StyledButton>;
+        return (
+          <StyledButton variant="contained" disableElevation={true}>
+            Saving...
+          </StyledButton>
+        );
       } else {
         return (
           <StyledButton
@@ -187,7 +191,8 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                 NAME
               </Typography>
             </div>
-            <div className={styles["edit-field-container"]}
+            <div
+              className={styles["edit-field-container"]}
               onClick={() => {
                 if (editingForm) {
                   resetEditing();
@@ -207,13 +212,14 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                   }}
                 />
               ) : (
-                <div
-                  className={styles["info-field"]}
-                >
-                  {adminName}
-                </div>
+                <div className={styles["info-field"]}>{adminName}</div>
               )}
-              {editingForm && !editingName && <Icon type={"editpencilgrey"} className={styles["edit-pencil"]} />}
+              {editingForm && !editingName && (
+                <Icon
+                  type={"editpencilgrey"}
+                  className={styles["edit-pencil"]}
+                />
+              )}
             </div>
           </div>
           <br></br>
@@ -244,13 +250,14 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                   }}
                 />
               ) : (
-                <div
-                  className={styles["info-field"]}
-                >
-                  {adminRole}
-                </div>
+                <div className={styles["info-field"]}>{adminRole}</div>
               )}
-              {editingForm && !editingRole && <Icon type={"editpencilgrey"} className={styles["edit-pencil"]} />}
+              {editingForm && !editingRole && (
+                <Icon
+                  type={"editpencilgrey"}
+                  className={styles["edit-pencil"]}
+                />
+              )}
             </div>
           </div>
           <br></br>
@@ -290,7 +297,8 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                 EMAIL
               </Typography>
             </div>
-            <div className={styles["edit-field-container"]}
+            <div
+              className={styles["edit-field-container"]}
               onClick={() => {
                 if (editingForm) {
                   resetEditing();
@@ -310,13 +318,14 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                   }}
                 />
               ) : (
-                <div
-                  className={styles["info-field"]}
-                >
-                  {adminEmail}
-                </div>
+                <div className={styles["info-field"]}>{adminEmail}</div>
               )}
-              {editingForm && !editingEmail && <Icon type={"editpencilgrey"} className={styles["edit-pencil"]} />}
+              {editingForm && !editingEmail && (
+                <Icon
+                  type={"editpencilgrey"}
+                  className={styles["edit-pencil"]}
+                />
+              )}
             </div>
           </div>
           <br></br>
@@ -348,13 +357,14 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                   }}
                 />
               ) : (
-                <div
-                  className={styles["info-field"]}
-                >
-                  {adminPhone}
-                </div>
+                <div className={styles["info-field"]}>{adminPhone}</div>
               )}
-              {editingForm && !editingPhone && <Icon type={"editpencilgrey"} className={styles["edit-pencil"]} />}
+              {editingForm && !editingPhone && (
+                <Icon
+                  type={"editpencilgrey"}
+                  className={styles["edit-pencil"]}
+                />
+              )}
             </div>
           </div>
           <br></br>
