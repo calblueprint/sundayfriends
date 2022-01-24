@@ -7,7 +7,8 @@
     "build": "next build",
     "build:scripts": "tsc --project tsconfig.scripts.json",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/core": "^7.15.8",
@@ -33,15 +34,23 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.11.2",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.4.0",
     "@types/node": "^16.9.1",
     "@types/react": "^17.0.20",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
+    "babel-jest": "^27.4.6",
     "eslint": "^7.32.0",
     "eslint-config-next": "11.1.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.4.7",
     "prettier": "^2.4.1",
     "typescript": "^4.4.3"
   }
