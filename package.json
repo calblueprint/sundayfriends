@@ -8,7 +8,8 @@
     "build:scripts": "tsc --project tsconfig.scripts.json",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "cross-env jest",
+    "test:ci": "cross-env TZ=utc jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage --silent"
   },
   "dependencies": {
     "@babel/core": "^7.15.8",
@@ -19,6 +20,7 @@
     "@mui/material": "^5.0.0",
     "@mui/styles": "^5.1.0",
     "@mui/x-data-grid": "^5.0.1",
+    "cross-env": "^7.0.3",
     "emailjs-com": "^3.2.0",
     "firebase": "^8.2.3",
     "firebase-admin": "^10.0.0",
@@ -51,6 +53,8 @@
     "eslint-plugin-react": "^7.26.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.7",
+    "jest-junit": "^13.0.0",
+    "jest-unit": "0.0.1",
     "prettier": "^2.4.1",
     "typescript": "^4.4.3"
   }
