@@ -92,7 +92,7 @@
     font-family: Avenir;
     font-size: medium;
     border: 0px;
-    width: 60%;
+    width: 100%;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -116,4 +116,15 @@
     font-weight: bold;
     font-style: normal;
     margin-bottom: 16px;
+}
+
+.edit-field-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.edit-pencil {
+    margin-top: 7px;
 }

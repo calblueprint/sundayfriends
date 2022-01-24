@@ -42,7 +42,8 @@ export type IconType =
   | "inviteAdd"
   | "ex"
   | "smallX"
-  | "smallCheck";
+  | "smallCheck"
+  | "editpencilgrey";
 
 const IconSvgs: Record<IconType, React.ReactElement> = {
   calendar: (
@@ -645,6 +646,11 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
       />
     </SvgIcon>
   ),
+  editpencilgrey: (
+    <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0.771262 14.5C0.555767 14.4996 0.350338 14.4087 0.205094 14.2495C0.0571725 14.0916 -0.0163304 13.878 0.00305578 13.6624L0.191266 11.5923L8.88583 2.89845L11.603 5.61557L2.91072 14.3087L0.841169 14.4969C0.817355 14.4992 0.79354 14.5 0.771262 14.5ZM12.1453 5.0723L9.42895 2.35518L11.0583 0.725366C11.2024 0.581075 11.3979 0.5 11.6018 0.5C11.8057 0.5 12.0012 0.581075 12.1453 0.725366L13.7747 2.35518C13.9189 2.49931 14 2.69489 14 2.89883C14 3.10278 13.9189 3.29836 13.7747 3.44249L12.1453 5.0723Z" fill="#A9A9A9" />
+    </svg>
+  )
 };
 
 type Props = {

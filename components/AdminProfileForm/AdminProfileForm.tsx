@@ -67,6 +67,11 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
   const [newAdminData, setNewAdminData] = useState<AdminUpdateData>({});
   const [saving, setSaving] = useState<boolean>(false);
 
+  const [editingName, setEditingName] = useState<boolean>(false);
+  const [editingRole, setEditingRole] = useState<boolean>(false);
+  const [editingEmail, setEditingEmail] = useState<boolean>(false);
+  const [editingPhone, setEditingPhone] = useState<boolean>(false);
+
   // monitor changes in editable fields
   useEffect(() => {
     if (editingForm) {
@@ -76,6 +81,13 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
 
   const refresh = () => {
     router.replace(router.asPath);
+  };
+
+  const resetEditing = (): void => {
+    setEditingEmail(false);
+    setEditingName(false);
+    setEditingRole(false);
+    setEditingPhone(false);
   };
 
   // reset to default values
@@ -90,6 +102,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
   // TODO error handling
   const handleSubmit = async (): Promise<void> => {
     try {
+      resetEditing();
       setSaving(true);
       setEditingForm(false);
       setEdited(false);
@@ -118,6 +131,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
               setEditingForm(false);
               setEdited(false);
               resetFields();
+              resetEditing();
             }}
             disableElevation={true}
           >
@@ -173,20 +187,34 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                 NAME
               </Typography>
             </div>
-            {editingForm ? (
-              <input
-                className={styles["editable-field"]}
-                type="text"
-                defaultValue={adminName}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  setAdminName(event.target.value);
-                  setEditingForm(true);
-                  newAdminData.name = event.target.value;
-                }}
-              />
-            ) : (
-              <div className={styles["info-field"]}>{adminName}</div>
-            )}
+            <div className={styles["edit-field-container"]}
+              onClick={() => {
+                if (editingForm) {
+                  resetEditing();
+                  setEditingName(true);
+                }
+              }}
+            >
+              {editingForm && editingName ? (
+                <input
+                  className={styles["editable-field"]}
+                  type="text"
+                  defaultValue={adminName}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setAdminName(event.target.value);
+                    setEditingForm(true);
+                    newAdminData.name = event.target.value;
+                  }}
+                />
+              ) : (
+                <div
+                  className={styles["info-field"]}
+                >
+                  {adminName}
+                </div>
+              )}
+              {editingForm && !editingName && <Icon type={"editpencilgrey"} className={styles["edit-pencil"]} />}
+            </div>
           </div>
           <br></br>
           <div className={styles["info"]}>
@@ -196,19 +224,34 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                 ROLE
               </Typography>
             </div>
-            {editingForm ? (
-              <input
-                className={styles["editable-field"]}
-                defaultValue={adminRole}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  setAdminRole(event.target.value);
-                  setEditingForm(true);
-                  newAdminData.role = event.target.value;
-                }}
-              />
-            ) : (
-              <div className={styles["info-field"]}>{adminRole}</div>
-            )}
+            <div
+              className={styles["edit-field-container"]}
+              onClick={() => {
+                if (editingForm) {
+                  resetEditing();
+                  setEditingRole(true);
+                }
+              }}
+            >
+              {editingForm && editingRole ? (
+                <input
+                  className={styles["editable-field"]}
+                  defaultValue={adminRole}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setAdminRole(event.target.value);
+                    setEditingForm(true);
+                    newAdminData.role = event.target.value;
+                  }}
+                />
+              ) : (
+                <div
+                  className={styles["info-field"]}
+                >
+                  {adminRole}
+                </div>
+              )}
+              {editingForm && !editingRole && <Icon type={"editpencilgrey"} className={styles["edit-pencil"]} />}
+            </div>
           </div>
           <br></br>
           <div className={styles["info"]}>
@@ -247,20 +290,34 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                 EMAIL
               </Typography>
             </div>
-            {editingForm ? (
-              <input
-                className={styles["editable-field"]}
-                type="email"
-                defaultValue={adminEmail}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  setAdminEmail(event.target.value);
-                  setEditingForm(true);
-                  newAdminData.email = event.target.value;
-                }}
-              />
-            ) : (
-              <div className={styles["info-field"]}>{adminEmail}</div>
-            )}
+            <div className={styles["edit-field-container"]}
+              onClick={() => {
+                if (editingForm) {
+                  resetEditing();
+                  setEditingEmail(true);
+                }
+              }}
+            >
+              {editingForm && editingEmail ? (
+                <input
+                  className={styles["editable-field"]}
+                  type="email"
+                  defaultValue={adminEmail}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setAdminEmail(event.target.value);
+                    setEditingForm(true);
+                    newAdminData.email = event.target.value;
+                  }}
+                />
+              ) : (
+                <div
+                  className={styles["info-field"]}
+                >
+                  {adminEmail}
+                </div>
+              )}
+              {editingForm && !editingEmail && <Icon type={"editpencilgrey"} className={styles["edit-pencil"]} />}
+            </div>
           </div>
           <br></br>
           <div className={styles["info"]}>
@@ -270,20 +327,35 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
                 PHONE #
               </Typography>
             </div>
-            {editingForm ? (
-              <input
-                className={styles["editable-field"]}
-                type="tel"
-                defaultValue={adminPhone}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                  setAdminPhone(event.target.value);
-                  setEditingForm(true);
-                  newAdminData.phone = event.target.value;
-                }}
-              />
-            ) : (
-              <div className={styles["info-field"]}>{adminPhone}</div>
-            )}
+            <div
+              className={styles["edit-field-container"]}
+              onClick={() => {
+                if (editingForm) {
+                  resetEditing();
+                  setEditingPhone(true);
+                }
+              }}
+            >
+              {editingForm && editingPhone ? (
+                <input
+                  className={styles["editable-field"]}
+                  type="tel"
+                  defaultValue={adminPhone}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                    setAdminPhone(event.target.value);
+                    setEditingForm(true);
+                    newAdminData.phone = event.target.value;
+                  }}
+                />
+              ) : (
+                <div
+                  className={styles["info-field"]}
+                >
+                  {adminPhone}
+                </div>
+              )}
+              {editingForm && !editingPhone && <Icon type={"editpencilgrey"} className={styles["edit-pencil"]} />}
+            </div>
           </div>
           <br></br>
           <div className={styles["info"]}>
