@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
-      - run: npm test:ci
+      - run: npm run test:ci
 
       - name: Tests ✅
         if: ${{ success() }}
