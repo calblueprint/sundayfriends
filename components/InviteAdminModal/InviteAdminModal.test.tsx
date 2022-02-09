@@ -3,7 +3,7 @@
  */
 
 import * as React from "react";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, fireEvent, act } from "@testing-library/react";
 import { InviteAdminModal } from "./InviteAdminModal";
 
 const mockSetOpen = jest.fn();
@@ -129,5 +129,79 @@ describe("The InviteAdminModal component", () => {
     expect(screen.getAllByRole("textbox")).toHaveLength(2);
   });
 
-  // TODO check for error states in tests and API calls with emailjs
+  it('should set open to false (closes modal) after clicking close (after information submitted)', () => {
+    render(
+      <InviteAdminModal
+        open={true}
+        setOpen={mockSetOpen}
+        sent={true}
+        setSent={mockSetSent}
+      />
+    );
+    const closeButton = screen.getByRole("button", {
+      name: /Close/i,
+    });
+    closeButton.click();
+    expect(mockSetOpen).toHaveBeenCalledWith(false);
+  });
+
+  it('should set sent to false (updates modal) after clicking Invite More (after information submitted)', () => {
+    render(
+      <InviteAdminModal
+        open={true}
+        setOpen={mockSetOpen}
+        sent={true}
+        setSent={mockSetSent}
+      />
+    );
+    const inviteMoreButton = screen.getByRole("button", {
+      name: /Invite More/i,
+    });
+    inviteMoreButton.click();
+    expect(mockSetSent).toHaveBeenCalledWith(false);
+  });
+
+  it('should set sent to true (updates modal) after clicking Send Invites', async () => {
+    render(
+      <InviteAdminModal
+        open={true}
+        setOpen={mockSetOpen}
+        sent={false}
+        setSent={mockSetSent}
+      />
+    );
+    const inputName = screen.getByPlaceholderText("Firstname Lastname");
+    const inputEmail = screen.getByPlaceholderText("thisisanemail@email.com");
+    fireEvent.change(inputName, { target: { value: 'Dummy Name' } });
+    fireEvent.change(inputEmail, { target: { value: 'sundayfriends@calblueprint.org' } });
+    expect(inputName).toHaveValue("Dummy Name");
+    expect(inputEmail).toHaveValue("sundayfriends@calblueprint.org");
+    const sendInvitesButton = screen.getByRole("button", {
+      name: /Send Invites/i,
+    });
+    // wrap code that changes in await act
+    await act(async () => {
+      sendInvitesButton.click();
+    });
+    expect(mockSetSent).toHaveBeenCalledWith(true);
+  });
+
+  it('should display errors when inputs are left blank', async () => {
+    render(
+      <InviteAdminModal
+        open={true}
+        setOpen={mockSetOpen}
+        sent={false}
+        setSent={mockSetSent}
+      />
+    );
+    const sendInvitesButton = screen.getByRole("button", {
+      name: /Send Invites/i,
+    });
+    await act(async () => { sendInvitesButton.click(); });
+    // expect messages to exist
+    const errorMessages = screen.getAllByText("Field required");
+    // 2 error messages (1 for each field)
+    expect(errorMessages).toHaveLength(2);
+  });
 });
