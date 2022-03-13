@@ -35,7 +35,7 @@ const StyledButton = styled(Button)(() => ({
   "&:hover": {
     backgroundColor: "#253c85",
   },
-  fontFamily: "Avenir"
+  fontFamily: "Avenir",
 }));
 
 const DisabledSaveButton = styled(StyledButton)(() => ({
@@ -173,7 +173,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
             >
               Save
             </StyledButton>
-          ) :
+          ) : (
             <DisabledSaveButton
               variant="contained"
               disableElevation={true}
@@ -181,7 +181,7 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
             >
               Save
             </DisabledSaveButton>
-          }
+          )}
         </div>
       );
     } else {
@@ -232,7 +232,11 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
               </Typography>
             </div>
             <div
-              className={editingForm ? styles["edit-field-container-editing"] : styles["edit-field-container"]}
+              className={
+                editingForm
+                  ? styles["edit-field-container-editing"]
+                  : styles["edit-field-container"]
+              }
               onClick={() => {
                 if (editingForm) {
                   resetEditing();
@@ -271,7 +275,11 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
               </Typography>
             </div>
             <div
-              className={editingForm ? styles["edit-field-container-editing"] : styles["edit-field-container"]}
+              className={
+                editingForm
+                  ? styles["edit-field-container-editing"]
+                  : styles["edit-field-container"]
+              }
               onClick={() => {
                 if (editingForm) {
                   resetEditing();
@@ -338,7 +346,11 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
               </Typography>
             </div>
             <div
-              className={editingForm ? styles["edit-field-container-editing"] : styles["edit-field-container"]}
+              className={
+                editingForm
+                  ? styles["edit-field-container-editing"]
+                  : styles["edit-field-container"]
+              }
               onClick={() => {
                 if (editingForm) {
                   resetEditing();
@@ -377,7 +389,11 @@ export const AdminProfileForm: React.FC<AdminProfileFormProps> = ({
               </Typography>
             </div>
             <div
-              className={editingForm ? styles["edit-field-container-editing"] : styles["edit-field-container"]}
+              className={
+                editingForm
+                  ? styles["edit-field-container-editing"]
+                  : styles["edit-field-container"]
+              }
               onClick={() => {
                 if (editingForm) {
                   resetEditing();
