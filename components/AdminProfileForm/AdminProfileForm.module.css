@@ -26,6 +26,11 @@
     margin-bottom: 2%;
 }
 
+.namebar-button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
 .boxes {
     width: 100%;
     display: flex;
@@ -70,6 +75,8 @@
     text-align: right;
     border: none;
     font-size: 13px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .edit-buttons-container {
@@ -108,6 +115,7 @@
     margin-top: 3px;
     padding-left: 10px;
     color: var(--grey-dark);
+
 }
 
 .card-title {
@@ -123,6 +131,17 @@
     flex-direction: row;
     justify-content: space-between;
     width: 60%;
+}
+
+.edit-field-container-editing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.edit-field-container-editing:hover {
+    background-color: #F2F2F2;
 }
 
 .edit-pencil {
