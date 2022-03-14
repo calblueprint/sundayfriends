@@ -19,15 +19,15 @@ const SettingsMenuItem = styled(MenuItem)(() => ({
   alignItems: "center",
   fontFamily: "Avenir",
   "&:hover": {
-    backgroundColor: "white"
-  }
+    backgroundColor: "white",
+  },
 }));
 
 const ProfileSettings: React.FunctionComponent<ProfileSettingsProps> = ({
   adminName,
   onProfile,
 }) => {
-  const name = adminName.split(" ")[0]
+  const name = adminName.split(" ")[0];
   const [anchorEl, setAnchorEl] = useState<Element>(null);
   const router = useRouter();
   const handleClick = (event) => {
@@ -80,7 +80,7 @@ const ProfileSettings: React.FunctionComponent<ProfileSettingsProps> = ({
             borderRadius: "10px",
             border: "2px solid #E6ECFE",
             boxSizing: "border-box",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)"
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
           },
         }}
         anchorEl={anchorEl}
@@ -92,15 +92,19 @@ const ProfileSettings: React.FunctionComponent<ProfileSettingsProps> = ({
           horizontal: 40,
         }}
       >
-        <SettingsMenuItem disabled={onProfile} onClick={handleRedirect} disableRipple>
+        <SettingsMenuItem
+          disabled={onProfile}
+          onClick={handleRedirect}
+          disableRipple
+        >
           <Icon type="settings" />
           Settings
         </SettingsMenuItem>
         <Divider
           sx={{
             display: {
-              background: "#E6ECFE"
-            }
+              background: "#E6ECFE",
+            },
           }}
         />
         <SettingsMenuItem onClick={handleSignOut} disableRipple>
