@@ -84,7 +84,7 @@ const ProfileSettingsPage: React.FunctionComponent<ProfileSettingsPageProps> =
     };
 
     return (
-      <Layout title="Profile">
+      <Layout title="Profile" adminName={currentAdmin.name} onProfile={true}>
         <div className={styles.page}>
           <div className={styles.pagetitle}>
             <Icon type="settings"></Icon>
