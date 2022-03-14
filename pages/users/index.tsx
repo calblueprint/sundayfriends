@@ -36,7 +36,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
     router.replace(router.asPath);
   };
   return (
-    <Layout title="Users">
+    <Layout title="Users" adminName={currentAdmin.name}>
       <Modal open={isOpen}>
         <div className={styles["newFamModal"]}>
           <div className={styles["modalHeadContanier"]}>

@@ -159,7 +159,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   const uploadOpen = Boolean(uploadAnchorEl);
   const uploadpopoverid = uploadOpen ? "upload-popover" : undefined;
   return (
-    <Layout title="Transactions">
+    <Layout title="Transactions" adminName={currentAdmin.name}>
       <div className={styles["screen"]}>
         <div className={styles["container"]}>
           <div className={styles["title-div"]}>

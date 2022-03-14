@@ -109,7 +109,7 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
   });
 
   return (
-    <Layout title="Admins">
+    <Layout title="Admins" adminName={currentAdmin.name}>
       <main className={styles["main"]}>
         <div className={styles["header"]}>
           <Icon className={styles["admin-icon"]} type={"admin"}></Icon>

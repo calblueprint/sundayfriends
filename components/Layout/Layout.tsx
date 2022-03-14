@@ -4,14 +4,19 @@ import Head from "next/head";
 import SideNavbar from "./SideNavbar/SideNavbar";
 import ProfileSettings from "../ProfileSettings/ProfileSettings";
 import styles from "./Layout.module.css";
+import { boolean } from "yup";
 
 type LayoutProps = {
   title?: string;
+  adminName?: string;
+  onProfile?: boolean;
 };
 
 const Layout: React.FC<LayoutProps> = ({
   children,
   title = "Sunday Friends",
+  adminName = "Admin",
+  onProfile = false,
 }) => {
   return (
     <div className={styles["layout-container"]}>
@@ -24,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({
         <SideNavbar />
         {children}
         <div className={styles["profile-settings"]}>
-          <ProfileSettings />
+          <ProfileSettings adminName={adminName} onProfile={onProfile} />
         </div>
       </div>
     </div>
