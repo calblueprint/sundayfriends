@@ -14,4 +14,4 @@ _Optional - any related PRs you're waiting on, or PRs that will conflict, etc_
 
 _Required for visual changes_
 
-CC: @gabriel-jt @cindyxzhang @hukellyy
+CC: @jacobjk01 @hukellyy

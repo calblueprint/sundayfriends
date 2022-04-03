@@ -1,0 +1,17 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  run-linters:
+    name: Run linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check out and apply linter fixes
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: npm install
+      - run: npm run lint -- --fix
