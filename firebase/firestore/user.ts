@@ -94,6 +94,34 @@ export const addUser = async (user: User): Promise<void> => {
 };
 
 /**
+ * Suspends the given user
+ */
+export const suspendUserToggle = async (userId: string): Promise<void> => {
+  const trimedId = userId.toString().replace(/\s/g, "");
+  const doc = await userCollection.doc(trimedId).get();
+  var data = doc.data();
+  data.suspended = !data.suspended;
+  
+  // var newUser = parseUser(doc);
+  // (await newUser).suspended = true;
+  userCollection.doc(trimedId).set(data);
+} 
+
+/**
+ * Update last_active
+ */
+// export const updateLastActive = async (userId: string, date: Date): Promise<void> => {
+//   const trimedId = userId.toString().replace(/\s/g, "");
+//   const doc = await userCollection.doc(trimedId).get();
+//   var data = doc.data();
+//   data.last_active = date;
+  
+//   // var newUser = parseUser(doc);
+//   // (await newUser).suspended = true;
+//   userCollection.doc(trimedId).set(data);
+// }
+
+/**
  * Deletes the user from firestore with the given userId
  */
 export const deleteUser = async (userId: string): Promise<void> => {

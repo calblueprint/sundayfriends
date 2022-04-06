@@ -37,6 +37,15 @@
   margin-bottom: 0%;
 }
 
+.headerDetails {
+  font-family: Avenir;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--grey-dark);
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
 .addIcon {
   border-radius: 50%;
   background-color: var(--grey-light);

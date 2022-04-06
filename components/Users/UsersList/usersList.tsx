@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import {
   Button,
   Table,
@@ -12,9 +13,11 @@ import styles from "./UsersList.module.css";
 import { Family, User } from "../../../types/schema";
 import UserModal from "../UserModal/userModal";
 import { useState } from "react";
+import { getAllUsers, suspendUserToggle } from '../../../firebase/firestore/user';
 
 type UsersListProps = {
   users: User[];
+  setUsers?: React.Dispatch<React.SetStateAction<User[]>>;
   isFamilyPath: boolean;
   family?: Family;
   setIsOpenFam?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,6 +29,7 @@ type UsersListItemProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setUser: React.Dispatch<React.SetStateAction<User>>;
   isFamilyPath: boolean;
+  suspend: Function;
 };
 
 const UsersListItem: React.FC<UsersListItemProps> = ({
@@ -33,6 +37,7 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
   setIsOpen,
   setUser,
   isFamilyPath,
+  suspend,
 }: UsersListItemProps) => {
   return (
     <TableRow key={user.email} className={styles["tableRow"]}>
@@ -54,7 +59,15 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
         {user.points}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["transactions"]}`}>
-        {user.transactions.length.toString()}
+        {user.suspended?
+          <div className={styles["suspendedBubble"]}>
+            Suspended
+          </div>
+        :
+          <div className={styles["activeBubble"]}>
+            Active
+          </div>
+        }
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["manage"]}`}>
         <div className={styles["manageButtons"]}>
@@ -67,7 +80,7 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
           >
             View
           </Button>
-          <Button className={styles["button"]}>Suspend</Button>
+          <Button className={styles["button"]} onClick={() => suspend(user)}>{user.suspended?"Unsuspend":"Suspend"}</Button>
           <Button className={styles["button"]}>Delete</Button>
         </div>
       </TableCell>
@@ -77,6 +90,7 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
 
 const UsersList: React.FC<UsersListProps> = ({
   users,
+  setUsers,
   isFamilyPath,
   family,
   setIsOpenFam,
@@ -85,6 +99,14 @@ const UsersList: React.FC<UsersListProps> = ({
 }: UsersListProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState();
+
+  const toggleSuspend = async (user: User) => {
+    await suspendUserToggle(user.user_id);
+    getAllUsers().then((allUsers) => {
+      setUsers(allUsers);
+    })
+  }
+
   return (
     <TableContainer>
       <UserModal
@@ -121,9 +143,9 @@ const UsersList: React.FC<UsersListProps> = ({
               Balance
             </TableCell>
             <TableCell
-              className={`${styles["headingRow"]} ${styles["transactions"]}`}
+              className={`${styles["headingRow"]} ${styles["status"]}`}
             >
-              # Transactions
+              Status
             </TableCell>
             <TableCell
               className={`${styles["headingRow"]} ${styles["manage"]}`}
@@ -140,6 +162,7 @@ const UsersList: React.FC<UsersListProps> = ({
               setIsOpen={setIsOpen}
               setUser={setUser}
               isFamilyPath={isFamilyPath}
+              suspend={toggleSuspend}
             />
           ))}
         </TableBody>

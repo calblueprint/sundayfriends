@@ -50,14 +50,28 @@ export const getFamilyById = async (FID: string): Promise<Family> => {
   }
 };
 
+/**
+ * Update last_active
+ */
+ export const updateLastActive = async (FID: string, date: Date): Promise<void> => {
+  const doc = await familyCollection.doc(FID).get();
+  var data = doc.data();
+  data.last_active = date;
+  
+  // var newUser = parseUser(doc);
+  // (await newUser).suspended = true;
+  familyCollection.doc(FID).set(data);
+}
+
 const parseFamily = async (doc) => {
   const family_id = doc.id as string;
   const data = doc.data();
   const total_points = data.total_points;
+  const last_active = new Date(data.last_active.toMillis()).toLocaleDateString();
   const user_ids = data.user_ids;
   const promises: Promise<User>[] = user_ids.map((user_id) => getUser(user_id));
   const users = await Promise.all(promises);
   const family_name = data.family_name;
-  const family = { family_id, family_name, total_points, user_ids: users };
+  const family = { family_id, family_name, last_active, total_points, user_ids, users };
   return family as Family;
 };

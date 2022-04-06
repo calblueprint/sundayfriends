@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import styles from "./UploadPopover.module.css";
 import { Button, Popover, LinearProgress, Snackbar } from "@mui/material";
 import Icon from "../../assets/Icon";
-import { Transaction, User } from "../../types/schema";
+import { Transaction, User, Admin } from "../../types/schema";
 import {
   getAllTransactions,
   addTransaction,
 } from "../../firebase/firestore/transaction";
 import Papa from "papaparse";
+import { getFamilyById, updateLastActive } from "../../firebase/firestore/family";
 
 type UploadPopoverProps = {
+  admin: Admin;
   uploadAnchor: Element;
   closeUpload: Function;
   popoverid: string;
@@ -17,6 +19,7 @@ type UploadPopoverProps = {
 };
 
 export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
+  admin,
   uploadAnchor,
   closeUpload,
   popoverid,
@@ -59,19 +62,13 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
 
   const checkCSV = () => {
     console.log(fileData[0]);
-    if (fileData[0][0] != "Date") {
+    if (fileData[0][0] != "User") {
       return false;
-    } else if (fileData[0][1] != "User") {
+    } else if (fileData[0][1] != "FID") {
       return false;
-    } else if (fileData[0][2] != "FID") {
+    } else if (fileData[0][2] != "Message") {
       return false;
-    } else if (fileData[0][3] != "Admin") {
-      return false;
-    } else if (fileData[0][4] != "Action") {
-      return false;
-    } else if (fileData[0][5] != "Message") {
-      return false;
-    } else if (fileData[0][6] != "Change") {
+    } else if (fileData[0][3] != "Change") {
       return false;
     }
     return true;
@@ -85,16 +82,21 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
         setSnackbarOpen(true);
       } else {
         for (let i = 1; i < fileData.length; i++) {
-          const data = {
-            admin_name: fileData[i][3],
-            date: new Date(fileData[i][0]),
-            description: fileData[i][5],
-            family_id: fileData[i][2],
-            point_gain: parseInt(fileData[i][6]),
-            user_name: fileData[i][1],
-          };
-          console.log(data);
-          addTransaction(data as Transaction);
+          const activeDate = new Date();
+          const userid = findUserByNameandFID(fileData[i][0], fileData[i][1]);
+            const data = {
+              admin_name: admin.name,
+              date: activeDate,
+              description: fileData[i][2],
+              family_id: fileData[i][1],
+              point_gain: parseInt(fileData[i][3]),
+              user_name: fileData[i][0],
+              user_id: userid,
+            };
+            console.log(data);
+            addTransaction(data as Transaction);
+
+            updateLastActive(fileData[i][1], activeDate);
         }
 
         let trans = await getAllTransactions();
@@ -132,6 +134,18 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
     setUploadFile(null);
     setUploadProgress(0);
   };
+
+  const findUserByNameandFID = (name: string, fid: number) => {
+    getFamilyById(fid.toString()).then((family) => {
+      family.users.map((user) => {
+        if (user.full_name == name && user.family_id == fid) {
+          console.log(user.user_id);
+          return user.user_id;
+        }
+      })
+    })
+    return null;
+  }
 
   const uploadPopoverContent = () => {
     if (uploadSuccess) {

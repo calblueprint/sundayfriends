@@ -28,6 +28,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
 }: UsersPageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(0);
+  const [users, setUsers] = useState(allUsers);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -153,7 +154,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
         {value == 0 ? (
           <FamilyCards families={allFamilies} refresh={() => refreshData()} />
         ) : (
-          <FullUsersList users={allUsers} refresh={() => refreshData()} />
+          <FullUsersList users={users} setUsers={setUsers} refresh={() => refreshData()} />
         )}
       </div>
     </Layout>

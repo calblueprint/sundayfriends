@@ -225,6 +225,7 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
             setTransactions={changeTransactions}
           />
           <UploadPopover
+            admin={currentAdmin}
             uploadAnchor={uploadAnchorEl}
             closeUpload={closeUpload}
             popoverid={uploadpopoverid}
