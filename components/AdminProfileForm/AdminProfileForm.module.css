@@ -1,0 +1,149 @@
+
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 7%;
+    margin-top: 5%;
+    width:100%;
+    height: 100%;
+    background-color: #FAFAFA 100vh;
+}
+
+.pagetitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1%;
+}
+
+.namebar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+.namebar-button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.boxes {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2%;
+    gap: 5%;
+}
+
+.box {
+    padding: 2% 4% 4% 4%;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #F2F2F2;
+    border-radius: 25px;
+    width: 100%;
+    background-color: white;
+    height: 415px;
+}
+
+.hr {
+    margin-top: 23px;
+    border: 1px solid #F2F2F2;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 5%;
+    margin-bottom: 3%;
+}
+
+.fields {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.editable-field {
+    outline: none;
+    text-align: right;
+    border: none;
+    font-size: 13px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.edit-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 20%;
+}
+
+.editable-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+}
+
+.editable-field {
+    font-family: Avenir;
+    font-size: medium;
+    border: 0px;
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    color: var(--grey-dark);
+    text-align: start;
+    padding: 0px 0px 0px 10px;    
+}
+
+.info-field {
+    text-align: left;
+    width: 60%;
+    height: 100%;
+    margin-top: 3px;
+    padding-left: 10px;
+    color: var(--grey-dark);
+
+}
+
+.card-title {
+    font-size: 18px;
+    color: var(--noirish);
+    font-weight: bold;
+    font-style: normal;
+    margin-bottom: 16px;
+}
+
+.edit-field-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.edit-field-container-editing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.edit-field-container-editing:hover {
+    background-color: #F2F2F2;
+}
+
+.edit-pencil {
+    margin-top: 7px;
+}
