@@ -102,9 +102,14 @@ const UsersList: React.FC<UsersListProps> = ({
 
   const toggleSuspend = async (user: User) => {
     await suspendUserToggle(user.user_id);
-    getAllUsers().then((allUsers) => {
-      setUsers(allUsers);
+    const allUsers = users;
+    allUsers.map((match) => {
+      if (match == user) {
+        match.suspended = !match.suspended;
+      }
     })
+    setUsers(allUsers);
+    refresh();
   }
 
   return (

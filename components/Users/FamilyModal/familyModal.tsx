@@ -21,6 +21,7 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
   refresh,
 }: FamilyModalProps) => {
   const [newFamily, setNewFamily] = useState<Family>();
+  const [users, setUsers] = useState(family.users);
   const [wasEdited, setWasEdited] = useState(false);
   useEffect(() => {
     const getFamilies = async () => {
@@ -78,7 +79,8 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
         <h4>Family Members</h4>
         <div className={styles["modalContent"]}>
           <UserList
-            users={getUpdated().users}
+            users={users}
+            setUsers={setUsers}
             family={family}
             isFamilyPath={true}
             setIsOpenFam={setIsOpen}

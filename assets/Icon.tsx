@@ -40,7 +40,8 @@ export type IconType =
   | "invite"
   | "inviteTrash"
   | "inviteAdd"
-  | "ex";
+  | "ex"
+  | "checkmark";
 
 const IconSvgs: Record<IconType, React.ReactElement> = {
   calendar: (
@@ -627,6 +628,13 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
       />
     </svg>
   ),
+  checkmark: (
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14.4968 1.79984L4.9803 11.3163L0.501953 6.83798L1.6182 5.72173L4.9803 
+      9.07591L13.3805 0.683594L14.4968 1.79984Z" fill="#E6ECFE"/>
+    </svg>
+
+  )
 };
 
 type Props = {

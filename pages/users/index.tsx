@@ -14,6 +14,7 @@ import nookies from "nookies";
 import { Admin, Family, User } from "../../types/schema";
 import { useRouter } from "next/router";
 import Icon from "../../assets/Icon";
+import NewFamilyModal from "../../components/Users/NewFamilyModal/newFamilyModal";
 
 type UsersPageProps = {
   currentAdmin: Admin;
@@ -38,96 +39,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   };
   return (
     <Layout title="Users">
-      <Modal open={isOpen}>
-        <div className={styles["newFamModal"]}>
-          <div className={styles["modalHeadContanier"]}>
-            <div className={styles["breadcrumb"]}>
-              <button
-                className={styles["chevronButton"]}
-                onClick={() => setIsOpen(false)}
-              >
-                <Icon className={styles["chevron"]} type={"chevronLeft"} />
-              </button>
-              <button
-                className={styles["chevronButton"]}
-                onClick={() => setIsOpen(false)}
-              >
-                <Icon className={styles["chevron"]} type={"chevronRight"} />
-              </button>
-              New Family
-            </div>
-            <button
-              className={styles["closeButton"]}
-              onClick={() => setIsOpen(false)}
-            >
-              <Icon className={styles["closeIcon"]} type={"popoverclose"} />
-            </button>
-          </div>
-          <div className={styles["title"]}>
-            <Icon type={"family"} className={styles["familyIcon"]} />
-            <div className={styles["modalHeading"]}>NEW FAMILY</div>
-          </div>
-          <div className={styles["modalContainer"]}>
-            <div className={styles["containerLeft"]}>
-              <div>
-                <div className={styles["headingText"]}>Assign a Head</div>
-                <button
-                  className={styles["addHeadButton"]}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Icon className={styles["addHead"]} type={"addCircle"} />
-                </button>
-              </div>
-              <div>
-                <div className={styles["headingText"]}>Add Dependents</div>
-                <div className={styles["subText"]}>
-                  Those who don’t have emails can be added under the head’s
-                  account
-                </div>
-                <button
-                  className={styles["addDepButton"]}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Icon className={styles["addDep"]} type={"addCircle"} />
-                </button>
-              </div>
-            </div>
-            <div className={styles["containerRight"]}>
-              <div>
-                <div className={styles["headingText"]}>Add Members</div>
-                <button
-                  className={styles["addHeadButton"]}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Icon className={styles["addHead"]} type={"addCircle"} />
-                </button>
-              </div>
-              <div className={styles["modalButtons"]}>
-                <button
-                  className={styles["cancelButton"]}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
-                >
-                  <Icon
-                    className={styles["cancelIcon"]}
-                    type={"popoverclose"}
-                  />
-                  Cancel
-                </button>
-                <button
-                  className={styles["createFamilyButton"]}
-                  onClick={() => {
-                    return;
-                  }}
-                >
-                  Create Family
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      <NewFamilyModal isOpen={isOpen} setIsOpen={setIsOpen}/>
       <div className={styles["container"]}>
         <div className={styles["headingContainer"]}>
           <div className={styles["title"]}>
@@ -143,13 +55,19 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
           </button>
         </div>
         <Tabs
+          TabIndicatorProps={{
+            style: {
+              color: "black",
+            }
+          }}
           value={value}
           onChange={handleChange}
+          textColor={"inherit"}
           aria-label="basic tabs example"
-          className={styles["tabs"]}
+          className={styles["alltabs"]}
         >
-          <Tab className={styles["tabs"]} label="Families View" />
-          <Tab className={styles["tabs"]} label="List View" />
+          <Tab className={value==0?styles["sel-tabs"]:styles["tabs"]} label="Family View" />
+          <Tab className={value==1?styles["sel-tabs"]:styles["tabs"]} label="User View" />
         </Tabs>
         {value == 0 ? (
           <FamilyCards families={allFamilies} refresh={() => refreshData()} />
