@@ -5,6 +5,7 @@ import { RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import Icon from "../../../assets/Icon"
 import styles from "./newFamilyModal.module.css";
 import { User } from "../../../types/schema";
+import NewFamilyCard from "../NewFamilyCard/newFamilyCard";
 
 type NewFamilyModalProps = {
     isOpen: boolean;
@@ -16,7 +17,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
     setIsOpen
 }: NewFamilyModalProps) => {
   const [state, setState] = useState("home");
-  const [head, setHead] = useState<User>();
+  const [head, setHead] = useState(false);
   const [headName, setHeadName] = useState("");
   const [headEmail, setHeadEmail] = useState("");
 
@@ -24,6 +25,12 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
 
   const closeModal = () => {
     setIsOpen(false);
+    setState("home");
+  }
+
+  const addHead = () => {
+    // form validation?
+    setHead(true);
     setState("home");
   }
 
@@ -40,12 +47,17 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               <div className={styles["containerLeft"]}>
                 <div>
                   <div className={styles["headingText"]}>Assign a Head</div>
-                  <button
-                    className={styles["addHeadButton"]}
-                    onClick={() => setState("head")}
-                  >
-                    <Icon className={styles["addHead"]} type={"addCircle"} />
-                  </button>
+                  {head?
+                    <NewFamilyCard name={headName} email={headEmail} role={"head"} deleteFunction={() => setHead(false)}></NewFamilyCard>
+                    :
+                    <button
+                      className={styles["addHeadButton"]}
+                      onClick={() => setState("head")}
+                    >
+                      <Icon className={styles["addHead"]} type={"addCircle"} />
+                    </button>
+                  }
+                  
                 </div>
               </div>
               <div className={styles["containerRight"]}>
@@ -67,7 +79,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               >
                 <Icon
                   className={styles["cancelIcon"]}
-                  type={"popoverclose"}
+                  type={"cancelx"}
                 />
                 Cancel
               </button>
@@ -126,15 +138,13 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               >
                 <Icon
                   className={styles["cancelIcon"]}
-                  type={"popoverclose"}
+                  type={"cancelx"}
                 />
                 Cancel
               </button>
               <button
                 className={styles["createFamilyButton"]}
-                onClick={() => {
-                  return;
-                }}
+                onClick={() => addHead()}
               >
                 <Icon
                   className={styles["checkmarkIcon"]}
@@ -202,7 +212,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               >
                 <Icon
                   className={styles["cancelIcon"]}
-                  type={"popoverclose"}
+                  type={"cancelx"}
                 />
                 Cancel
               </button>

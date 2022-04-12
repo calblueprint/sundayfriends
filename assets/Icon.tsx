@@ -41,7 +41,11 @@ export type IconType =
   | "inviteTrash"
   | "inviteAdd"
   | "ex"
-  | "checkmark";
+  | "checkmark"
+  | "cancelx"
+  | "headRole"
+  | "parentRole"
+  | "childRole";
 
 const IconSvgs: Record<IconType, React.ReactElement> = {
   calendar: (
@@ -160,12 +164,17 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     </SvgIcon>
   ),
   popoverclose: (
-    <SvgIcon viewBox="0 0 40 40">
-      <path
-        d="M17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41L17.59 5Z"
-        fill="#2E3A59"
-      />
+    <SvgIcon width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="29.5" height="29.5" rx="14.75" fill="#F2F2F2"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M13.2803 12.2197C12.9874 11.9268 12.5126 
+      11.9268 12.2197 12.2197C11.9268 12.5126 11.9268 12.9874 12.2197 13.2803L15.6893 
+      16.75L12.2197 20.2197C11.9268 20.5126 11.9268 20.9874 12.2197 21.2803C12.5126 21.5732
+       12.9874 21.5732 13.2803 21.2803L16.75 17.8107L20.2197 21.2803C20.5126 21.5732 20.9874
+        21.5732 21.2803 21.2803C21.5732 20.9874 21.5732 20.5126 21.2803 20.2197L17.8107 
+        16.75L21.2803 13.2803C21.5732 12.9874 21.5732 12.5126 21.2803 12.2197C20.9874 11.9268 
+        20.5126 11.9268 20.2197 12.2197L16.75 15.6893L13.2803 12.2197Z" fill="#525454"/>
     </SvgIcon>
+
   ),
   close: (
     <SvgIcon
@@ -570,7 +579,7 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
     </SvgIcon>
   ),
   inviteTrash: (
-    <svg
+    <SvgIcon
       width="25"
       height="26"
       viewBox="0 0 25 26"
@@ -588,10 +597,10 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
         d="M15.5532 19.1063H9.44692C8.77244 19.1063 8.22566 18.5595 8.22566 17.8851V9.94684H7.00439V8.72557H9.44692V8.11494C9.44692 7.44046 9.9937 6.89368 10.6682 6.89368H14.332C15.0065 6.89368 15.5532 7.44046 15.5532 8.11494V8.72557H17.9958V9.94684H16.7745V17.8851C16.7745 18.5595 16.2277 19.1063 15.5532 19.1063ZM9.44692 9.94684V17.8851H15.5532V9.94684H9.44692ZM10.6682 8.11494V8.72557H14.332V8.11494H10.6682ZM14.332 16.6638H13.1107V11.1681H14.332V16.6638ZM11.8895 16.6638H10.6682V11.1681H11.8895V16.6638Z"
         fill="white"
       />
-    </svg>
+    </SvgIcon>
   ),
   inviteAdd: (
-    <svg
+    <SvgIcon
       width="29"
       height="29"
       viewBox="0 0 29 29"
@@ -603,10 +612,10 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
         d="M9.392 19.44H8C8 17.1337 9.86966 15.264 12.176 15.264C14.4823 15.264 16.352 17.1337 16.352 19.44H14.96C14.96 17.9024 13.7136 16.656 12.176 16.656C10.6384 16.656 9.392 17.9024 9.392 19.44ZM19.832 17.352H18.44V15.264H16.352V13.872H18.44V11.784H19.832V13.872H21.92V15.264H19.832V17.352ZM12.176 14.568C10.6384 14.568 9.392 13.3216 9.392 11.784C9.392 10.2464 10.6384 9 12.176 9C13.7136 9 14.96 10.2464 14.96 11.784C14.9581 13.3208 13.7128 14.5661 12.176 14.568ZM12.176 10.392C11.4155 10.3928 10.7965 11.0037 10.7856 11.7641C10.7747 12.5244 11.376 13.1528 12.1361 13.1754C12.8962 13.1979 13.5338 12.6063 13.568 11.8466V12.125V11.784C13.568 11.0152 12.9448 10.392 12.176 10.392Z"
         fill="white"
       />
-    </svg>
+    </SvgIcon>
   ),
   ex: (
-    <svg
+    <SvgIcon
       width="29"
       height="29"
       viewBox="0 0 29 29"
@@ -626,13 +635,52 @@ const IconSvgs: Record<IconType, React.ReactElement> = {
         strokeWidth="1.45"
         strokeLinecap="round"
       />
-    </svg>
+    </SvgIcon>
   ),
   checkmark: (
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <SvgIcon width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M14.4968 1.79984L4.9803 11.3163L0.501953 6.83798L1.6182 5.72173L4.9803 
       9.07591L13.3805 0.683594L14.4968 1.79984Z" fill="#E6ECFE"/>
-    </svg>
+    </SvgIcon>
+
+  ),
+  cancelx: (
+    <SvgIcon width="15" height="15" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10.9261 0.458496L6.50065 4.88391L2.07523 0.458496L0.958984 1.57475L5.3844 
+      6.00016L0.958984 10.4256L2.07523 11.5418L6.50065 7.11641L10.9261 11.5418L12.0423 
+      10.4256L7.6169 6.00016L12.0423 1.57475L10.9261 0.458496Z" fill="#253C85"/>
+    </SvgIcon>
+
+  ),
+  headRole: (
+    <SvgIcon width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="19.0663" cy="20.7948" r="17.0663" fill="#E6ECFE" stroke="#B5C4F4" stroke-width="2"/>
+      <circle cx="11.5576" cy="19.4429" r="0.557143" fill="#525454" stroke="#525454" stroke-width="1.11429"/>
+      <circle cx="26.044" cy="19.4429" r="0.557143" fill="#525454" stroke="#525454" stroke-width="1.11429"/>
+      <path d="M16.0137 26.1284C16.5708 28.357 20.4708 28.357 21.028 26.1284" stroke="#525454" stroke-width="0.626786" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5.95814 12.6199L1 6.55995H5.40724L4.85633 1.60181L8.71267 4.35633L10.9163 
+      0.5L13.6708 9.31448C11.4672 12.8403 7.61086 12.9872 5.95814 12.6199Z" fill="#FFF2C3" 
+      stroke="#FFE381" stroke-linecap="round" stroke-linejoin="round"/>
+    </SvgIcon>
+
+  ),
+  parentRole: (
+    <SvgIcon width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18.0663" cy="18.5663" r="17.0663" fill="#E6ECFE" stroke="#B5C4F4" stroke-width="2"/>
+      <circle cx="10.5557" cy="17.2144" r="0.557143" fill="#525454" stroke="#525454" stroke-width="1.11429"/>
+      <circle cx="25.042" cy="17.2144" r="0.557143" fill="#525454" stroke="#525454" stroke-width="1.11429"/>
+      <path d="M15.0137 23.8999C15.5708 26.1285 19.4708 26.1285 20.028 23.8999" stroke="#525454" 
+      stroke-width="0.626786" stroke-linecap="round" stroke-linejoin="round"/>
+    </SvgIcon>
+  ),
+  childRole: (
+    <SvgIcon width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18.0663" cy="18.5663" r="17.0663" fill="#DDF3E1" stroke="#ADDBB6" stroke-width="2"/>
+      <rect width="16.7143" height="2.22857" transform="translate(9.44141 16.1001)" fill="#DDF3E1"/>
+      <circle cx="10.5557" cy="17.2144" r="0.557143" fill="#525454" stroke="#525454" stroke-width="1.11429"/>
+      <circle cx="25.042" cy="17.2144" r="0.557143" fill="#525454" stroke="#525454" stroke-width="1.11429"/>
+      <path d="M15.0137 23.8999C15.5708 26.1285 19.4708 26.1285 20.028 23.8999" stroke="#525454" stroke-width="0.626786" stroke-linecap="round" stroke-linejoin="round"/>
+    </SvgIcon>
 
   )
 };

@@ -84,16 +84,19 @@
     justify-content: center;
     border-radius: 7px;
   }
+
   .cancelIcon {
-    margin-top: 9px;
+      width: 15px;
+      height: 15px;
+      margin-right: 10px;
   }
   
   .cancelButton {
     display: flex;
     font-family: Avenir;
     background-color: transparent;
-    border: 1px solid var(--grey-dark);
-    color: var(--grey-dark);
+    border: 1px solid var(--sapphire);
+    color: var(--sapphire);
     cursor: pointer;
     place-items: center;
     height: 37px;
@@ -199,8 +202,6 @@
   .closeIcon {
     border-radius: 50%;
     background-color: var(--grey-light);
-    padding-left: 8px;
-    padding-top: 8px;
     width: 30px;
     height: 30px;
   }
@@ -332,6 +333,8 @@
   }
 
   .checkmarkIcon {
+    width: 17px;
+    height: 17px;
     margin-top: 2px;
     margin-right: 10px;
   }
