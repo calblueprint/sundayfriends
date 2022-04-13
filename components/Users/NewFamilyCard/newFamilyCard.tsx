@@ -9,22 +9,32 @@ type NewFamilyCardProps = {
     email: string,
     role: string,
     deleteFunction: Function,
+    index?: number
 };
 
 const NewFamilyCard: React.FC<NewFamilyCardProps> = ({
     name,
     email,
     role,
-    deleteFunction
+    deleteFunction,
+    index,
 }: NewFamilyCardProps) => {
 
     const imagePath = (): string => {
         if (role == "head") {
             return "/smiley - head.svg";
-        } else if (role == "Parent") {
+        } else if (role == "parent") {
             return "/smiley - parent.svg";
-        } else if (role == "Child") {
+        } else if (role == "child") {
             return "/smiley - child.svg";
+        }
+    }
+
+    const deleteHelper = () => {
+        if (index != null) {
+            deleteFunction();
+        } else {
+            deleteFunction(index);
         }
     }
 
@@ -40,7 +50,7 @@ const NewFamilyCard: React.FC<NewFamilyCardProps> = ({
         </div>
         <button
         className={styles["closeButton"]}
-        onClick={() => deleteFunction()}
+        onClick={() => deleteHelper()}
         >
             <Icon className={styles["closeIcon"]} type={"popoverclose"} />
         </button>

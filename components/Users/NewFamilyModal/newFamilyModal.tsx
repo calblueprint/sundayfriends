@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal} from "@mui/material";
 import { RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import Icon from "../../../assets/Icon"
@@ -21,10 +21,26 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
   const [headName, setHeadName] = useState("");
   const [headEmail, setHeadEmail] = useState("");
 
+  const [counter, setCounter] = useState(0);
+
+  const [members, setMembers] = useState([]);
+  const [memberName, setMemberName] = useState("");
+  const [memberEmail, setMemberEmail] = useState("");
   const [memberRole, setMemberRole] = useState("");
+
+  useEffect(() => {
+    console.log(members);
+  }, [])
+
+  useEffect(() => {
+    console.log(members);
+    console.log(counter);
+  }, [counter])
 
   const closeModal = () => {
     setIsOpen(false);
+    setHead(false);
+    setMembers([]);
     setState("home");
   }
 
@@ -32,6 +48,25 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
     // form validation?
     setHead(true);
     setState("home");
+  }
+
+  const addMember = () => {
+    const mem = {
+      name: memberName,
+      email: memberEmail,
+      role: memberRole,
+    }
+    var newmems = members;
+    newmems.push(mem);
+    setMembers(newmems);
+    setState("home");
+  }
+
+  const deleteMember = (index) => {
+    var newmems = members;
+    newmems.splice(index, 1);
+    setMembers(newmems);
+    setCounter(counter+1);
   }
 
   const renderContent = () => {
@@ -61,8 +96,14 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                 </div>
               </div>
               <div className={styles["containerRight"]}>
-                <div>
-                  <div className={styles["headingText"]}>Add Members</div>
+                <div className={styles["headingText"]}>Add Members</div>
+                <div className={styles["memberList"]}>
+                  {Array.from(Array(members.length).keys()).map((index) => {
+                    return (
+                      <NewFamilyCard name={members[index].name} email={members[index].email} 
+                      role={members[index].role} deleteFunction={() => deleteMember(index)}/>
+                    )
+                  })}
                   <button
                     className={styles["addHeadButton"]}
                     onClick={() => setState("member")}
@@ -169,7 +210,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                     name="fullname"
                     className={styles["headTextField"]}
                     placeholder={"Firstname Lastname"}
-                    onChange={(e) => setHeadName(e.target.value)}
+                    onChange={(e) => setMemberName(e.target.value)}
                   />
                 </div>
               </div>
@@ -181,7 +222,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                     name="email"
                     className={styles["headTextField"]}
                     placeholder={"thisisanemail@gmail.com"}
-                    onChange={(e) => setHeadEmail(e.target.value)}
+                    onChange={(e) => setMemberEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -190,12 +231,12 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                   <div className={styles["headingText"]}>ROLE</div>
                   <RadioGroup row onChange={(e) => setMemberRole(e.target.value)}>
                     <FormControlLabel
-                      value="redeem"
+                      value="parent"
                       control={<Radio />}
                       label={<div>Parent</div>}
                     />
                     <FormControlLabel
-                      value="earn"
+                      value="child"
                       control={<Radio />}
                       label={<p className={styles["radio-label"]}>Child</p>}
                     />
@@ -218,9 +259,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               </button>
               <button
                 className={styles["createFamilyButton"]}
-                onClick={() => {
-                  return;
-                }}
+                onClick={() => addMember()}
               >
                 <Icon
                   className={styles["checkmarkIcon"]}

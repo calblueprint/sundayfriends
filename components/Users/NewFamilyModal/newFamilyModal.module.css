@@ -172,7 +172,7 @@
     flex-direction: column;
     padding: 4%;
     width: 60%;
-    height: 60%;
+    height: 50%;
     max-height: 70%;
     background-color: white;
     border-radius: 20px;
@@ -229,6 +229,7 @@
     display: flex;
     flex-direction: column;
     width: 50%;
+    height: 90%;
     border-right: 1px solid var(--grey-mid);
     margin-top: 25px;
     padding-right: 8%;
@@ -238,10 +239,9 @@
     display: flex;
     flex-direction: column;
     width: 50%;
-    height: 100%;
-    margin-left: 34px;
+    height: 95%;
+    margin-left: 30px;
     margin-top: 25px;
-    justify-content: space-between;
   }
   
   .headingText {
@@ -254,6 +254,13 @@
     font-family: Avenir;
     font-size: small;
   }
+
+  .memberList {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: scroll;
+  }
   
   .addHeadButton {
     display: flex;
@@ -265,7 +272,6 @@
     place-items: center;
     justify-content: center;
     margin-top: 15px;
-    margin-bottom: 25px;
   }
   
   .addHead {
@@ -297,7 +303,8 @@
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
-    height: 78%;
+    height: 70%;
+    margin-bottom: 5%;
   }
   
   .modalButtons {
