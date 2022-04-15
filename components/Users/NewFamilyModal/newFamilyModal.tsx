@@ -6,6 +6,7 @@ import Icon from "../../../assets/Icon"
 import styles from "./newFamilyModal.module.css";
 import { User } from "../../../types/schema";
 import NewFamilyCard from "../NewFamilyCard/newFamilyCard";
+import { addFamily } from "../../../firebase/firestore/family";
 
 type NewFamilyModalProps = {
     isOpen: boolean;
@@ -42,6 +43,16 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
     setHead(false);
     setMembers([]);
     setState("home");
+  }
+
+  const createFamily = () => {
+    const family = {
+      family_name: "",
+      last_active: Date(),
+      total_points: 0,
+      user_ids: [],
+    }
+    closeModal();
   }
 
   const addHead = () => {

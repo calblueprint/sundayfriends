@@ -51,6 +51,20 @@ export const getFamilyById = async (FID: string): Promise<Family> => {
 };
 
 /**
+ * Add a family
+ */
+export const addFamily = async (
+  family: Family
+): Promise<void> => {
+  try {
+    await familyCollection.doc().set(family);
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+}
+
+/**
  * Update last_active
  */
  export const updateLastActive = async (FID: string, date: Date): Promise<void> => {
