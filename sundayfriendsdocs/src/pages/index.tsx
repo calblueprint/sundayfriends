@@ -11,15 +11,7 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title">Sunday Friends Documentation</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
-        </div>
+        <h1 className={styles["title"]}>Sunday Friends Documentation</h1>
       </div>
     </header>
   );
@@ -32,8 +24,18 @@ export default function Home(): JSX.Element {
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
-      <main>
-        <HomepageFeatures />
+      <main className={styles["mainContainer"]}>
+        {/* <HomepageFeatures /> */}
+        <div className={styles["homepageContainer"]}>
+          <img src={require('../../assets/sundayFriendsFoundation.jpeg').default} className={styles["image"]}></img>
+          <div>A guide to the admin (web) and family (mobile) applications developed with Expo, React Native, and Firebase, built for the Sunday Friends Foundation.</div>
+          <div>Code</div>
+          <div>The code for this documentation can be found in the web application github under the sundayfriendsdocs folder. It's built with Docusaurus and hosted by Netlify.</div>
+          <div>Contact</div>
+          <div>Contact Jacob Kim at jacobjk01@berkeley.edu for any questions about the project.</div>
+          <div>The Team:</div>
+          <div></div>
+        </div>
       </main>
     </Layout>
   );

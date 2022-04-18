@@ -21,3 +21,29 @@
   align-items: center;
   justify-content: center;
 }
+
+.mainContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 3rem;
+  margin: 0px;
+}
+
+.homepageContainer {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  width: 50%;
+}
+
+.image {
+  margin-top: 3%;
+  width: 70%;
+  margin-bottom: 3%;
+  align-self: center;
+}
