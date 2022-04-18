@@ -8,8 +8,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const config = {
   title: "My Site",
   tagline: "Dinosaurs are cool",
-  url: "https://sundayfriends.calblueprint.org",
-  baseUrl: "/SFdocumentation/",
+  url: "glistening-quokka-c1e01a.netlify.app",
+  baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
