@@ -28,11 +28,11 @@
 }
 
 .FID {
-  width: 10%;
+  width: 6%;
 }
 
 .role {
-  width: 10%;
+  width: 7%;
 }
 
 .email {
@@ -43,12 +43,12 @@
   width: 10%;
 }
 
-.transactions {
-  width: 13%;
+.status {
+  width: 9%;
 }
 
 .manage {
-  width: 27%;
+  width: 17%;
 }
 
 .button {
@@ -89,6 +89,35 @@
 .viewButton:hover {
   background-color: var(--sapphire);
   color: var(--white);
+}
+
+.activeBubble {
+  align-self: left;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16.5px;
+  color: white;
+  height: 26px;
+  width: 80%;
+  background-color: var(--sapphire-mid-light);
+}
+
+.suspendedBubble {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16.5px;
+  color: white;
+  height: 26px;
+  background-color: var(--grey-mid);
+  padding-inline: 10px;
 }
 
 .manageButtons {

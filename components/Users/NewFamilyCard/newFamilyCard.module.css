@@ -1,0 +1,68 @@
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    border: 2px solid #E6ECFE;
+    border-radius: 8px;
+    padding: 3%;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.content {
+    display: flex;
+    gap: 5%;
+    margin-left: 2%;
+}
+
+.textContent {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.roleIcon {
+    width: 50px;
+    height: 50px;
+}
+
+.name {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 19px;
+    color: var(--grey-dark);
+}
+
+.email {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--grey-dark);
+}
+
+.closeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.closeIcon {
+    border-radius: 50%;
+    background-color: var(--grey-light);
+    width: 25px;
+    height: 25px;
+}
+
+.closeIcon:hover {
+    background-color: var(--grey-mid);
+}

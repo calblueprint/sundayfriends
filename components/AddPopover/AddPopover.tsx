@@ -18,6 +18,7 @@ import {
   getAllTransactions,
 } from "../../firebase/firestore/transaction";
 import { integerPropType } from "@mui/utils";
+import { updateLastActive } from "../../firebase/firestore/family";
 
 type AddPopoverProps = {
   allUsers: User[];
@@ -74,16 +75,20 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
       setSnackbarOpen(true);
     } else {
       //handle post request
+      const activeDate = new Date();
       const adding = {
         admin_name: currentAdmin.name,
-        date: new Date(),
+        date: activeDate,
         description: addMessage,
         family_id: addUser.family_id,
         point_gain:
           addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
         user_name: addUser.full_name,
+        user_id: addUser.user_id,
       };
       await addTransaction(adding as Transaction);
+
+      updateLastActive(addUser.family_id.toString(), activeDate);
 
       let trans = await getAllTransactions();
       setTransactions(trans);

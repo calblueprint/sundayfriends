@@ -21,11 +21,12 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
   refresh,
 }: FamilyModalProps) => {
   const [newFamily, setNewFamily] = useState<Family>();
+  const [users, setUsers] = useState(family.users);
   const [wasEdited, setWasEdited] = useState(false);
   useEffect(() => {
     const getFamilies = async () => {
       if (family) {
-        const data = await getFamilyById(family.family_id);
+        const data = await getFamilyById(family.family_id.toString());
         setNewFamily(data);
       }
     };
@@ -62,23 +63,30 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
               {getUpdated().family_name} Family
             </h1>
             <div className={styles["colSpacing"]}>
-              <h4>FID: {getUpdated().family_id}</h4>
-              <h4>*</h4>
-              <h4>{getUpdated().user_ids.length} Members</h4>
-              <h4>*</h4>
-              <h4>Total Transactions: {getUpdated().total_points}</h4>
+              <h4 className={styles["headerDetails"]}>
+                FID: {getUpdated().family_id}
+              </h4>
+              <h4 className={styles["headerDetails"]}>*</h4>
+              <h4 className={styles["headerDetails"]}>
+                {getUpdated().user_ids.length} Members
+              </h4>
+              <h4 className={styles["headerDetails"]}>*</h4>
+              <h4 className={styles["headerDetails"]}>
+                Last Active: {getUpdated().last_active}
+              </h4>
             </div>
           </div>
           <div>
             <h1 className={styles["header"]}>{getUpdated().total_points}</h1>
-            <h4>Total Balance</h4>
+            <h4 className={styles["headerDetails"]}>Total Balance</h4>
           </div>
         </div>
         <hr className={styles["break"]} />
         <h4>Family Members</h4>
         <div className={styles["modalContent"]}>
           <UserList
-            users={getUpdated().user_ids}
+            users={users}
+            setUsers={setUsers}
             family={family}
             isFamilyPath={true}
             setIsOpenFam={setIsOpen}

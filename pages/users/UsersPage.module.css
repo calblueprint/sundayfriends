@@ -14,8 +14,16 @@
   gap: 15px;
 }
 
-.tabs {
+.alltabs {
   margin-bottom: 10px;
+}
+
+.tabs {
+  color: var(--grey-mid);;
+}
+
+.sel-tabs {
+  color: var(--noirish);
 }
 
 .tab {
@@ -62,6 +70,7 @@
   font-weight: 800;
   width: 135px;
   justify-content: center;
+  align-self: center;
   border-radius: 7px;
 }
 
@@ -264,6 +273,7 @@
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
+  height: 78%;
 }
 
 .modalButtons {

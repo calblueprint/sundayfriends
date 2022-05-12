@@ -128,6 +128,7 @@ const parseTransaction = async (doc) => {
     family_id: data.family_id,
     point_gain: data.point_gain,
     user_name: data.user_name,
+    user_id: data.user_id,
   };
   return transaction as Transaction;
 };
