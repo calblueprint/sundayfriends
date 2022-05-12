@@ -65,7 +65,7 @@ const FamilyCard: React.FunctionComponent<FamilyCardProps> = ({
             <h5>{family.total_points}</h5>
           </div>
           <Grid container spacing={2}>
-            {family.user_ids.map((user) => (
+            {family.users.map((user) => (
               <FamilyMember key={user.full_name} user={user} />
             ))}
           </Grid>

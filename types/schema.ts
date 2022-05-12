@@ -8,13 +8,16 @@ export type Transaction = {
   family_id: string;
   point_gain: number;
   user_name: string;
+  user_id: string;
 };
 
 export type Family = {
   total_points: number;
   family_name: string;
-  user_ids: User[];
-  family_id: string;
+  last_active: Date | Timestamp;
+  user_ids: string[];
+  users: User[];
+  family_id: number;
 };
 
 export type Admin = {

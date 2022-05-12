@@ -19,11 +19,13 @@ import {
 
 type FullUsersListProps = {
   users: User[];
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
   refresh: () => void;
 };
 
 const FullUsersList: React.FC<FullUsersListProps> = ({
   users,
+  setUsers,
   refresh,
 }: FullUsersListProps) => {
   const [searchQ, setSearchQ] = useState("");
@@ -93,6 +95,7 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
       <div className={styles["container"]}>
         <UsersList
           users={newUsers ? newUsers : users}
+          setUsers={setUsers}
           isFamilyPath={false}
           refresh={refresh}
         />
