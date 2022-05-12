@@ -19,11 +19,11 @@ const NewFamilyCard: React.FC<NewFamilyCardProps> = ({
   index,
 }: NewFamilyCardProps) => {
   const imagePath = (): string => {
-    if (role == "head") {
+    if (role == "Head") {
       return "/smiley - head.svg";
-    } else if (role == "parent") {
+    } else if (role == "Parent") {
       return "/smiley - parent.svg";
-    } else if (role == "child") {
+    } else if (role == "Child") {
       return "/smiley - child.svg";
     }
   };

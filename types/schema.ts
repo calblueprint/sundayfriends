@@ -52,3 +52,15 @@ export type User = {
   phone_number: string;
   transactions: Transaction[];
 };
+
+export type User_Invite = {
+  family_id: number;
+  name: string;
+  email: string;
+  status: string;
+  user_invite_id: string;
+};
+
+export type Family_Counter = {
+  counter: number;
+};
