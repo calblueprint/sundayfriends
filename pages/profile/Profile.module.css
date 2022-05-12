@@ -37,7 +37,7 @@
 
 .box {
     padding: 4%;
-    align-content: space-between;
+    justify-content: space-between;
     align-items: center;
     border: 2px solid var(--sapphire-light);
     border-radius: 25px;
@@ -63,4 +63,26 @@
 .hr {
     height: 2px;
     color: var(--sapphire-light);
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+    margin-right: 20%;
+}
+
+.fields {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.editable-field {
+    outline: none;
+    text-align: right;
+    border: none;
+    font-size: 13px;
 }

@@ -39,7 +39,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   };
   return (
     <Layout title="Users">
-      <NewFamilyModal isOpen={isOpen} setIsOpen={setIsOpen}/>
+      <NewFamilyModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className={styles["container"]}>
         <div className={styles["headingContainer"]}>
           <div className={styles["title"]}>
@@ -58,7 +58,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
           TabIndicatorProps={{
             style: {
               color: "black",
-            }
+            },
           }}
           value={value}
           onChange={handleChange}
@@ -66,13 +66,23 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
           aria-label="basic tabs example"
           className={styles["alltabs"]}
         >
-          <Tab className={value==0?styles["sel-tabs"]:styles["tabs"]} label="Family View" />
-          <Tab className={value==1?styles["sel-tabs"]:styles["tabs"]} label="User View" />
+          <Tab
+            className={value == 0 ? styles["sel-tabs"] : styles["tabs"]}
+            label="Family View"
+          />
+          <Tab
+            className={value == 1 ? styles["sel-tabs"] : styles["tabs"]}
+            label="User View"
+          />
         </Tabs>
         {value == 0 ? (
           <FamilyCards families={allFamilies} refresh={() => refreshData()} />
         ) : (
-          <FullUsersList users={users} setUsers={setUsers} refresh={() => refreshData()} />
+          <FullUsersList
+            users={users}
+            setUsers={setUsers}
+            refresh={() => refreshData()}
+          />
         )}
       </div>
     </Layout>

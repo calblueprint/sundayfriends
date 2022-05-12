@@ -13,7 +13,10 @@ import styles from "./UsersList.module.css";
 import { Family, User } from "../../../types/schema";
 import UserModal from "../UserModal/userModal";
 import { useState } from "react";
-import { getAllUsers, suspendUserToggle } from '../../../firebase/firestore/user';
+import {
+  getAllUsers,
+  suspendUserToggle,
+} from "../../../firebase/firestore/user";
 
 type UsersListProps = {
   users: User[];
@@ -59,15 +62,11 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
         {user.points}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["transactions"]}`}>
-        {user.suspended?
-          <div className={styles["suspendedBubble"]}>
-            Suspended
-          </div>
-        :
-          <div className={styles["activeBubble"]}>
-            Active
-          </div>
-        }
+        {user.suspended ? (
+          <div className={styles["suspendedBubble"]}>Suspended</div>
+        ) : (
+          <div className={styles["activeBubble"]}>Active</div>
+        )}
       </TableCell>
       <TableCell className={`${styles["tableRow"]} ${styles["manage"]}`}>
         <div className={styles["manageButtons"]}>
@@ -80,7 +79,9 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
           >
             View
           </Button>
-          <Button className={styles["button"]} onClick={() => suspend(user)}>{user.suspended?"Unsuspend":"Suspend"}</Button>
+          <Button className={styles["button"]} onClick={() => suspend(user)}>
+            {user.suspended ? "Unsuspend" : "Suspend"}
+          </Button>
           <Button className={styles["button"]}>Delete</Button>
         </div>
       </TableCell>
@@ -107,10 +108,10 @@ const UsersList: React.FC<UsersListProps> = ({
       if (match == user) {
         match.suspended = !match.suspended;
       }
-    })
+    });
     setUsers(allUsers);
     refresh();
-  }
+  };
 
   return (
     <TableContainer>

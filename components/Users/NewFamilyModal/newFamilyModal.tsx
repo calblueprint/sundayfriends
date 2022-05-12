@@ -1,21 +1,21 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Modal} from "@mui/material";
+import { Modal } from "@mui/material";
 import { RadioGroup, FormControlLabel, Radio } from "@mui/material";
-import Icon from "../../../assets/Icon"
+import Icon from "../../../assets/Icon";
 import styles from "./newFamilyModal.module.css";
 import { User } from "../../../types/schema";
 import NewFamilyCard from "../NewFamilyCard/newFamilyCard";
 import { addFamily } from "../../../firebase/firestore/family";
 
 type NewFamilyModalProps = {
-    isOpen: boolean;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
-    isOpen,
-    setIsOpen
+  isOpen,
+  setIsOpen,
 }: NewFamilyModalProps) => {
   const [state, setState] = useState("home");
   const [head, setHead] = useState(false);
@@ -31,19 +31,19 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
 
   useEffect(() => {
     console.log(members);
-  }, [])
+  }, []);
 
   useEffect(() => {
     console.log(members);
     console.log(counter);
-  }, [counter])
+  }, [counter]);
 
   const closeModal = () => {
     setIsOpen(false);
     setHead(false);
     setMembers([]);
     setState("home");
-  }
+  };
 
   const createFamily = () => {
     const family = {
@@ -51,37 +51,37 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
       last_active: Date(),
       total_points: 0,
       user_ids: [],
-    }
+    };
     closeModal();
-  }
+  };
 
   const addHead = () => {
     // form validation?
     setHead(true);
     setState("home");
-  }
+  };
 
   const addMember = () => {
     const mem = {
       name: memberName,
       email: memberEmail,
       role: memberRole,
-    }
+    };
     var newmems = members;
     newmems.push(mem);
     setMembers(newmems);
     setState("home");
-  }
+  };
 
   const deleteMember = (index) => {
     var newmems = members;
     newmems.splice(index, 1);
     setMembers(newmems);
-    setCounter(counter+1);
-  }
+    setCounter(counter + 1);
+  };
 
   const renderContent = () => {
-    switch(state) {
+    switch (state) {
       case "home":
         return (
           <div className={styles["contentContainer"]}>
@@ -93,17 +93,21 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               <div className={styles["containerLeft"]}>
                 <div>
                   <div className={styles["headingText"]}>Assign a Head</div>
-                  {head?
-                    <NewFamilyCard name={headName} email={headEmail} role={"head"} deleteFunction={() => setHead(false)}></NewFamilyCard>
-                    :
+                  {head ? (
+                    <NewFamilyCard
+                      name={headName}
+                      email={headEmail}
+                      role={"head"}
+                      deleteFunction={() => setHead(false)}
+                    ></NewFamilyCard>
+                  ) : (
                     <button
                       className={styles["addHeadButton"]}
                       onClick={() => setState("head")}
                     >
                       <Icon className={styles["addHead"]} type={"addCircle"} />
                     </button>
-                  }
-                  
+                  )}
                 </div>
               </div>
               <div className={styles["containerRight"]}>
@@ -111,9 +115,14 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                 <div className={styles["memberList"]}>
                   {Array.from(Array(members.length).keys()).map((index) => {
                     return (
-                      <NewFamilyCard name={members[index].name} email={members[index].email} 
-                      role={members[index].role} deleteFunction={() => deleteMember(index)}/>
-                    )
+                      <NewFamilyCard
+                        key={members[index].name}
+                        name={members[index].name}
+                        email={members[index].email}
+                        role={members[index].role}
+                        deleteFunction={() => deleteMember(index)}
+                      />
+                    );
                   })}
                   <button
                     className={styles["addHeadButton"]}
@@ -129,10 +138,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                 className={styles["cancelButton"]}
                 onClick={() => closeModal()}
               >
-                <Icon
-                  className={styles["cancelIcon"]}
-                  type={"cancelx"}
-                />
+                <Icon className={styles["cancelIcon"]} type={"cancelx"} />
                 Cancel
               </button>
               <button
@@ -141,20 +147,20 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                   return;
                 }}
               >
-                <Icon
-                  className={styles["checkmarkIcon"]}
-                  type={"checkmark"}
-                />
+                <Icon className={styles["checkmarkIcon"]} type={"checkmark"} />
                 Create Family
               </button>
             </div>
           </div>
-        )
+        );
       case "head":
         return (
           <div className={styles["contentContainer"]}>
             <div className={styles["blackHeading"]}>Assign a Head</div>
-            <div className={styles["headDescription"]}>Assign a user the role of family head, responsible for managing family transactions and dependent accounts. </div>
+            <div className={styles["headDescription"]}>
+              Assign a user the role of family head, responsible for managing
+              family transactions and dependent accounts.{" "}
+            </div>
             <div className={styles["modalContainer"]}>
               <div className={styles["containerLeft"]}>
                 <div>
@@ -188,30 +194,26 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                   setState("home");
                 }}
               >
-                <Icon
-                  className={styles["cancelIcon"]}
-                  type={"cancelx"}
-                />
+                <Icon className={styles["cancelIcon"]} type={"cancelx"} />
                 Cancel
               </button>
               <button
                 className={styles["createFamilyButton"]}
                 onClick={() => addHead()}
               >
-                <Icon
-                  className={styles["checkmarkIcon"]}
-                  type={"checkmark"}
-                />
+                <Icon className={styles["checkmarkIcon"]} type={"checkmark"} />
                 Confirm
               </button>
             </div>
           </div>
-        )
+        );
       case "member":
         return (
           <div className={styles["contentContainer"]}>
             <div className={styles["blackHeading"]}>Add Members</div>
-            <div className={styles["headDescription"]}>Add parents and children to the family as members. </div>
+            <div className={styles["headDescription"]}>
+              Add parents and children to the family as members.{" "}
+            </div>
             <div className={styles["modalContainer"]}>
               <div className={styles["containerFirst"]}>
                 <div>
@@ -240,7 +242,10 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               <div className={styles["containerThird"]}>
                 <div>
                   <div className={styles["headingText"]}>ROLE</div>
-                  <RadioGroup row onChange={(e) => setMemberRole(e.target.value)}>
+                  <RadioGroup
+                    row
+                    onChange={(e) => setMemberRole(e.target.value)}
+                  >
                     <FormControlLabel
                       value="parent"
                       control={<Radio />}
@@ -262,27 +267,21 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                   setState("home");
                 }}
               >
-                <Icon
-                  className={styles["cancelIcon"]}
-                  type={"cancelx"}
-                />
+                <Icon className={styles["cancelIcon"]} type={"cancelx"} />
                 Cancel
               </button>
               <button
                 className={styles["createFamilyButton"]}
                 onClick={() => addMember()}
               >
-                <Icon
-                  className={styles["checkmarkIcon"]}
-                  type={"checkmark"}
-                />
+                <Icon className={styles["checkmarkIcon"]} type={"checkmark"} />
                 Confirm
               </button>
             </div>
           </div>
-        )
+        );
     }
-  }
+  };
 
   const renderBreadcrumbs = () => {
     switch (state) {
@@ -303,7 +302,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
             </button>
             New Family
           </div>
-        )
+        );
       case "head":
         return (
           <div className={styles["breadcrumb"]}>
@@ -323,7 +322,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
             <div className={styles["breadcrumbDivider"]}>/</div>
             <div className={styles["activeBreadcrumb"]}>Assign a Head</div>
           </div>
-        )
+        );
       case "member":
         return (
           <div className={styles["breadcrumb"]}>
@@ -343,14 +342,21 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
             <div className={styles["breadcrumbDivider"]}>/</div>
             <div className={styles["activeBreadcrumb"]}>Add Members</div>
           </div>
-        )
-
+        );
     }
-  }
+  };
 
   return (
     <Modal open={isOpen}>
-      <div className={state=="home"?styles["newFamModal"]:(state=="head"?styles["newHeadModal"]:styles["newMemberModal"])}>
+      <div
+        className={
+          state == "home"
+            ? styles["newFamModal"]
+            : state == "head"
+            ? styles["newHeadModal"]
+            : styles["newMemberModal"]
+        }
+      >
         <div className={styles["modalHeadContanier"]}>
           {renderBreadcrumbs()}
           <button
@@ -363,7 +369,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
         {renderContent()}
       </div>
     </Modal>
-  )
-}
+  );
+};
 
 export default NewFamilyModal;

@@ -8,7 +8,10 @@ import {
   addTransaction,
 } from "../../firebase/firestore/transaction";
 import Papa from "papaparse";
-import { getFamilyById, updateLastActive } from "../../firebase/firestore/family";
+import {
+  getFamilyById,
+  updateLastActive,
+} from "../../firebase/firestore/family";
 
 type UploadPopoverProps = {
   admin: Admin;
@@ -84,19 +87,19 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
         for (let i = 1; i < fileData.length; i++) {
           const activeDate = new Date();
           const userid = findUserByNameandFID(fileData[i][0], fileData[i][1]);
-            const data = {
-              admin_name: admin.name,
-              date: activeDate,
-              description: fileData[i][2],
-              family_id: fileData[i][1],
-              point_gain: parseInt(fileData[i][3]),
-              user_name: fileData[i][0],
-              user_id: userid,
-            };
-            console.log(data);
-            addTransaction(data as Transaction);
+          const data = {
+            admin_name: admin.name,
+            date: activeDate,
+            description: fileData[i][2],
+            family_id: fileData[i][1],
+            point_gain: parseInt(fileData[i][3]),
+            user_name: fileData[i][0],
+            user_id: userid,
+          };
+          console.log(data);
+          addTransaction(data as Transaction);
 
-            updateLastActive(fileData[i][1], activeDate);
+          updateLastActive(fileData[i][1], activeDate);
         }
 
         let trans = await getAllTransactions();
@@ -142,10 +145,10 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
           console.log(user.user_id);
           return user.user_id;
         }
-      })
-    })
+      });
+    });
     return null;
-  }
+  };
 
   const uploadPopoverContent = () => {
     if (uploadSuccess) {

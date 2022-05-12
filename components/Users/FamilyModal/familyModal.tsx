@@ -26,7 +26,7 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
   useEffect(() => {
     const getFamilies = async () => {
       if (family) {
-        const data = await getFamilyById(family.family_id);
+        const data = await getFamilyById(family.family_id.toString());
         setNewFamily(data);
       }
     };
@@ -63,11 +63,17 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
               {getUpdated().family_name} Family
             </h1>
             <div className={styles["colSpacing"]}>
-              <h4 className={styles["headerDetails"]}>FID: {getUpdated().family_id}</h4>
+              <h4 className={styles["headerDetails"]}>
+                FID: {getUpdated().family_id}
+              </h4>
               <h4 className={styles["headerDetails"]}>*</h4>
-              <h4 className={styles["headerDetails"]}>{getUpdated().user_ids.length} Members</h4>
+              <h4 className={styles["headerDetails"]}>
+                {getUpdated().user_ids.length} Members
+              </h4>
               <h4 className={styles["headerDetails"]}>*</h4>
-              <h4 className={styles["headerDetails"]}>Last Active: {getUpdated().last_active}</h4>
+              <h4 className={styles["headerDetails"]}>
+                Last Active: {getUpdated().last_active}
+              </h4>
             </div>
           </div>
           <div>
