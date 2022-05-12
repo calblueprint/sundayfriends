@@ -17,7 +17,7 @@ export type Family = {
   last_active: Date | Timestamp;
   user_ids: string[];
   users: User[];
-  family_id: string;
+  family_id: number;
 };
 
 export type Admin = {

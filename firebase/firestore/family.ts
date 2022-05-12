@@ -24,10 +24,18 @@ export const getFamily = async (familyId: string): Promise<Family> => {
  */
 export const getAllFamilies = async (): Promise<Family[]> => {
   try {
-    const allFamilies = await familyCollection.get();
-    const promises: Promise<Family>[] = allFamilies.docs.map((doc) =>
-      parseFamily(doc)
-    );
+    const promises: Promise<Family>[] = [];
+    const allFamilies = await familyCollection
+      .where('__name__', '!=', 'count')
+      .get()
+      .then((doc) => {
+        doc.forEach((item) => promises.push(parseFamily(item)));
+      });
+    
+    // const  = await allFamilies.docs.map((doc) => {
+    //     parseFamily(doc)
+    //   }
+    // );
     const families = await Promise.all(promises);
     return families;
   } catch (e) {
@@ -78,7 +86,7 @@ export const addFamily = async (
 }
 
 const parseFamily = async (doc) => {
-  const family_id = doc.id as string;
+  const family_id = doc.id;
   const data = doc.data();
   const total_points = data.total_points;
   const last_active = new Date(data.last_active.toMillis()).toLocaleDateString();
