@@ -3,6 +3,7 @@ import styles from "../TransactionItem/TransactionItem.module.css";
 import { ListItem } from "@mui/material";
 import Icon from "../../assets/Icon";
 import { Timestamp } from "@firebase/firestore";
+import { styled } from "@mui/styles";
 import {
   getAllTransactions,
   deleteTransaction,
@@ -18,6 +19,20 @@ type TransactionItemProps = {
   change: number;
   setTransactions: Function;
 };
+
+const StyledListItem = styled(ListItem)(() => ({
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  alignItems: "center",
+  minHeight: "54px",
+  paddingLeft: "2%",
+  paddingRight: "2%",
+  borderTop: "1px solid #ebebeb",
+  color: "#646464",
+  fontWeight: "normal",
+  fontSize: "13.5px",
+}));
 
 export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
   id,
@@ -36,7 +51,7 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
   };
 
   return (
-    <ListItem className={styles["list-item"]}>
+    <StyledListItem>
       <div className={fid ? styles["date"] : styles["dateV2"]}>{date}</div>
       {userName ? <div className={styles["username"]}>{userName}</div> : null}
       {fid ? <div className={styles["fid"]}>{fid}</div> : null}
@@ -65,6 +80,6 @@ export const TransactionItem: React.FunctionComponent<TransactionItemProps> = ({
       <div className={styles["trash"]} onClick={handleDelete}>
         <Icon className={styles["trash-icon"]} type={"trash"}></Icon>
       </div>
-    </ListItem>
+    </StyledListItem>
   );
 };

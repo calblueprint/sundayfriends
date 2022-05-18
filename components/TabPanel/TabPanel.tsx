@@ -21,7 +21,16 @@ export const TabPanel: React.FunctionComponent<TabPanelProps> = ({
       aria-labelledby={`simple-tab-${index}`}
     >
       {value === index && (
-        <Box sx={{ p: 3 }} className={styles["tab-box"]}>
+        <Box
+          sx={{
+            p: 3,
+            height: "fit-content",
+            padding: "0%",
+            marginLeft: "7px",
+            borderRadius: "0px 30px 30px 30px",
+            boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+          }}
+        >
           <h3 className={styles["children"]}>{children}</h3>
         </Box>
       )}

@@ -6,6 +6,7 @@ import { SortTriangles } from "../SortTriangles/SortTriangles";
 import { List } from "@mui/material";
 import styles from "../TransactionList/TransactionList.module.css";
 import itemstyles from "../TransactionItem/TransactionItem.module.css";
+import { styled } from "@mui/styles";
 import { Transaction } from "../../types/schema";
 
 type TransactionListProps = {
@@ -14,6 +15,16 @@ type TransactionListProps = {
   userPath?: boolean;
 };
 
+const SectionHeader = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "row",
+  height: "40px",
+  alignItems: "center",
+  backgroundColor: "#e6ecfe",
+  paddingLeft: "2%",
+  paddingRight: "2%",
+}));
+
 export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
   transactions,
   setTransactions,
@@ -21,9 +32,11 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
 }) => {
   const renderCategoryHeader = () => {
     return (
-      <Box className={styles["section-header"]}>
+      <SectionHeader>
         <Box
-          className={userPath ? styles["dateV2"] : itemstyles["date"]}
+          sx={{
+            width: userPath ? "13%" : "9%",
+          }}
           id={styles["category"]}
         >
           <body id={styles["category-text"]}>Date</body>
@@ -61,13 +74,19 @@ export const TransactionList: React.FunctionComponent<TransactionListProps> = ({
         <div className={itemstyles["change"]} id={styles["category-text"]}>
           Change
         </div>
-      </Box>
+      </SectionHeader>
     );
   };
 
   const renderHistory = () => {
     return (
-      <List className={styles["list"]}>
+      <List
+        sx={{
+          paddingTop: "0%",
+          paddingBottom: "0%",
+          height: "fit-content",
+        }}
+      >
         {transactions.map((transaction) => {
           console.log(transaction);
           return (
