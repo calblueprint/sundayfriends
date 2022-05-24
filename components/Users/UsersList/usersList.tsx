@@ -26,7 +26,10 @@ type UsersListProps = {
   setIsOpenFam?: React.Dispatch<React.SetStateAction<boolean>>;
   setEdited?: React.Dispatch<React.SetStateAction<boolean>>;
   refresh?: () => void;
+  startIndex?: number;
+  endIndex?: number;
 };
+
 type UsersListItemProps = {
   user: User;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -97,9 +100,12 @@ const UsersList: React.FC<UsersListProps> = ({
   setIsOpenFam,
   setEdited,
   refresh,
+  startIndex,
+  endIndex,
 }: UsersListProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState();
+  const [usersList, setUsersList] = useState<User[]>(users);
 
   const toggleSuspend = async (user: User) => {
     await suspendUserToggle(user.user_id);
@@ -111,6 +117,25 @@ const UsersList: React.FC<UsersListProps> = ({
     });
     setUsers(allUsers);
     refresh();
+  };
+
+  // useEffect(() => {
+  //   setUsersList(users.slice(startIndex, endIndex));
+  // }, [startIndex, endIndex]);
+
+  const renderUsersList = () => {
+    var data = users.slice(startIndex, endIndex);
+    console.log(data, "data");
+    return data.map((user) => (
+      <UsersListItem
+        key={user.email}
+        user={user}
+        setIsOpen={setIsOpen}
+        setUser={setUser}
+        isFamilyPath={isFamilyPath}
+        suspend={toggleSuspend}
+      />
+    ));
   };
 
   return (
@@ -161,7 +186,8 @@ const UsersList: React.FC<UsersListProps> = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user) => (
+          {renderUsersList()}
+          {/* {users.map((user) => (
             <UsersListItem
               key={user.email}
               user={user}
@@ -170,7 +196,7 @@ const UsersList: React.FC<UsersListProps> = ({
               isFamilyPath={isFamilyPath}
               suspend={toggleSuspend}
             />
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </TableContainer>

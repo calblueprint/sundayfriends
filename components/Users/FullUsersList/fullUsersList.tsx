@@ -31,9 +31,31 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
   const [searchQ, setSearchQ] = useState("");
   const [filterRole, setFilterRole] = useState();
   const [newUsers, setNewUsers] = useState<User[]>();
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(15);
 
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
+  };
+
+  const handlePaginationIndex = (direction) => {
+    if (direction == "back") {
+      startIndex > 1 && endIndex != users.length
+        ? [setStartIndex(startIndex - 15), setEndIndex(endIndex - 15)]
+        : endIndex == users.length
+        ? [
+            setStartIndex(startIndex - (endIndex - startIndex) - 15),
+            setEndIndex(endIndex - (endIndex - startIndex) - 1),
+          ]
+        : null;
+    }
+    if (direction == "forward") {
+      endIndex + 15 >= users.length && endIndex != users.length
+        ? [setStartIndex(startIndex + 15), setEndIndex(users.length)]
+        : endIndex == users.length
+        ? null
+        : [setStartIndex(startIndex + 15), setEndIndex(endIndex + 15)];
+    }
   };
 
   const applyFilters = async () => {
@@ -85,9 +107,13 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
               <Icon className={styles["search-icon"]} type={"search"}></Icon>
             }
           />
-          <div className={styles["pageNav"]}>1-15 of 200</div>
-          <div>
+          <div className={styles["pageNav"]}>
+            {startIndex + 1}-{endIndex} of {users.length}
+          </div>
+          <div onClick={() => handlePaginationIndex("back")}>
             <Icon className={styles["chevron"]} type={"chevronLeft"} />
+          </div>
+          <div onClick={() => handlePaginationIndex("forward")}>
             <Icon className={styles["chevron"]} type={"chevronRight"} />
           </div>
         </div>
@@ -98,6 +124,8 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
           setUsers={setUsers}
           isFamilyPath={false}
           refresh={refresh}
+          startIndex={startIndex}
+          endIndex={endIndex}
         />
       </div>
     </div>
