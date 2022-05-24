@@ -89,6 +89,7 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
       await addTransaction(adding as Transaction);
 
       updateLastActive(addUser.family_id.toString(), activeDate);
+      
 
       let trans = await getAllTransactions();
       setTransactions(trans);

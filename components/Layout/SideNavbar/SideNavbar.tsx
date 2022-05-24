@@ -87,19 +87,19 @@ const SideNavbar: React.FunctionComponent = () => {
         </ListItem>
         <ListItem
           button
-          key={"inventory"}
+          key={"settings"}
           onClick={() => {
-            router.push("/inventory");
+            router.push("/settings");
           }}
           className={styles["item"]}
         >
           <div className={styles["icon"]}>
-            <Icon type="inventorynavicon" className={styles["pageicons"]} />
+            <Icon type="settingsnavicon" className={styles["pageicons"]} />
           </div>
           <ListItemText
             disableTypography
             className={styles["item"]}
-            primary={"Inventory"}
+            primary={"Settings"}
           />
         </ListItem>
       </List>

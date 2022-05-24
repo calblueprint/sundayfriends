@@ -1,6 +1,6 @@
 import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
-import { Family, User } from "../../types/schema";
+import { Family, User, Family_Counter } from "../../types/schema";
 import { getUser } from "./user";
 
 const db = firebaseApp.firestore();
@@ -18,6 +18,20 @@ export const getFamily = async (familyId: string): Promise<Family> => {
     throw e;
   }
 };
+
+export const getCountAndIncrement = async (): Promise<number> => {
+  try {
+    var doc = await familyCollection.doc("count").get()
+    const family_counter = doc.data() as Family_Counter;
+    family_counter.counter += 1;
+
+    familyCollection.doc("count").set(family_counter)
+    return family_counter.counter
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+}
 
 /**
  * Returns all the families from firestore
