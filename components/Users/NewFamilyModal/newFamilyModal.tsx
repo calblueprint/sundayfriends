@@ -10,7 +10,6 @@ import { getCountAndIncrement } from "../../../firebase/firestore/family";
 import { addUserInvite } from "../../../firebase/firestore/userInvite";
 import { User_Invite } from "../../../types/schema";
 
-
 type NewFamilyModalProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -81,7 +80,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
         name: headName,
         email: headEmail,
         status: "Head",
-      }
+      };
       addUserInvite(headInvite as User_Invite);
       members.map((member) => {
         const memberInvite = {
@@ -89,11 +88,11 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
           name: member.name,
           email: member.email,
           status: member.role,
-        }
+        };
         addUserInvite(memberInvite as User_Invite);
-      })
+      });
     });
-  }
+  };
 
   const renderContent = () => {
     switch (state) {
