@@ -106,6 +106,7 @@ const UsersList: React.FC<UsersListProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState();
   const [usersList, setUsersList] = useState<User[]>(users.slice(0, 15));
+  //map everything out and then slice?? still didn't work
   const [fullList, setFullList] = useState(
     users.map((user) => (
       <UsersListItem
