@@ -2,6 +2,7 @@ import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import Query from "firebase/firestore";
 import { Transaction } from "../../types/schema";
+import { getExpirations } from "./expirationDates";
 
 const db = firebaseApp.firestore();
 const transactionsCollection = db.collection("transactions");
@@ -74,6 +75,23 @@ export const addTransaction = async (
 ): Promise<void> => {
   try {
     await transactionsCollection.doc().set(transaction);
+    // get expiration date
+    const expireDate = await getExpirations().then((dates) => {
+      return (
+        dates[transaction.date.getMonth()]
+      )
+    })
+    console.log(expireDate);
+    const expiration = {
+      admin_name: transaction.admin_name,
+      date: expireDate,
+      description: transaction.description,
+      family_id: transaction.family_id,
+      point_gain: transaction.point_gain * -1,
+      user_name: transaction.user_name,
+      user_id: transaction.user_id,
+    };
+    await transactionsCollection.doc().set(expiration);
   } catch (e) {
     console.warn(e);
     throw e;
