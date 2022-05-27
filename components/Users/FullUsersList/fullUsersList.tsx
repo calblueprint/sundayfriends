@@ -11,7 +11,7 @@ import styles from "./FullUsersList.module.css";
 import { User } from "../../../types/schema";
 import UsersList from "../UsersList/usersList";
 import Icon from "../../../assets/Icon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   getFilteredUsers,
   getUsersSearch,
@@ -20,26 +20,39 @@ import {
 type FullUsersListProps = {
   users: User[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  slicedUsers: User[];
+  setSlicedUsers: Function;
+  startIndex: number;
+  setStartIndex: React.Dispatch<React.SetStateAction<number>>;
+  endIndex: number;
+  setEndIndex: React.Dispatch<React.SetStateAction<number>>;
   refresh: () => void;
 };
 
 const FullUsersList: React.FC<FullUsersListProps> = ({
   users,
   setUsers,
+  slicedUsers,
+  setSlicedUsers,
+  startIndex,
+  setStartIndex,
+  endIndex,
+  setEndIndex,
   refresh,
 }: FullUsersListProps) => {
   const [searchQ, setSearchQ] = useState("");
   const [filterRole, setFilterRole] = useState();
   const [newUsers, setNewUsers] = useState<User[]>();
-  const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(15);
-  const [slicedList, setSlicedList] = useState(
-    users.slice(startIndex, endIndex)
-  );
+  // const [startIndex, setStartIndex] = useState(0);
+  // const [endIndex, setEndIndex] = useState(15);
 
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
   };
+
+  useEffect(() => {
+    setSlicedUsers(startIndex, endIndex);
+  }, [startIndex]);
 
   const handlePaginationIndex = (direction) => {
     if (direction == "back") {
@@ -47,13 +60,13 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
         ? [
             setStartIndex(startIndex - 15),
             setEndIndex(endIndex - 15),
-            setSlicedList(users.slice(startIndex, endIndex)),
+            setSlicedUsers(startIndex, endIndex),
           ]
         : endIndex == users.length
         ? [
             setStartIndex(startIndex - (endIndex - startIndex) - 15),
             setEndIndex(endIndex - (endIndex - startIndex) - 1),
-            setSlicedList(users.slice(startIndex, endIndex)),
+            setSlicedUsers(startIndex, endIndex),
           ]
         : null;
     }
@@ -62,14 +75,14 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
         ? [
             setStartIndex(startIndex + 15),
             setEndIndex(users.length),
-            setSlicedList(users.slice(startIndex, endIndex)),
+            setSlicedUsers(startIndex, endIndex),
           ]
         : endIndex == users.length
         ? null
         : [
             setStartIndex(startIndex + 15),
             setEndIndex(endIndex + 15),
-            setSlicedList(users.slice(startIndex, endIndex)),
+            setSlicedUsers(startIndex, endIndex),
           ];
     }
   };
@@ -136,8 +149,9 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
       </div>
       <div className={styles["container"]}>
         <UsersList
-          users={newUsers ? newUsers : slicedList}
-          setUsers={setUsers}
+          allUsers={users}
+          users={slicedUsers}
+          setSlicedUsers={setSlicedUsers}
           isFamilyPath={false}
           refresh={refresh}
           startIndex={startIndex}

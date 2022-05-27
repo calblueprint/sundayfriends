@@ -30,6 +30,12 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(0);
   const [users, setUsers] = useState(allUsers);
+  const [slicedUsers, setSlicedUsers] = useState(
+    allUsers.slice(0, 15 || allUsers.length)
+  );
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(15);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -37,6 +43,12 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   const refreshData = (): void => {
     router.replace(router.asPath);
   };
+
+  const changeSlicedList = (start, end) => {
+    setSlicedUsers(allUsers.slice(start, end));
+    console.log("changeSlicedList", start, end);
+  };
+
   return (
     <Layout title="Users">
       <NewFamilyModal isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -81,6 +93,12 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
           <FullUsersList
             users={users}
             setUsers={setUsers}
+            slicedUsers={slicedUsers}
+            setSlicedUsers={changeSlicedList}
+            startIndex={startIndex}
+            setStartIndex={setStartIndex}
+            endIndex={endIndex}
+            setEndIndex={setEndIndex}
             refresh={() => refreshData()}
           />
         )}
