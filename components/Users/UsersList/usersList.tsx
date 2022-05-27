@@ -199,8 +199,8 @@ const UsersList: React.FC<UsersListProps> = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {renderUsersList()}
-          {/* {users.map((user) => (
+          {/* {renderUsersList()} */}
+          {users.map((user) => (
             <UsersListItem
               key={user.email}
               user={user}
@@ -209,7 +209,7 @@ const UsersList: React.FC<UsersListProps> = ({
               isFamilyPath={isFamilyPath}
               suspend={toggleSuspend}
             />
-          ))} */}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

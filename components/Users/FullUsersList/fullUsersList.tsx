@@ -33,6 +33,9 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
   const [newUsers, setNewUsers] = useState<User[]>();
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(15);
+  const [slicedList, setSlicedList] = useState(
+    users.slice(startIndex, endIndex)
+  );
 
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
@@ -41,20 +44,33 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
   const handlePaginationIndex = (direction) => {
     if (direction == "back") {
       startIndex > 1 && endIndex != users.length
-        ? [setStartIndex(startIndex - 15), setEndIndex(endIndex - 15)]
+        ? [
+            setStartIndex(startIndex - 15),
+            setEndIndex(endIndex - 15),
+            setSlicedList(users.slice(startIndex, endIndex)),
+          ]
         : endIndex == users.length
         ? [
             setStartIndex(startIndex - (endIndex - startIndex) - 15),
             setEndIndex(endIndex - (endIndex - startIndex) - 1),
+            setSlicedList(users.slice(startIndex, endIndex)),
           ]
         : null;
     }
     if (direction == "forward") {
       endIndex + 15 >= users.length && endIndex != users.length
-        ? [setStartIndex(startIndex + 15), setEndIndex(users.length)]
+        ? [
+            setStartIndex(startIndex + 15),
+            setEndIndex(users.length),
+            setSlicedList(users.slice(startIndex, endIndex)),
+          ]
         : endIndex == users.length
         ? null
-        : [setStartIndex(startIndex + 15), setEndIndex(endIndex + 15)];
+        : [
+            setStartIndex(startIndex + 15),
+            setEndIndex(endIndex + 15),
+            setSlicedList(users.slice(startIndex, endIndex)),
+          ];
     }
   };
 
@@ -120,7 +136,7 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
       </div>
       <div className={styles["container"]}>
         <UsersList
-          users={newUsers ? newUsers : users}
+          users={newUsers ? newUsers : slicedList}
           setUsers={setUsers}
           isFamilyPath={false}
           refresh={refresh}
