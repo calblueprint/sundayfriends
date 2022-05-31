@@ -18,10 +18,9 @@ import {
 } from "../../../firebase/firestore/user";
 
 type FullUsersListProps = {
+  allUsers: User[];
   users: User[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
-  slicedUsers: User[];
-  setSlicedUsers: Function;
   startIndex: number;
   setStartIndex: React.Dispatch<React.SetStateAction<number>>;
   endIndex: number;
@@ -30,10 +29,9 @@ type FullUsersListProps = {
 };
 
 const FullUsersList: React.FC<FullUsersListProps> = ({
+  allUsers,
   users,
   setUsers,
-  slicedUsers,
-  setSlicedUsers,
   startIndex,
   setStartIndex,
   endIndex,
@@ -43,47 +41,44 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
   const [searchQ, setSearchQ] = useState("");
   const [filterRole, setFilterRole] = useState();
   const [newUsers, setNewUsers] = useState<User[]>();
-  // const [startIndex, setStartIndex] = useState(0);
-  // const [endIndex, setEndIndex] = useState(15);
 
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
   };
 
-  useEffect(() => {
-    setSlicedUsers(startIndex, endIndex);
-  }, [startIndex]);
-
   const handlePaginationIndex = (direction) => {
     if (direction == "back") {
-      startIndex > 1 && endIndex != users.length
+      startIndex == 1
+        ? null
+        : startIndex > 1 && endIndex != allUsers.length
         ? [
             setStartIndex(startIndex - 15),
             setEndIndex(endIndex - 15),
-            setSlicedUsers(startIndex, endIndex),
+            setUsers(users.slice(startIndex, endIndex)),
           ]
-        : endIndex == users.length
+        : endIndex == allUsers.length
         ? [
-            setStartIndex(startIndex - (endIndex - startIndex) - 15),
-            setEndIndex(endIndex - (endIndex - startIndex) - 1),
-            setSlicedUsers(startIndex, endIndex),
+            setStartIndex(startIndex - 15),
+            setEndIndex(endIndex - (endIndex - startIndex)),
+            setUsers(users.slice(startIndex, endIndex)),
           ]
         : null;
     }
     if (direction == "forward") {
-      endIndex + 15 >= users.length && endIndex != users.length
+      endIndex == allUsers.length
+        ? null
+        : endIndex + 15 >= allUsers.length
         ? [
             setStartIndex(startIndex + 15),
-            setEndIndex(users.length),
-            setSlicedUsers(startIndex, endIndex),
+            setEndIndex(allUsers.length),
+            setUsers(users.slice(startIndex, endIndex)),
           ]
-        : endIndex == users.length
-        ? null
         : [
             setStartIndex(startIndex + 15),
             setEndIndex(endIndex + 15),
-            setSlicedUsers(startIndex, endIndex),
+            setUsers(users.slice(startIndex, endIndex)),
           ];
+      // setUsers(users.slice(startIndex, endIndex));
     }
   };
 
@@ -137,7 +132,7 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
             }
           />
           <div className={styles["pageNav"]}>
-            {startIndex + 1}-{endIndex} of {users.length}
+            {startIndex + 1}-{endIndex} of {allUsers.length}
           </div>
           <div onClick={() => handlePaginationIndex("back")}>
             <Icon className={styles["chevron"]} type={"chevronLeft"} />
@@ -149,9 +144,9 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
       </div>
       <div className={styles["container"]}>
         <UsersList
-          allUsers={users}
-          users={slicedUsers}
-          setSlicedUsers={setSlicedUsers}
+          allUsers={allUsers}
+          users={users}
+          setUsers={setUsers}
           isFamilyPath={false}
           refresh={refresh}
           startIndex={startIndex}

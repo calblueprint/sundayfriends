@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import {
   Button,
   Table,
@@ -22,7 +21,7 @@ type UsersListProps = {
   allUsers: User[];
   users: User[];
   setUsers?: React.Dispatch<React.SetStateAction<User[]>>;
-  setSlicedUsers: Function;
+  setSlicedUsers?: Function;
   isFamilyPath: boolean;
   family?: Family;
   setIsOpenFam?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -98,31 +97,14 @@ const UsersList: React.FC<UsersListProps> = ({
   allUsers,
   users,
   setUsers,
-  setSlicedUsers,
   isFamilyPath,
   family,
   setIsOpenFam,
   setEdited,
   refresh,
-  startIndex,
-  endIndex,
 }: UsersListProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState();
-  // const [usersList, setUsersList] = useState<User[]>(users.slice(0, 15));
-  // map everything out and then slice?? still didn't work
-  // const [fullList, setFullList] = useState(
-  //   users.map((user) => (
-  //     <UsersListItem
-  //       key={user.email}
-  //       user={user}
-  //       setIsOpen={setIsOpen}
-  //       setUser={setUser}
-  //       isFamilyPath={isFamilyPath}
-  //       suspend={toggleSuspend}
-  //     />
-  //   ))
-  // );
 
   const toggleSuspend = async (user: User) => {
     await suspendUserToggle(user.user_id);
@@ -136,25 +118,18 @@ const UsersList: React.FC<UsersListProps> = ({
     refresh();
   };
 
-  // useEffect(() => {
-  //   // setUsersList(users.slice(startIndex, endIndex));
-  // }, [startIndex]);
-
-  const renderUsersList = () => {
-    // setSlicedUsers(startIndex, endIndex);
-    //var data = users.slice(startIndex, endIndex);
-    console.log(users, "data");
-    return users.map((user) => (
-      <UsersListItem
-        key={user.email}
-        user={user}
-        setIsOpen={setIsOpen}
-        setUser={setUser}
-        isFamilyPath={isFamilyPath}
-        suspend={toggleSuspend}
-      />
-    ));
-  };
+  // const renderUsersList = () => {
+  //   return users.map((user) => (
+  //     <UsersListItem
+  //       key={user.email}
+  //       user={user}
+  //       setIsOpen={setIsOpen}
+  //       setUser={setUser}
+  //       isFamilyPath={isFamilyPath}
+  //       suspend={toggleSuspend}
+  //     />
+  //   ));
+  // };
 
   return (
     <TableContainer>
@@ -204,8 +179,8 @@ const UsersList: React.FC<UsersListProps> = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {renderUsersList()}
-          {/* {users.map((user) => (
+          {/* {renderUsersList()} */}
+          {users.map((user) => (
             <UsersListItem
               key={user.email}
               user={user}
@@ -214,7 +189,7 @@ const UsersList: React.FC<UsersListProps> = ({
               isFamilyPath={isFamilyPath}
               suspend={toggleSuspend}
             />
-          ))} */}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>

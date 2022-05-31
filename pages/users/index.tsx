@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import styles from "./UsersPage.module.css";
 import FamilyCards from "../../components/Users/FamilyCard/familyCard";
 import { Tabs, Tab, Modal } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getAllUsers } from "../../firebase/firestore/user";
 import { getAllFamilies } from "../../firebase/firestore/family";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
@@ -30,11 +30,12 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(0);
   const [users, setUsers] = useState(allUsers);
-  const [slicedUsers, setSlicedUsers] = useState(
-    allUsers.slice(0, 15 || allUsers.length)
-  );
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(15);
+
+  useEffect(() => {
+    setUsers(allUsers.slice(startIndex, endIndex));
+  }, [startIndex]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -42,11 +43,6 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   const router = useRouter();
   const refreshData = (): void => {
     router.replace(router.asPath);
-  };
-
-  const changeSlicedList = (start, end) => {
-    setSlicedUsers(allUsers.slice(start, end));
-    console.log("changeSlicedList", start, end);
   };
 
   return (
@@ -91,10 +87,9 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
           <FamilyCards families={allFamilies} refresh={() => refreshData()} />
         ) : (
           <FullUsersList
+            allUsers={allUsers}
             users={users}
             setUsers={setUsers}
-            slicedUsers={slicedUsers}
-            setSlicedUsers={changeSlicedList}
             startIndex={startIndex}
             setStartIndex={setStartIndex}
             endIndex={endIndex}
