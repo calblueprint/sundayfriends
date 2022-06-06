@@ -42,6 +42,10 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
   const [filterRole, setFilterRole] = useState();
   const [newUsers, setNewUsers] = useState<User[]>();
 
+  // useEffect(() => {
+  //   setUsers(allUsers.slice(startIndex, endIndex));
+  // }, [startIndex]);
+
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
   };
@@ -78,7 +82,7 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
             setEndIndex(endIndex + 15),
             setUsers(users.slice(startIndex, endIndex)),
           ];
-      // setUsers(users.slice(startIndex, endIndex));
+      setUsers(users.slice(startIndex, endIndex));
     }
   };
 

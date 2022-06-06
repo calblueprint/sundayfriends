@@ -118,18 +118,18 @@ const UsersList: React.FC<UsersListProps> = ({
     refresh();
   };
 
-  // const renderUsersList = () => {
-  //   return users.map((user) => (
-  //     <UsersListItem
-  //       key={user.email}
-  //       user={user}
-  //       setIsOpen={setIsOpen}
-  //       setUser={setUser}
-  //       isFamilyPath={isFamilyPath}
-  //       suspend={toggleSuspend}
-  //     />
-  //   ));
-  // };
+  const renderUsersList = () => {
+    return users.map((user) => (
+      <UsersListItem
+        key={user.email}
+        user={user}
+        setIsOpen={setIsOpen}
+        setUser={setUser}
+        isFamilyPath={isFamilyPath}
+        suspend={toggleSuspend}
+      />
+    ));
+  };
 
   return (
     <TableContainer>
@@ -178,19 +178,7 @@ const UsersList: React.FC<UsersListProps> = ({
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {/* {renderUsersList()} */}
-          {users.map((user) => (
-            <UsersListItem
-              key={user.email}
-              user={user}
-              setIsOpen={setIsOpen}
-              setUser={setUser}
-              isFamilyPath={isFamilyPath}
-              suspend={toggleSuspend}
-            />
-          ))}
-        </TableBody>
+        <TableBody>{renderUsersList()}</TableBody>
       </Table>
     </TableContainer>
   );

@@ -116,6 +116,7 @@
   border-radius: 16.5px;
   color: white;
   height: 26px;
+  width: 80%;
   background-color: var(--grey-mid);
   padding-inline: 10px;
 }
