@@ -82,7 +82,7 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
             setEndIndex(endIndex + 15),
             setUsers(users.slice(startIndex, endIndex)),
           ];
-      setUsers(users.slice(startIndex, endIndex));
+      //setUsers(users.slice(startIndex, endIndex));
     }
   };
 
