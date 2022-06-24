@@ -42,9 +42,17 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
   const [filterRole, setFilterRole] = useState();
   const [newUsers, setNewUsers] = useState<User[]>();
 
-  // useEffect(() => {
-  //   setUsers(allUsers.slice(startIndex, endIndex));
-  // }, [startIndex]);
+  useEffect(() => {
+    if (searchQ == "") {
+      return setUsers(allUsers.slice(startIndex, endIndex));
+    } else {
+      setUsers(
+        allUsers.filter((user) => {
+          return user.full_name.includes(searchQ);
+        })
+      );
+    }
+  }, [searchQ]);
 
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
@@ -97,6 +105,16 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
       console.log(data);
     }
   };
+
+  const handleSearch = () => {
+    return;
+    setUsers(
+      allUsers.filter((user) => {
+        return user.full_name.includes(searchQ);
+      })
+    );
+  };
+
   return (
     <div className={styles["pageContainer"]}>
       <div className={styles["filters"]}>
@@ -126,23 +144,31 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
         <div className={styles["searchNav"]}>
           <Input
             disableUnderline={true}
-            placeholder="Search for a user"
+            placeholder="Search for a family or user"
             className={styles["search-bar"]}
             onChange={(e) => {
               setSearchQ(e.target.value);
             }}
-            endAdornment={
-              <Icon className={styles["search-icon"]} type={"search"}></Icon>
+            startAdornment={
+              <div onClick={handleSearch} className={styles["center"]}>
+                <Icon className={styles["search-icon"]} type={"search"}></Icon>
+              </div>
             }
           />
           <div className={styles["pageNav"]}>
             {startIndex + 1}-{endIndex} of {allUsers.length}
-          </div>
-          <div onClick={() => handlePaginationIndex("back")}>
-            <Icon className={styles["chevron"]} type={"chevronLeft"} />
-          </div>
-          <div onClick={() => handlePaginationIndex("forward")}>
-            <Icon className={styles["chevron"]} type={"chevronRight"} />
+            <div
+              onClick={() => handlePaginationIndex("back")}
+              className={styles["center"]}
+            >
+              <Icon className={styles["chevronLeft"]} type={"chevronLeft"} />
+            </div>
+            <div
+              onClick={() => handlePaginationIndex("forward")}
+              className={styles["center"]}
+            >
+              <Icon className={styles["chevronRight"]} type={"chevronRight"} />
+            </div>
           </div>
         </div>
       </div>
