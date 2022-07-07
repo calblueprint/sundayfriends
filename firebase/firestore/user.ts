@@ -25,7 +25,7 @@ export const getUser = async (userId: string): Promise<User> => {
  */
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const allUsers = await userCollection.get();
+    const allUsers = await userCollection.orderBy("family_id").orderBy("full_name").get();
     const promises: Promise<User>[] = allUsers.docs.map((doc) =>
       parseUser(doc)
     );

@@ -1,9 +1,8 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import Layout from "../../components/Layout/Layout";
 import styles from "./UsersPage.module.css";
 import FamilyCards from "../../components/Users/FamilyCard/familyCard";
 import { Tabs, Tab, Modal } from "@mui/material";
-import { useState } from "react";
 import { getAllUsers, getUser, updateUserPoints } from "../../firebase/firestore/user";
 import { getAllFamilies, updateFamilyPoints } from "../../firebase/firestore/family";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
@@ -32,6 +31,13 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   const [value, setValue] = useState(0);
   const [users, setUsers] = useState(allUsers);
   const [families, setFamilies] = useState(allFamilies);
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(15);
+
+  useEffect(() => {
+    setUsers(allUsers.slice(startIndex, endIndex));
+  }, [startIndex]);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -115,8 +121,13 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
           <FamilyCards families={families} refresh={() => refreshData()} />
         ) : (
           <FullUsersList
+            allUsers={allUsers}
             users={users}
             setUsers={setUsers}
+            startIndex={startIndex}
+            setStartIndex={setStartIndex}
+            endIndex={endIndex}
+            setEndIndex={setEndIndex}
             refresh={() => refreshData()}
           />
         )}

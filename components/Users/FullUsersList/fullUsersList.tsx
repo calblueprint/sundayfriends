@@ -11,29 +11,79 @@ import styles from "./FullUsersList.module.css";
 import { User } from "../../../types/schema";
 import UsersList from "../UsersList/usersList";
 import Icon from "../../../assets/Icon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   getFilteredUsers,
   getUsersSearch,
 } from "../../../firebase/firestore/user";
 
 type FullUsersListProps = {
+  allUsers: User[];
   users: User[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  startIndex: number;
+  setStartIndex: React.Dispatch<React.SetStateAction<number>>;
+  endIndex: number;
+  setEndIndex: React.Dispatch<React.SetStateAction<number>>;
   refresh: () => void;
 };
 
 const FullUsersList: React.FC<FullUsersListProps> = ({
+  allUsers,
   users,
   setUsers,
+  startIndex,
+  setStartIndex,
+  endIndex,
+  setEndIndex,
   refresh,
 }: FullUsersListProps) => {
   const [searchQ, setSearchQ] = useState("");
   const [filterRole, setFilterRole] = useState();
   const [newUsers, setNewUsers] = useState<User[]>();
 
+  // useEffect(() => {
+  //   setUsers(allUsers.slice(startIndex, endIndex));
+  // }, [startIndex]);
+
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
+  };
+
+  const handlePaginationIndex = (direction) => {
+    if (direction == "back") {
+      startIndex == 1
+        ? null
+        : startIndex > 1 && endIndex != allUsers.length
+        ? [
+            setStartIndex(startIndex - 15),
+            setEndIndex(endIndex - 15),
+            setUsers(users.slice(startIndex, endIndex)),
+          ]
+        : endIndex == allUsers.length
+        ? [
+            setStartIndex(startIndex - 15),
+            setEndIndex(endIndex - (endIndex - startIndex)),
+            setUsers(users.slice(startIndex, endIndex)),
+          ]
+        : null;
+    }
+    if (direction == "forward") {
+      endIndex == allUsers.length
+        ? null
+        : endIndex + 15 >= allUsers.length
+        ? [
+            setStartIndex(startIndex + 15),
+            setEndIndex(allUsers.length),
+            setUsers(users.slice(startIndex, endIndex)),
+          ]
+        : [
+            setStartIndex(startIndex + 15),
+            setEndIndex(endIndex + 15),
+            setUsers(users.slice(startIndex, endIndex)),
+          ];
+      //setUsers(users.slice(startIndex, endIndex));
+    }
   };
 
   const applyFilters = async () => {
@@ -85,19 +135,26 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
               <Icon className={styles["search-icon"]} type={"search"}></Icon>
             }
           />
-          <div className={styles["pageNav"]}>1-15 of 200</div>
-          <div>
+          <div className={styles["pageNav"]}>
+            {startIndex + 1}-{endIndex} of {allUsers.length}
+          </div>
+          <div onClick={() => handlePaginationIndex("back")}>
             <Icon className={styles["chevron"]} type={"chevronLeft"} />
+          </div>
+          <div onClick={() => handlePaginationIndex("forward")}>
             <Icon className={styles["chevron"]} type={"chevronRight"} />
           </div>
         </div>
       </div>
       <div className={styles["container"]}>
         <UsersList
-          users={newUsers ? newUsers : users}
+          allUsers={allUsers}
+          users={users}
           setUsers={setUsers}
           isFamilyPath={false}
           refresh={refresh}
+          startIndex={startIndex}
+          endIndex={endIndex}
         />
       </div>
     </div>

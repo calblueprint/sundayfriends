@@ -4,8 +4,7 @@
   border-style: solid;
   border-radius: 15px;
   border-color: var(--sapphire-light);
-  padding-top: 4%;
-  padding-bottom: 4%;
+  padding-top: 2%;
 }
 
 .filters {
@@ -98,4 +97,5 @@
   display: flex;
   width: 100%;
   flex-direction: column;
+  margin-top: 20px;
 }

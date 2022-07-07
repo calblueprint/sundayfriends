@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import {
   Button,
   Table,
@@ -19,14 +18,19 @@ import {
 } from "../../../firebase/firestore/user";
 
 type UsersListProps = {
+  allUsers: User[];
   users: User[];
   setUsers?: React.Dispatch<React.SetStateAction<User[]>>;
+  setSlicedUsers?: Function;
   isFamilyPath: boolean;
   family?: Family;
   setIsOpenFam?: React.Dispatch<React.SetStateAction<boolean>>;
   setEdited?: React.Dispatch<React.SetStateAction<boolean>>;
   refresh?: () => void;
+  startIndex?: number;
+  endIndex?: number;
 };
+
 type UsersListItemProps = {
   user: User;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -90,6 +94,7 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
 };
 
 const UsersList: React.FC<UsersListProps> = ({
+  allUsers,
   users,
   setUsers,
   isFamilyPath,
@@ -111,6 +116,19 @@ const UsersList: React.FC<UsersListProps> = ({
     });
     setUsers(allUsers);
     refresh();
+  };
+
+  const renderUsersList = () => {
+    return users.map((user) => (
+      <UsersListItem
+        key={user.email}
+        user={user}
+        setIsOpen={setIsOpen}
+        setUser={setUser}
+        isFamilyPath={isFamilyPath}
+        suspend={toggleSuspend}
+      />
+    ));
   };
 
   return (
@@ -160,18 +178,7 @@ const UsersList: React.FC<UsersListProps> = ({
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <UsersListItem
-              key={user.email}
-              user={user}
-              setIsOpen={setIsOpen}
-              setUser={setUser}
-              isFamilyPath={isFamilyPath}
-              suspend={toggleSuspend}
-            />
-          ))}
-        </TableBody>
+        <TableBody>{renderUsersList()}</TableBody>
       </Table>
     </TableContainer>
   );
