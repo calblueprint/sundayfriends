@@ -1,11 +1,10 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 import Layout from "../../components/Layout/Layout";
 import styles from "./UsersPage.module.css";
 import FamilyCards from "../../components/Users/FamilyCard/familyCard";
 import { Tabs, Tab, Modal } from "@mui/material";
-import { useState, useEffect } from "react";
-import { getAllUsers } from "../../firebase/firestore/user";
-import { getAllFamilies } from "../../firebase/firestore/family";
+import { getAllUsers, getUser, updateUserPoints } from "../../firebase/firestore/user";
+import { getAllFamilies, updateFamilyPoints } from "../../firebase/firestore/family";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { GetServerSidePropsContext } from "next";
@@ -15,6 +14,7 @@ import { Admin, Family, User } from "../../types/schema";
 import { useRouter } from "next/router";
 import Icon from "../../assets/Icon";
 import NewFamilyModal from "../../components/Users/NewFamilyModal/newFamilyModal";
+import { deleteTransaction } from "../../firebase/firestore/transaction";
 
 type UsersPageProps = {
   currentAdmin: Admin;
@@ -30,6 +30,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(0);
   const [users, setUsers] = useState(allUsers);
+  const [families, setFamilies] = useState(allFamilies);
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(15);
 
@@ -44,6 +45,39 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
   const refreshData = (): void => {
     router.replace(router.asPath);
   };
+
+  const updatePoints = () => {
+    const newFamilies: Family[] = [];
+    allFamilies.map((family) => {
+      var familypoints = 0;
+      family.users.map((user) => {
+        var points = 0;
+        user.transactions.map((transaction) => {
+          if (transaction.expire_id != null && new Date(transaction.deleteDate) <= new Date()) {
+            deleteTransaction(transaction.transaction_id)
+          } else if (new Date(transaction.date) <= new Date()) {
+            points += transaction.point_gain;
+          }
+        })
+        if (user.role != "Child") {
+          familypoints += points;
+        }
+        if (user.points != points) {
+          updateUserPoints(user.user_id, points);
+        }
+      })
+      if (family.total_points != familypoints) {
+        updateFamilyPoints(family.family_id.toString(), familypoints);
+        family.total_points = familypoints;
+      }
+      newFamilies.push(family);
+    })
+    return newFamilies;
+  }
+
+  useEffect(() => {
+    setFamilies(updatePoints());
+  }, [])
 
   return (
     <Layout title="Users">
@@ -84,7 +118,7 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
           />
         </Tabs>
         {value == 0 ? (
-          <FamilyCards families={allFamilies} refresh={() => refreshData()} />
+          <FamilyCards families={families} refresh={() => refreshData()} />
         ) : (
           <FullUsersList
             allUsers={allUsers}

@@ -12,6 +12,7 @@ import {
   getFamilyById,
   updateLastActive,
 } from "../../firebase/firestore/family";
+import { getExpirations } from "../../firebase/firestore/expirationDates";
 
 type UploadPopoverProps = {
   admin: Admin;
@@ -86,10 +87,19 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
       } else {
         for (let i = 1; i < fileData.length; i++) {
           const activeDate = new Date();
+          const expireDate = await getExpirations().then((dates) => {
+            return (
+              dates[activeDate.getMonth()]
+            )
+          })
+          const deleteDate = new Date(expireDate);
+          deleteDate.setMonth(expireDate.getMonth() + 1);
           const userid = findUserByNameandFID(fileData[i][0], fileData[i][1]);
           const data = {
+            expire_id: null,
             admin_name: admin.name,
             date: activeDate,
+            deleteDate: deleteDate,
             description: fileData[i][2],
             family_id: fileData[i][1],
             point_gain: parseInt(fileData[i][3]),
@@ -97,7 +107,7 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
             user_id: userid,
           };
           console.log(data);
-          addTransaction(data as Transaction);
+          addTransaction(data as Transaction, expireDate, deleteDate);
 
           updateLastActive(fileData[i][1], activeDate);
         }

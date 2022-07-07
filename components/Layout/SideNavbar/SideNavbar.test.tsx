@@ -35,7 +35,7 @@ describe("The SideNavbar component", () => {
     expect(navButtons[0]).toHaveTextContent("Users");
     expect(navButtons[1]).toHaveTextContent("Admins");
     expect(navButtons[2]).toHaveTextContent("Transactions");
-    expect(navButtons[3]).toHaveTextContent("Inventory");
+    expect(navButtons[3]).toHaveTextContent("Settings");
   });
 
   it("should navigate to the correct routes", () => {
@@ -48,7 +48,7 @@ describe("The SideNavbar component", () => {
     navButtons[2].click();
     expect(mockPush).toHaveBeenCalledWith("/transactions");
     navButtons[3].click();
-    expect(mockPush).toHaveBeenCalledWith("/inventory");
+    expect(mockPush).toHaveBeenCalledWith("/settings");
   });
 
   it("should render the Icon component with the correct props", () => {

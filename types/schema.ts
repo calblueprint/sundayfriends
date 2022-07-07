@@ -2,8 +2,10 @@ import { Timestamp } from "@firebase/firestore";
 
 export type Transaction = {
   transaction_id: string;
+  expire_id: string | null;
   admin_name: string;
   date: Date | Timestamp | string;
+  deleteDate: Date | Timestamp | string;
   description: string | null;
   family_id: string;
   point_gain: number;
@@ -51,4 +53,16 @@ export type User = {
   suspended: boolean;
   phone_number: string;
   transactions: Transaction[];
+};
+
+export type User_Invite = {
+  family_id: number;
+  name: string;
+  email: string;
+  status: string;
+  user_invite_id: string;
+};
+
+export type Family_Counter = {
+  counter: number;
 };

@@ -17,6 +17,7 @@ import {
   addTransaction,
   getAllTransactions,
 } from "../../firebase/firestore/transaction";
+import { getExpirations } from "../../firebase/firestore/expirationDates";
 import { integerPropType } from "@mui/utils";
 import { updateLastActive } from "../../firebase/firestore/family";
 
@@ -42,7 +43,6 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
 
   const [success, setSuccess] = useState(false);
   const [addPoints, setAddPoints] = useState("10");
-  const [addType, setAddType] = useState("");
   const [addMessage, setAddMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -59,9 +59,6 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
     if (selectedUser == "Select User") {
       setSnackbarMessage("No User Selected.");
       setSnackbarOpen(true);
-    } else if (addType == "") {
-      setSnackbarMessage("Select Redeem or Earn.");
-      setSnackbarOpen(true);
     } else if (parseInt(addPoints) >= 10000) {
       setSnackbarMessage(
         "Amount chosen too large. Please reduce to below 10000."
@@ -76,19 +73,28 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
     } else {
       //handle post request
       const activeDate = new Date();
+      const expireDate = await getExpirations().then((dates) => {
+        return (
+          dates[activeDate.getMonth()]
+        )
+      })
+      const deleteDate = new Date(expireDate);
+      deleteDate.setMonth(expireDate.getMonth() + 1);
       const adding = {
+        expire_id: null,
         admin_name: currentAdmin.name,
         date: activeDate,
+        deleteDate: deleteDate,
         description: addMessage,
         family_id: addUser.family_id,
         point_gain:
-          addType == "redeem" ? -parseInt(addPoints) : parseInt(addPoints),
+          parseInt(addPoints),
         user_name: addUser.full_name,
         user_id: addUser.user_id,
       };
-      await addTransaction(adding as Transaction);
-
+      await addTransaction(adding as Transaction, expireDate, deleteDate);
       updateLastActive(addUser.family_id.toString(), activeDate);
+      
 
       let trans = await getAllTransactions();
       setTransactions(trans);
@@ -118,7 +124,6 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
   const resetFields = () => {
     setSelectedUser("Select User");
     setAddPoints("10");
-    setAddType("");
     setAddMessage("");
   };
 
@@ -190,35 +195,6 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
               )}
             />
           </div>
-          <div className={styles["amount-action"]}>
-            <div id={styles["amount"]}>
-              <p className={styles["select-category"]}>AMOUNT</p>
-              <TextField
-                className={styles["amount-field"]}
-                rows={1}
-                defaultValue="10"
-                variant="standard"
-                type="number"
-                inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
-                onChange={(e) => setAddPoints(e.target.value)}
-              />
-            </div>
-            <div id={styles["action"]}>
-              <p className={styles["select-category"]}>ACTION</p>
-              <RadioGroup row onChange={(e) => setAddType(e.target.value)}>
-                <FormControlLabel
-                  value="redeem"
-                  control={<Radio />}
-                  label={<p className={styles["radio-label"]}>Redeem</p>}
-                />
-                <FormControlLabel
-                  value="earn"
-                  control={<Radio />}
-                  label={<p className={styles["radio-label"]}>Earn</p>}
-                />
-              </RadioGroup>
-            </div>
-          </div>
           <div>
             <p className={styles["select-category"]}>DESCRIPTION</p>
             <TextField
@@ -233,6 +209,21 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
               }}
               onChange={(e) => setAddMessage(e.target.value)}
             />
+          </div>
+          <div className={styles["amount-action"]}>
+            <div id={styles["amount"]}>
+              <p className={styles["select-category"]}>AMOUNT</p>
+              <TextField
+                className={styles["amount-field"]}
+                rows={1}
+                placeholder="0"
+                defaultValue={0}
+                variant="standard"
+                type="number"
+                inputProps={{ inputmode: "numeric", pattern: "[0-9]*" }}
+                onChange={(e) => setAddPoints(e.target.value)}
+              />
+            </div>
           </div>
           <Button
             className={styles["confirm-button"]}
