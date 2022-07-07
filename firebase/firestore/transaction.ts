@@ -70,9 +70,26 @@ export const getTransactionByDate = async (
  * Adds the given transaction data to firestore
  */
 export const addTransaction = async (
-  transaction: Transaction
+  transaction: Transaction,
+  expireDate: Date,
+  deleteDate: Date,
 ): Promise<void> => {
   try {
+    // get expiration date
+    const expiration = {
+      expire_id: null,
+      admin_name: transaction.admin_name,
+      date: expireDate,
+      deleteDate: deleteDate,
+      description: transaction.description,
+      family_id: transaction.family_id,
+      point_gain: transaction.point_gain * -1,
+      user_name: transaction.user_name,
+      user_id: transaction.user_id,
+    };
+    var exp = transactionsCollection.doc();
+    await exp.set(expiration);
+    transaction.expire_id=exp.id;
     await transactionsCollection.doc().set(transaction);
   } catch (e) {
     console.warn(e);
@@ -87,6 +104,9 @@ export const deleteTransaction = async (
   transactionId: string
 ): Promise<void> => {
   try {
+    const transaction = await transactionsCollection.doc(transactionId).get();
+    const data = transaction.data();
+    await transactionsCollection.doc(data.expire_id).delete();
     await transactionsCollection.doc(transactionId).delete();
   } catch (e) {
     console.warn(e);
@@ -122,8 +142,10 @@ const parseTransaction = async (doc) => {
   const data = doc.data();
   const transaction = {
     transaction_id: transaction_id,
+    expire_id: data.expire_id,
     admin_name: data.admin_name,
     date: new Date(data.date.toMillis()).toLocaleDateString(),
+    deleteDate: new Date(data.deleteDate.toMillis()).toLocaleDateString(),
     description: data.description,
     family_id: data.family_id,
     point_gain: data.point_gain,

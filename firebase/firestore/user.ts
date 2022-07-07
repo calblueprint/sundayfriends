@@ -1,7 +1,7 @@
 import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Transaction, User } from "../../types/schema";
-import { getTransactionByUser } from "./transaction";
+import { deleteTransaction, getTransactionByUser } from "./transaction";
 
 const db = firebaseApp.firestore();
 const userCollection = db.collection("users");
@@ -133,11 +133,34 @@ export const deleteUser = async (userId: string): Promise<void> => {
   }
 };
 
+export const updateUserPoints = async (userId: string, points: number): Promise<void> => {
+  const trimedId = userId.toString().replace(/\s/g, "");
+  const doc = await userCollection.doc(trimedId).get();
+  var data = doc.data();
+  data.points = points;
+  
+  userCollection.doc(trimedId).set(data);
+}
+
+const calculateUserPoints = async (transactions: Transaction[]): Promise<number> => {
+  var points = 0;
+  transactions.map((transaction) => {
+    if (transaction.expire_id != null && new Date(transaction.deleteDate) <= new Date()) {
+      deleteTransaction(transaction.transaction_id)
+    } else if (new Date(transaction.date) <= new Date()) {
+      points += transaction.point_gain;
+    }
+  })
+  return points;
+}
+
 const parseUser = async (doc) => {
   const user_id = doc.id.toString();
   const data = doc.data();
   const promise: Promise<Transaction[]> = getTransactionByUser(user_id);
   const transactions = await promise;
+  // const points = await calculateUserPoints(user_id);
+  //updateUserPoints(user_id, points);
   const user = {
     user_id: user_id,
     address: data.address,

@@ -2,8 +2,10 @@ import { Timestamp } from "@firebase/firestore";
 
 export type Transaction = {
   transaction_id: string;
+  expire_id: string | null;
   admin_name: string;
   date: Date | Timestamp | string;
+  deleteDate: Date | Timestamp | string;
   description: string | null;
   family_id: string;
   point_gain: number;
