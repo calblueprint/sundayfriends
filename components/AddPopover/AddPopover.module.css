@@ -127,14 +127,14 @@
 
 .amount-action {
   display: flex;
-  width: 100%;
+  width: 30%;
   flex-direction: row;
   margin-top: 10px;
   gap: 20px;
 }
 
 .amount-field {
-  width: 90%;
+  width: 100%;
 }
 
 #amount {

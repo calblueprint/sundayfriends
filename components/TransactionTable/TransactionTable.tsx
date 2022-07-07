@@ -108,6 +108,13 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
       filterWeek(prev, next);
     };
 
+    const nextWeekAvailable = () => {
+      if (nextSunday.getTime() >= new Date().getTime()) {
+        return false;
+      }
+      return true;
+    }
+
     const filterSearch = (event) => {
       setFilteredTransactions(
         weekTransactions.filter((item) => {
@@ -153,12 +160,15 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
                 type={"chevronLeft"}
               ></Icon>
             </div>
-            <div className={styles["chevron-wrapper"]} onClick={nextWeek}>
-              <Icon
-                className={styles["chevron-right"]}
-                type={"chevronRight"}
-              ></Icon>
-            </div>
+            {
+              nextWeekAvailable() &&
+              <div className={styles["chevron-wrapper"]} onClick={nextWeek}>
+                <Icon
+                  className={styles["chevron-right"]}
+                  type={"chevronRight"}
+                ></Icon>
+              </div>
+            }
           </div>
           <Input
             disableUnderline={true}
