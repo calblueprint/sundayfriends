@@ -302,12 +302,12 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
           <div className={styles["modalHeadContainer"]}>
             <div className={styles["breadcrumb"]}>
               <button
-                className={styles["chevronButton"]}
+                className={styles["chevronButtonNoClick"]}
               >
                 <Icon className={styles["chevron"]} type={"chevronLeft"} />
               </button>
               <button
-                className={styles["chevronButton"]}
+                className={styles["chevronButtonNoClick"]}
               >
                 <Icon className={styles["chevron"]} type={"chevronRight"} />
               </button>

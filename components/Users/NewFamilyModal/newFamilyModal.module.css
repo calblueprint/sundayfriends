@@ -198,6 +198,12 @@
     cursor: pointer;
     height: 11px;
   }
+
+  .chevronButtonNoClick {
+    background-color: transparent;
+    border: none;
+    height: 11px;
+  }
   
   .closeIcon {
     border-radius: 50%;
