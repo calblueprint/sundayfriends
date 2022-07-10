@@ -88,10 +88,8 @@ export const UploadPopover: React.FunctionComponent<UploadPopoverProps> = ({
         for (let i = 1; i < fileData.length; i++) {
           const activeDate = new Date();
           const expireDate = await getExpirations().then((dates) => {
-            return (
-              dates[activeDate.getMonth()]
-            )
-          })
+            return dates[activeDate.getMonth()];
+          });
           const deleteDate = new Date(expireDate);
           deleteDate.setMonth(expireDate.getMonth() + 1);
           const userid = findUserByNameandFID(fileData[i][0], fileData[i][1]);

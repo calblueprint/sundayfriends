@@ -301,14 +301,10 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
         return (
           <div className={styles["modalHeadContainer"]}>
             <div className={styles["breadcrumb"]}>
-              <button
-                className={styles["chevronButtonNoClick"]}
-              >
+              <button className={styles["chevronButtonNoClick"]}>
                 <Icon className={styles["chevron"]} type={"chevronLeft"} />
               </button>
-              <button
-                className={styles["chevronButtonNoClick"]}
-              >
+              <button className={styles["chevronButtonNoClick"]}>
                 <Icon className={styles["chevron"]} type={"chevronRight"} />
               </button>
               Invite Family
@@ -320,7 +316,6 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               <Icon className={styles["closeIcon"]} type={"popoverclose"} />
             </button>
           </div>
-          
         );
       case "Head":
         return (

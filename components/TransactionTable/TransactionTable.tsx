@@ -113,7 +113,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
         return false;
       }
       return true;
-    }
+    };
 
     const filterSearch = (event) => {
       setFilteredTransactions(
@@ -160,15 +160,14 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
                 type={"chevronLeft"}
               ></Icon>
             </div>
-            {
-              nextWeekAvailable() &&
+            {nextWeekAvailable() && (
               <div className={styles["chevron-wrapper"]} onClick={nextWeek}>
                 <Icon
                   className={styles["chevron-right"]}
                   type={"chevronRight"}
                 ></Icon>
               </div>
-            }
+            )}
           </div>
           <Input
             disableUnderline={true}

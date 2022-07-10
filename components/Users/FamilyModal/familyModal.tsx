@@ -1,5 +1,11 @@
 import * as React from "react";
-import { FormControlLabel, Modal, RadioGroup, Radio, Snackbar } from "@mui/material";
+import {
+  FormControlLabel,
+  Modal,
+  RadioGroup,
+  Radio,
+  Snackbar,
+} from "@mui/material";
 import styles from "./FamilyModal.module.css";
 import { Family, User_Invite } from "../../../types/schema";
 import Icon from "../../../assets/Icon";
@@ -45,13 +51,14 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
   }, [wasEdited]);
 
   const getUpdated = (): Family => {
-    console.log(family)
-    console.log(newFamily)
+    console.log(family);
+    console.log(newFamily);
     return newFamily ? newFamily : family;
   };
 
   const addMember = () => {
-    const emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    const emailRegex =
+      RegExp("^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
     if (memberName == "") {
       setSnackbarMessage("Invalid Name");
       setSnackbarOpen(true);
@@ -70,6 +77,8 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
       };
       addUserInvite(memberInvite as User_Invite);
       setState("home");
+      setSnackbarMessage(`${memberName} has been invited to the family.`);
+      setSnackbarOpen(true);
     }
   };
 
@@ -79,7 +88,7 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
     } else if (state == "add") {
       setState("home");
     }
-  }
+  };
 
   const renderHeader = () => {
     return (
@@ -93,21 +102,20 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
           </button>
           {renderBreadcrumbs()}
         </div>
-        <button
-          className={styles["closeButton"]}
-          onClick={closeModal}
-        >
+        <button className={styles["closeButton"]} onClick={closeModal}>
           <Icon className={styles["addIcon"]} type={"close"} />
         </button>
       </div>
-    )
-  }
+    );
+  };
 
   const renderBreadcrumbs = () => {
     if (state == "home") {
       return (
-        <div className={styles["activeBreadcrumb"]}>{getUpdated().family_name} Family</div>
-      )
+        <div className={styles["activeBreadcrumb"]}>
+          {getUpdated().family_name} Family
+        </div>
+      );
     } else if (state == "add") {
       return (
         <>
@@ -115,11 +123,11 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
           <div className={styles["breadcrumbDivider"]}>/</div>
           <div className={styles["activeBreadcrumb"]}>Add Members</div>
         </>
-      )
+      );
     }
-  }
+  };
 
-  if ( state == "home") {
+  if (state == "home") {
     return (
       <Modal open={isOpen}>
         <div className={styles["modal"]}>
@@ -162,16 +170,24 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
               refresh={refresh}
             />
           </div>
-          <div className={styles["addTransaction"]} 
+          <div
+            className={styles["addTransaction"]}
             onClick={() => {
-              setState("add"); 
-              setHoveringAdd(false)
+              setState("add");
+              setHoveringAdd(false);
             }}
-            onMouseEnter={() => setHoveringAdd(true)} 
+            onMouseEnter={() => setHoveringAdd(true)}
             onMouseLeave={() => setHoveringAdd(false)}
           >
-            <Icon className={hoveringAdd ? styles["userAddHover"] : styles["userAdd"]} type={"userAdd"} /> 
-            <div className={hoveringAdd && styles["addText"]}>Add New Family Member</div>
+            <Icon
+              className={
+                hoveringAdd ? styles["userAddHover"] : styles["userAdd"]
+              }
+              type={"userAdd"}
+            />
+            <div className={hoveringAdd && styles["addText"]}>
+              Add New Family Member
+            </div>
           </div>
         </div>
       </Modal>
@@ -252,17 +268,16 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
             </div>
           </div>
           <Snackbar
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          open={snackbarOpen}
-          autoHideDuration={3000}
-          onClose={() => setSnackbarOpen(false)}
-          message={snackbarMessage}
-        />
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={snackbarOpen}
+            autoHideDuration={3000}
+            onClose={() => setSnackbarOpen(false)}
+            message={snackbarMessage}
+          />
         </div>
       </Modal>
-    )
+    );
   }
-  
 };
 
 export default FamilyModal;
