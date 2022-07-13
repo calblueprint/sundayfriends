@@ -111,6 +111,15 @@ export const updateFamilyPoints = async (FID: string, points: number): Promise<v
   familyCollection.doc(FID).set(data);
 }
 
+export const deleteUserFromFamily = async (FID: string, user_id: string): Promise<void> => {
+  const doc = await familyCollection.doc(FID).get();
+  var data = doc.data();
+  const index = data.user_ids.indexOf(user_id);
+  data.user_ids.splice(index, 1);
+  
+  familyCollection.doc(FID).set(data);
+}
+
 const calculateFamilyPoints = async (users: User[]): Promise<number> => {
   var familypoints = 0;
   users.map((user) => {

@@ -57,12 +57,11 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
   };
 
   const addMember = () => {
-    const emailRegex =
-      RegExp("^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
+    console.log("adding")
     if (memberName == "") {
       setSnackbarMessage("Invalid Name");
       setSnackbarOpen(true);
-    } else if (!emailRegex.test(memberEmail)) {
+    } else if (memberEmail == "") {
       setSnackbarMessage("Invalid Email");
       setSnackbarOpen(true);
     } else if (memberRole == "") {
@@ -86,6 +85,10 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
     if (state == "home") {
       setIsOpen(false);
     } else if (state == "add") {
+      setMemberName("");
+      setMemberEmail("");
+      setMemberRole("");
+      setSnackbarOpen(false);
       setState("home");
     }
   };
@@ -253,6 +256,7 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
                 className={styles["cancelButton"]}
                 onClick={() => {
                   setState("home");
+                  setSnackbarOpen(false);
                 }}
               >
                 <Icon className={styles["cancelIcon"]} type={"cancelx"} />
