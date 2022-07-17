@@ -48,7 +48,7 @@
 }
 
 .manage {
-  width: 17%;
+  width: 10%;
 }
 
 .button {
@@ -63,12 +63,57 @@
   font-size: 14px;
   margin-right: 10px;
   text-transform: none;
-  padding-left: 17px;
-  padding-right: 17px;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-bottom: 3px;
 }
 
 .button:hover {
   background-color: var(--grey-light);
+}
+
+.deleteButton {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  color: var(--grey-dark);
+  border: 1px solid;
+  border-radius: 15px;
+  border-color: var(--grey-mid);
+  height: 26px;
+  font-size: 14px;
+  margin-right: 10px;
+  text-transform: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #FCE3E3;
+  padding-bottom: 3px;
+}
+
+.deleteButton:hover {
+  background-color: #FDCACA;
+}
+
+.confirmDeleteButton {
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  color: white;
+  border: 1px solid;
+  border-radius: 15px;
+  border-color: var(--grey-mid);
+  height: 26px;
+  font-size: 14px;
+  margin-right: 10px;
+  text-transform: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #FF6666;
+  padding-bottom: 3px;
+}
+
+.confirmDeleteButton:hover {
+  background-color: #E94444;
 }
 
 .viewButton {
@@ -84,6 +129,7 @@
   text-transform: none;
   padding-left: 17px;
   padding-right: 17px;
+  padding-bottom: 3px;
 }
 
 .viewButton:hover {
@@ -124,6 +170,17 @@
 .manageButtons {
   display: flex;
   flex-direction: row;
-  width: 250px;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.closeIcon {
+  border-radius: 50%;
+  background-color: var(--grey-light);
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.closeIcon:hover {
+  opacity: 0.6;
 }

@@ -1,10 +1,17 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import styles from "./UsersPage.module.css";
 import FamilyCards from "../../components/Users/FamilyCard/familyCard";
 import { Tabs, Tab, Modal } from "@mui/material";
-import { getAllUsers, getUser, updateUserPoints } from "../../firebase/firestore/user";
-import { getAllFamilies, updateFamilyPoints } from "../../firebase/firestore/family";
+import {
+  getAllUsers,
+  getUser,
+  updateUserPoints,
+} from "../../firebase/firestore/user";
+import {
+  getAllFamilies,
+  updateFamilyPoints,
+} from "../../firebase/firestore/family";
 import FullUsersList from "../../components/Users/FullUsersList/fullUsersList";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { GetServerSidePropsContext } from "next";
@@ -53,31 +60,34 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
       family.users.map((user) => {
         var points = 0;
         user.transactions.map((transaction) => {
-          if (transaction.expire_id != null && new Date(transaction.deleteDate) <= new Date()) {
-            deleteTransaction(transaction.transaction_id)
+          if (
+            transaction.expire_id != null &&
+            new Date(transaction.deleteDate) <= new Date()
+          ) {
+            deleteTransaction(transaction.transaction_id);
           } else if (new Date(transaction.date) <= new Date()) {
             points += transaction.point_gain;
           }
-        })
+        });
         if (user.role != "Child") {
           familypoints += points;
         }
         if (user.points != points) {
           updateUserPoints(user.user_id, points);
         }
-      })
+      });
       if (family.total_points != familypoints) {
         updateFamilyPoints(family.family_id.toString(), familypoints);
         family.total_points = familypoints;
       }
       newFamilies.push(family);
-    })
+    });
     return newFamilies;
-  }
+  };
 
   useEffect(() => {
     setFamilies(updatePoints());
-  }, [])
+  }, []);
 
   return (
     <Layout title="Users">

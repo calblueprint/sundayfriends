@@ -2,6 +2,7 @@ import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Transaction, User } from "../../types/schema";
 import { deleteTransaction, getTransactionByUser } from "./transaction";
+import { deleteUserFromFamily } from "./family";
 
 const db = firebaseApp.firestore();
 const userCollection = db.collection("users");
@@ -126,6 +127,8 @@ export const suspendUserToggle = async (userId: string): Promise<void> => {
  */
 export const deleteUser = async (userId: string): Promise<void> => {
   try {
+    const user = await getUser(userId);
+    await deleteUserFromFamily(user.family_id.toString(), userId);
     await userCollection.doc(userId).delete();
   } catch (e) {
     console.warn(e);
