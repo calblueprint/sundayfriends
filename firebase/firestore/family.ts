@@ -65,8 +65,10 @@ export const getAllFamilies = async (): Promise<Family[]> => {
 export const getFamilyById = async (FID: string): Promise<Family> => {
   try {
     const family = await familyCollection.doc(FID).get();
-    //console.log("backend", await parseFamily(family));
-    return await parseFamily(family);
+    if (family.data()) {
+      return await parseFamily(family);
+    }
+    return null;
   } catch (e) {
     console.warn(e);
     throw e;
@@ -95,8 +97,6 @@ export const addFamily = async (
   var data = doc.data();
   data.last_active = date;
   
-  // var newUser = parseUser(doc);
-  // (await newUser).suspended = true;
   familyCollection.doc(FID).set(data);
 }
 

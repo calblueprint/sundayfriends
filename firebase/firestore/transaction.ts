@@ -87,7 +87,7 @@ export const addTransaction = async (
       user_name: transaction.user_name,
       user_id: transaction.user_id,
     };
-    var exp = transactionsCollection.doc();
+    var exp = await transactionsCollection.doc();
     await exp.set(expiration);
     transaction.expire_id=exp.id;
     await transactionsCollection.doc().set(transaction);
