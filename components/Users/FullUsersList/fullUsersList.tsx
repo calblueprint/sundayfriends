@@ -42,18 +42,6 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
   const [filterRole, setFilterRole] = useState();
   const [newUsers, setNewUsers] = useState<User[]>();
 
-  useEffect(() => {
-    if (searchQ == "") {
-      return setUsers(allUsers.slice(startIndex, endIndex));
-    } else {
-      setUsers(
-        allUsers.filter((user) => {
-          return user.full_name.includes(searchQ);
-        })
-      );
-    }
-  }, [searchQ]);
-
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
   };
@@ -90,30 +78,39 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
             setEndIndex(endIndex + 15),
             setUsers(users.slice(startIndex, endIndex)),
           ];
-      //setUsers(users.slice(startIndex, endIndex));
     }
   };
 
   const applyFilters = async () => {
-    if (filterRole) {
-      const data = await getFilteredUsers(filterRole);
-      setNewUsers(data);
-      console.log(data);
+    if (filterRole != "All Roles") {
+      setUsers(
+        allUsers.filter((user) => {
+          return user.role == filterRole;
+        })
+      );
+      // const data = await getFilteredUsers(filterRole);
+      // setUsers(data);
+      // console.log(data);
+    } else {
+      setUsers(allUsers.slice(startIndex, endIndex));
     }
-    if (searchQ != "") {
-      const data = await getUsersSearch(searchQ);
-      console.log(data);
-    }
+    // if (searchQ != "") {
+    //   const data = await getUsersSearch(searchQ);
+    //   console.log(data);
+    // }
   };
 
-  const handleSearch = () => {
-    return;
-    setUsers(
-      allUsers.filter((user) => {
-        return user.full_name.includes(searchQ);
-      })
-    );
-  };
+  useEffect(() => {
+    if (searchQ != "") {
+      setUsers(
+        allUsers.filter((user) => {
+          return user.full_name.includes(searchQ);
+        })
+      );
+    } else {
+      setUsers(allUsers.slice(startIndex, endIndex));
+    }
+  }, [searchQ]);
 
   return (
     <div className={styles["pageContainer"]}>
@@ -150,7 +147,7 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
               setSearchQ(e.target.value);
             }}
             startAdornment={
-              <div onClick={handleSearch} className={styles["center"]}>
+              <div className={styles["center"]}>
                 <Icon className={styles["search-icon"]} type={"search"}></Icon>
               </div>
             }

@@ -29,9 +29,9 @@ const UsersPage: React.FunctionComponent<UsersPageProps> = ({
 }: UsersPageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(0);
-  const [users, setUsers] = useState(allUsers);
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(15);
+  const [users, setUsers] = useState(allUsers.slice(startIndex, endIndex));
 
   useEffect(() => {
     setUsers(allUsers.slice(startIndex, endIndex));
