@@ -46,6 +46,18 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
     setFilterRole(event.target.value);
   };
 
+  useEffect(() => {
+    if (searchQ != "") {
+      setUsers(
+        allUsers.filter((user) => {
+          return user.full_name.includes(searchQ);
+        })
+      );
+    } else {
+      setUsers(allUsers.slice(startIndex, endIndex));
+    }
+  }, [searchQ]);
+
   const handlePaginationIndex = (direction) => {
     if (direction == "back") {
       startIndex == 1
@@ -99,18 +111,6 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
     //   console.log(data);
     // }
   };
-
-  useEffect(() => {
-    if (searchQ != "") {
-      setUsers(
-        allUsers.filter((user) => {
-          return user.full_name.includes(searchQ);
-        })
-      );
-    } else {
-      setUsers(allUsers.slice(startIndex, endIndex));
-    }
-  }, [searchQ]);
 
   return (
     <div className={styles["pageContainer"]}>

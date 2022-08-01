@@ -6,7 +6,9 @@ import Icon from "../../../assets/Icon";
 import styles from "./newFamilyModal.module.css";
 import { User } from "../../../types/schema";
 import NewFamilyCard from "../NewFamilyCard/newFamilyCard";
-import { addFamily } from "../../../firebase/firestore/family";
+import { getCountAndIncrement } from "../../../firebase/firestore/family";
+import { addUserInvite } from "../../../firebase/firestore/userInvite";
+import { User_Invite } from "../../../types/schema";
 
 type NewFamilyModalProps = {
   isOpen: boolean;
@@ -45,16 +47,6 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
     setState("home");
   };
 
-  const createFamily = () => {
-    const family = {
-      family_name: "",
-      last_active: Date(),
-      total_points: 0,
-      user_ids: [],
-    };
-    closeModal();
-  };
-
   const addHead = () => {
     // form validation?
     setHead(true);
@@ -80,6 +72,28 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
     setCounter(counter + 1);
   };
 
+  const inviteFamily = () => {
+    closeModal();
+    getCountAndIncrement().then((count) => {
+      const headInvite = {
+        family_id: count,
+        name: headName,
+        email: headEmail,
+        status: "Head",
+      };
+      addUserInvite(headInvite as User_Invite);
+      members.map((member) => {
+        const memberInvite = {
+          family_id: count,
+          name: member.name,
+          email: member.email,
+          status: member.role,
+        };
+        addUserInvite(memberInvite as User_Invite);
+      });
+    });
+  };
+
   const renderContent = () => {
     switch (state) {
       case "home":
@@ -87,7 +101,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
           <div className={styles["contentContainer"]}>
             <div className={styles["title"]}>
               <Icon type={"family"} className={styles["familyIcon"]} />
-              <div className={styles["modalHeading"]}>NEW FAMILY</div>
+              <div className={styles["modalHeading"]}>INVITE FAMILY</div>
             </div>
             <div className={styles["modalContainer"]}>
               <div className={styles["containerLeft"]}>
@@ -97,13 +111,13 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                     <NewFamilyCard
                       name={headName}
                       email={headEmail}
-                      role={"head"}
+                      role={"Head"}
                       deleteFunction={() => setHead(false)}
                     ></NewFamilyCard>
                   ) : (
                     <button
                       className={styles["addHeadButton"]}
-                      onClick={() => setState("head")}
+                      onClick={() => setState("Head")}
                     >
                       <Icon className={styles["addHead"]} type={"addCircle"} />
                     </button>
@@ -143,17 +157,15 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
               </button>
               <button
                 className={styles["createFamilyButton"]}
-                onClick={() => {
-                  return;
-                }}
+                onClick={() => inviteFamily()}
               >
                 <Icon className={styles["checkmarkIcon"]} type={"checkmark"} />
-                Create Family
+                Invite Family
               </button>
             </div>
           </div>
         );
-      case "head":
+      case "Head":
         return (
           <div className={styles["contentContainer"]}>
             <div className={styles["blackHeading"]}>Assign a Head</div>
@@ -247,12 +259,12 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
                     onChange={(e) => setMemberRole(e.target.value)}
                   >
                     <FormControlLabel
-                      value="parent"
+                      value="Parent"
                       control={<Radio />}
                       label={<div>Parent</div>}
                     />
                     <FormControlLabel
-                      value="child"
+                      value="Child"
                       control={<Radio />}
                       label={<p className={styles["radio-label"]}>Child</p>}
                     />
@@ -300,10 +312,10 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
             >
               <Icon className={styles["chevron"]} type={"chevronRight"} />
             </button>
-            New Family
+            Invite Family
           </div>
         );
-      case "head":
+      case "Head":
         return (
           <div className={styles["breadcrumb"]}>
             <button
@@ -352,7 +364,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
         className={
           state == "home"
             ? styles["newFamModal"]
-            : state == "head"
+            : state == "Head"
             ? styles["newHeadModal"]
             : styles["newMemberModal"]
         }

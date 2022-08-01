@@ -47,6 +47,11 @@ const ProfileSettings: React.FunctionComponent = () => {
         open={open}
         onClose={handleClose}
       >
+        {router.pathname != "/profile" && (
+          <MenuItem onClick={() => router.push("/profile")} disableRipple>
+            Profile{" "}
+          </MenuItem>
+        )}
         <MenuItem onClick={handleSignOut} disableRipple>
           Logout{" "}
         </MenuItem>
