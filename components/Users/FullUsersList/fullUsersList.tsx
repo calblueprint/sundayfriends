@@ -40,15 +40,28 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
 }: FullUsersListProps) => {
   const [searchQ, setSearchQ] = useState("");
   const [filterRole, setFilterRole] = useState();
+  const [filterStatus, setFilterStatus] = useState();
   const [newUsers, setNewUsers] = useState<User[]>();
-
-  // useEffect(() => {
-  //   setUsers(allUsers.slice(startIndex, endIndex));
-  // }, [startIndex]);
 
   const handleChangeRole = (event) => {
     setFilterRole(event.target.value);
   };
+
+  const handleChangeStatus = (event) => {
+    setFilterStatus(event.target.value);
+  };
+
+  useEffect(() => {
+    if (searchQ != "") {
+      setUsers(
+        allUsers.filter((user) => {
+          return user.full_name.includes(searchQ);
+        })
+      );
+    } else {
+      setUsers(allUsers.slice(startIndex, endIndex));
+    }
+  }, [searchQ]);
 
   const handlePaginationIndex = (direction) => {
     if (direction == "back") {
@@ -82,28 +95,50 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
             setEndIndex(endIndex + 15),
             setUsers(users.slice(startIndex, endIndex)),
           ];
-      //setUsers(users.slice(startIndex, endIndex));
     }
   };
 
+  //PENDING/ACTIVE DOES NOT WORK YET BECAUSE THERE IS NO FIELD IN FIREBASE; ONLY SUSPENDED FOR NOW
   const applyFilters = async () => {
-    if (filterRole) {
-      const data = await getFilteredUsers(filterRole);
-      setNewUsers(data);
-      console.log(data);
+    if (filterStatus && filterStatus != "All Statuses") {
+      if (filterRole && filterRole != "All Roles") {
+        return setUsers(
+          allUsers.filter((user) => {
+            return user.role == filterRole && filterStatus == "Suspended"
+              ? user.suspended
+              : !user.suspended;
+          })
+        );
+      }
+      return filterStatus == "Suspended"
+        ? setUsers(
+            allUsers.filter((user) => {
+              return user.suspended == true;
+            })
+          )
+        : setUsers(
+            allUsers.filter((user) => {
+              return user.suspended == false;
+            })
+          );
     }
-    if (searchQ != "") {
-      const data = await getUsersSearch(searchQ);
-      console.log(data);
+    if (filterRole && filterRole != "All Roles") {
+      return setUsers(
+        allUsers.filter((user) => {
+          return user.role == filterRole;
+        })
+      );
     }
+    return setUsers(allUsers.slice(startIndex, endIndex));
   };
+
   return (
     <div className={styles["pageContainer"]}>
       <div className={styles["filters"]}>
         <div>
-          <FormControl className={styles["filter-select"]} size="small">
+          <FormControl className={styles["filter-role"]} size="small">
             <InputLabel id="All Roles" className={styles["filter-label"]}>
-              All Roles
+              Filter by Role
             </InputLabel>
             <Select
               id="All Roles"
@@ -119,30 +154,59 @@ const FullUsersList: React.FC<FullUsersListProps> = ({
               <MenuItem value={"Child"}>Child</MenuItem>
             </Select>
           </FormControl>
-          <Button className={styles["applyButton"]} onClick={applyFilters}>
+          <FormControl className={styles["filter-status"]} size="small">
+            <InputLabel id="All Statuses" className={styles["filter-label"]}>
+              Filter by Status
+            </InputLabel>
+            <Select
+              id="All Statuses"
+              variant="outlined"
+              className={styles["select"]}
+              label="All Statuses"
+              value={filterStatus}
+              onChange={handleChangeStatus}
+            >
+              <MenuItem value={"All Statuses"}>All Statuses</MenuItem>
+              <MenuItem value={"Active"}>Active</MenuItem>
+              <MenuItem value={"Pending"}>Pending</MenuItem>
+              <MenuItem value={"Suspended"}>Suspended</MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            className={styles["applyButton"]}
+            onClick={filterRole || filterStatus ? applyFilters : null}
+          >
             Apply
           </Button>
         </div>
         <div className={styles["searchNav"]}>
           <Input
             disableUnderline={true}
-            placeholder="Search for a user"
+            placeholder="Search for a family or user"
             className={styles["search-bar"]}
             onChange={(e) => {
               setSearchQ(e.target.value);
             }}
-            endAdornment={
-              <Icon className={styles["search-icon"]} type={"search"}></Icon>
+            startAdornment={
+              <div className={styles["center"]}>
+                <Icon className={styles["search-icon"]} type={"search"}></Icon>
+              </div>
             }
           />
           <div className={styles["pageNav"]}>
             {startIndex + 1}-{endIndex} of {allUsers.length}
-          </div>
-          <div onClick={() => handlePaginationIndex("back")}>
-            <Icon className={styles["chevron"]} type={"chevronLeft"} />
-          </div>
-          <div onClick={() => handlePaginationIndex("forward")}>
-            <Icon className={styles["chevron"]} type={"chevronRight"} />
+            <div
+              onClick={() => handlePaginationIndex("back")}
+              className={styles["center"]}
+            >
+              <Icon className={styles["chevronLeft"]} type={"chevronLeft"} />
+            </div>
+            <div
+              onClick={() => handlePaginationIndex("forward")}
+              className={styles["center"]}
+            >
+              <Icon className={styles["chevronRight"]} type={"chevronRight"} />
+            </div>
           </div>
         </div>
       </div>

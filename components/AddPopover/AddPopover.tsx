@@ -74,10 +74,8 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
       //handle post request
       const activeDate = new Date();
       const expireDate = await getExpirations().then((dates) => {
-        return (
-          dates[activeDate.getMonth()]
-        )
-      })
+        return dates[activeDate.getMonth()];
+      });
       const deleteDate = new Date(expireDate);
       deleteDate.setMonth(expireDate.getMonth() + 1);
       const adding = {
@@ -87,14 +85,12 @@ export const AddPopover: React.FunctionComponent<AddPopoverProps> = ({
         deleteDate: deleteDate,
         description: addMessage,
         family_id: addUser.family_id,
-        point_gain:
-          parseInt(addPoints),
+        point_gain: parseInt(addPoints),
         user_name: addUser.full_name,
         user_id: addUser.user_id,
       };
       await addTransaction(adding as Transaction, expireDate, deleteDate);
       updateLastActive(addUser.family_id.toString(), activeDate);
-      
 
       let trans = await getAllTransactions();
       setTransactions(trans);

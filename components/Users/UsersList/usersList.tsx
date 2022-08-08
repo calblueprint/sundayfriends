@@ -11,7 +11,7 @@ import {
 import styles from "./UsersList.module.css";
 import { Family, User } from "../../../types/schema";
 import UserModal from "../UserModal/userModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getAllUsers,
   suspendUserToggle,
