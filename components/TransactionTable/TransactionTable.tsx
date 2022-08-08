@@ -160,8 +160,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
                 type={"chevronLeft"}
               ></Icon>
             </div>
-            {
-              nextWeekAvailable() &&
+            {nextWeekAvailable() && (
               <div className={styles["chevron-wrapper"]} onClick={nextWeek}>
                 <Icon
                   className={styles["chevron-right"]}
