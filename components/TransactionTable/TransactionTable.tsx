@@ -5,6 +5,7 @@ import styles from "../TransactionTable/TransactionTable.module.css";
 import { Input } from "@mui/material";
 import { Transaction } from "../../types/schema";
 import { TransactionList } from "../TransactionList/TransactionList";
+import { styled } from "@mui/system";
 import {
   getAllTransactions,
   deleteTransaction,
@@ -15,6 +16,17 @@ type TransactionTableProps = {
   setTransactions: Function;
   userPath?: boolean;
 };
+
+const TransactionSearchBar = styled(Input)(() => ({
+  border: "2px solid #f0f0f0",
+  borderRadius: "19.5px",
+  width: "30%",
+  minWidth: "175px",
+  height: "36px",
+  fontFamily: "Avenir",
+  fontSize: "12px",
+  paddingLeft: "1%",
+}));
 
 export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
   ({ transactions, setTransactions, userPath }) => {
@@ -170,10 +182,9 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
               </div>
             }
           </div>
-          <Input
-            disableUnderline={true}
+          <TransactionSearchBar
+            disableUnderline
             placeholder="Search for a transaction"
-            className={styles["search-bar"]}
             onChange={filterSearch}
             endAdornment={
               <Icon className={styles["search-icon"]} type={"search"}></Icon>

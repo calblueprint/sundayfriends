@@ -27,6 +27,7 @@ import { useRouter } from "next/router";
 import firebaseAdmin from "../../firebase/firebaseAdmin";
 import { getAdmin } from "../../firebase/firestore/admin";
 import nookies from "nookies";
+import { styled } from "@mui/system";
 import { UploadPopover } from "../../components/UploadPopover/UploadPopover";
 import { TransactionTable } from "../../components/TransactionTable/TransactionTable";
 
@@ -35,6 +36,42 @@ type TransactionPageProps = {
   transactions: Transaction[];
   users: User[];
 };
+
+const TransactionTab = styled(Tab)(() => ({
+  minWidth: "90px",
+  width: "12%",
+  marginLeft: "7px",
+  marginRight: "7px",
+  backgroundColor: "#526dc2",
+  borderRadius: "15px 15px 0px 0px",
+  color: "#e6ecfe",
+  textTransform: "none",
+  fontSize: "14px",
+  fontFamily: "Avenir",
+  boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+  marginTop: "10px",
+  fontWeight: "bold",
+}));
+
+const SelectedTab = styled(Tab)(() => ({
+  fontFamily: "Avenir",
+  backgroundColor: "white",
+  borderRadius: "15px 15px 0px 0px",
+  minWidth: "110px",
+  width: "12%",
+  marginLeft: "7px",
+  marginRight: "7px",
+  color: "#253c85",
+  textDecorationLine: "underline",
+  textDecorationThickness: "2px",
+  textDecorationColor: "#253c85",
+  textUnderlineOffset: "6px",
+  textTransform: "none",
+  fontSize: "14px",
+  fontWeight: "bold",
+  boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.15)",
+  marginTop: "10px",
+}));
 
 const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
   currentAdmin,
@@ -102,27 +139,34 @@ const TransactionsPage: React.FunctionComponent<TransactionPageProps> = ({
     };
 
     return (
-      <Box className={styles["transaction-container"]}>
+      <Box
+        sx={{
+          width: "100%",
+          borderRadius: "15px 15px 30px 30px",
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
           TabIndicatorProps={{ style: { display: "none" } }}
           textColor={"inherit"}
           aria-label="basic tabs example"
-          className={styles["tabs"]}
         >
-          <Tab
-            label="History"
-            className={value == 0 ? styles["sel-tab"] : styles["tab"]}
-          />
-          <Tab
-            label="Redemptions"
-            className={value == 1 ? styles["sel-tab"] : styles["tab"]}
-          />
-          <Tab
-            label="Earnings"
-            className={value == 2 ? styles["sel-tab"] : styles["tab"]}
-          />
+          {value == 0 ? (
+            <SelectedTab label="History" />
+          ) : (
+            <TransactionTab label="History" />
+          )}
+          {value == 1 ? (
+            <SelectedTab label="Redemptions" />
+          ) : (
+            <TransactionTab label="Redemptions" />
+          )}
+          {value == 2 ? (
+            <SelectedTab label="Earnings" />
+          ) : (
+            <TransactionTab label="Earnings" />
+          )}
         </Tabs>
         <TabPanel value={value} index={0}>
           {!isLoading && (

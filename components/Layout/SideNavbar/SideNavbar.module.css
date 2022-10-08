@@ -17,7 +17,8 @@
 }
 
 .SFlogo {
-  transform: scale(2);
+  height: 44px;
+  width: 44px;
 }
 
 .icon {
@@ -29,8 +30,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
   border-radius: 50%;
+  background-color: white;
   margin: 26px;
   width: 70px;
   height: 70px;
