@@ -10,7 +10,7 @@ import {
 
 type TransactionItemProps = {
   id: string;
-  date: Date | firestore.Timestamp;
+  date: string | Date | firestore.Timestamp;
   userName?: string;
   fid?: string;
   adminName: string;

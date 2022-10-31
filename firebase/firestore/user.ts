@@ -105,11 +105,10 @@ export const suspendUserToggle = async (userId: string): Promise<void> => {
   const doc = await userCollection.doc(trimedId).get();
   var data = doc.data();
   data.suspended = !data.suspended;
-  
   // var newUser = parseUser(doc);
   // (await newUser).suspended = true;
   userCollection.doc(trimedId).set(data);
-} 
+};
 
 /**
  * Update last_active
@@ -119,7 +118,6 @@ export const suspendUserToggle = async (userId: string): Promise<void> => {
 //   const doc = await userCollection.doc(trimedId).get();
 //   var data = doc.data();
 //   data.last_active = date;
-  
 //   // var newUser = parseUser(doc);
 //   // (await newUser).suspended = true;
 //   userCollection.doc(trimedId).set(data);

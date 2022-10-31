@@ -1,8 +1,7 @@
 import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Family, User, Family_Counter } from "../../types/schema";
-import { getUser, updateUserPoints } from "./user";
-import { deleteTransaction } from "./transaction";
+import { getUser } from "./user";
 
 const db = firebaseApp.firestore();
 const familyCollection = db.collection("families");
@@ -22,17 +21,17 @@ export const getFamily = async (familyId: string): Promise<Family> => {
 
 export const getCountAndIncrement = async (): Promise<number> => {
   try {
-    var doc = await familyCollection.doc("count").get()
+    var doc = await familyCollection.doc("count").get();
     const family_counter = doc.data() as Family_Counter;
     family_counter.counter += 1;
 
-    familyCollection.doc("count").set(family_counter)
-    return family_counter.counter
+    familyCollection.doc("count").set(family_counter);
+    return family_counter.counter;
   } catch (e) {
     console.warn(e);
     throw e;
   }
-}
+};
 
 /**
  * Returns all the families from firestore
@@ -73,16 +72,14 @@ export const getFamilyById = async (FID: string): Promise<Family> => {
 /**
  * Add a family
  */
-export const addFamily = async (
-  family: Family
-): Promise<void> => {
+export const addFamily = async (family: Family): Promise<void> => {
   try {
     await familyCollection.doc().set(family);
   } catch (e) {
     console.warn(e);
     throw e;
   }
-}
+};
 
 export const deleteFamily = async (familyId: string): Promise<void> => {
   try {

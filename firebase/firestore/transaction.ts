@@ -72,7 +72,7 @@ export const getTransactionByDate = async (
 export const addTransaction = async (
   transaction: Transaction,
   expireDate: Date,
-  deleteDate: Date,
+  deleteDate: Date
 ): Promise<void> => {
   try {
     // get expiration date

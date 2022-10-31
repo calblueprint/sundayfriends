@@ -5,10 +5,6 @@ import styles from "../TransactionTable/TransactionTable.module.css";
 import { Input } from "@mui/material";
 import { Transaction } from "../../types/schema";
 import { TransactionList } from "../TransactionList/TransactionList";
-import {
-  getAllTransactions,
-  deleteTransaction,
-} from "../../firebase/firestore/transaction";
 
 type TransactionTableProps = {
   transactions: Transaction[];
