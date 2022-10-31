@@ -32,7 +32,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
     const [nextSunday, setNextSunday] = useState(getNextSunday(new Date()));
     const [weekTransactions, setWeekTransactions] = useState(
       transactions.filter((item) => {
-        let date = new Date(item.date).getTime();
+        let date = new Date(item.date.toString()).getTime();
         return date >= prevSunday.getTime() && date <= nextSunday.getTime();
       })
     );
@@ -42,7 +42,7 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
     useEffect(() => {
       setWeekTransactions(
         transactions.filter((item) => {
-          let date = new Date(item.date).getTime();
+          let date = new Date(item.date.toString()).getTime();
           return date >= prevSunday.getTime() && date <= nextSunday.getTime();
         })
       );
@@ -60,11 +60,11 @@ export const TransactionTable: React.FunctionComponent<TransactionTableProps> =
       var week =
         transactions != null
           ? transactions.filter((item) => {
-              let date = new Date(item.date).getTime();
+              let date = new Date(item.date.toString()).getTime();
               return date >= prev.getTime() && date <= next.getTime();
             })
           : transactions.filter((item) => {
-              let date = new Date(item.date).getTime();
+              let date = new Date(item.date.toString()).getTime();
               return date >= prev.getTime() && date <= next.getTime();
             });
       setWeekTransactions(week);

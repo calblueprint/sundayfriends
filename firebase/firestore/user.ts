@@ -156,11 +156,11 @@ const calculateUserPoints = async (
     transactions.map(async (transaction) => {
       if (
         transaction.expire_id != null &&
-        new Date(transaction.deleteDate) <= new Date()
+        new Date(transaction.deleteDate.toString()) <= new Date()
       ) {
         await deleteTransaction(transaction.transaction_id);
         await deleteTransaction(transaction.expire_id);
-      } else if (new Date(transaction.date) <= new Date()) {
+      } else if (new Date(transaction.date.toString()) <= new Date()) {
         points += transaction.point_gain;
       }
     })
