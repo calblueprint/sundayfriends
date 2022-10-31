@@ -159,7 +159,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                   : user?.full_name.split(" ")[1]}{" "}
                 Family
               </h4>
-              <h4>*</h4>
+              <h4>|</h4>
               <h4>FID: {currUser ? currUser.family_id : user?.family_id}</h4>
             </div>
           </div>
@@ -222,13 +222,13 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                       type={"nameicon"}
                     />
                     <Icon className={styles["iconSpacing"]} type={"email"} />
-                    <Icon className={styles["iconSpacing"]} type={"phone"} />
+                    {/* <Icon className={styles["iconSpacing"]} type={"phone"} /> */}
                     <Icon className={styles["iconSpacing"]} type={"password"} />
                   </div>
                   <div className={styles["aboutInfo"]}>
                     <div className={styles["subTitle"]}>Role</div>
                     <div className={styles["subTitle"]}>Email</div>
-                    <div className={styles["subTitle"]}>Phone</div>
+                    {/* <div className={styles["subTitle"]}>Phone</div> */}
                     <div className={styles["subTitle"]}>Password</div>
                   </div>
                   <div className={styles["aboutInfoEditing"]}>
@@ -258,7 +258,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                             type={"edit"}
                           />
                         </div>
-                        <div className={styles["editSection"]}>
+                        {/* <div className={styles["editSection"]}>
                           <input
                             className={styles["editTitle"]}
                             defaultValue={
@@ -272,7 +272,7 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                             className={styles["inLineEditIcon"]}
                             type={"edit"}
                           />
-                        </div>
+                        </div> */}
                         <div className={styles["infoSpacing"]}>
                           <input
                             className={styles["password"]}
@@ -298,11 +298,11 @@ const UserModal: React.FunctionComponent<UserModalProps> = ({
                         <div className={styles["infoSpacing"]}>
                           {currUser ? currUser.email : user?.email}
                         </div>
-                        <div className={styles["infoSpacing"]}>
+                        {/* <div className={styles["infoSpacing"]}>
                           {currUser
                             ? currUser.phone_number
                             : user?.phone_number}
-                        </div>
+                        </div> */}
                         <div className={styles["infoSpacing"]}>
                           <input
                             className={styles["password"]}

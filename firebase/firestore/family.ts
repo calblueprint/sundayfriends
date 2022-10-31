@@ -41,16 +41,11 @@ export const getAllFamilies = async (): Promise<Family[]> => {
   try {
     const promises: Promise<Family>[] = [];
     const allFamilies = await familyCollection
-      .where('__name__', '!=', 'count')
+      .where("__name__", "!=", "count")
       .get()
       .then((doc) => {
         doc.forEach((item) => promises.push(parseFamily(item)));
       });
-    
-    // const  = await allFamilies.docs.map((doc) => {
-    //     parseFamily(doc)
-    //   }
-    // );
     const families = await Promise.all(promises);
     return families;
   } catch (e) {
@@ -65,8 +60,10 @@ export const getAllFamilies = async (): Promise<Family[]> => {
 export const getFamilyById = async (FID: string): Promise<Family> => {
   try {
     const family = await familyCollection.doc(FID).get();
-    //console.log("backend", await parseFamily(family));
-    return await parseFamily(family);
+    if (family.data()) {
+      return await parseFamily(family);
+    }
+    return null;
   } catch (e) {
     console.warn(e);
     throw e;
@@ -87,49 +84,84 @@ export const addFamily = async (
   }
 }
 
+export const deleteFamily = async (familyId: string): Promise<void> => {
+  try {
+    await familyCollection.doc(familyId).delete();
+  } catch (e) {
+    console.warn(e);
+    throw e;
+  }
+};
+
 /**
  * Update last_active
  */
- export const updateLastActive = async (FID: string, date: Date): Promise<void> => {
+export const updateLastActive = async (
+  FID: string,
+  date: Date
+): Promise<void> => {
   const doc = await familyCollection.doc(FID).get();
   var data = doc.data();
   data.last_active = date;
-  
-  // var newUser = parseUser(doc);
-  // (await newUser).suspended = true;
   familyCollection.doc(FID).set(data);
-}
+};
 
 /**
  * Update the family's total points value.
  */
-export const updateFamilyPoints = async (FID: string, points: number): Promise<void> => {
+export const updateFamilyPoints = async (
+  FID: string,
+  points: number
+): Promise<void> => {
   const doc = await familyCollection.doc(FID).get();
   var data = doc.data();
   data.total_points = points;
-  
   familyCollection.doc(FID).set(data);
-}
+};
 
-const calculateFamilyPoints = async (users: User[]): Promise<number> => {
+export const deleteUserFromFamily = async (
+  FID: string,
+  user_id: string
+): Promise<void> => {
+  const doc = await familyCollection.doc(FID).get();
+  var data = doc.data();
+  if (data.user_ids.length === 1) {
+    deleteFamily(FID);
+  } else {
+    const index = data.user_ids.indexOf(user_id);
+    data.user_ids.splice(index, 1);
+    familyCollection.doc(FID).set(data);
+  }
+};
+
+const calculateFamilyPoints = (users: User[]): number => {
   var familypoints = 0;
   users.map((user) => {
     if (user.role != "Child") {
       familypoints += user.points;
     }
-  })
+  });
   return familypoints;
-}
+};
 
 const parseFamily = async (doc) => {
   const family_id = doc.id;
   const data = doc.data();
-  const last_active = new Date(data.last_active.toMillis()).toLocaleDateString();
+  const last_active = new Date(
+    data.last_active.toMillis()
+  ).toLocaleDateString();
   const user_ids = data.user_ids;
   const promises: Promise<User>[] = user_ids.map((user_id) => getUser(user_id));
   const users = await Promise.all(promises);
-  const total_points = data.total_points;
+  const total_points = calculateFamilyPoints(users);
   const family_name = data.family_name;
-  const family = { family_id, family_name, last_active, total_points, user_ids, users };
+  const family = {
+    family_id,
+    family_name,
+    last_active,
+    total_points,
+    user_ids,
+    users,
+  };
   return family as Family;
 };

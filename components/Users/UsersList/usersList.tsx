@@ -13,6 +13,7 @@ import { Family, User } from "../../../types/schema";
 import UserModal from "../UserModal/userModal";
 import { useState } from "react";
 import {
+  deleteUser,
   getAllUsers,
   suspendUserToggle,
 } from "../../../firebase/firestore/user";
@@ -33,6 +34,7 @@ type UsersListProps = {
 
 type UsersListItemProps = {
   user: User;
+  removeUser: Function;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setUser: React.Dispatch<React.SetStateAction<User>>;
   isFamilyPath: boolean;
@@ -41,11 +43,14 @@ type UsersListItemProps = {
 
 const UsersListItem: React.FC<UsersListItemProps> = ({
   user,
+  removeUser,
   setIsOpen,
   setUser,
   isFamilyPath,
   suspend,
 }: UsersListItemProps) => {
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+
   return (
     <TableRow key={user.email} className={styles["tableRow"]}>
       <TableCell className={`${styles["tableRow"]} ${styles["name"]}`}>
@@ -86,7 +91,34 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
           <Button className={styles["button"]} onClick={() => suspend(user)}>
             {user.suspended ? "Unsuspend" : "Suspend"}
           </Button>
-          <Button className={styles["button"]}>Delete</Button>
+          <Button
+            className={
+              confirmingDelete ? styles["button"] : styles["deleteButton"]
+            }
+            onClick={
+              confirmingDelete
+                ? () => {
+                    setConfirmingDelete(false);
+                  }
+                : () => {
+                    setConfirmingDelete(true);
+                  }
+            }
+          >
+            {confirmingDelete ? "Cancel" : "Delete"}
+          </Button>
+          {confirmingDelete && (
+            <Button
+              className={styles["confirmDeleteButton"]}
+              onClick={() => {
+                deleteUser(user.user_id);
+                setConfirmingDelete(false);
+                removeUser();
+              }}
+            >
+              Confirm?
+            </Button>
+          )}
         </div>
       </TableCell>
     </TableRow>
@@ -118,11 +150,19 @@ const UsersList: React.FC<UsersListProps> = ({
     refresh();
   };
 
+  const deleteUser = (index) => {
+    let newUsers = [...users];
+    newUsers.slice(index, 1);
+    setUsers(newUsers);
+    refresh();
+  };
+
   const renderUsersList = () => {
-    return users.map((user) => (
+    return users.map((user, index) => (
       <UsersListItem
         key={user.email}
         user={user}
+        removeUser={() => deleteUser(index)}
         setIsOpen={setIsOpen}
         setUser={setUser}
         isFamilyPath={isFamilyPath}

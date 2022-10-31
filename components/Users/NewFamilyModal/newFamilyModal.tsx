@@ -31,15 +31,6 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
   const [memberEmail, setMemberEmail] = useState("");
   const [memberRole, setMemberRole] = useState("");
 
-  useEffect(() => {
-    console.log(members);
-  }, []);
-
-  useEffect(() => {
-    console.log(members);
-    console.log(counter);
-  }, [counter]);
-
   const closeModal = () => {
     setIsOpen(false);
     setHead(false);
@@ -295,64 +286,82 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
     }
   };
 
-  const renderBreadcrumbs = () => {
+  const renderHeader = () => {
     switch (state) {
       case "home":
         return (
-          <div className={styles["breadcrumb"]}>
+          <div className={styles["modalHeadContainer"]}>
+            <div className={styles["breadcrumb"]}>
+              <button className={styles["chevronButtonNoClick"]}>
+                <Icon className={styles["chevron"]} type={"chevronLeft"} />
+              </button>
+              <button className={styles["chevronButtonNoClick"]}>
+                <Icon className={styles["chevron"]} type={"chevronRight"} />
+              </button>
+              Invite Family
+            </div>
             <button
-              className={styles["chevronButton"]}
-              onClick={() => setIsOpen(false)}
+              className={styles["closeButton"]}
+              onClick={() => closeModal()}
             >
-              <Icon className={styles["chevron"]} type={"chevronLeft"} />
+              <Icon className={styles["closeIcon"]} type={"popoverclose"} />
             </button>
-            <button
-              className={styles["chevronButton"]}
-              onClick={() => setIsOpen(false)}
-            >
-              <Icon className={styles["chevron"]} type={"chevronRight"} />
-            </button>
-            Invite Family
           </div>
         );
       case "Head":
         return (
-          <div className={styles["breadcrumb"]}>
+          <div className={styles["modalHeadContainer"]}>
+            <div className={styles["breadcrumb"]}>
+              <button
+                className={styles["chevronButton"]}
+                onClick={() => setState("home")}
+              >
+                <Icon className={styles["chevron"]} type={"chevronLeft"} />
+              </button>
+              {/* <button
+                className={styles["chevronButton"]}
+                onClick={() => setIsOpen(false)}
+              >
+                <Icon className={styles["chevron"]} type={"chevronRight"} />
+              </button> */}
+              <div>New Family</div>
+              <div className={styles["breadcrumbDivider"]}>/</div>
+              <div className={styles["activeBreadcrumb"]}>Assign a Head</div>
+            </div>
             <button
-              className={styles["chevronButton"]}
+              className={styles["closeButton"]}
               onClick={() => setState("home")}
             >
-              <Icon className={styles["chevron"]} type={"chevronLeft"} />
+              <Icon className={styles["closeIcon"]} type={"popoverclose"} />
             </button>
-            {/* <button
-              className={styles["chevronButton"]}
-              onClick={() => setIsOpen(false)}
-            >
-              <Icon className={styles["chevron"]} type={"chevronRight"} />
-            </button> */}
-            <div>New Family</div>
-            <div className={styles["breadcrumbDivider"]}>/</div>
-            <div className={styles["activeBreadcrumb"]}>Assign a Head</div>
           </div>
         );
       case "member":
         return (
-          <div className={styles["breadcrumb"]}>
+          <div className={styles["modalHeadContainer"]}>
+            <div className={styles["breadcrumb"]}>
+              <button
+                className={styles["chevronButton"]}
+                onClick={() => setState("home")}
+              >
+                <Icon className={styles["chevron"]} type={"chevronLeft"} />
+              </button>
+              {/* <button
+                className={styles["chevronButton"]}
+                onClick={() => setIsOpen(false)}
+              >
+                <Icon className={styles["chevron"]} type={"chevronRight"} />
+              </button> */}
+              <div>New Family</div>
+              <div className={styles["breadcrumbDivider"]}>/</div>
+              <div className={styles["activeBreadcrumb"]}>Add Members</div>
+            </div>
             <button
-              className={styles["chevronButton"]}
+              className={styles["closeButton"]}
               onClick={() => setState("home")}
             >
-              <Icon className={styles["chevron"]} type={"chevronLeft"} />
+              <Icon className={styles["closeIcon"]} type={"popoverclose"} />
             </button>
-            {/* <button
-              className={styles["chevronButton"]}
-              onClick={() => setIsOpen(false)}
-            >
-              <Icon className={styles["chevron"]} type={"chevronRight"} />
-            </button> */}
-            <div>New Family</div>
-            <div className={styles["breadcrumbDivider"]}>/</div>
-            <div className={styles["activeBreadcrumb"]}>Add Members</div>
           </div>
         );
     }
@@ -369,15 +378,7 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
             : styles["newMemberModal"]
         }
       >
-        <div className={styles["modalHeadContanier"]}>
-          {renderBreadcrumbs()}
-          <button
-            className={styles["closeButton"]}
-            onClick={() => closeModal()}
-          >
-            <Icon className={styles["closeIcon"]} type={"popoverclose"} />
-          </button>
-        </div>
+        {renderHeader()}
         {renderContent()}
       </div>
     </Modal>

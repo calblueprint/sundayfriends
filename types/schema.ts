@@ -23,7 +23,6 @@ export type Family = {
 };
 
 export type Admin = {
-  admin_id: string;
   created_at: Date | Timestamp | string;
   last_active: Date | Timestamp | string;
   email: string;
@@ -33,6 +32,7 @@ export type Admin = {
 };
 
 export type AdminInvite = {
+  adminInviteId: string;
   email: string;
   full_name: string;
   valid: boolean;

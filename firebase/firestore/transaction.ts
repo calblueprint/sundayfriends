@@ -87,9 +87,9 @@ export const addTransaction = async (
       user_name: transaction.user_name,
       user_id: transaction.user_id,
     };
-    var exp = transactionsCollection.doc();
+    var exp = await transactionsCollection.doc();
     await exp.set(expiration);
-    transaction.expire_id=exp.id;
+    transaction.expire_id = exp.id;
     await transactionsCollection.doc().set(transaction);
   } catch (e) {
     console.warn(e);
@@ -125,6 +125,7 @@ export const getTransactionByUser = async (
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const getTransactions = await transactionsCollection
       .where("user_id", "==", user_id)
+      .where("point_gain", ">", 0)
       .get()
       .then((doc) => {
         doc.forEach((item) => promises.push(parseTransaction(item)));

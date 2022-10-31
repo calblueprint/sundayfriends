@@ -48,6 +48,7 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
 
   const [open, setOpen] = React.useState(false);
   const [sent, setSent] = React.useState(false);
+  const [searchText, setSearchText] = React.useState("");
 
   const handleClickOpen = () => {
     setSent(false);
@@ -55,21 +56,44 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
   };
 
   const renderAdminList = () => {
-    return (
-      <List className={styles["list"]}>
-        {admins.map((admin, index) => {
-          return (
-            <AdminItem
-              key={index}
-              name={admin.name}
-              email={admin.email}
-              role={admin.role}
-              phone={admin.phone}
-            />
-          );
-        })}
-      </List>
-    );
+    if (searchText == "") {
+      return (
+        <List className={styles["list"]}>
+          {admins.map((admin, index) => {
+            return (
+              <AdminItem
+                key={index}
+                name={admin.name}
+                email={admin.email}
+                role={admin.role}
+                phone={admin.phone}
+              />
+            );
+          })}
+        </List>
+      );
+    } else {
+      return (
+        <List className={styles["list"]}>
+          {admins.map((admin, index) => {
+            if (
+              admin.name.toLowerCase().includes(searchText.toLowerCase()) ||
+              admin.email.toLowerCase().includes(searchText.toLowerCase()) ||
+              admin.role.toLowerCase().includes(searchText.toLowerCase())
+            )
+              return (
+                <AdminItem
+                  key={index}
+                  name={admin.name}
+                  email={admin.email}
+                  role={admin.role}
+                  phone={admin.phone}
+                />
+              );
+          })}
+        </List>
+      );
+    }
   };
 
   const renderFilters = () => {
@@ -82,6 +106,7 @@ const AdminPage: React.FunctionComponent<AdminPageProps> = ({
           endAdornment={
             <Icon className={styles["search-icon"]} type={"search"}></Icon>
           }
+          onChange={(e) => setSearchText(e.target.value)}
         />
         <p className={styles["label"]}>
           <b>{admins.length}</b> Total Admin

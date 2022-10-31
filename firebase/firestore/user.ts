@@ -2,6 +2,7 @@ import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Transaction, User } from "../../types/schema";
 import { deleteTransaction, getTransactionByUser } from "./transaction";
+import { deleteUserFromFamily } from "./family";
 
 const db = firebaseApp.firestore();
 const userCollection = db.collection("users");
@@ -25,7 +26,10 @@ export const getUser = async (userId: string): Promise<User> => {
  */
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const allUsers = await userCollection.orderBy("family_id").orderBy("full_name").get();
+    const allUsers = await userCollection
+      .orderBy("family_id")
+      .orderBy("full_name")
+      .get();
     const promises: Promise<User>[] = allUsers.docs.map((doc) =>
       parseUser(doc)
     );
@@ -126,6 +130,8 @@ export const suspendUserToggle = async (userId: string): Promise<void> => {
  */
 export const deleteUser = async (userId: string): Promise<void> => {
   try {
+    const user = await getUser(userId);
+    await deleteUserFromFamily(user.family_id.toString(), userId);
     await userCollection.doc(userId).delete();
   } catch (e) {
     console.warn(e);
@@ -133,34 +139,42 @@ export const deleteUser = async (userId: string): Promise<void> => {
   }
 };
 
-export const updateUserPoints = async (userId: string, points: number): Promise<void> => {
+export const updateUserPoints = async (
+  userId: string,
+  points: number
+): Promise<void> => {
   const trimedId = userId.toString().replace(/\s/g, "");
   const doc = await userCollection.doc(trimedId).get();
   var data = doc.data();
   data.points = points;
-  
   userCollection.doc(trimedId).set(data);
-}
+};
 
-const calculateUserPoints = async (transactions: Transaction[]): Promise<number> => {
+const calculateUserPoints = async (
+  transactions: Transaction[]
+): Promise<number> => {
   var points = 0;
-  transactions.map((transaction) => {
-    if (transaction.expire_id != null && new Date(transaction.deleteDate) <= new Date()) {
-      deleteTransaction(transaction.transaction_id)
-    } else if (new Date(transaction.date) <= new Date()) {
-      points += transaction.point_gain;
-    }
-  })
+  await Promise.all(
+    transactions.map(async (transaction) => {
+      if (
+        transaction.expire_id != null &&
+        new Date(transaction.deleteDate) <= new Date()
+      ) {
+        await deleteTransaction(transaction.transaction_id);
+        await deleteTransaction(transaction.expire_id);
+      } else if (new Date(transaction.date) <= new Date()) {
+        points += transaction.point_gain;
+      }
+    })
+  );
   return points;
-}
+};
 
 const parseUser = async (doc) => {
   const user_id = doc.id.toString();
   const data = doc.data();
   const promise: Promise<Transaction[]> = getTransactionByUser(user_id);
   const transactions = await promise;
-  // const points = await calculateUserPoints(user_id);
-  //updateUserPoints(user_id, points);
   const user = {
     user_id: user_id,
     address: data.address,
@@ -171,7 +185,7 @@ const parseUser = async (doc) => {
     full_name: data.full_name,
     last_active: new Date(data.last_active.toMillis()).toLocaleDateString(),
     parent: data.parent,
-    points: data.points,
+    points: await calculateUserPoints(transactions),
     reward_eligible: data.reward_eligible,
     suspended: data.suspended,
     phone_number: data.phone_number,

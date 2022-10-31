@@ -6,7 +6,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import styles from "./InviteAdminModal.module.css";
 import Icon from "../../assets/Icon";
-import { addAdminInvite } from "../../firebase/firestore/invite_admin";
+import {
+  addAdminInvite,
+  getAdminInvitebyEmail,
+} from "../../firebase/firestore/invite_admin";
 import { AdminInvite } from "../../types/schema";
 import { useForm } from "react-hook-form";
 import emailjs from "emailjs-com";
@@ -52,12 +55,12 @@ export const InviteAdminModal: React.FunctionComponent<InviteAdminModalProps> =
     const onSubmit = (data) => {
       // alert("SUCCESS!! :-)\n\n" + JSON.stringify(data, null, 4));
       data["invite"].map((inv) => {
-        const invite: AdminInvite = {
+        const invite = {
           email: inv.email,
           full_name: inv.name,
           valid: true,
         };
-        addAdminInvite(invite);
+        addAdminInvite(invite as AdminInvite);
         const templateParams = { email: inv.email, name: inv.name };
         sendEmail(templateParams);
       });

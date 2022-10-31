@@ -3,8 +3,13 @@ import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import styles from "./Activate.module.css";
-import { checkAdminActivationStatus } from "../../firebase/firestore/invite_admin";
+import {
+  checkAdminActivationStatus,
+  getAdminInvitebyEmail,
+} from "../../firebase/firestore/invite_admin";
 import Icon from "../../assets/Icon";
+import { AdminInvite } from "../../types/schema";
+import AdminRegister from "../../components/AdminRegister/AdminRegister";
 
 type AdminActivateData = {
   email: string;
@@ -15,13 +20,23 @@ const ActivateScreen: React.FC = () => {
   const router = useRouter();
   const [errMessage, setErrMessage] = useState(null);
   const [validEmail, setValidEmail] = useState(true);
+  const [registerState, setRegisterState] = useState(false);
+  const [currentInvite, setCurrentInvite] = useState<AdminInvite>({
+    email: "email@gmail.com",
+    full_name: "default",
+    valid: true,
+  } as AdminInvite);
 
   // TODO clear fields after error in submission
   const handleCheckAdminInvite = async (data: AdminActivateData) => {
     try {
       const validEmail = await checkAdminActivationStatus(data.email);
       if (validEmail) {
-        router.push("/register");
+        getAdminInvitebyEmail(data.email).then((invite) => {
+          setCurrentInvite(invite);
+          setRegisterState(true);
+          reset();
+        });
       } else {
         setValidEmail(false);
         setErrMessage("Invalid email.");
@@ -33,6 +48,16 @@ const ActivateScreen: React.FC = () => {
     }
   };
 
+  if (registerState) {
+    return (
+      <div>
+        <AdminRegister
+          currentInvite={currentInvite}
+          setRegisterState={setRegisterState}
+        />
+      </div>
+    );
+  }
   return validEmail ? (
     <div className={styles["page-container"]}>
       <form onSubmit={handleSubmit(handleCheckAdminInvite)}>

@@ -95,10 +95,29 @@
   margin-right: 10px;
 }
 
+.userAddHover {
+  border-radius: 50%;
+  background-color: var(--sapphire-mid);
+  fill: var(--white);
+  padding: 8px;
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+}
+
+.addText {
+  color: var(--grey-dark);
+}
+
+.headingText {
+  font-family: Avenir;
+  font-size: large;
+  font-weight: 800;
+}
+
 .addTransaction {
   display: flex;
   flex-direction: row;
-  margin-bottom: 5%;
   color: var(--grey-mid);
   justify-content: flex-start;
   place-items: center;
@@ -108,4 +127,162 @@
 .navButton {
   background-color: transparent;
   border: 0px;
+}
+
+.breadcrumbDivider {
+  margin-inline: 10px;
+}
+
+.activeBreadcrumb {
+  color: var(--noirish);
+}
+
+.newMemberModal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 4%;
+  width: 60%;
+  height: 50%;
+  max-height: 70%;
+  background-color: white;
+  border-radius: 20px;
+  top: 20%;
+  left: 20%;
+}
+
+.blackHeading {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 31px;
+  color: var(--noirish);
+}
+
+.modalContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 70%;
+  margin-bottom: 5%;
+}
+
+.modalButtons {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.contentContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.headDescription {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: var(--grey-dark);
+}
+
+.headTextField {
+  border: none;
+  border-bottom: 2px solid var(--grey-mid);
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  line-height: 32px;
+}
+
+.checkmarkIcon {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  margin-right: 10px;
+}
+
+.breadcrumbDivider {
+  margin-inline: 10px;
+}
+
+.activeBreadcrumb {
+  color: var(--noirish);
+}
+
+.containerFirst {
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  margin-top: 25px;
+  padding-right: 8%;
+}
+
+.containerSecond {
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  margin-top: 25px;
+  margin-left: 20px;
+  padding-right: 8%;
+}
+
+.containerThird {
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  height: 100%;
+  margin-left: 20px;
+  margin-top: 25px;
+  justify-content: space-between;
+}
+
+.cancelIcon {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+}
+
+.cancelButton {
+  display: flex;
+  font-family: Avenir;
+  background-color: transparent;
+  border: 1px solid var(--sapphire);
+  color: var(--sapphire);
+  cursor: pointer;
+  place-items: center;
+  height: 37px;
+  font-size: normal;
+  font-weight: 800;
+  padding-right: 16px;
+  padding-left: 16px;
+  justify-content: center;
+  border-radius: 7px;
+  vertical-align: middle;
+  margin-right: 12px;
+}
+
+.createFamilyButton {
+  display: flex;
+  font-family: Avenir;
+  background-color: var(--sapphire);
+  border: none;
+  cursor: pointer;
+  color: var(--white);
+  place-items: center;
+  height: 37px;
+  font-size: normal;
+  font-weight: 800;
+  padding-right: 16px;
+  padding-left: 16px;
+  justify-content: center;
+  border-radius: 7px;
 }

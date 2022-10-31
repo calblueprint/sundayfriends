@@ -1,6 +1,7 @@
 import firebaseApp from "../firebaseApp";
 import "firebase/firestore";
 import { Admin } from "../../types/schema";
+import { deleteAdminInvite, getAdminInvitebyEmail } from "./invite_admin";
 
 const db = firebaseApp.firestore();
 const adminCollection = db.collection("admins");
@@ -57,9 +58,11 @@ export const getAllAdmins = async (): Promise<Admin[]> => {
 /**
  * Adds the given admin data to firestore
  */
-export const addAdmin = async (admin: Admin): Promise<void> => {
+export const addAdmin = async (admin: Admin, uid: string): Promise<void> => {
   try {
-    await adminCollection.doc().set(admin);
+    await adminCollection.doc(uid).set(admin);
+    const adminInvite = await getAdminInvitebyEmail(admin.email);
+    await deleteAdminInvite(adminInvite.adminInviteId);
   } catch (e) {
     console.warn(e);
     throw e;

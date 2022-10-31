@@ -131,7 +131,7 @@
     margin-top: 12px;
   }
   
-  .modalHeadContanier {
+  .modalHeadContainer {
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -196,6 +196,12 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+    height: 11px;
+  }
+
+  .chevronButtonNoClick {
+    background-color: transparent;
+    border: none;
     height: 11px;
   }
   
