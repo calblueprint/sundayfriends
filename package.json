@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider next dev",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider next build",
     "build:scripts": "tsc --project tsconfig.scripts.json",
-    "start": "next start",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider next start",
     "lint": "next lint",
     "test": "cross-env jest --silent",
     "test:ci": "cross-env TZ=utc jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage --silent"
