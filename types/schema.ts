@@ -29,6 +29,7 @@ export type Admin = {
   name: string;
   role: string;
   phone: string;
+  admin_id: string;
 };
 
 export type AdminInvite = {
