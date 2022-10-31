@@ -1,11 +1,11 @@
-import { Timestamp } from "@firebase/firestore";
+import { firestore } from "firebase-admin";
 
 export type Transaction = {
   transaction_id: string;
   expire_id: string | null;
   admin_name: string;
-  date: Date | Timestamp | string;
-  deleteDate: Date | Timestamp | string;
+  date: Date | firestore.Timestamp | string;
+  deleteDate: Date | firestore.Timestamp | string;
   description: string | null;
   family_id: string;
   point_gain: number;
@@ -16,15 +16,15 @@ export type Transaction = {
 export type Family = {
   total_points: number;
   family_name: string;
-  last_active: Date | Timestamp;
+  last_active: Date | firestore.Timestamp;
   user_ids: string[];
   users: User[];
   family_id: number;
 };
 
 export type Admin = {
-  created_at: Date | Timestamp | string;
-  last_active: Date | Timestamp | string;
+  created_at: Date | firestore.Timestamp | string;
+  last_active: Date | firestore.Timestamp | string;
   email: string;
   name: string;
   role: string;
@@ -42,12 +42,12 @@ export type AdminInvite = {
 export type User = {
   user_id: string;
   address: string;
-  created_at: Date | Timestamp | string;
+  created_at: Date | firestore.Timestamp | string;
   email: string;
   role: string;
   family_id: number;
   full_name: string;
-  last_active: Date | Timestamp;
+  last_active: Date | firestore.Timestamp;
   parent: boolean;
   points: number;
   reward_eligible: boolean;

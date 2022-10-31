@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from "../TransactionItem/TransactionItem.module.css";
 import { ListItem } from "@mui/material";
 import Icon from "../../assets/Icon";
-import { Timestamp } from "@firebase/firestore";
+import { firestore } from "firebase-admin";
 import {
   getAllTransactions,
   deleteTransaction,
@@ -10,7 +10,7 @@ import {
 
 type TransactionItemProps = {
   id: string;
-  date: Date | Timestamp;
+  date: Date | firestore.Timestamp;
   userName?: string;
   fid?: string;
   adminName: string;
