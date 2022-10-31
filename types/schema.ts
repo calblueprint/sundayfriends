@@ -16,7 +16,7 @@ export type Transaction = {
 export type Family = {
   total_points: number;
   family_name: string;
-  last_active: Date | firestore.Timestamp;
+  last_active: Date | firestore.Timestamp | string;
   user_ids: string[];
   users: User[];
   family_id: number;
@@ -47,7 +47,7 @@ export type User = {
   role: string;
   family_id: number;
   full_name: string;
-  last_active: Date | firestore.Timestamp;
+  last_active: Date | firestore.Timestamp | string;
   parent: boolean;
   points: number;
   reward_eligible: boolean;
