@@ -51,13 +51,13 @@ const FamilyModal: React.FunctionComponent<FamilyModalProps> = ({
   }, [wasEdited]);
 
   const getUpdated = (): Family => {
-    console.log(family);
-    console.log(newFamily);
+    // console.log(family);
+    // console.log(newFamily);
     return newFamily ? newFamily : family;
   };
 
   const addMember = () => {
-    console.log("adding")
+    console.log("adding");
     if (memberName == "") {
       setSnackbarMessage("Invalid Name");
       setSnackbarOpen(true);

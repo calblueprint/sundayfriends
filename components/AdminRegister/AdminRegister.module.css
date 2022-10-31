@@ -67,8 +67,11 @@
   border: none;
   border-bottom: 2px solid var(--grey-mid);
   width: 332px;
-  margin-bottom: 35px;
   line-height: 32px;
+}
+
+.email-input-field:required {
+  border: 1px solid red;
 }
 
 .password-input-field {
@@ -82,6 +85,12 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
 }
 
 .bottom-row {
@@ -100,6 +109,7 @@
   line-height: 19px;
   text-decoration-line: underline;
   color: var(--sapphire);
+  cursor: pointer;
 }
 
 .forgot-password {
@@ -111,13 +121,14 @@
   color: var(--grey-mid);
   margin-top: 18px;
 }
-.login-error-message {
+
+.error-message {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   font-size: 12px;
   line-height: 16px;
   color: red;
-  margin-top: 18px;
+  margin-top: 5px;
 }
 
 .hidepassword {
@@ -141,4 +152,17 @@
   margin-left: -100px;
   position: absolute;
   background-color: none;
+}
+
+.sign-in-button {
+  background: #253c85;
+  border-radius: 7px;
+  color: white;
+  width: 86px;
+  height: 36px;
+}
+
+.sign-in-button:hover {
+  background: #253c85;
+  opacity: 0.6;
 }

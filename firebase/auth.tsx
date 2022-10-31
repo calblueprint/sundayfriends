@@ -1,8 +1,9 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import firebaseApp from "./firebaseApp";
 import { User } from "@firebase/auth-types";
-import { checkAdminId } from "./firestore/admin";
+import { checkAdminId, addAdmin } from "./firestore/admin";
 import nookies from "nookies";
+import { Admin } from "../types/schema";
 
 const auth = firebaseApp.auth();
 
@@ -31,11 +32,13 @@ export const signInWithEmailAndPassword = async (
 };
 
 export const registerWithEmailAndPassword = async (
-  email: string,
+  admin: Admin,
   password: string
 ): Promise<void> => {
   try {
-    await auth.createUserWithEmailAndPassword(email, password);
+    auth.createUserWithEmailAndPassword(admin.email, password).then((data) => {
+      addAdmin(admin, data.user.uid);
+    });
   } catch (e) {
     console.error(e);
     throw e;

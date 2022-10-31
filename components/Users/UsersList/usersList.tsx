@@ -34,6 +34,7 @@ type UsersListProps = {
 
 type UsersListItemProps = {
   user: User;
+  removeUser: Function;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setUser: React.Dispatch<React.SetStateAction<User>>;
   isFamilyPath: boolean;
@@ -42,6 +43,7 @@ type UsersListItemProps = {
 
 const UsersListItem: React.FC<UsersListItemProps> = ({
   user,
+  removeUser,
   setIsOpen,
   setUser,
   isFamilyPath,
@@ -108,9 +110,13 @@ const UsersListItem: React.FC<UsersListItemProps> = ({
           {confirmingDelete && (
             <Button
               className={styles["confirmDeleteButton"]}
-              onClick={() => deleteUser(user.user_id)}
+              onClick={() => {
+                deleteUser(user.user_id);
+                setConfirmingDelete(false);
+                removeUser();
+              }}
             >
-              {confirmingDelete ? "Confirm?" : "Delete"}
+              Confirm?
             </Button>
           )}
         </div>
@@ -144,11 +150,19 @@ const UsersList: React.FC<UsersListProps> = ({
     refresh();
   };
 
+  const deleteUser = (index) => {
+    let newUsers = [...users];
+    newUsers.slice(index, 1);
+    setUsers(newUsers);
+    refresh();
+  };
+
   const renderUsersList = () => {
-    return users.map((user) => (
+    return users.map((user, index) => (
       <UsersListItem
         key={user.email}
         user={user}
+        removeUser={() => deleteUser(index)}
         setIsOpen={setIsOpen}
         setUser={setUser}
         isFamilyPath={isFamilyPath}

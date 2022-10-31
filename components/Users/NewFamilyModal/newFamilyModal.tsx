@@ -31,15 +31,6 @@ const NewFamilyModal: React.FC<NewFamilyModalProps> = ({
   const [memberEmail, setMemberEmail] = useState("");
   const [memberRole, setMemberRole] = useState("");
 
-  useEffect(() => {
-    console.log(members);
-  }, []);
-
-  useEffect(() => {
-    console.log(members);
-    console.log(counter);
-  }, [counter]);
-
   const closeModal = () => {
     setIsOpen(false);
     setHead(false);
