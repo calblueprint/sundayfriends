@@ -69,7 +69,6 @@ const AdminRegister: React.FC<AdminRegisterProps> = (props) => {
       };
       registerWithEmailAndPassword(newAdmin as Admin, createPass);
       router.push("/");
-    } else {
     }
   };
 
