@@ -1,0 +1,74 @@
+.header {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    color: #272929;
+}
+
+.tiers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 3%;
+}
+
+.tier {
+    display: flex;
+    flex-direction: column;
+}
+
+.tiertitle {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 19px;
+    color: #272929;
+}
+
+.tier-range {
+    display: flex;
+    flex-direction: row;
+}
+
+.to {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 19px;
+    color: #A9A9A9;
+    margin-right: 20px;
+}
+
+.amount-field {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.confirm-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--sapphire);
+    color: white;
+    border-radius: 7px;
+    height: 33px;
+    font-size: 14px;
+    text-transform: none;
+    margin-top: 20px;
+    width: 89px;
+}
+  
+.confirm-button:hover {
+    cursor: pointer;
+    background-color: var(--sapphire-mid);
+}
+
+.confirm-button:disabled {
+    background-color: #A9A9A9;
+}
