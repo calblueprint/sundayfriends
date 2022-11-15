@@ -12,14 +12,19 @@ export const getExpirations = async (): Promise<Date[]> => {
     // query everything in the userInvite collection
     const allExpirations = await expirationCollection.get();
     var expirations = [];
-    allExpirations.docs.map((doc) =>
-      expirations = parseExpiration(doc)
-    );
+    allExpirations.docs.map((doc) => (expirations = parseExpiration(doc)));
     return expirations;
   } catch (e) {
     console.warn(e);
     throw e;
   }
+};
+
+export const updateExpirations = async (expirations: Date[]): Promise<void> => {
+  const doc = await expirationCollection.doc("dates").get();
+  var data = doc.data();
+  data.expirations = expirations;
+  expirationCollection.doc("dates").set(data);
 };
 
 // TODO replace doc with proper type
@@ -29,6 +34,6 @@ const parseExpiration = (doc: any) => {
   var parsed = [];
   expirations.map((date) => {
     parsed.push(new Date(date.toMillis()));
-  })
+  });
   return parsed;
 };

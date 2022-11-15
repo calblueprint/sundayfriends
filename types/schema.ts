@@ -67,3 +67,17 @@ export type User_Invite = {
 export type Family_Counter = {
   counter: number;
 };
+
+export type Tiers = {
+  tier2: number;
+  tier3: number;
+  tier4: number;
+  tier1title: string;
+  tier2title: string;
+  tier3title: string;
+  tier4title: string;
+  tier1description: string;
+  tier2description: string;
+  tier3description: string;
+  tier4description: string;
+};
